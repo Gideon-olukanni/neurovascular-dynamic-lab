@@ -144,29 +144,21 @@ nav a:hover { background:rgba(255,255,255,.12); }
 
 .brain-region {
   cursor:pointer;
-  transition:filter .2s ease, stroke-width .2s ease, opacity .2s ease;
+  transition:stroke-width .2s ease, opacity .2s ease, stroke .2s ease;
   stroke-linecap:round; stroke-linejoin:round;
 }
 .brain-region:hover {
-  filter:brightness(1.35) drop-shadow(0 0 6px rgba(255,255,255,0.5));
-  stroke-width:2.5 !important;
+  stroke-width:3 !important;
+  stroke:rgba(255,255,255,0.9) !important;
+  opacity:0.9;
 }
 .brain-region.active {
-  filter:brightness(1.4) drop-shadow(0 0 8px rgba(255,255,255,0.6));
-  stroke-width:3 !important;
+  stroke-width:4 !important;
+  stroke:#ffffff !important;
+  opacity:1;
 }
 /* dim unselected when one is active */
-.has-active .brain-region:not(.active) { opacity:.55; }
-
-.region-label {
-  font-family:'Space Grotesk',sans-serif;
-  font-size:10.5px; font-weight:600;
-  fill:#fff; pointer-events:none;
-  text-anchor:middle; dominant-baseline:middle;
-  letter-spacing:.02em; paint-order:stroke;
-  stroke:#000; stroke-width:2.5px; stroke-opacity:.45;
-}
-.region-label-sm { font-size:8.5px; }
+.has-active .brain-region:not(.active) { opacity:.45; }
 
 /* ── LEGEND ── */
 .legend {
