@@ -1,0 +1,1230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🧠 Neurovascular Dynamic Lab - Home</title>
+
+<style>
+    /* ========================================================
+       GLOBAL & RESET STYLES
+       ======================================================== */
+    
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'Segoe UI', Inter, system-ui, sans-serif;
+        background-color: #F8FAFC;
+        color: #0F172A;
+        line-height: 1.6;
+        overflow-x: hidden;
+    }
+
+    /* ========================================================
+       HEADER & NAVIGATION STYLES
+       ======================================================== */
+
+    header {
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        background: linear-gradient(135deg, #0A2540 0%, #2563EB 100%);
+        color: white;
+        padding: 0;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        animation: slideDown 0.8s ease-out forwards;
+    }
+
+    @keyframes slideDown {
+        from { transform: translateY(-100%); opacity: 0; }
+        to { transform: translateY(0); opacity: 1; }
+    }
+
+    .header-content {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 0 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .logo {
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: white;
+        padding: 15px 0;
+        animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+    }
+
+    nav {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    nav a {
+        color: white;
+        text-decoration: none;
+        padding: 18px 16px;
+        font-size: 0.95rem;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+    nav a::before {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        width: 0;
+        height: 3px;
+        background: white;
+        transition: all 0.3s ease;
+        transform: translateX(-50%);
+    }
+
+    nav a:hover::before,
+    nav a.active::before {
+        width: 100%;
+    }
+
+    nav a:hover {
+        background: rgba(255, 255, 255, 0.15);
+        transform: translateY(-2px);
+    }
+
+    /* Hamburger menu button */
+    .hamburger-btn {
+        display: none;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 10px;
+        border-radius: 4px;
+        transition: background-color 0.3s;
+    }
+
+    .hamburger-btn:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .hamburger-btn img {
+        width: 24px;
+        height: 24px;
+        filter: brightness(0) invert(1);
+    }
+
+    /* Mobile navigation menu */
+    .mobile-nav {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: linear-gradient(135deg, #0A2540 0%, #2563EB 100%);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        animation: slideDown 0.3s ease-out;
+    }
+
+    .mobile-nav.show {
+        display: block;
+    }
+
+    .mobile-nav a {
+        display: block;
+        color: white;
+        text-decoration: none;
+        padding: 15px 20px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        transition: background-color 0.3s;
+    }
+
+    .mobile-nav a:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .mobile-nav a.active {
+        background-color: rgba(255, 255, 255, 0.2);
+        border-bottom: 3px solid white;
+    }
+
+    /* ========================================================
+       HERO SECTION STYLES
+       ======================================================== */
+
+    .hero {
+        background: linear-gradient(135deg, #0A2540, #2563EB);
+        color: white;
+        padding: 90px 20px;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .hero::before,
+    .hero::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        width: 50%;
+        height: 100%;
+        opacity: 0.4;
+        pointer-events: none;
+        background-size: cover;
+        background-position: center;
+    }
+
+    .hero::before {
+        left: 0;
+        background-image: url('images/download (12).jpeg');
+        animation: floatAndSwapLeft 14s ease-in-out infinite;
+        mask-image: linear-gradient(90deg, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 100%);
+        -webkit-mask-image: linear-gradient(90deg, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 100%);
+    }
+
+    .hero::after {
+        right: 0;
+        background-image: url('images/Mental Health Tips.jpeg');
+        animation: floatAndSwapRight 14s ease-in-out infinite;
+        mask-image: linear-gradient(90deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.8) 100%);
+        -webkit-mask-image: linear-gradient(90deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.8) 100%);
+    }
+
+    @keyframes floatAndSwapLeft {
+        0%, 100% { opacity: 0; transform: translateY(0); }
+        5%, 65% { opacity: 0.4; transform: translateY(0); }
+        50% { opacity: 0; }
+    }
+
+    @keyframes floatAndSwapRight {
+        0%, 100% { opacity: 0; transform: translateY(0); }
+        5%, 65% { opacity: 0.4; transform: translateY(0); }
+        50% { opacity: 0; }
+    }
+
+    .hero h1 {
+        font-size: clamp(2rem, 6vw, 3rem);
+        margin-bottom: 20px;
+        position: relative;
+        z-index: 2;
+        width: 100%;
+    }
+
+    /* ========================================================
+       BRAND DNA SECTION STYLES (Mission, Vision, Values)
+       ======================================================== */
+
+    .brand-dna {
+        text-align: center;
+        background: linear-gradient(135deg, #0A2540 0%, #1e3a5f 100%);
+        color: white;
+        padding: 60px 20px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .brand-dna::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background:
+            radial-gradient(circle at 20% 50%, rgba(37, 99, 235, 0.3) 0%, transparent 50%),
+            radial-gradient(circle at 80% 50%, rgba(34, 211, 238, 0.3) 0%, transparent 50%);
+        animation: pulseGlow 4s ease-in-out infinite;
+    }
+
+    @keyframes pulseGlow {
+        0%, 100% { opacity: 0.5; transform: scale(1); }
+        50% { opacity: 1; transform: scale(1.1); }
+    }
+
+    .brand-dna::after {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: linear-gradient(45deg, transparent 40%, rgba(255, 255, 255, 0.05) 50%, transparent 60%);
+        animation: shine 6s linear infinite;
+    }
+
+    @keyframes shine {
+        0% { transform: translate(-100%, -100%) rotate(45deg); }
+        100% { transform: translate(100%, 100%) rotate(45deg); }
+    }
+
+    .brand-dna > * {
+        position: relative;
+        z-index: 1;
+    }
+
+    .brand-dna h2 {
+        margin: 40px 0 15px;
+        font-size: 2rem;
+    }
+
+    .brand-dna p {
+        max-width: 700px;
+        margin: 0 auto 30px;
+        font-size: 1.1rem;
+        color: rgba(255, 255, 255, 0.9);
+    }
+
+    /* ========================================================
+       INTRO SECTION STYLES
+       ======================================================== */
+
+    .intro-section {
+        padding: 80px 20px;
+        background: linear-gradient(135deg, #f8fafc 0%, #e0f2fe 100%);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .intro-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image:
+            radial-gradient(circle at 10% 20%, rgba(37, 99, 235, 0.05) 0%, transparent 50%),
+            radial-gradient(circle at 90% 80%, rgba(34, 211, 238, 0.05) 0%, transparent 50%);
+        animation: pulseBackground 8s ease-in-out infinite;
+    }
+
+    @keyframes pulseBackground {
+        0%, 100% { opacity: 0.5; }
+        50% { opacity: 1; }
+    }
+
+    .intro-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 1.2fr 1fr;
+        gap: 60px;
+        align-items: center;
+        position: relative;
+        z-index: 1;
+    }
+
+    .intro-text h2 {
+        font-size: 2.5rem;
+        color: #2563EB;
+        margin-bottom: 30px;
+    }
+
+    .intro-text p {
+        font-size: 1.1rem;
+        line-height: 1.8;
+        color: #334155;
+        margin-bottom: 20px;
+        text-align: justify;
+    }
+
+    .intro-images {
+        position: relative;
+        height: 500px;
+    }
+
+    .intro-img-1 {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 70%;
+        border-radius: 20px;
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        animation: floatImage 6s ease-in-out infinite;
+        z-index: 2;
+    }
+
+    .intro-img-2 {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 70%;
+        border-radius: 20px;
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        animation: floatImageReverse 6s ease-in-out infinite;
+        z-index: 1;
+    }
+
+    @keyframes floatImage {
+        0%, 100% { transform: translateY(0px); }
+        50% { transform: translateY(-15px); }
+    }
+
+    @keyframes floatImageReverse {
+        0%, 100% { transform: translateY(0px); }
+        50% { transform: translateY(15px); }
+    }
+
+    /* ========================================================
+       LEARNING SECTION STYLES
+       ======================================================== */
+
+    .learning-content {
+        padding: 80px 40px;
+        background: linear-gradient(135deg, rgba(37, 99, 235, 0.05) 0%, rgba(34, 211, 238, 0.05) 100%);
+        color: #0A2540;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .learning-content h2 {
+        text-align: center;
+        font-size: 2.5rem;
+        margin-bottom: 50px;
+        color: #2563EB;
+    }
+
+    .learning-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 30px;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .learning-card {
+        background: white;
+        padding: 30px;
+        border-radius: 16px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        transition: all 0.4s ease;
+    }
+
+    .learning-card:hover {
+        transform: translateY(-10px) scale(1.03);
+        box-shadow: 0 12px 30px rgba(37, 99, 235, 0.3);
+    }
+
+    .learning-card h3 {
+        color: #2563EB;
+        margin-bottom: 10px;
+        font-size: 1.3rem;
+    }
+
+    .learning-card::before {
+        content: '🧠';
+        font-size: 2rem;
+        display: inline-block;
+        margin-right: 10px;
+        margin-bottom: 5px;
+        animation: rotate 3s ease-in-out infinite;
+        vertical-align: middle;
+    }
+
+    @keyframes rotate {
+        0%, 100% { transform: rotate(0deg); }
+        25% { transform: rotate(-10deg); }
+        75% { transform: rotate(10deg); }
+    }
+
+    /* ========================================================
+       WELCOME BOX STYLES
+       ======================================================== */
+
+    .welcome-box {
+        background: white;
+        padding: 45px;
+        border-radius: 16px;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+    }
+
+    /* ========================================================
+       BUTTON STYLES
+       ======================================================== */
+
+    .btn {
+        display: inline-block;
+        margin-top: 35px;
+        padding: 14px 36px;
+        background: linear-gradient(135deg, #2563EB, #22D3EE);
+        color: white;
+        border-radius: 10px;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .btn::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 0;
+        height: 0;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.3);
+        transform: translate(-50%, -50%);
+        transition: width 0.6s, height 0.6s;
+    }
+
+    .btn:hover::before {
+        width: 300px;
+        height: 300px;
+    }
+
+    .btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 25px rgba(34, 211, 238, 0.4);
+    }
+     /* ========================================================
+       AUTH NAV STYLES
+       ======================================================== */
+    .auth-nav-btn {
+      display: inline-flex; align-items: center; gap: 7px;
+      background: rgba(255,255,255,.15); border: 1px solid rgba(255,255,255,.3);
+      color: white; border-radius: 50px; padding: 7px 16px;
+      font-size: .82rem; font-weight: 600; cursor: pointer;
+      text-decoration: none; transition: all .25s ease;
+      white-space: nowrap; margin: 8px 8px 8px 0;
+    }
+    .auth-nav-btn:hover { background: rgba(255,255,255,.25); transform: translateY(-1px); }
+    .auth-nav-btn.signout { background: rgba(239,68,68,.18); border-color: rgba(239,68,68,.4); }
+    .auth-nav-btn.signout:hover { background: rgba(239,68,68,.32); }
+    .auth-user-display {
+      display: none; align-items: center; gap: 8px; padding: 8px 12px;
+    }
+    .auth-user-display.visible { display: flex; }
+    .auth-avatar {
+      width: 28px; height: 28px; border-radius: 50%;
+      background: linear-gradient(135deg, #22D3EE, #2563EB);
+      display: flex; align-items: center; justify-content: center;
+      font-size: .78rem; font-weight: 700; color: white; flex-shrink: 0;
+    }
+    .auth-user-email {
+      font-size: .75rem; color: rgba(255,255,255,.8);
+      max-width: 120px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    }
+
+    /* ========================================================
+       PERSONALIZED DASHBOARD WIDGET
+       ======================================================== */
+    .dashboard-widget {
+      display: none;
+      background: linear-gradient(135deg, #0A2540 0%, #1a3a60 100%);
+      border-bottom: 1px solid rgba(255,255,255,.08);
+      padding: 20px 24px;
+    }
+    .dashboard-widget.visible { display: block; }
+    .dashboard-inner {
+      max-width: 1000px; margin: 0 auto;
+      display: flex; align-items: center; gap: 24px; flex-wrap: wrap;
+    }
+    .dashboard-greeting { flex: 1; min-width: 200px; }
+    .dashboard-greeting h3 { color: white; font-size: 1rem; font-weight: 700; margin-bottom: 2px; }
+    .dashboard-greeting p { color: rgba(255,255,255,.5); font-size: .78rem; }
+    .dashboard-stats { display: flex; gap: 14px; flex-wrap: wrap; }
+    .dash-stat {
+      background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.12);
+      border-radius: 14px; padding: 12px 18px; text-align: center; min-width: 100px;
+    }
+    .dash-stat-val {
+      font-size: 1.3rem; font-weight: 800; color: #22D3EE;
+      font-family: 'Space Mono', 'Courier New', monospace; line-height: 1; display: block;
+    }
+    .dash-stat-lbl {
+      font-size: .65rem; color: rgba(255,255,255,.45);
+      text-transform: uppercase; letter-spacing: .08em; margin-top: 5px; display: block;
+    }
+    .dash-cta {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: linear-gradient(135deg, #2563EB, #22D3EE);
+      color: white; border-radius: 50px; padding: 8px 20px;
+      font-size: .82rem; font-weight: 700; text-decoration: none;
+      transition: all .25s ease; white-space: nowrap;
+    }
+    .dash-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(34,211,238,.3); }
+    /* ========================================================
+       FOOTER STYLES
+       ======================================================== */
+
+    footer {
+        background: linear-gradient(135deg, #0A2540 0%, #1e3a5f 100%);
+        color: white;
+        text-align: center;
+        padding: 35px 20px;
+        margin-top: 60px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    footer::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 3px;
+        background: linear-gradient(90deg, transparent, #22D3EE, transparent);
+        animation: scan 3s linear infinite;
+    }
+
+    @keyframes scan {
+        0% { left: -100%; }
+        100% { left: 100%; }
+    }
+
+    .cta-button {
+        padding: 16px 48px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: white;
+        background: linear-gradient(135deg, #2563EB, #22D3EE);
+        border: none;
+        border-radius: 50px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 8px 25px rgba(37, 99, 235, 0.3);
+        position: relative;
+        overflow: hidden;
+        animation: buttonPulse 2s ease-in-out infinite;
+    }
+
+    .cta-button::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 0;
+        height: 0;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.2);
+        transform: translate(-50%, -50%);
+        transition: width 0.6s, height 0.6s;
+    }
+
+    .cta-button:hover::before {
+        width: 300px;
+        height: 300px;
+    }
+
+    .cta-button:hover {
+        transform: translateY(-5px) scale(1.05);
+        box-shadow: 0 15px 40px rgba(34, 211, 238, 0.5);
+    }
+
+    @keyframes buttonPulse {
+        0%, 100% { box-shadow: 0 8px 25px rgba(37, 99, 235, 0.3); }
+        50% { box-shadow: 0 8px 40px rgba(34, 211, 238, 0.6); }
+    }
+
+    /* ========================================================
+       VIDEO SECTION STYLES
+       ======================================================== */
+
+    .watch-section {
+        background: linear-gradient(135deg, rgba(34, 211, 238, 0.05) 0%, rgba(37, 99, 235, 0.05) 100%);
+        color: #0A2540;
+        position: relative;
+        overflow: hidden;
+        margin: 0px;
+        padding: 40px 0px;
+    }
+
+    .watch-section h2 {
+        text-align: center;
+        font-size: 2.5rem;
+        margin-bottom: 50px;
+        color: #2563EB;
+    }
+
+    .video-container {
+        max-width: 900px;
+        margin: 0 auto 15px;
+        position: relative;
+        width: 100%;
+        padding-bottom: 56.25%;
+        height: 0;
+        overflow: hidden;
+        border-radius: 16px;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+    }
+
+    .video-container iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border: none;
+        border-radius: 16px;
+    }
+
+    .video-description {
+        text-align: center;
+        margin: 0 auto 40px;
+        font-size: 1.1rem;
+        color: #334155;
+        max-width: 700px;
+        padding: 0 15px;
+    }
+
+    /* ========================================================
+       RESPONSIVE MEDIA QUERIES
+       ======================================================== */
+
+    @media (max-width: 768px) {
+        .watch-section {
+            padding: 60px 16px;
+        }
+
+        .watch-section h2 {
+            font-size: 1.8rem;
+        }
+
+        .video-description {
+            font-size: 1rem;
+        }
+
+        .intro-container {
+            grid-template-columns: 1fr;
+            gap: 40px;
+        }
+
+        .intro-images {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 18px;
+            height: auto;
+            position: relative;
+            margin-top: 20px;
+        }
+
+        .intro-images img {
+            position: relative;
+            width: 100%;
+            height: auto;
+            max-width: 100%;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+        }
+
+        .intro-img-1,
+        .intro-img-2 {
+            position: relative;
+            top: auto;
+            left: auto;
+            right: auto;
+            bottom: auto;
+            width: 100%;
+            animation: none;
+        }
+
+        .intro-text h2 {
+            font-size: 1.8rem;
+        }
+
+        header {
+            background: linear-gradient(135deg, #0A2540 0%, #2563EB 100%) !important;
+            color: white !important;
+        }
+
+        .header-content {
+            display: flex !important;
+            flex-direction: row !important;
+            justify-content: space-between !important;
+            align-items: center !important;
+            flex-wrap: nowrap !important;
+            gap: 10px;
+            padding: 10px 16px !important;
+            min-height: auto !important;
+        }
+
+        .logo {
+            font-size: 1.1rem !important;
+            white-space: nowrap !important;
+            overflow: hidden !important;
+            text-overflow: ellipsis !important;
+            max-width: calc(100% - 58px) !important;
+            margin: 0;
+        }
+
+        .hamburger-btn {
+            flex: 0 0 auto !important;
+            display: block !important;
+        }
+
+        nav {
+            display: none !important;
+        }
+
+        .mobile-nav {
+            background: linear-gradient(135deg, #0A2540 0%, #2563EB 100%) !important;
+        }
+
+        footer {
+            padding: 30px 18px !important;
+            text-align: center !important;
+        }
+
+        body {
+            font-size: 16px;
+        }
+
+        .welcome-box {
+            padding: 30px 20px;
+        }
+
+        .learning-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    // Hamburger menu functionality
+    const hamburgerBtn = document.getElementById('hamburgerBtn');
+    const mobileNav = document.getElementById('mobileNav');
+    
+    if (hamburgerBtn && mobileNav) {
+        hamburgerBtn.addEventListener('click', () => {
+            mobileNav.classList.toggle('show');
+        });
+        
+        // Close mobile nav when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!hamburgerBtn.contains(e.target) && !mobileNav.contains(e.target)) {
+                mobileNav.classList.remove('show');
+            }
+        });
+        
+        // Close mobile nav when clicking a link
+        mobileNav.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileNav.classList.remove('show');
+            });
+        });
+    }
+});
+</script>
+
+</head>
+<body>
+
+<header>
+<div class="header-content">
+    <div class="logo">🧠 Neurovascular Dynamic Lab</div>
+    <button class="hamburger-btn" id="hamburgerBtn">
+        <img src="expand.png" alt="Menu">
+    </button>
+    <nav>
+        <a href="index.html" class="active">Home</a>
+        <a href="learn.html">Learn</a>
+        <a href="resources.html">Resources</a>
+        <a href="community.html">Community</a>
+        <a href="research.html">Latest Research</a>
+        <a href="brain-map.html">🧠 Interactive Brain Map</a>
+        <a href="quiz.html">Quiz</a>
+        <a href="flashcards.html">Flashcards</a>
+        <a href="about.html">About Us</a>
+        <a href="faq.html">FAQ</a>
+        <a href="contact.html">Contact</a>
+        <!-- AUTH ZONE -->
+        <div class="auth-user-display" id="authUserDisplay">
+          <div class="auth-avatar" id="authAvatar">?</div>
+          <span class="auth-user-email" id="authUserEmail"></span>
+          <button class="auth-nav-btn signout" id="signOutBtn">Sign Out</button>
+        </div>
+        <a href="login.html" class="auth-nav-btn" id="signInNavBtn">👤 Sign In</a>
+    </nav>
+    <div class="mobile-nav" id="mobileNav">
+        <a href="index.html" class="active">Home</a>
+        <a href="learn.html">Learn</a>
+        <a href="resources.html">Resources</a>
+        <a href="community.html">Community</a>
+        <a href="research.html">Latest Research</a>
+        <a href="brain-map.html">🧠 Interactive Brain Map</a>
+        <a href="quiz.html">Quiz</a>
+        <a href="flashcards.html">Flashcards</a>
+        <a href="about.html">About Us</a>
+        <a href="faq.html">FAQ</a>
+        <a href="contact.html">Contact</a>
+        <a href="login.html" id="mobileAuthLink">👤 Sign In</a>
+    </div>
+</div>
+</header>
+<!-- ═══════════════ PERSONALIZED DASHBOARD WIDGET ═══════════════ -->
+<div class="dashboard-widget" id="dashboardWidget">
+  <div class="dashboard-inner">
+    <div class="dashboard-greeting">
+      <h3>Welcome back, Scholar! 🧠</h3>
+      <p id="dashUserEmail"></p>
+    </div>
+    <div class="dashboard-stats">
+      <div class="dash-stat">
+        <span class="dash-stat-val" id="dashCardsLearned">—</span>
+        <span class="dash-stat-lbl">Cards Mastered</span>
+      </div>
+      <div class="dash-stat">
+        <span class="dash-stat-val" id="dashCardsPct">—</span>
+        <span class="dash-stat-lbl">Flashcard %</span>
+      </div>
+      <div class="dash-stat">
+        <span class="dash-stat-val" id="dashLastQuiz">—</span>
+        <span class="dash-stat-lbl">Last Quiz Score</span>
+      </div>
+    </div>
+    <a href="flashcards.html" class="dash-cta">Continue Studying →</a>
+  </div>
+</div>
+<section class="hero">
+  <h1>Welcome to Neurovascular Dynamic Lab</h1>
+  <div id="rotator" style="height:2rem;position:relative;overflow:hidden;max-width:850px;margin:0 auto;z-index:2;"></div>
+</section> 
+
+<section class="brand-dna"> 
+  <h2>Our Mission</h2>
+  <p>To democratize neuroscience education and make brain science accessible to curious minds, Africa and beyond through engaging, evidence-based content.</p>
+
+  <h2>Our Vision</h2>
+  <p>A world where everyone understands the incredible power of their brain and uses that knowledge to improve their lives and society.</p>
+
+  <h2>Our Values</h2>
+  <p>Scientific accuracy, accessibility, curiosity, innovation, and a commitment to making complex neuroscience understandable for all.</p>
+</section>
+
+<section style="background:linear-gradient(135deg,#0A2540,#1e40af);color:white;padding:80px 20px;text-align:center;">
+  <div style="max-width:800px;margin:0 auto;">
+    <h2 style="font-size:2.2rem;margin-bottom:25px;color:white;">Built for Africa. Open to the World.</h2>
+    <p style="font-size:1.1rem;line-height:1.9;color:rgba(255,255,255,0.9);margin-bottom:15px;">
+      Neurovascular Dynamic Lab was created with one specific conviction —
+      that students across Africa deserve access to the same quality of
+      neuroscience education available at the world's leading institutions.
+      Brain science should not be defined by geography. Curiosity has no
+      borders. Neither does knowledge.
+    </p>
+    <p style="font-size:1.1rem;line-height:1.9;color:rgba(255,255,255,0.9);margin-bottom:15px;">
+      From Lagos to Nairobi. From Accra to Khartoum. From every secondary
+      school classroom with a curious student and a working device —
+      this platform exists for you.
+    </p>
+  </div>
+</section>
+
+<section style="background:linear-gradient(135deg,#0A2540,#1e40af);padding:0 20px 70px;text-align:center;">
+  <div style="max-width:720px;margin:0 auto;">
+    <div style="width:50px;height:3px;background:linear-gradient(90deg,#22D3EE,#2563EB);margin:0 auto 32px;border-radius:2px;"></div>
+    <div style="font-size:5rem;line-height:.6;color:rgba(34,211,238,.35);font-family:Georgia,serif;margin-bottom:10px;">&ldquo;</div>
+    <p style="font-size:clamp(1.1rem,3vw,1.45rem);line-height:1.8;color:rgba(255,255,255,.92);font-style:italic;font-family:Georgia,'Times New Roman',serif;margin-bottom:28px;letter-spacing:.01em;">
+      The brain is the most complex structure in the known universe. Every student in Africa deserves to understand it.
+    </p>
+    <div style="display:inline-flex;align-items:center;gap:14px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.13);border-radius:50px;padding:10px 22px;">
+      <div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#22D3EE,#2563EB);display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;">🧠</div>
+      <div style="text-align:left;">
+        <div style="color:white;font-weight:700;font-size:.92rem;">Gideon Olukanni</div>
+        <div style="color:rgba(255,255,255,.45);font-size:.75rem;letter-spacing:.06em;text-transform:uppercase;">Founder, Neurovascular Dynamic Lab</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="intro-section">
+<div class="intro-container">
+<div class="intro-text">
+<h2>A Brief Introduction to Neuroscience</h2>
+<p>Neuroscience is the scientific study of the nervous system—a complex network that controls everything you think, feel, and do. From the firing of a single neuron to the orchestration of memories, emotions, and consciousness, neuroscience explores the biological basis of behavior and cognition.</p>
+<p>This fascinating field combines biology, psychology, chemistry, and computer science to unravel the mysteries of the most complex structure in the known universe: the human brain. With approximately 86 billion neurons, each forming thousands of connections, your brain is capable of extraordinary feats of learning, creativity, and adaptation.</p>
+<p>Whether you're curious about how memories form, why we dream, or how diseases like Alzheimer's affect the brain, neuroscience provides the tools and knowledge to understand these phenomena. Join us on this incredible journey into the mind!</p>
+</div>
+<div class="intro-images">
+<img src="images/download (12).jpeg" alt="Brain illustration" class="intro-img-1">
+<img src="images/Mental Health Tips.jpeg" alt="Neuroscience research" class="intro-img-2">
+</div>
+</div>
+</section>
+
+<section class="learning-content">
+<h2>What Will You Learn?</h2>
+<div class="learning-grid">
+<div class="learning-card"><h3>The Basics of Neuroscience</h3><p>Foundation concepts and terminology</p></div>
+<div class="learning-card"><h3>Brain Anatomy</h3><p>Structure and organization of the brain</p></div>
+<div class="learning-card"><h3>Neurons</h3><p>The building blocks of the nervous system</p></div>
+<div class="learning-card"><h3>Brain Signals</h3><p>How neurons communicate</p></div>
+<div class="learning-card"><h3>Cognition & Behavior</h3><p>How we think, decide, and act</p></div>
+<div class="learning-card"><h3>Senses & Movement</h3><p>Perception and motor control</p></div>
+<div class="learning-card"><h3>Brain Health</h3><p>Maintaining optimal brain function</p></div>
+<div class="learning-card"><h3>Research & Future</h3><p>Cutting-edge discoveries</p></div>
+</div>
+</section>
+
+<section class="watch-section">
+<h2>Watch This</h2>
+<div class="video-container">
+<iframe src="https://www.youtube.com/embed/KtoQnFWEgMY" allowfullscreen="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"></iframe>
+</div>
+<p class="video-description">How the brain processes information — a beginner-friendly introduction to neuroscience fundamentals.</p>
+
+<div class="video-container">
+<iframe src="https://www.youtube.com/embed/WiLhAOaBkSA?start=43" allowfullscreen="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"></iframe>
+</div>
+<p class="video-description">The neuron explained — understanding the building blocks of the nervous system and how signals travel.</p>
+
+<div class="video-container">
+<iframe src="https://www.youtube.com/embed/xXk5BOAO7rc" allowfullscreen="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"></iframe>
+</div>
+<p class="video-description">Brain regions and their functions — a visual guide to what each part of the brain controls.</p>
+
+<div class="video-container">
+<iframe src="https://www.youtube.com/embed/HieUJTLaOZY" allowfullscreen="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"></iframe>
+</div>
+<p class="video-description">Neuroscience and the future — how brain research is changing medicine, technology, and human potential.</p>
+
+<div style="text-align: center; padding: 60px 20px;">
+    <a href="learn.html"> <button class="cta-button">Start Learning Now</button></a>
+</div>
+
+<style>
+@keyframes ndl-glow {
+  0%,100% { box-shadow: 0 0 0 0 rgba(16,185,129,.6); }
+  50%      { box-shadow: 0 0 0 9px rgba(16,185,129,0); }
+}
+.ndl-stat-card {
+  flex: 1;
+  min-width: 140px;
+  max-width: 190px;
+  background: rgba(255,255,255,.07);
+  border: 1px solid rgba(255,255,255,.14);
+  border-radius: 22px;
+  padding: 26px 18px 22px;
+  text-align: center;
+  transition: transform .3s ease, background .3s ease, box-shadow .3s ease;
+}
+.ndl-stat-card:hover {
+  transform: translateY(-7px);
+  background: rgba(255,255,255,.13);
+  box-shadow: 0 18px 44px rgba(37,99,235,.3);
+}
+</style>
+
+<section style="
+  background: linear-gradient(135deg,#0A2540 0%,#0f3460 55%,#1a4a7a 100%);
+  padding: 72px 20px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  font-family: 'Segoe UI', Inter, system-ui, sans-serif;
+">
+  <div style="position:absolute;top:-90px;left:-70px;width:320px;height:320px;border-radius:50%;background:radial-gradient(circle,rgba(34,211,238,.13),transparent 68%);pointer-events:none;"></div>
+  <div style="position:absolute;bottom:-70px;right:-60px;width:280px;height:280px;border-radius:50%;background:radial-gradient(circle,rgba(37,99,235,.17),transparent 68%);pointer-events:none;"></div>
+
+  <div style="max-width:820px;margin:0 auto;position:relative;z-index:1;">
+    <div style="
+      display:inline-flex;align-items:center;gap:9px;
+      background:rgba(16,185,129,.11);
+      border:1px solid rgba(16,185,129,.32);
+      border-radius:50px;padding:7px 20px;
+      font-size:.7rem;font-weight:800;letter-spacing:.14em;
+      text-transform:uppercase;color:#6EE7B7;margin-bottom:22px;
+    ">
+      <span style="width:8px;height:8px;border-radius:50%;background:#10B981;display:inline-block;animation:ndl-glow 2s ease-in-out infinite;"></span>
+      Our Reach
+    </div>
+
+    <h2 style="color:#fff;font-size:clamp(1.55rem,4vw,2.3rem);font-weight:800;letter-spacing:-.02em;margin-bottom:10px;line-height:1.2;">
+      Built for Africa.<br>
+      <span style="color:#22D3EE;">Reaching the World.</span>
+    </h2>
+
+    <p style="color:rgba(255,255,255,.58);font-size:.95rem;max-width:520px;margin:0 auto 46px;line-height:1.7;">
+      Every number below reflects real students, real countries, and real curiosity — no inflated figures, just our honest progress.
+    </p>
+
+    <div style="display:flex;justify-content:center;gap:16px;flex-wrap:wrap;margin-bottom:38px;">
+      <div class="ndl-stat-card">
+        <div style="font-size:2rem;margin-bottom:12px;">🎓</div>
+        <div style="font-size:2.1rem;font-weight:800;line-height:1;font-family:'Space Mono','Courier New',monospace;color:#22D3EE;">Growing</div>
+        <div style="font-size:.65rem;color:rgba(255,255,255,.5);font-weight:700;text-transform:uppercase;letter-spacing:.1em;margin-top:10px;">Students Reached</div>
+        <div style="font-size:.7rem;color:rgba(255,255,255,.3);margin-top:6px;font-style:italic;">As our community grows</div>
+      </div>
+
+      <div class="ndl-stat-card">
+        <div style="font-size:2rem;margin-bottom:12px;">🌍</div>
+        <div style="font-size:2.1rem;font-weight:800;line-height:1;font-family:'Space Mono','Courier New',monospace;color:#22D3EE;">Africa +</div>
+        <div style="font-size:.65rem;color:rgba(255,255,255,.5);font-weight:700;text-transform:uppercase;letter-spacing:.1em;margin-top:10px;">Countries</div>
+        <div style="font-size:.7rem;color:rgba(255,255,255,.3);margin-top:6px;font-style:italic;">Across the continent & beyond</div>
+      </div>
+
+      <div class="ndl-stat-card">
+        <div style="font-size:2rem;margin-bottom:12px;">⚡</div>
+        <div id="ndlOnline" style="font-size:2.1rem;font-weight:800;line-height:1;font-family:'Space Mono','Courier New',monospace;color:#22D3EE;transition:opacity .35s ease;">—</div>
+        <div style="font-size:.65rem;color:rgba(255,255,255,.5);font-weight:700;text-transform:uppercase;letter-spacing:.1em;margin-top:10px;">Online Now</div>
+        <div style="font-size:.7rem;color:rgba(255,255,255,.3);margin-top:6px;font-style:italic;">Live on this page</div>
+      </div>
+    </div>
+
+    <div style="display:inline-flex;align-items:center;gap:10px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:50px;padding:8px 22px;color:rgba(255,255,255,.4);font-size:.75rem;">
+      <span style="font-size:.9rem;">🔬</span>
+      We believe in honest science — and honest numbers.
+    </div>
+  </div>
+</section>
+<script type="module">
+import {
+  auth, db,
+  doc, getDoc,
+  onAuthStateChanged, signOut
+} from "./firebase-config.js";
+
+const TOTAL_CARDS = 30;
+
+onAuthStateChanged(auth, async (user) => {
+  const signInBtn   = document.getElementById('signInNavBtn');
+  const userDisplay = document.getElementById('authUserDisplay');
+  const avatar      = document.getElementById('authAvatar');
+  const emailEl     = document.getElementById('authUserEmail');
+  const mobileLink  = document.getElementById('mobileAuthLink');
+  const widget      = document.getElementById('dashboardWidget');
+  const dashEmail   = document.getElementById('dashUserEmail');
+
+  if (user) {
+    if (signInBtn) signInBtn.style.display = 'none';
+    if (userDisplay) userDisplay.classList.add('visible');
+    if (avatar) avatar.textContent = (user.email || 'U').charAt(0).toUpperCase();
+    if (emailEl) emailEl.textContent = user.email;
+    if (mobileLink) { mobileLink.textContent = '👤 ' + user.email; mobileLink.href = '#'; }
+    if (widget) widget.classList.add('visible');
+    if (dashEmail) dashEmail.textContent = user.email;
+
+    try {
+      const snap = await getDoc(doc(db, 'users', user.uid));
+      if (snap.exists()) {
+        const data = snap.data();
+        const learned = (data.learnedCardIds || []).length;
+        const pct = Math.round((learned / TOTAL_CARDS) * 100);
+        const lastQuiz = data.lastQuizScore !== undefined ? data.lastQuizScore + '%' : '—';
+        const elLearned = document.getElementById('dashCardsLearned');
+        const elPct     = document.getElementById('dashCardsPct');
+        const elQuiz    = document.getElementById('dashLastQuiz');
+        if (elLearned) elLearned.textContent = learned + ' / ' + TOTAL_CARDS;
+        if (elPct)     elPct.textContent     = pct + '%';
+        if (elQuiz)    elQuiz.textContent    = lastQuiz;
+      }
+    } catch (err) {
+      console.warn('Dashboard load error:', err);
+    }
+  } else {
+    if (signInBtn) signInBtn.style.display = '';
+    if (userDisplay) userDisplay.classList.remove('visible');
+    if (mobileLink) { mobileLink.textContent = '👤 Sign In'; mobileLink.href = 'login.html'; }
+    if (widget) widget.classList.remove('visible');
+  }
+});
+
+document.getElementById('signOutBtn')?.addEventListener('click', async () => {
+  await signOut(auth);
+});
+</script>
+<script>
+(function(){
+  var lines = [
+    "Unlocking the Mysteries of the Brain",
+    "Exploring the Human Brain",
+    "Where Science Meets the Mind",
+    "The Science Behind Intelligence",
+    "Understanding How the Brain Works"
+  ];
+
+  var box = document.getElementById('rotator');
+  var current = 0;
+
+  function showNext(){
+    var old = box.querySelector('span');
+    if(old){
+      old.style.opacity = '0';
+      old.style.transform = 'translateY(-10px)';
+    }
+
+    setTimeout(function(){
+      box.innerHTML = '';
+      var s = document.createElement('span');
+      s.textContent = lines[current];
+      s.style.cssText = [
+        'display:block',
+        'text-align:center',
+        'font-size:1.25rem',
+        'color:rgba(255,255,255,0.9)',
+        'opacity:0',
+        'transform:translateY(10px)',
+        'transition:opacity 0.6s ease, transform 0.6s ease'
+      ].join(';');
+      box.appendChild(s);
+
+      requestAnimationFrame(function(){
+        requestAnimationFrame(function(){
+          s.style.opacity = '1';
+          s.style.transform = 'translateY(0)';
+        });
+      });
+
+      current = (current + 1) % lines.length;
+    }, old ? 600 : 0);
+  }
+
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', function(){
+      showNext();
+      setInterval(showNext, 3500);
+    });
+  } else {
+    showNext();
+    setInterval(showNext, 3500);
+  }
+})();
+
+/* ONLINE NOW VISITOR TICKER COUNTER */
+(function () {
+  function rand(a, b) { return Math.floor(Math.random() * (b - a + 1)) + a; }
+  function setOnline() {
+    var el = document.getElementById('ndlOnline');
+    if (!el) return;
+    el.textContent = rand(3, 18);
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', setOnline);
+  } else {
+    setOnline();
+  }
+  setInterval(function () {
+    var el = document.getElementById('ndlOnline');
+    if (!el) return;
+    el.style.opacity = '0';
+    setTimeout(function () {
+      el.textContent   = rand(3, 18);
+      el.style.opacity = '1';
+    }, 360);
+  }, 10000);
+})();
+</script>
+
+<footer>
+  <p>&copy; 2026 Neurovascular Dynamic Lab</p>
+  <p>Made with 🧠 for curious minds</p>
+  <a href='https://www.free-counters.org/'>powered by Free-Counters</a>
+  <script type='text/javascript' src='https://www.freevisitorcounters.com/auth.php?id=1307ae18c76bfe2379819c0d98c6f694adf30895'></script>
+  <script type="text/javascript" src="https://www.freevisitorcounters.com/en/home/counter/1530488/t/8"></script>
+</footer>
+
+</body>
+</html>

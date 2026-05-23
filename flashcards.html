@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🧠 Neurovascular Dynamic Lab — Flashcards</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+/* ══════════════════════════════════════════
+   TOKENS  —  Site palette + refinements
+   ══════════════════════════════════════════ */
+:root {
+  --navy:      #0A2540;
+  --blue:      #2563EB;
+  --blue-mid:  #1D4ED8;
+  --blue-light:#3B82F6;
+  --cyan:      #22D3EE;
+  --cyan-soft: #67E8F9;
+  --emerald:   #10B981;
+  --amber:     #F59E0B;
+  --rose:      #EF4444;
+  --violet:    #8B5CF6;
+  --slate-50:  #F8FAFC;
+  --slate-100: #F1F5F9;
+  --slate-200: #E2E8F0;
+  --slate-400: #94A3B8;
+  --slate-500: #64748B;
+  --slate-700: #334155;
+  --slate-900: #0F172A;
+  --white:     #FFFFFF;
+
+  --radius-card: 20px;
+  --shadow-card: 0 4px 24px rgba(10,37,64,.10);
+  --shadow-hover: 0 16px 48px rgba(37,99,235,.22);
+  --transition: 0.3s cubic-bezier(.4,0,.2,1);
+}
+
+/* ══════════════════════════════════════════  RESET */
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--slate-50);
+  color: var(--slate-900);
+  overflow-x: hidden;
+  line-height: 1.6;
+}
+
+/* ══════════════════════════════════════════  HEADER */
+header {
+  position: sticky; top: 0; z-index: 1000;
+  background: linear-gradient(135deg, var(--navy) 0%, var(--blue) 100%);
+  color: white;
+  box-shadow: 0 4px 20px rgba(0,0,0,.25);
+}
+.header-content {
+  max-width: 1400px; margin: 0 auto; padding: 0 24px;
+  display: flex; justify-content: space-between; align-items: center;
+  position: relative;
+}
+.logo {
+  font-size: 1.25rem; font-weight: 700; color: white;
+  padding: 16px 0; white-space: nowrap; letter-spacing: -.01em;
+}
+nav { display: flex; flex-wrap: wrap; }
+nav a {
+  color: white; text-decoration: none;
+  padding: 18px 13px; font-size: .88rem; font-weight: 500;
+  transition: background var(--transition); position: relative;
+}
+nav a::after {
+  content: ''; position: absolute; bottom: 0; left: 50%;
+  width: 0; height: 3px; background: white;
+  transition: all var(--transition); transform: translateX(-50%);
+}
+nav a:hover::after, nav a.active::after { width: 100%; }
+nav a:hover { background: rgba(255,255,255,.13); }
+
+.hamburger-btn {
+  display: none; background: none; border: none;
+  cursor: pointer; padding: 10px; border-radius: 6px;
+  transition: background var(--transition);
+}
+.hamburger-btn:hover { background: rgba(255,255,255,.12); }
+.hamburger-btn img { width: 24px; height: 24px; filter: brightness(0) invert(1); display:block; }
+
+.mobile-nav {
+  display: none; position: absolute; top: 100%; left: 0; right: 0;
+  background: linear-gradient(135deg, var(--navy) 0%, var(--blue) 100%);
+  box-shadow: 0 8px 24px rgba(0,0,0,.25);
+}
+.mobile-nav.show { display: block; }
+.mobile-nav a {
+  display: block; color: white; text-decoration: none;
+  padding: 14px 22px; border-bottom: 1px solid rgba(255,255,255,.1);
+  font-size: .92rem; transition: background var(--transition);
+}
+.mobile-nav a:hover { background: rgba(255,255,255,.12); }
+.mobile-nav a.active { background: rgba(255,255,255,.2); font-weight: 600; }
+
+/* ══════════════════════════════════════════  HERO */
+.hero {
+  background: linear-gradient(135deg, var(--navy) 0%, var(--blue) 100%);
+  color: white; padding: 72px 24px 60px; text-align: center;
+  position: relative; overflow: hidden;
+}
+/* decorative blobs */
+.hero::before, .hero::after {
+  content: ''; position: absolute; border-radius: 50%;
+  pointer-events: none; filter: blur(80px); opacity: .18;
+}
+.hero::before {
+  width: 500px; height: 500px; background: var(--cyan);
+  top: -120px; left: -100px;
+}
+.hero::after {
+  width: 400px; height: 400px; background: var(--blue-light);
+  bottom: -100px; right: -80px;
+}
+
+.hero-eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.2);
+  border-radius: 50px; padding: 6px 18px;
+  font-size: .78rem; font-weight: 700; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--cyan-soft);
+  margin-bottom: 20px; position: relative; z-index: 1;
+}
+.hero h1 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(2rem, 5vw, 3.4rem); font-weight: 900;
+  line-height: 1.15; margin-bottom: 14px;
+  position: relative; z-index: 1; letter-spacing: -.02em;
+}
+.hero h1 span { color: var(--cyan); }
+.hero-sub {
+  font-size: 1rem; opacity: .8; margin-bottom: 6px;
+  position: relative; z-index: 1;
+}
+.hero-meta {
+  font-size: .78rem; opacity: .5; margin-bottom: 36px;
+  position: relative; z-index: 1;
+}
+.hero-stats {
+  display: flex; justify-content: center; gap: 16px;
+  flex-wrap: wrap; position: relative; z-index: 1;
+}
+.hero-stat {
+  background: rgba(255,255,255,.1); backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,.18); border-radius: 16px;
+  padding: 14px 28px; min-width: 110px;
+}
+.hero-stat strong {
+  display: block; font-size: 1.8rem; font-weight: 700;
+  font-family: 'Space Mono', monospace; line-height: 1;
+  color: var(--cyan);
+}
+.hero-stat span { font-size: .75rem; opacity: .75; margin-top: 4px; display: block; }
+
+/* ══════════════════════════════════════════  FILTER BAR */
+.filter-bar {
+  background: white; padding: 18px 24px;
+  box-shadow: 0 2px 12px rgba(0,0,0,.07);
+  position: sticky; top: 57px; z-index: 100;
+}
+.filter-inner {
+  max-width: 1100px; margin: 0 auto;
+  display: flex; flex-direction: column; align-items: center; gap: 12px;
+}
+.filter-label { font-size: .78rem; color: var(--slate-500); font-weight: 600; letter-spacing: .06em; text-transform: uppercase; }
+.filter-btns { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
+.filter-btn {
+  padding: 7px 18px; border-radius: 50px; border: 2px solid var(--slate-200);
+  background: white; color: var(--slate-700); font-size: .82rem; font-weight: 600;
+  cursor: pointer; transition: all var(--transition); font-family: 'DM Sans', sans-serif;
+  white-space: nowrap;
+}
+.filter-btn:hover { border-color: var(--blue); color: var(--blue); }
+.filter-btn.active { background: var(--blue); border-color: var(--blue); color: white; box-shadow: 0 4px 14px rgba(37,99,235,.35); }
+
+/* ══════════════════════════════════════════  PROGRESS */
+.progress-section {
+  max-width: 900px; margin: 32px auto 0; padding: 0 24px;
+}
+.progress-row {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 10px;
+}
+.progress-label { font-size: .82rem; color: var(--slate-500); font-weight: 700; letter-spacing:.04em; text-transform:uppercase; }
+.progress-count { font-size: .82rem; color: var(--blue); font-weight: 700; font-family: 'Space Mono', monospace; }
+.progress-track { background: var(--slate-200); border-radius: 10px; height: 8px; overflow: hidden; }
+.progress-fill {
+  height: 100%; border-radius: 10px;
+  background: linear-gradient(90deg, var(--blue), var(--cyan));
+  transition: width .6s cubic-bezier(.4,0,.2,1); width: 0%;
+  box-shadow: 0 0 10px rgba(34,211,238,.4);
+}
+
+/* ══════════════════════════════════════════  CARDS SECTION */
+.cards-section {
+  max-width: 1100px; margin: 32px auto 64px; padding: 0 24px;
+}
+
+.category-block { margin-bottom: 12px; }
+.category-title {
+  font-size: 1rem; font-weight: 700; color: var(--navy);
+  margin: 36px 0 18px; padding: 10px 16px;
+  border-left: 4px solid var(--blue);
+  display: flex; align-items: center; gap: 10px;
+  background: white; border-radius: 0 12px 12px 0;
+  box-shadow: var(--shadow-card);
+}
+.category-title .cat-badge {
+  margin-left: auto; font-size: .72rem; font-weight: 700;
+  background: var(--slate-100); color: var(--slate-500);
+  border-radius: 50px; padding: 3px 10px;
+  font-family: 'Space Mono', monospace;
+}
+
+.cards-grid {
+  display: grid; grid-template-columns: repeat(2, 1fr);
+  gap: 22px;
+}
+
+    /* ══════════════════════════════════════════  FLIP CARD */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 22px;
+  align-items: start; /* Prevents cards in the same row from stretching weirdly */
+}
+
+.flip-card {
+  min-height: 240px; /* Establishes a uniform baseline for shorter terms */
+  height: auto;      /* Allows the main element wrapper to expand vertically */
+  cursor: pointer;
+  perspective: 1200px;
+  animation: cardReveal .5s ease both;
+  display: grid;     /* Eradicates layout collapses */
+}
+
+@keyframes cardReveal {
+  from { opacity: 0; transform: translateY(20px) scale(.97); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform .6s cubic-bezier(.4,0,.2,1);
+  transform-style: preserve-3d;
+  display: grid;     /* Forces inner container to pass height down seamlessly */
+}
+.flip-card.flipped .flip-card-inner { transform: rotateY(180deg); }
+
+.flip-front, .flip-back {
+  grid-area: 1 / 1 / 2 / 2; /* Replaces position absolute! Keeps faces perfectly stacked */
+  width: 100%;
+  min-height: 240px;        /* Forces both faces to stay perfectly equal in height */
+  height: 100%;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  border-radius: var(--radius-card);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 24px 20px;       /* Increased internal breathing room for dense text */
+  text-align: center;
+  box-sizing: border-box;
+  transition: box-shadow var(--transition);
+}
+.flip-card:hover .flip-front,
+.flip-card:hover .flip-back { box-shadow: var(--shadow-hover); }
+
+/* FRONT */
+.flip-front {
+  background: white;
+  border: 2px solid var(--slate-200);
+  box-shadow: var(--shadow-card);
+  position: relative;
+}
+.flip-front .card-icon { font-size: 2.2rem; margin-bottom: 10px; line-height: 1; }
+.flip-front .card-term { font-size: 1.05rem; font-weight: 700; color: var(--navy); line-height: 1.3; font-family: 'Playfair Display', Georgia, serif; }
+.flip-front .card-hint { font-size: .72rem; color: var(--slate-400); margin-top: auto; padding-top: 10px; letter-spacing: .04em; }
+
+/* category accent dot — top-right */
+.card-dot {
+  position: absolute; top: 14px; right: 14px;
+  width: 10px; height: 10px; border-radius: 50%;
+}
+.dot-anatomy  { background: var(--emerald); }
+.dot-neuron   { background: var(--amber); }
+.dot-function { background: var(--violet); }
+.dot-clinical { background: var(--rose); }
+.dot-neuro    { background: var(--cyan); }
+
+/* BACK */
+.flip-back {
+  background: linear-gradient(145deg, var(--navy) 0%, var(--blue-mid) 100%);
+  color: white;
+  transform: rotateY(180deg);
+  box-shadow: 0 8px 32px rgba(10,37,64,.35);
+}
+.flip-back .back-term {
+  font-size: .72rem; font-weight: 800; color: var(--cyan);
+  text-transform: uppercase; letter-spacing: .12em; margin-bottom: 8px;
+}
+.flip-back .back-def { 
+  font-size: .83rem; 
+  line-height: 1.6; 
+  color: rgba(255,255,255,.95);
+  word-break: break-word; /* Prevents long continuous medical words from breaking layouts */
+}
+
+/* ══════════════════════════════════════════  RESPONSIVE UPDATES */
+@media (max-width: 768px) {
+  .hero { padding: 52px 20px 44px; }
+  .hero h1 { font-size: 1.9rem; }
+  nav { display: none !important; }
+  .hamburger-btn { display: block !important; }
+  .logo { font-size: 1rem; }
+  .cards-grid { grid-template-columns: 1fr; gap: 16px; }
+  .flip-card { min-height: 200px; height: auto; }
+  .flip-front, .flip-back { min-height: 200px; padding: 20px 16px; }
+  .filter-bar { top: 54px; }
+  .flip-front .card-term { font-size: .95rem; }
+}
+/* ══════════════════════════════════════════  LEARNED STATE */
+.flip-card.learned .flip-front {
+  border-color: var(--emerald);
+  background: linear-gradient(145deg, #f0fdf4, #dcfce7);
+}
+.flip-card.learned .flip-front .card-term { color: #166534; }
+
+.learned-badge {
+  position: absolute; top: 10px; left: 12px; z-index: 5;
+  font-size: .65rem; font-weight: 800; color: var(--emerald);
+  background: #dcfce7; border: 1.5px solid var(--emerald);
+  border-radius: 50px; padding: 2px 8px;
+  letter-spacing: .04em; text-transform: uppercase;
+  display: none; align-items: center; gap: 3px;
+}
+.flip-card.learned .learned-badge { display: flex; }
+
+/* ══════════════════════════════════════════  EMPTY STATE */
+.empty-state {
+  grid-column: 1/-1; text-align: center; padding: 60px 20px;
+  color: var(--slate-400); font-size: 1rem;
+}
+.empty-state .empty-icon { font-size: 3rem; display: block; margin-bottom: 12px; }
+
+/* ══════════════════════════════════════════  ACTIONS */
+.actions-bar {
+  max-width: 1100px; margin: 0 auto 80px; padding: 0 24px;
+  display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;
+}
+.btn {
+  padding: 11px 28px; border-radius: 50px; font-size: .92rem; font-weight: 600;
+  cursor: pointer; transition: all var(--transition); font-family: 'DM Sans', sans-serif;
+  border: 2px solid transparent; display: inline-flex; align-items: center; gap: 6px;
+}
+.btn-outline {
+  background: white; border-color: var(--slate-200); color: var(--slate-700);
+}
+.btn-outline:hover { border-color: var(--rose); color: var(--rose); transform: translateY(-2px); box-shadow: 0 4px 14px rgba(239,68,68,.2); }
+.btn-primary {
+  background: var(--blue); border-color: var(--blue); color: white;
+  box-shadow: 0 4px 14px rgba(37,99,235,.35);
+}
+.btn-primary:hover { background: var(--blue-mid); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(37,99,235,.45); }
+
+/* ══════════════════════════════════════════  TOAST */
+.toast {
+  position: fixed; bottom: 32px; left: 50%; transform: translateX(-50%) translateY(80px);
+  background: var(--navy); color: white; border-radius: 50px;
+  padding: 12px 24px; font-size: .88rem; font-weight: 600;
+  box-shadow: 0 8px 32px rgba(0,0,0,.3); z-index: 9999;
+  transition: transform .4s cubic-bezier(.4,0,.2,1), opacity .4s;
+  opacity: 0; white-space: nowrap;
+  border-left: 4px solid var(--cyan);
+}
+.toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+
+/* ══════════════════════════════════════════  FOOTER */
+footer {
+  background: var(--navy); color: rgba(255,255,255,.65);
+  text-align: center; padding: 48px 24px;
+  font-size: .88rem; line-height: 1.8;
+}
+footer strong { color: rgba(255,255,255,.9); }
+footer a { color: var(--cyan); text-decoration: none; }
+footer a:hover { text-decoration: underline; }
+/* ══ AUTH NAV BUTTON ══ */
+.auth-nav-btn {
+  display: inline-flex; align-items: center; gap: 7px;
+  background: rgba(255,255,255,.15); border: 1px solid rgba(255,255,255,.3);
+  color: white; border-radius: 50px; padding: 7px 16px;
+  font-size: .82rem; font-weight: 600; cursor: pointer;
+  text-decoration: none; transition: all .25s ease;
+  white-space: nowrap; margin-left: 8px;
+}
+.auth-nav-btn:hover { background: rgba(255,255,255,.25); transform: translateY(-1px); }
+.auth-nav-btn.signout { background: rgba(239,68,68,.18); border-color: rgba(239,68,68,.4); }
+.auth-nav-btn.signout:hover { background: rgba(239,68,68,.32); }
+.auth-user-display {
+  display: none; align-items: center; gap: 10px; padding: 10px 14px;
+}
+.auth-user-display.visible { display: flex; }
+.auth-avatar {
+  width: 30px; height: 30px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--cyan), var(--blue));
+  display: flex; align-items: center; justify-content: center;
+  font-size: .82rem; font-weight: 700; color: white; flex-shrink: 0;
+}
+.auth-user-email {
+  font-size: .78rem; color: rgba(255,255,255,.8);
+  max-width: 130px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.sync-badge {
+  display: inline-flex; align-items: center; gap: 5px;
+  background: rgba(16,185,129,.15); border: 1px solid rgba(16,185,129,.3);
+  color: #6EE7B7; border-radius: 50px; padding: 4px 12px;
+  font-size: .72rem; font-weight: 700; letter-spacing: .06em;
+  text-transform: uppercase; margin-bottom: 14px;
+}
+.sync-dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: #10B981; animation: syncPulse 2s ease-in-out infinite;
+}
+@keyframes syncPulse { 0%,100%{opacity:1;} 50%{opacity:.3;} }
+/* ══════════════════════════════════════════  RESPONSIVE */
+@media (max-width: 768px) {
+  .hero { padding: 52px 20px 44px; }
+  .hero h1 { font-size: 1.9rem; }
+  nav { display: none !important; }
+  .hamburger-btn { display: block !important; }
+  .logo { font-size: 1rem; }
+  .cards-grid { grid-template-columns: 1fr; gap: 14px; }
+  .flip-card { height: 190px; }
+  .filter-bar { top: 54px; }
+  .flip-front .card-term { font-size: .92rem; }
+}
+
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════ HEADER ═══════════════════ -->
+<header>
+  <div class="header-content">
+    <div class="logo">🧠 Neurovascular Dynamic Lab</div>
+    <button class="hamburger-btn" id="hamburgerBtn" aria-label="Open menu">
+      <img src="expand.png" alt="Menu">
+    </button>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="learn.html">Learn</a>
+      <a href="resources.html">Resources</a>
+      <a href="community.html">Community</a>
+      <a href="research.html">Latest Research</a>
+      <a href="brain-map.html">🧠 Interactive Brain Map</a>
+      <a href="quiz.html">Quiz</a>
+      <a href="flashcards.html" class="active">Flashcards</a>
+      <a href="about.html">About Us</a>
+      <a href="faq.html">FAQ</a>
+      <a href="contact.html">Contact</a>
+      <!-- AUTH ZONE -->
+      <div class="auth-user-display" id="authUserDisplay">
+        <div class="auth-avatar" id="authAvatar">?</div>
+        <span class="auth-user-email" id="authUserEmail"></span>
+        <button class="auth-nav-btn signout" id="signOutBtn">Sign Out</button>
+      </div>
+      <a href="login.html" class="auth-nav-btn" id="signInNavBtn">👤 Sign In</a>
+    </nav>
+    <div class="mobile-nav" id="mobileNav">
+      <a href="index.html">Home</a>
+      <a href="learn.html">Learn</a>
+      <a href="resources.html">Resources</a>
+      <a href="community.html">Community</a>
+      <a href="research.html">Latest Research</a>
+      <a href="brain-map.html">🧠 Interactive Brain Map</a>
+      <a href="quiz.html">Quiz</a>
+      <a href="flashcards.html" class="active">Flashcards</a>
+      <a href="about.html">About Us</a>
+      <a href="faq.html">FAQ</a>
+      <a href="contact.html">Contact</a>
+      <a href="login.html" id="mobileAuthLink">👤 Sign In</a>
+    </div>
+  </div>
+</header>
+<!-- ═══════════════════ HERO ═══════════════════ -->
+<section class="hero">
+    <div id="syncBadge" class="sync-badge" style="display:none;">
+    <span class="sync-dot"></span> Cloud Sync Active
+  </div>
+  <div class="hero-eyebrow">✦ Study Mode Active</div>
+  <h1>Neuroscience <span>Flashcards</span></h1>
+  <p class="hero-sub">Tap any card to reveal the definition. Mark cards as learned to track your mastery.</p>
+  <p class="hero-meta">30 cards across 5 categories · Curated for deep understanding</p>
+  <div class="hero-stats">
+    <div class="hero-stat"><strong id="totalCount">30</strong><span>Total Cards</span></div>
+    <div class="hero-stat"><strong id="learnedCount">0</strong><span>Learned</span></div>
+    <div class="hero-stat"><strong id="remainingCount">30</strong><span>Remaining</span></div>
+    <div class="hero-stat"><strong id="pctCount">0%</strong><span>Mastery</span></div>
+  </div>
+</section>
+
+<!-- ═══════════════════ FILTER BAR ═══════════════════ -->
+<div class="filter-bar" role="navigation" aria-label="Filter cards by category">
+  <div class="filter-inner">
+    <span class="filter-label">Filter by category</span>
+    <div class="filter-btns">
+      <button class="filter-btn active" onclick="filterCards('all', this)">All (30)</button>
+      <button class="filter-btn" onclick="filterCards('anatomy', this)">🏛️ Brain Anatomy (8)</button>
+      <button class="filter-btn" onclick="filterCards('neuron', this)">⚡ Neuron &amp; Signals (7)</button>
+      <button class="filter-btn" onclick="filterCards('function', this)">🧩 Brain Functions (6)</button>
+      <button class="filter-btn" onclick="filterCards('clinical', this)">🏥 Clinical &amp; Disorders (5)</button>
+      <button class="filter-btn" onclick="filterCards('neuro', this)">🔬 Neuroscience Terms (4)</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ PROGRESS ═══════════════════ -->
+<div class="progress-section">
+  <div class="progress-row">
+    <span class="progress-label">Your Progress</span>
+    <span class="progress-count" id="progressText">0 / 30 learned</span>
+  </div>
+  <div class="progress-track" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+    <div class="progress-fill" id="progressFill"></div>
+  </div>
+</div>
+
+<!-- ═══════════════════ CARDS ═══════════════════ -->
+<div class="cards-section" id="cardsSection"></div>
+
+<!-- ═══════════════════ ACTIONS ═══════════════════ -->
+<div class="actions-bar">
+  <button class="btn btn-outline" onclick="resetAll()">↺ Reset All Progress</button>
+  <button class="btn btn-primary" onclick="shuffleCards()">⇌ Shuffle Cards</button>
+</div>
+
+<!-- ═══════════════════ TOAST ═══════════════════ -->
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<!-- ═══════════════════ FOOTER ═══════════════════ -->
+<footer>
+  <p><strong>© 2026 Neurovascular Dynamic Lab</strong></p>
+  <p>Built for curious minds across Africa 🌍 · Powered by science &amp; passion</p>
+</footer>
+
+<!-- ═══════════════════════════════════════════════
+     JAVASCRIPT
+     ═══════════════════════════════════════════════ -->
+<script type="module">
+/* ── FIREBASE CORE SYSTEM IMPORTS ── */
+import {
+  db, auth, collection, getDocs, query, where,
+  doc, setDoc, getDoc, updateDoc, arrayUnion, arrayRemove,
+  onAuthStateChanged, signOut
+} from "./firebase-config.js";
+/* ── ALL 30 IMMUTABLE ORIGINAL FLASHCARDS ── */
+const CARDS = [
+  /* BRAIN ANATOMY (8) */
+  { id:1,  cat:'anatomy',  icon:'🧠', term:'Cerebral Cortex',
+    def:'The outermost layer of the brain responsible for higher-order thinking, language, memory, and voluntary movement. It is highly folded (gyrification) to maximise surface area within the skull.' },
+  { id:2,  cat:'anatomy',  icon:'🌊', term:'Frontal Lobe',
+    def:'The largest cerebral lobe, seated at the front. It governs executive functions — planning, decision-making, problem-solving, impulse control, and personality expression.' },
+  { id:3,  cat:'anatomy',  icon:'🎨', term:'Parietal Lobe',
+    def:'Positioned at the crown of the brain, it integrates sensory data including touch, temperature, and pain, and constructs our sense of spatial awareness and body position.' },
+  { id:4,  cat:'anatomy',  icon:'👂', term:'Temporal Lobe',
+    def:'Located on the lateral sides of the brain. Processes auditory information, supports language comprehension (Wernicke\'s area), and is critical for long-term memory formation.' },
+  { id:5,  cat:'anatomy',  icon:'👁️', term:'Occipital Lobe',
+    def:'The rearmost cerebral lobe. Almost entirely dedicated to processing visual information received from the retinas, including colour, motion, and object recognition.' },
+  { id:6,  cat:'anatomy',  icon:'⚖️', term:'Cerebellum',
+    def:'Nestled beneath the cerebral hemispheres at the back. Coordinates voluntary movement, fine motor control, balance, and posture. Contains more neurons than any other brain region.' },
+  { id:7,  cat:'anatomy',  icon:'🌉', term:'Corpus Callosum',
+    def:'A wide, flat band of approximately 200 million nerve fibers that connects the left and right cerebral hemispheres, allowing continuous cross-hemisphere communication.' },
+  { id:8,  cat:'anatomy',  icon:'🔄', term:'Brainstem',
+    def:'The stalk-like structure linking the brain to the spinal cord. Autonomously governs life-sustaining functions: breathing rhythm, heart rate, blood pressure, and the sleep–wake cycle.' },
+
+  /* NEURON & SIGNALS (7) */
+  { id:9,  cat:'neuron',   icon:'⚡', term:'Neuron',
+    def:'The fundamental signalling unit of the nervous system. A specialised cell that integrates incoming electrochemical signals and propagates them onward. The brain contains ~86 billion neurons.' },
+  { id:10, cat:'neuron',   icon:'🌿', term:'Dendrite',
+    def:'Tree-like extensions projecting from the neuron\'s cell body. They receive and consolidate incoming signals from thousands of other neurons and convey them toward the soma.' },
+  { id:11, cat:'neuron',   icon:'➡️', term:'Axon',
+    def:'A single, elongated projection that carries electrical impulses (action potentials) away from the cell body toward target neurons, muscle fibres, or glands — sometimes over distances of a metre.' },
+  { id:12, cat:'neuron',   icon:'🛡️', term:'Myelin Sheath',
+    def:'A segmented fatty insulating coat around axons formed by Schwann cells (peripheral) or oligodendrocytes (central). It dramatically accelerates signal speed via saltatory conduction and protects the nerve fibre.' },
+  { id:13, cat:'neuron',   icon:'🔗', term:'Synapse',
+    def:'The nanoscale junction between two neurons where communication occurs. The presynaptic terminal releases neurotransmitters into the synaptic cleft; the postsynaptic membrane receives and responds to them.' },
+  { id:14, cat:'neuron',   icon:'💬', term:'Neurotransmitter',
+    def:'Chemical messengers released from synaptic vesicles that bind to postsynaptic receptors. Key examples: dopamine (reward/motivation), serotonin (mood), glutamate (excitation), GABA (inhibition).' },
+  { id:15, cat:'neuron',   icon:'🔋', term:'Action Potential',
+    def:'A rapid, all-or-nothing electrical impulse travelling along the axon membrane, generated when a stimulus exceeds the neuron\'s threshold. It is the universal currency of neural communication.' },
+
+  /* BRAIN FUNCTIONS (6) */
+  { id:16, cat:'function', icon:'🐠', term:'Hippocampus',
+    def:'A seahorse-shaped bilateral structure in the medial temporal lobe. Indispensable for converting short-term experiences into long-term declarative memories and for spatial navigation.' },
+  { id:17, cat:'function', icon:'😨', term:'Amygdala',
+    def:'An almond-shaped bilateral structure in the temporal lobe. Processes emotional significance — especially fear, threat detection, and pleasure — and tags memories with emotional salience.' },
+  { id:18, cat:'function', icon:'📡', term:'Thalamus',
+    def:'The brain\'s principal relay hub, routing virtually all sensory and motor signals to the appropriate cortical regions. Often described as the "gateway to consciousness."' },
+  { id:19, cat:'function', icon:'🌡️', term:'Hypothalamus',
+    def:'A tiny but powerful structure that maintains homeostasis — regulating body temperature, hunger, thirst, circadian rhythms, and hormonal output via the pituitary gland.' },
+  { id:20, cat:'function', icon:'🎯', term:'Prefrontal Cortex',
+    def:'The anterior region of the frontal lobe. The seat of complex cognition: working memory, abstract reasoning, impulse inhibition, future planning, moral judgement, and social behaviour.' },
+  { id:21, cat:'function', icon:'🔁', term:'Neuroplasticity',
+    def:'The brain\'s lifelong capacity to reorganise its structure and function — forming new synapses, pruning unused ones, and even generating new neurons — in response to learning, experience, or injury.' },
+
+  /* CLINICAL & DISORDERS (5) */
+  { id:22, cat:'clinical', icon:'💥', term:'Stroke',
+    def:'Occurs when cerebral blood flow is suddenly interrupted — by a clot (ischaemic, 87% of cases) or a ruptured vessel (haemorrhagic). Brain cells begin dying within minutes. A neurological emergency.' },
+  { id:23, cat:'clinical', icon:'🩸', term:'Cerebral Aneurysm',
+    def:'A localised bulge in a cerebral artery wall caused by weakened tissue. Rupture releases blood into the subarachnoid space, causing a sudden, severe headache and life-threatening haemorrhagic stroke.' },
+  { id:24, cat:'clinical', icon:'🌩️', term:'Epilepsy',
+    def:'A chronic neurological disorder defined by recurrent, unprovoked seizures arising from abnormal, synchronised electrical discharges across neuronal networks. Affects over 50 million people worldwide.' },
+  { id:25, cat:'clinical', icon:'🧩', term:'Alzheimer\'s Disease',
+    def:'The most prevalent neurodegenerative disease and leading cause of dementia. Hallmarked by amyloid-beta plaques and tau tangles that progressively destroy neurons, impairing memory and cognition.' },
+  { id:26, cat:'clinical', icon:'🚧', term:'Blood-Brain Barrier',
+    def:'A selective semi-permeable barrier formed by specialised endothelial cells lining cerebral blood vessels. It shields the brain from pathogens and toxins while permitting glucose, oxygen, and vital nutrients to pass.' },
+
+  /* NEUROSCIENCE TERMS (4) */
+  { id:27, cat:'neuro',    icon:'🖥️', term:'Computational Neuroscience',
+    def:'An interdisciplinary field that builds mathematical models and computer simulations of neural circuits to understand how the brain encodes information, makes decisions, and generates behaviour.' },
+  { id:28, cat:'neuro',    icon:'📡', term:'fMRI',
+    def:'Functional Magnetic Resonance Imaging. Non-invasively maps brain activity by detecting the BOLD signal — changes in blood oxygenation — with millimetre spatial resolution. The gold standard for brain mapping.' },
+  { id:29, cat:'neuro',    icon:'🌊', term:'EEG',
+    def:'Electroencephalography. Records the brain\'s spontaneous electrical activity through scalp electrodes. Offers millisecond temporal resolution; clinically essential for diagnosing epilepsy and sleep disorders.' },
+  { id:30, cat:'neuro',    icon:'🔬', term:'Cerebrovascular',
+    def:'Relating to the blood vessels supplying the brain. Cerebrovascular disease encompasses conditions — stroke, aneurysm, arteriovenous malformation — that compromise cerebral blood flow and oxygenation.' },
+];
+
+const DOT_CLASS  = { anatomy:'dot-anatomy', neuron:'dot-neuron', function:'dot-function', clinical:'dot-clinical', neuro:'dot-neuro' };
+const CAT_LABEL  = { anatomy:'Brain Anatomy', neuron:'Neuron & Signals', function:'Brain Functions', clinical:'Clinical & Disorders', neuro:'Neuroscience Terms' };
+const CAT_ICON   = { anatomy:'🏛️', neuron:'⚡', function:'🧩', clinical:'🏥', neuro:'🔬' };
+
+/* ── STATE SYSTEMS ── */
+let learned       = new Set();
+let currentFilter = 'all';
+let cardOrder     = [];
+let currentUser   = null;
+
+/* ── AUTH STATE CONTROLLER ── */
+onAuthStateChanged(auth, async (user) => {
+  currentUser = user;
+  const signInBtn   = document.getElementById('signInNavBtn');
+  const userDisplay = document.getElementById('authUserDisplay');
+  const avatar      = document.getElementById('authAvatar');
+  const emailEl     = document.getElementById('authUserEmail');
+  const mobileLink  = document.getElementById('mobileAuthLink');
+  const syncBadge   = document.getElementById('syncBadge');
+
+  if (user) {
+    signInBtn.style.display = 'none';
+    userDisplay.classList.add('visible');
+    avatar.textContent = (user.email || 'U').charAt(0).toUpperCase();
+    emailEl.textContent = user.email;
+    if (mobileLink) { mobileLink.textContent = '👤 ' + user.email; mobileLink.href = '#'; }
+    syncBadge.style.display = 'inline-flex';
+    await loadCloudProgress(user.uid);
+  } else {
+    signInBtn.style.display = '';
+    userDisplay.classList.remove('visible');
+    if (mobileLink) { mobileLink.textContent = '👤 Sign In'; mobileLink.href = 'login.html'; }
+    syncBadge.style.display = 'none';
+    learned = new Set(JSON.parse(localStorage.getItem('ndl_learned') || '[]'));
+  }
+  buildCards(currentFilter);
+  updateProgress();
+});
+
+/* ── SIGN OUT ── */
+document.getElementById('signOutBtn')?.addEventListener('click', async () => {
+  await signOut(auth);
+  learned = new Set(JSON.parse(localStorage.getItem('ndl_learned') || '[]'));
+  buildCards(currentFilter);
+  updateProgress();
+  showToast('👋 Signed out. Progress saved to cloud.');
+});
+
+/* ── CLOUD PROGRESS LOADER ── */
+async function loadCloudProgress(uid) {
+  try {
+    const userDocRef = doc(db, 'users', uid);
+    const snap = await getDoc(userDocRef);
+    if (snap.exists()) {
+      learned = new Set(snap.data().learnedCardIds || []);
+    } else {
+      await setDoc(userDocRef, { learnedCardIds: [], createdAt: new Date().toISOString() });
+      learned = new Set();
+    }
+  } catch (err) {
+    console.warn('Cloud load failed, using localStorage:', err);
+    learned = new Set(JSON.parse(localStorage.getItem('ndl_learned') || '[]'));
+  }
+}
+
+/* ── CLOUD PROGRESS SAVER ── */
+async function saveProgress() {
+  const learnedArray = [...learned];
+  localStorage.setItem('ndl_learned', JSON.stringify(learnedArray));
+  if (currentUser) {
+    try {
+      await setDoc(doc(db, 'users', currentUser.uid),
+        { learnedCardIds: learnedArray, lastUpdated: new Date().toISOString() },
+        { merge: true }
+      );
+    } catch (err) {
+      console.warn('Cloud save failed (saved locally):', err);
+    }
+  }
+}
+/* ── NOTIFICATION TOASTS ── */
+let toastTimer;
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  if (!t) return;
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 2400);
+}
+
+/* ── ASYNC PIPELINE INIT — GRABS LOCAL AND DB UPDATE PACKETS ── */
+async function initializeFlashcards() {
+  let dbFlashcards = [];
+  
+  try {
+    // Queries global "flashcards" collection in Firestore
+    const q = query(collection(db, "flashcards"));
+    const querySnapshot = await getDocs(q);
+    
+    querySnapshot.forEach((doc) => {
+      dbFlashcards.push(doc.data());
+    });
+  } catch (error) {
+    console.error("Database connection bypassed. Loading static decks only:", error);
+  }
+
+  // Merges your pristine 30 hardcoded cards with any updates coming from the database
+  cardOrder = [...CARDS, ...dbFlashcards];
+  
+  // Recalculates dynamically loaded context totals inside UI tags
+  updateHeroAndFilterCounters();
+  
+  // Render presentation grid
+  // Auth listener handles the initial render with correct learned state
+}
+/* ── RE-COUNTER ENGINE FOR LOADED BALANCES ── */
+function updateHeroAndFilterCounters() {
+  const totalCount = cardOrder.length;
+  document.getElementById('totalCount').textContent = totalCount;
+  document.getElementById('remainingCount').textContent = totalCount - learned.size;
+  
+  // Recount groups for filter labels
+  const tallies = { all: totalCount, anatomy: 0, neuron: 0, function: 0, clinical: 0, neuro: 0 };
+  cardOrder.forEach(c => { if (tallies[c.cat] !== undefined) tallies[c.cat]++; });
+  
+  const filterSection = document.querySelector('.filter-btns');
+  if (filterSection) {
+    filterSection.innerHTML = `
+      <button class="filter-btn ${currentFilter === 'all' ? 'active' : ''}" onclick="filterCards('all', this)">All (${tallies.all})</button>
+      <button class="filter-btn ${currentFilter === 'anatomy' ? 'active' : ''}" onclick="filterCards('anatomy', this)">🏛️ Brain Anatomy (${tallies.anatomy})</button>
+      <button class="filter-btn ${currentFilter === 'neuron' ? 'active' : ''}" onclick="filterCards('neuron', this)">⚡ Neuron &amp; Signals (${tallies.neuron})</button>
+      <button class="filter-btn ${currentFilter === 'function' ? 'active' : ''}" onclick="filterCards('function', this)">🧩 Brain Functions (${tallies.function})</button>
+      <button class="filter-btn ${currentFilter === 'clinical' ? 'active' : ''}" onclick="filterCards('clinical', this)">🏥 Clinical &amp; Disorders (${tallies.clinical})</button>
+      <button class="filter-btn ${currentFilter === 'neuro' ? 'active' : ''}" onclick="filterCards('neuro', this)">🔬 Neuroscience Terms (${tallies.neuro})</button>
+    `;
+  }
+}
+
+/* ── DOM RENDERING LAB ── */
+function buildCards(filter) {
+  const section = document.getElementById('cardsSection');
+  if (!section) return;
+  section.innerHTML = '';
+
+  const filtered = filter === 'all' ? cardOrder : cardOrder.filter(c => c.cat === filter);
+
+  if (!filtered.length) {
+    section.innerHTML = '<div class="empty-state"><span class="empty-icon">🔍</span>No cards in this category.</div>';
+    return;
+  }
+
+  const groups = {};
+  filtered.forEach(c => { (groups[c.cat] = groups[c.cat] || []).push(c); });
+
+  let delay = 0;
+  Object.keys(groups).forEach(cat => {
+    const block = document.createElement('div');
+    block.className = 'category-block';
+
+    const title = document.createElement('div');
+    title.className = 'category-title';
+    title.innerHTML = `${CAT_ICON[cat] || '🔬'} ${CAT_LABEL[cat] || cat} <span class="cat-badge">${groups[cat].length} cards</span>`;
+    block.appendChild(title);
+
+    const grid = document.createElement('div');
+    grid.className = 'cards-grid';
+
+    groups[cat].forEach(card => {
+      const isLearned = learned.has(card.id);
+      const el = document.createElement('div');
+      el.className = 'flip-card' + (isLearned ? ' learned' : '');
+      el.dataset.id = card.id;
+      el.style.animationDelay = (delay * .045) + 's';
+      el.setAttribute('role', 'button');
+      el.setAttribute('tabindex', '0');
+      el.setAttribute('aria-label', `Flashcard: ${card.term}`);
+      el.innerHTML = `
+        <div class="flip-card-inner">
+          <div class="flip-front">
+            <span class="card-dot ${DOT_CLASS[card.cat] || 'dot-neuro'}"></span>
+            <span class="learned-badge">✓ Learned</span>
+            <div class="card-icon">${card.icon || '🧠'}</div>
+            <div class="card-term">${card.term}</div>
+            <div class="card-hint">Tap to reveal →</div>
+          </div>
+          <div class="flip-back">
+            <div class="back-term">${card.term}</div>
+            <div class="back-def">${card.def}</div>
+          </div>
+        </div>`;
+
+      el.addEventListener('click', () => handleCardClick(el, card.id));
+      el.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') handleCardClick(el, card.id); });
+
+      grid.appendChild(el);
+      delay++;
+    });
+
+    block.appendChild(grid);
+    section.appendChild(block);
+  });
+}
+
+/* ── CLICK REVEAL AND AUTOMATED LEARNING DETECTION ── */
+function handleCardClick(el, id) {
+  if (!el.classList.contains('flipped')) {
+    el.classList.add('flipped');
+    setTimeout(async () => {
+      if (!learned.has(id)) {
+        learned.add(id);
+        el.classList.add('learned');
+        await saveProgress();
+        updateProgress();
+        
+        const total = cardOrder.length;
+        if (learned.size === total) showToast('🎉 You\'ve mastered all active flashcards!');
+        else showToast(`✓ Learned! ${total - learned.size} remaining.`);
+      }
+    }, 900);
+  } else {
+    el.classList.remove('flipped');
+  }
+}
+
+/* ── DECK FILTERS ── */
+function filterCards(filter, btn) {
+  currentFilter = filter;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  buildCards(filter);
+}
+
+/* ── METER STATS TRACKER ── */
+function updateProgress() {
+  const total = cardOrder.length || 30;
+  const count = learned.size;
+  const pct   = Math.round((count / total) * 100) || 0;
+  
+  document.getElementById('learnedCount').textContent   = count;
+  document.getElementById('remainingCount').textContent = total - count;
+  document.getElementById('pctCount').textContent       = pct + '%';
+  document.getElementById('progressText').textContent   = count + ' / ' + total + ' learned';
+  
+  const fill = document.getElementById('progressFill');
+  if (fill) fill.style.width = pct + '%';
+  
+  const bar = document.querySelector('.progress-track');
+  if (bar) bar.setAttribute('aria-valuenow', pct);
+}
+
+/* ── SYSTEM DATA SCRUBBER ── */
+async function resetAll() {
+  if (!confirm('Reset all progress? This will unmark every learned card.')) return;
+  learned.clear();
+  await saveProgress();
+  updateProgress();
+  buildCards(currentFilter);
+  showToast('↺ Progress reset.');
+}
+
+/* ── DECK RANDOMIZER ── */
+function shuffleCards() {
+  cardOrder = [...cardOrder].sort(() => Math.random() - .5);
+  buildCards(currentFilter);
+  showToast('⇌ Cards shuffled!');
+}
+
+/* ── LIFE CYCLE ENGINE ACCESS ROUTINE ── */
+document.addEventListener('DOMContentLoaded', () => {
+  initializeFlashcards();
+
+  // Mobile navigation hamburger toggler
+  const btn = document.getElementById('hamburgerBtn');
+  const nav = document.getElementById('mobileNav');
+  if (btn && nav) {
+    btn.addEventListener('click', e => { e.stopPropagation(); nav.classList.toggle('show'); });
+    document.addEventListener('click', e => {
+      if (!nav.contains(e.target) && !btn.contains(e.target)) nav.classList.remove('show');
+    });
+    nav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => nav.classList.remove('show')));
+  }
+});
+
+/* ── STRUCTURAL GLOBAL BRIDGE ENTRY (MODULE MODE ONCLICK RESTORATION) ── */
+window.filterCards = filterCards;
+window.resetAll = resetAll;
+window.shuffleCards = shuffleCards;
+</script>
+</body>
+</html>
