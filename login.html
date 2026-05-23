@@ -552,7 +552,7 @@
   </footer>
   <script type="module">
     // OPTION B FIX: Using the absolute path pointing directly to your correct filename
-    import { auth } from '/firebase-config.js';
+    import { auth } from './firebase-config.js';
     import { 
       signInWithEmailAndPassword, 
       createUserWithEmailAndPassword,
@@ -671,7 +671,7 @@
           renderStatus("Authentication validated! Directing traffic flow to tracking deck dashboard...", "success");
           
           setTimeout(() => {
-            window.location.href = "/flashcards.html";
+            window.location.href = "./flashcards.html";
           }, 1200);
         } else {
           // Profile Document Cloud Injection Engine Entry
@@ -679,7 +679,7 @@
           renderStatus("Cloud registration successful! Initializing primary session tokens...", "success");
           
           setTimeout(() => {
-            window.location.href = "/flashcards.html";
+            window.location.href = "./flashcards.html";
           }, 1200);
         }
       } catch (error) {
