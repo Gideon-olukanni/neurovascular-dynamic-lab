@@ -1,0 +1,1199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🧠 Interactive Brain Map — Neurovascular Dynamic Lab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Crimson+Pro:ital,wght@0,300;0,600;1,300&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   DESIGN SYSTEM
+   ============================================================ */
+:root {
+  --navy:    #0A2540;
+  --blue:    #2563EB;
+  --cyan:    #22D3EE;
+  --text:    #0F172A;
+  --muted:   #64748B;
+  --border:  #E2E8F0;
+}
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  font-family:'Space Grotesk',sans-serif;
+  background:var(--navy);
+  color:#fff;
+  min-height:100vh;
+  overflow-x:hidden;
+}
+
+/* ── HEADER ── */
+header {
+  position:sticky; top:0; z-index:100;
+  background:linear-gradient(135deg,#0A2540 0%,#2563EB 100%);
+  box-shadow:0 4px 15px rgba(0,0,0,.3);
+  animation:slideDown .7s ease-out forwards;
+}
+@keyframes slideDown {
+  from{transform:translateY(-100%);opacity:0}
+  to  {transform:translateY(0);opacity:1}
+}
+.header-content {
+  max-width:1400px; margin:0 auto; padding:0 20px;
+  display:flex; justify-content:space-between; align-items:center;
+}
+.logo {
+  font-size:1.5rem; font-weight:700; color:#fff;
+  padding:15px 0; text-decoration:none;
+  animation:pulse 2s ease-in-out infinite;
+}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.04)}}
+nav { display:flex; flex-wrap:wrap; }
+nav a {
+  color:#fff; text-decoration:none; padding:18px 14px;
+  font-size:.9rem; transition:all .3s ease; position:relative;
+}
+nav a::after {
+  content:''; position:absolute; bottom:0; left:50%;
+  width:0; height:3px; background:#fff;
+  transition:all .3s ease; transform:translateX(-50%);
+}
+nav a:hover::after, nav a.active::after { width:100%; }
+nav a:hover { background:rgba(255,255,255,.12); }
+.hamburger-btn {
+  display:none; background:none; border:none; cursor:pointer; padding:10px;
+}
+.hamburger-btn img { width:24px; height:24px; filter:brightness(0) invert(1); }
+.mobile-nav {
+  display:none; position:absolute; top:100%; left:0; right:0;
+  background:linear-gradient(135deg,#0A2540,#2563EB);
+  box-shadow:0 4px 15px rgba(0,0,0,.2);
+}
+.mobile-nav.show { display:block; }
+.mobile-nav a {
+  display:block; color:#fff; text-decoration:none;
+  padding:15px 20px; border-bottom:1px solid rgba(255,255,255,.1);
+}
+.mobile-nav a.active { background:rgba(255,255,255,.2); }
+
+/* ── HERO STRIP ── */
+.hero-strip {
+  background:linear-gradient(135deg,#0A2540,#1e3a6e 50%,#0A2540);
+  padding:40px 20px 28px; text-align:center; position:relative; overflow:hidden;
+}
+.hero-strip::before {
+  content:''; position:absolute; inset:0; pointer-events:none;
+  background:radial-gradient(ellipse 80% 60% at 50% 50%,rgba(37,99,235,.15),transparent 70%);
+}
+.hero-strip h1 {
+  font-family:'Crimson Pro',serif;
+  font-size:clamp(1.8rem,5vw,3rem); font-weight:300; letter-spacing:-.02em;
+  position:relative; animation:fadeUp .9s ease-out .2s both;
+}
+.hero-strip h1 span { color:var(--cyan); font-style:italic; }
+.hero-strip p {
+  margin-top:8px; color:rgba(255,255,255,.55); font-size:.95rem;
+  position:relative; animation:fadeUp .9s ease-out .4s both;
+}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── INSTRUCTION BAR ── */
+.instruction {
+  display:flex; justify-content:center; gap:24px; flex-wrap:wrap;
+  padding:12px 20px; background:rgba(255,255,255,.03);
+  border-bottom:1px solid rgba(255,255,255,.07);
+}
+.badge {
+  display:flex; align-items:center; gap:7px;
+  font-size:.78rem; color:rgba(255,255,255,.5); letter-spacing:.03em;
+}
+.badge-dot {
+  width:7px; height:7px; border-radius:50%; background:var(--cyan);
+  box-shadow:0 0 6px var(--cyan); animation:blink 1.5s ease-in-out infinite;
+}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+
+/* ── MAIN LAYOUT ── */
+.main-layout {
+  max-width:1280px; margin:0 auto; padding:28px 20px 60px;
+  display:grid; grid-template-columns:1fr 360px; gap:28px; align-items:start;
+}
+
+/* ── BRAIN CONTAINER ── */
+.brain-container {
+  background:rgba(255,255,255,.025);
+  border:1px solid rgba(255,255,255,.07);
+  border-radius:22px; padding:20px; position:relative; overflow:hidden;
+}
+.brain-container::before {
+  content:''; position:absolute; inset:0; pointer-events:none;
+  background:radial-gradient(ellipse 60% 50% at 50% 40%,rgba(37,99,235,.07),transparent 70%);
+}
+.brain-section-label {
+  font-size:.68rem; font-weight:600; letter-spacing:.12em;
+  text-transform:uppercase; color:rgba(255,255,255,.3);
+  margin-bottom:12px; display:flex; align-items:center; gap:8px;
+}
+.brain-section-label::after {
+  content:''; flex:1; height:1px; background:rgba(255,255,255,.07);
+}
+
+/* ── SVG STYLES ── */
+#brain-svg { width:100%; height:auto; display:block; cursor:default; }
+
+.brain-region {
+  cursor:pointer;
+  transition:filter .2s ease, stroke-width .2s ease, opacity .2s ease;
+  stroke-linecap:round; stroke-linejoin:round;
+}
+.brain-region:hover {
+  filter:brightness(1.35) drop-shadow(0 0 10px currentColor);
+  stroke-width:2.5 !important;
+}
+.brain-region.active {
+  filter:brightness(1.5) drop-shadow(0 0 16px currentColor) drop-shadow(0 0 6px currentColor);
+  stroke-width:3 !important;
+}
+/* dim unselected when one is active */
+.has-active .brain-region:not(.active) { opacity:.55; }
+
+.region-label {
+  font-family:'Space Grotesk',sans-serif;
+  font-size:10.5px; font-weight:600;
+  fill:#fff; pointer-events:none;
+  text-anchor:middle; dominant-baseline:middle;
+  letter-spacing:.02em; paint-order:stroke;
+  stroke:#000; stroke-width:2.5px; stroke-opacity:.45;
+}
+.region-label-sm { font-size:8.5px; }
+
+/* ── LEGEND ── */
+.legend {
+  display:flex; flex-wrap:wrap; gap:7px;
+  margin-top:16px; padding-top:14px;
+  border-top:1px solid rgba(255,255,255,.07);
+}
+.legend-item {
+  display:flex; align-items:center; gap:6px;
+  font-size:.72rem; color:rgba(255,255,255,.5);
+  cursor:pointer; padding:4px 10px; border-radius:20px;
+  border:1px solid rgba(255,255,255,.08); transition:all .2s;
+}
+.legend-item:hover { background:rgba(255,255,255,.08); color:#fff; }
+.legend-item.active {
+  background:rgba(255,255,255,.14); color:#fff;
+  border-color:rgba(255,255,255,.22);
+}
+.legend-dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
+
+/* ── PROGRESS BAR ── */
+.counter-bar {
+  background:rgba(255,255,255,.03);
+  border:1px solid rgba(255,255,255,.07);
+  border-radius:14px; padding:14px 18px; margin-top:14px;
+  display:flex; align-items:center; justify-content:space-between; gap:12px;
+}
+.counter-bar .label { font-size:.7rem; color:rgba(255,255,255,.38); letter-spacing:.06em; }
+.counter-bar .count-display {
+  font-family:'Crimson Pro',serif; font-size:1.5rem;
+  color:var(--cyan); font-weight:600;
+}
+.progress-dots { display:flex; gap:5px; }
+.progress-dot {
+  width:8px; height:8px; border-radius:50%;
+  background:rgba(255,255,255,.12); transition:all .3s ease;
+}
+.progress-dot.visited { background:var(--cyan); box-shadow:0 0 6px var(--cyan); }
+
+/* ── INFO PANEL ── */
+.info-panel { position:sticky; top:80px; }
+
+.panel-default {
+  background:rgba(255,255,255,.03);
+  border:1px solid rgba(255,255,255,.07);
+  border-radius:22px; padding:32px 26px;
+  text-align:center; transition:opacity .3s;
+}
+.panel-default .big-icon { font-size:3rem; opacity:.35; display:block; margin-bottom:14px; }
+.panel-default h3 { font-size:.95rem; color:rgba(255,255,255,.38); margin-bottom:8px; }
+.panel-default p { font-size:.8rem; color:rgba(255,255,255,.22); line-height:1.6; }
+
+.info-card {
+  background:#fff; color:var(--text); border-radius:22px;
+  overflow:hidden; display:none;
+  animation:panelIn .38s cubic-bezier(.34,1.56,.64,1) both;
+  box-shadow:0 20px 50px rgba(0,0,0,.45),0 0 0 1px rgba(255,255,255,.06);
+}
+@keyframes panelIn{
+  from{opacity:0;transform:translateY(14px) scale(.97)}
+  to  {opacity:1;transform:translateY(0)    scale(1)}
+}
+.info-card.visible { display:block; }
+
+.card-header { padding:26px 26px 18px; position:relative; overflow:hidden; }
+.card-accent-bar { width:44px; height:4px; border-radius:2px; margin-bottom:10px; }
+.card-header h2 {
+  font-family:'Crimson Pro',serif; font-size:1.9rem; font-weight:600;
+  line-height:1.1; color:var(--text); margin-bottom:3px;
+}
+.card-header .subtitle {
+  font-size:.74rem; font-weight:600; letter-spacing:.1em;
+  text-transform:uppercase; color:var(--muted);
+}
+.close-btn {
+  position:absolute; top:14px; right:14px;
+  width:26px; height:26px; border-radius:50%;
+  border:1px solid var(--border); background:#fff;
+  cursor:pointer; display:flex; align-items:center; justify-content:center;
+  font-size:13px; color:var(--muted); transition:all .2s; line-height:1;
+}
+.close-btn:hover { background:var(--border); color:var(--text); }
+
+.card-body { padding:0 26px 26px; }
+.section-tag {
+  display:inline-flex; align-items:center; gap:6px;
+  font-size:.62rem; font-weight:700; letter-spacing:.12em;
+  text-transform:uppercase; color:var(--muted);
+  margin-bottom:7px; margin-top:18px;
+}
+.section-tag::before { content:''; width:14px; height:1px; background:var(--muted); }
+.function-text {
+  font-family:'Crimson Pro',serif; font-size:1.05rem;
+  line-height:1.65; color:var(--text);
+}
+.fun-fact-box {
+  margin-top:7px; background:#F0FDF4;
+  border-left:3px solid #10B981; border-radius:0 8px 8px 0;
+  padding:11px 13px; font-size:.83rem; line-height:1.55; color:#064E3B;
+}
+.disorders-list { display:flex; flex-wrap:wrap; gap:5px; margin-top:7px; }
+.disorder-tag {
+  padding:3px 10px; border-radius:20px;
+  font-size:.7rem; font-weight:600;
+  background:#FEF2F2; color:#991B1B; border:1px solid #FECACA;
+}
+
+/* ── FOOTER ── */
+footer {
+  background:linear-gradient(135deg,#0A2540,#1e3a5f);
+  color:#fff; text-align:center; padding:28px 20px;
+  font-size:.82rem; opacity:.75;
+}
+footer p { margin-bottom:3px; }
+
+/* ── RESPONSIVE ── */
+@media(max-width:920px){
+  .main-layout { grid-template-columns:1fr; }
+  .info-panel  { position:static; }
+  nav          { display:none; }
+  .hamburger-btn { display:block !important; }
+}
+@media(max-width:580px){
+  .hero-strip h1 { font-size:1.7rem; }
+  .brain-container { padding:12px; }
+  .card-header { padding:18px 18px 12px; }
+  .card-body   { padding:0 18px 18px; }
+  .card-header h2 { font-size:1.6rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="header-content">
+    <a href="index.html" class="logo">🧠 Neurovascular Dynamic Lab</a>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="learn.html">Learn</a>
+      <a href="resources.html">Resources</a>
+      <a href="community.html">Community</a>
+      <a href="research.html">Latest Research</a>
+      <a href="about.html">About Us</a>
+      <a href="brain-map.html" class="active">🧠 Interactive Brain Map</a>
+      <a href="quiz.html">Quiz</a>
+      <a href="flashcards.html">Flashcards</a>
+      <a href="faq.html">FAQ</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <button class="hamburger-btn" id="hamburgerBtn" style="display:none">
+      <img src="expand.png" alt="Menu">
+    </button>
+  </div>
+  <div class="mobile-nav" id="mobileNav">
+    <a href="index.html">Home</a>
+    <a href="learn.html">Learn</a>
+    <a href="resources.html">Resources</a>
+    <a href="community.html">Community</a>
+    <a href="research.html">Latest Research</a>
+    <a href="brain-map.html" class="active">🧠 Interactive Brain Map</a>
+    <a href="quiz.html">Quiz</a>
+      <a href="flashcards.html">Flashcards</a>
+    <a href="about.html">About Us</a>
+    <a href="faq.html">FAQ</a>
+    <a href="contact.html">Contact</a>
+  </div>
+</header>
+
+<!-- HERO -->
+<div class="hero-strip">
+  <h1>Interactive <span>Brain Map</span></h1>
+  <p>Tap any region to discover what it does, a fun fact, and related conditions</p>
+</div>
+<div class="instruction">
+  <div class="badge"><div class="badge-dot"></div>Click any region to explore</div>
+  <div class="badge"><div class="badge-dot" style="background:#3B82F6;box-shadow:0 0 6px #3B82F6"></div>Hover to highlight</div>
+  <div class="badge"><div class="badge-dot" style="background:#10B981;box-shadow:0 0 6px #10B981"></div><span id="visited-text">0 of 12 explored</span></div>
+</div>
+
+<!-- MAIN -->
+<div class="main-layout">
+
+  <!-- LEFT: Brain -->
+  <div>
+    <div class="brain-container">
+      <div class="brain-section-label">Lateral View — Left Hemisphere</div>
+
+      <!--
+        ============================================================
+        SVG BRAIN — viewBox 900 × 560
+        
+        APPROACH: One master brain silhouette clipped. Regions are
+        puzzle pieces that together fill the entire brain outline.
+        Based on a real lateral neuroanatomy diagram:
+        
+        Coordinate origin: top-left
+        Brain spans roughly x:60–840, y:30–490
+        
+        Lobes in correct anatomical positions:
+        - Frontal: anterior (left) upper portion
+        - Prefrontal: very front tip of frontal
+        - Parietal: superior posterior
+        - Temporal: inferior, below sylvian fissure
+        - Occipital: posterior (right) end
+        - Cerebellum: posterior inferior, behind brainstem
+        - Brainstem: inferior, connects to spinal cord
+        - Deep structures (corpus callosum, hippocampus,
+          amygdala, thalamus, hypothalamus) shown in a
+          cut-away inset in the lower left
+        ============================================================
+      -->
+      <svg id="brain-svg" viewBox="0 0 900 560" xmlns="http://www.w3.org/2000/svg"
+           role="img" aria-label="Interactive lateral brain diagram">
+        <defs>
+          <!-- Clip to master silhouette so regions never bleed out -->
+          <clipPath id="brainClip">
+            <path d="
+              M 210 430
+              C 175 425, 130 408, 100 378
+              C 70  348,  55 308,  52 268
+              C 49  228,  58 188,  76 156
+              C 94  124, 121  98, 152  80
+              C 183  62, 218  54, 254  50
+              C 290  46, 326  50, 360  58
+              C 394  66, 426  78, 456  94
+              C 486 110, 514 130, 540 152
+              C 566 174, 590 198, 610 224
+              C 630 250, 645 278, 652 307
+              C 659 336, 658 366, 648 392
+              C 638 418, 618 438, 594 450
+              C 570 462, 542 465, 516 462
+              C 494 460, 474 452, 458 440
+              C 442 428, 430 412, 420 398
+              C 410 384, 402 370, 390 362
+              C 378 354, 362 350, 346 352
+              C 330 354, 316 362, 304 374
+              C 292 386, 282 400, 268 414
+              C 254 428, 236 438, 218 436
+              Z
+            "/>
+          </clipPath>
+
+          <!-- Cerebellum clip (separate from main brain, behind/below) -->
+          <clipPath id="cerebellumClip">
+            <ellipse cx="690" cy="430" rx="120" ry="90"/>
+          </clipPath>
+
+          <filter id="subtleGlow">
+            <feGaussianBlur stdDeviation="2" result="blur"/>
+            <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+          </filter>
+
+          <!-- Hatching for deep structures inset -->
+          <pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+            <line x1="0" y1="0" x2="0" y2="6" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+          </pattern>
+        </defs>
+
+        <!-- ═══════════════════════════════════════════════════
+             MAIN BRAIN OUTER SHADOW / BACKGROUND
+             ═══════════════════════════════════════════════════ -->
+        <!-- Drop shadow behind brain -->
+        <path d="
+          M 210 430
+          C 175 425, 130 408, 100 378
+          C 70  348,  55 308,  52 268
+          C 49  228,  58 188,  76 156
+          C 94  124, 121  98, 152  80
+          C 183  62, 218  54, 254  50
+          C 290  46, 326  50, 360  58
+          C 394  66, 426  78, 456  94
+          C 486 110, 514 130, 540 152
+          C 566 174, 590 198, 610 224
+          C 630 250, 645 278, 652 307
+          C 659 336, 658 366, 648 392
+          C 638 418, 618 438, 594 450
+          C 570 462, 542 465, 516 462
+          C 494 460, 474 452, 458 440
+          C 442 428, 430 412, 420 398
+          C 410 384, 402 370, 390 362
+          C 378 354, 362 350, 346 352
+          C 330 354, 316 362, 304 374
+          C 292 386, 282 400, 268 414
+          C 254 428, 236 438, 218 436
+          Z
+        " fill="rgba(0,0,0,0.35)" transform="translate(6,8)"/>
+
+        <!-- ═══════════════════════════════════════════════════
+             REGION FILLS — clipped to brain silhouette
+             Each region is a polygon/path covering its
+             correct anatomical territory.
+             Together they tile and fill the entire brain.
+             ═══════════════════════════════════════════════════ -->
+        <g clip-path="url(#brainClip)">
+
+          <!-- Base fill so no gaps appear between regions -->
+          <rect x="0" y="0" width="900" height="560" fill="#0d2035"/>
+
+          <!-- ─── FRONTAL LOBE (red) ───────────────────────
+               Anterior section: from front face to central sulcus
+               Central sulcus runs diagonally from ~(354,58) down to ~(310,310)
+               Sylvian fissure runs roughly from (155,210) to (420,310)
+               ─────────────────────────────────────────────── -->
+          <path id="region-frontal"
+            class="brain-region" data-region="frontal"
+            d="
+              M  52 268
+              C  49 228,  58 188,  76 156
+              C  94 124, 121  98, 152  80
+              C 183  62, 218  54, 254  50
+              C 290  46, 326  50, 360  58
+              C 354  90, 346 122, 336 152
+              C 326 182, 312 210, 296 234
+              C 280 258, 260 278, 240 292
+              C 220 306, 196 312, 172 312
+              C 148 312, 124 304, 104 290
+              C  80 274,  60 270,  52 268
+              Z
+            "
+            fill="#7F1D1D" stroke="#FCA5A5" stroke-width="1.5"
+            style="color:#EF4444"
+            aria-label="Frontal Lobe" tabindex="0" role="button"
+          />
+
+          <!-- ─── PREFRONTAL CORTEX (deep red) ─────────────
+               Frontmost portion of frontal lobe
+               ─────────────────────────────────────────────── -->
+          <path id="region-prefrontal"
+            class="brain-region" data-region="prefrontal"
+            d="
+              M  52 268
+              C  49 228,  58 188,  76 156
+              C  94 124, 121  98, 152  80
+              C 174  66, 200  57, 227  52
+              C 210  70, 196  92, 184 114
+              C 172 136, 162 158, 154 182
+              C 146 206, 140 228, 136 250
+              C 128 258, 110 264,  90 268
+              C  74 268,  60 268,  52 268
+              Z
+            "
+            fill="#9F1239" stroke="#FDA4AF" stroke-width="1.5"
+            style="color:#E11D48"
+            aria-label="Prefrontal Cortex" tabindex="0" role="button"
+          />
+
+          <!-- ─── PARIETAL LOBE (amber) ─────────────────────
+               Superior posterior: from central sulcus to
+               parieto-occipital sulcus
+               ─────────────────────────────────────────────── -->
+          <path id="region-parietal"
+            class="brain-region" data-region="parietal"
+            d="
+              M 360  58
+              C 394  66, 426  78, 456  94
+              C 486 110, 514 130, 540 152
+              C 566 174, 590 198, 610 224
+              C 622 240, 630 258, 634 276
+              C 624 268, 610 258, 592 248
+              C 574 238, 552 230, 530 226
+              C 508 222, 484 222, 462 228
+              C 440 234, 420 246, 402 262
+              C 384 278, 368 296, 354 314
+              C 340 308, 326 296, 314 280
+              C 302 264, 294 244, 290 224
+              C 286 204, 286 182, 294 162
+              C 302 142, 316 124, 334 108
+              C 346  90, 356  72, 360  58
+              Z
+            "
+            fill="#78350F" stroke="#FCD34D" stroke-width="1.5"
+            style="color:#F59E0B"
+            aria-label="Parietal Lobe" tabindex="0" role="button"
+          />
+
+          <!-- ─── TEMPORAL LOBE (purple) ────────────────────
+               Inferior: below sylvian fissure, anterior of occipital
+               ─────────────────────────────────────────────── -->
+          <path id="region-temporal"
+            class="brain-region" data-region="temporal"
+            d="
+              M 104 290
+              C 124 304, 148 312, 172 312
+              C 196 312, 220 306, 240 292
+              C 260 278, 278 258, 292 234
+              C 296 248, 298 264, 296 280
+              C 294 296, 288 312, 280 326
+              C 272 340, 260 352, 248 362
+              C 236 372, 222 378, 208 382
+              C 194 386, 178 386, 164 382
+              C 150 378, 136 370, 124 358
+              C 112 346, 102 330, 96  314
+              C 90  298,  92 292, 104 290
+              Z
+            "
+            fill="#3B0764" stroke="#C4B5FD" stroke-width="1.5"
+            style="color:#8B5CF6"
+            aria-label="Temporal Lobe" tabindex="0" role="button"
+          />
+
+          <!-- ─── OCCIPITAL LOBE (green) ────────────────────
+               Posterior end of brain
+               ─────────────────────────────────────────────── -->
+          <path id="region-occipital"
+            class="brain-region" data-region="occipital"
+            d="
+              M 634 276
+              C 638 296, 642 316, 644 336
+              C 646 356, 646 376, 642 394
+              C 636 418, 622 436, 604 448
+              C 586 460, 562 464, 540 462
+              C 518 460, 498 452, 482 440
+              C 466 428, 454 412, 446 396
+              C 438 380, 434 362, 434 344
+              C 434 326, 438 308, 446 292
+              C 454 276, 466 262, 480 252
+              C 494 242, 510 236, 528 234
+              C 546 232, 564 238, 580 248
+              C 598 260, 618 268, 634 276
+              Z
+            "
+            fill="#064E3B" stroke="#6EE7B7" stroke-width="1.5"
+            style="color:#10B981"
+            aria-label="Occipital Lobe" tabindex="0" role="button"
+          />
+
+          <!-- ─── INSULA / TRANSITION ZONE ──────────────────
+               Junction between temporal, frontal, parietal
+               (shown as small connecting region)
+               ─────────────────────────────────────────────── -->
+          <path
+            d="
+              M 292 234
+              C 306 218, 322 204, 340 194
+              C 356 184, 374 180, 390 182
+              C 406 184, 420 192, 430 204
+              C 420 212, 408 218, 394 224
+              C 380 230, 364 232, 348 232
+              C 332 232, 316 230, 300 228
+              Z
+            "
+            fill="#1e3a6e" stroke="rgba(255,255,255,0.08)" stroke-width="1"
+            pointer-events="none"
+          />
+
+          <!-- ─── CORPUS CALLOSUM (pink) ────────────────────
+               Deep structure — shown in the mid-section
+               as a curved band
+               ─────────────────────────────────────────────── -->
+          <path id="region-corpus"
+            class="brain-region" data-region="corpus"
+            d="
+              M 248 320
+              C 255 308, 266 300, 280 296
+              C 294 292, 310 294, 324 302
+              C 338 310, 348 324, 352 340
+              C 356 356, 352 372, 344 384
+              C 340 378, 334 370, 326 364
+              C 318 358, 308 354, 296 354
+              C 284 354, 272 358, 262 366
+              C 252 374, 246 382, 244 392
+              C 236 380, 232 366, 234 352
+              C 236 338, 240 330, 248 320
+              Z
+            "
+            fill="#831843" stroke="#F9A8D4" stroke-width="1.5"
+            style="color:#EC4899"
+            aria-label="Corpus Callosum" tabindex="0" role="button"
+          />
+
+          <!-- ─── THALAMUS (lime) ───────────────────────────
+               Central, egg-shaped relay station
+               ─────────────────────────────────────────────── -->
+          <path id="region-thalamus"
+            class="brain-region" data-region="thalamus"
+            d="
+              M 324 302
+              C 338 294, 356 292, 372 298
+              C 388 304, 400 316, 404 332
+              C 408 348, 402 364, 390 374
+              C 378 384, 362 388, 346 384
+              C 330 380, 318 368, 314 352
+              C 310 336, 314 318, 324 302
+              Z
+            "
+            fill="#365314" stroke="#BEF264" stroke-width="1.5"
+            style="color:#84CC16"
+            aria-label="Thalamus" tabindex="0" role="button"
+          />
+
+          <!-- ─── HYPOTHALAMUS (violet) ─────────────────────
+               Below thalamus
+               ─────────────────────────────────────────────── -->
+          <path id="region-hypothalamus"
+            class="brain-region" data-region="hypothalamus"
+            d="
+              M 346 384
+              C 358 384, 370 380, 380 372
+              C 390 374, 396 382, 398 392
+              C 400 402, 396 412, 388 418
+              C 380 424, 368 426, 356 422
+              C 344 418, 336 408, 336 396
+              C 336 388, 340 384, 346 384
+              Z
+            "
+            fill="#4C1D95" stroke="#C4B5FD" stroke-width="1.5"
+            style="color:#A78BFA"
+            aria-label="Hypothalamus" tabindex="0" role="button"
+          />
+
+          <!-- ─── HIPPOCAMPUS (cyan) ────────────────────────
+               C-shaped, medial temporal
+               ─────────────────────────────────────────────── -->
+          <path id="region-hippocampus"
+            class="brain-region" data-region="hippocampus"
+            d="
+              M 244 392
+              C 240 380, 244 366, 252 356
+              C 256 362, 260 368, 264 374
+              C 256 380, 252 390, 254 402
+              C 256 414, 264 424, 274 428
+              C 284 432, 296 428, 302 420
+              C 306 414, 306 406, 302 400
+              C 298 394, 290 390, 282 392
+              C 276 390, 268 392, 262 398
+              C 254 404, 248 412, 244 420
+              C 238 412, 238 402, 244 392
+              Z
+            "
+            fill="#0C4A6E" stroke="#38BDF8" stroke-width="1.5"
+            style="color:#06B6D4"
+            aria-label="Hippocampus" tabindex="0" role="button"
+          />
+
+          <!-- ─── AMYGDALA (orange) ─────────────────────────
+               Almond, anterior to hippocampus
+               ─────────────────────────────────────────────── -->
+          <path id="region-amygdala"
+            class="brain-region" data-region="amygdala"
+            d="
+              M 208 382
+              C 202 372, 202 358, 208 348
+              C 214 338, 224 332, 236 332
+              C 248 332, 258 338, 262 350
+              C 266 362, 262 374, 254 382
+              C 246 390, 234 394, 222 390
+              C 214 388, 210 386, 208 382
+              Z
+            "
+            fill="#7C2D12" stroke="#FDBA74" stroke-width="1.5"
+            style="color:#F97316"
+            aria-label="Amygdala" tabindex="0" role="button"
+          />
+
+        </g><!-- end brainClip group -->
+
+        <!-- ═══════════════════════════════════════════════════
+             CEREBELLUM — separate structure, posterior inferior
+             ═══════════════════════════════════════════════════ -->
+        <!-- Cerebellum shadow -->
+        <ellipse cx="696" cy="436" rx="122" ry="90" fill="rgba(0,0,0,0.3)"/>
+
+        <!-- Cerebellum body -->
+        <ellipse id="region-cerebellum"
+          class="brain-region" data-region="cerebellum"
+          cx="690" cy="428" rx="118" ry="84"
+          fill="#1D3E8C" stroke="#60A5FA" stroke-width="1.5"
+          style="color:#3B82F6"
+          aria-label="Cerebellum" tabindex="0" role="button"
+        />
+        <!-- Cerebellum internal folia (the characteristic folded look) -->
+        <g clip-path="url(#cerebellumClip)" pointer-events="none">
+          <line x1="572" y1="428" x2="808" y2="428" stroke="#60A5FA" stroke-width="1" stroke-opacity=".35"/>
+          <line x1="576" y1="414" x2="804" y2="414" stroke="#60A5FA" stroke-width="1" stroke-opacity=".3"/>
+          <line x1="580" y1="400" x2="800" y2="400" stroke="#60A5FA" stroke-width="1" stroke-opacity=".25"/>
+          <line x1="586" y1="386" x2="794" y2="386" stroke="#60A5FA" stroke-width="1" stroke-opacity=".2"/>
+          <line x1="576" y1="442" x2="804" y2="442" stroke="#60A5FA" stroke-width="1" stroke-opacity=".3"/>
+          <line x1="578" y1="456" x2="800" y2="456" stroke="#60A5FA" stroke-width="1" stroke-opacity=".25"/>
+          <line x1="582" y1="470" x2="796" y2="470" stroke="#60A5FA" stroke-width="1" stroke-opacity=".2"/>
+          <!-- Vermis (central dividing line) -->
+          <line x1="690" y1="344" x2="690" y2="512" stroke="#93C5FD" stroke-width="1.8" stroke-opacity=".4"/>
+          <!-- Secondary lobule lines -->
+          <line x1="640" y1="350" x2="620" y2="510" stroke="#60A5FA" stroke-width=".8" stroke-opacity=".2"/>
+          <line x1="740" y1="350" x2="760" y2="510" stroke="#60A5FA" stroke-width=".8" stroke-opacity=".2"/>
+        </g>
+
+        <!-- ═══════════════════════════════════════════════════
+             BRAINSTEM — connects brain to cerebellum/cord
+             ═══════════════════════════════════════════════════ -->
+        <!-- Brainstem body (pons + medulla) -->
+        <path id="region-brainstem"
+          class="brain-region" data-region="brainstem"
+          d="
+            M 290 420
+            C 285 408, 282 394, 282 380
+            C 282 366, 285 352, 292 342
+            C 299 332, 310 326, 322 326
+            C 334 326, 344 332, 350 342
+            C 356 352, 358 366, 356 380
+            C 354 394, 348 408, 340 420
+            C 336 432, 328 442, 318 448
+            C 312 452, 305 454, 298 450
+            C 292 446, 288 438, 290 420
+            Z
+          "
+          fill="#374151" stroke="#9CA3AF" stroke-width="1.5"
+          style="color:#6B7280"
+          aria-label="Brainstem" tabindex="0" role="button"
+        />
+        <!-- Spinal cord continuation -->
+        <path d="M 305 448 C 302 460, 300 476, 300 494 C 300 510, 302 524, 306 536"
+          stroke="#9CA3AF" stroke-width="6" stroke-linecap="round"
+          fill="none" pointer-events="none" stroke-opacity=".5"/>
+
+        <!-- ═══════════════════════════════════════════════════
+             BRAIN OUTLINE STROKE (on top, non-interactive)
+             ═══════════════════════════════════════════════════ -->
+        <path d="
+          M 210 430
+          C 175 425, 130 408, 100 378
+          C 70  348,  55 308,  52 268
+          C 49  228,  58 188,  76 156
+          C 94  124, 121  98, 152  80
+          C 183  62, 218  54, 254  50
+          C 290  46, 326  50, 360  58
+          C 394  66, 426  78, 456  94
+          C 486 110, 514 130, 540 152
+          C 566 174, 590 198, 610 224
+          C 630 250, 645 278, 652 307
+          C 659 336, 658 366, 648 392
+          C 638 418, 618 438, 594 450
+          C 570 462, 542 465, 516 462
+          C 494 460, 474 452, 458 440
+          C 442 428, 430 412, 420 398
+          C 410 384, 402 370, 390 362
+          C 378 354, 362 350, 346 352
+          C 330 354, 316 362, 304 374
+          C 292 386, 282 400, 268 414
+          C 254 428, 236 438, 218 436
+          Z
+        " fill="none" stroke="rgba(100,160,255,0.5)" stroke-width="2" pointer-events="none"/>
+
+        <!-- ═══════════════════════════════════════════════════
+             SULCI / GYRI FOLD LINES (anatomical detail)
+             ═══════════════════════════════════════════════════ -->
+        <g stroke="rgba(255,255,255,0.09)" stroke-width="1" fill="none" pointer-events="none">
+          <!-- Frontal gyri (horizontal folds in frontal lobe) -->
+          <path d="M 80 162 C 110 150, 144 142, 175 138"/>
+          <path d="M 72 190 C 104 176, 138 168, 170 164 C 195 160, 215 158, 232 160"/>
+          <path d="M 68 218 C 100 204, 134 196, 166 194 C 192 192, 215 194, 234 198"/>
+          <path d="M 68 246 C 98 234, 128 228, 156 228 C 178 228, 198 232, 214 238"/>
+          <path d="M 74 270 C 100 260, 128 256, 154 256 C 174 256, 192 260, 206 268"/>
+
+          <!-- Central sulcus (Rolandic fissure) — key anatomical boundary -->
+          <path d="M 360 58 C 350 88, 338 118, 324 148 C 310 178, 294 206, 278 230 C 264 252, 248 270, 232 284"
+            stroke="rgba(255,255,255,0.20)" stroke-width="2"/>
+
+          <!-- Parietal gyri -->
+          <path d="M 400 80 C 424 74, 450 72, 474 78"/>
+          <path d="M 440 96 C 462 88, 488 84, 510 90 C 526 94, 538 102, 546 112"/>
+          <path d="M 470 118 C 490 110, 512 110, 530 120 C 545 128, 554 140, 558 154"/>
+          <path d="M 490 148 C 508 138, 526 138, 540 148 C 552 158, 558 172, 558 188"/>
+          <path d="M 500 178 C 516 168, 530 170, 540 182 C 548 194, 548 210, 542 224"/>
+
+          <!-- Sylvian fissure (lateral sulcus) — major landmark -->
+          <path d="M 155 210 C 195 220, 238 228, 280 236 C 322 244, 364 252, 400 264 C 428 272, 450 280, 464 290"
+            stroke="rgba(255,255,255,0.18)" stroke-width="2"/>
+
+          <!-- Temporal gyri (below sylvian) -->
+          <path d="M 104 296 C 128 290, 152 288, 172 292"/>
+          <path d="M 100 318 C 124 310, 148 308, 168 312 C 184 316, 194 324, 198 334"/>
+          <path d="M 106 344 C 128 336, 150 334, 168 338 C 182 342, 192 350, 196 360"/>
+
+          <!-- Parieto-occipital sulcus -->
+          <path d="M 634 276 C 626 302, 614 328, 600 350 C 588 368, 572 382, 554 392"
+            stroke="rgba(255,255,255,0.16)" stroke-width="1.5"/>
+
+          <!-- Occipital gyri (vertical folds) -->
+          <path d="M 466 266 C 472 286, 476 308, 476 330 C 476 352, 472 374, 464 392"/>
+          <path d="M 500 248 C 508 270, 512 294, 512 318 C 512 342, 508 366, 500 386"/>
+          <path d="M 536 240 C 546 262, 550 288, 548 312 C 546 336, 540 360, 530 380"/>
+          <path d="M 570 252 C 582 274, 588 300, 586 326 C 584 352, 576 376, 562 396"/>
+          <path d="M 604 272 C 618 296, 624 324, 622 350 C 620 374, 612 398, 598 416"/>
+        </g>
+
+        <!-- ═══════════════════════════════════════════════════
+             REGION LABELS
+             ═══════════════════════════════════════════════════ -->
+        <!-- Frontal Lobe label -->
+        <text class="region-label" x="180" y="218">Frontal Lobe</text>
+
+        <!-- Prefrontal Cortex label -->
+        <text class="region-label region-label-sm" x="104" y="188">Prefrontal</text>
+        <text class="region-label region-label-sm" x="104" y="200">Cortex</text>
+
+        <!-- Parietal Lobe -->
+        <text class="region-label" x="492" y="178">Parietal Lobe</text>
+
+        <!-- Temporal Lobe -->
+        <text class="region-label" x="184" y="342">Temporal Lobe</text>
+
+        <!-- Occipital Lobe -->
+        <text class="region-label" x="540" y="344">Occipital</text>
+        <text class="region-label" x="540" y="358">Lobe</text>
+
+        <!-- Cerebellum -->
+        <text class="region-label" x="690" y="426">Cerebellum</text>
+
+        <!-- Brainstem -->
+        <text class="region-label region-label-sm" x="318" y="392">Brainstem</text>
+
+        <!-- Corpus Callosum -->
+        <text class="region-label region-label-sm" x="298" y="350">Corpus</text>
+        <text class="region-label region-label-sm" x="298" y="362">Callosum</text>
+
+        <!-- Thalamus -->
+        <text class="region-label region-label-sm" x="362" y="338">Thalamus</text>
+
+        <!-- Hypothalamus -->
+        <text class="region-label region-label-sm" x="368" y="406">Hypo-</text>
+        <text class="region-label region-label-sm" x="368" y="418">thalamus</text>
+
+        <!-- Hippocampus -->
+        <text class="region-label region-label-sm" x="262" y="414">Hippo-</text>
+        <text class="region-label region-label-sm" x="262" y="426">campus</text>
+
+        <!-- Amygdala -->
+        <text class="region-label region-label-sm" x="232" y="362">Amygdala</text>
+
+        <!-- ═══════════════════════════════════════════════════
+             ANATOMICAL LANDMARK ANNOTATIONS
+             ═══════════════════════════════════════════════════ -->
+        <!-- Central sulcus tick label -->
+        <text x="348" y="45" fill="rgba(255,255,255,0.3)"
+          font-family="Space Grotesk,sans-serif" font-size="9"
+          text-anchor="middle" letter-spacing="0.05em">Central Sulcus</text>
+        <line x1="354" y1="50" x2="348" y2="58" stroke="rgba(255,255,255,0.25)" stroke-width="1"/>
+
+        <!-- Sylvian fissure label -->
+        <text x="410" y="320" fill="rgba(255,255,255,0.28)"
+          font-family="Space Grotesk,sans-serif" font-size="9"
+          text-anchor="middle" letter-spacing="0.04em"
+          transform="rotate(-8,410,320)">Sylvian Fissure</text>
+
+        <!-- Spinal cord label -->
+        <text x="320" y="516" fill="rgba(255,255,255,0.25)"
+          font-family="Space Grotesk,sans-serif" font-size="9"
+          text-anchor="middle">Spinal Cord</text>
+
+        <!-- Frontal/Parietal divider arrow -->
+        <line x1="356" y1="58" x2="230" y2="284"
+          stroke="rgba(255,255,255,0.10)" stroke-width="1" stroke-dasharray="4,3" pointer-events="none"/>
+
+      </svg>
+
+      <!-- LEGEND -->
+      <div class="legend" id="legend">
+        <div class="legend-item" data-region="frontal">
+          <div class="legend-dot" style="background:#EF4444"></div>Frontal Lobe</div>
+        <div class="legend-item" data-region="prefrontal">
+          <div class="legend-dot" style="background:#E11D48"></div>Prefrontal Cortex</div>
+        <div class="legend-item" data-region="parietal">
+          <div class="legend-dot" style="background:#F59E0B"></div>Parietal Lobe</div>
+        <div class="legend-item" data-region="temporal">
+          <div class="legend-dot" style="background:#8B5CF6"></div>Temporal Lobe</div>
+        <div class="legend-item" data-region="occipital">
+          <div class="legend-dot" style="background:#10B981"></div>Occipital Lobe</div>
+        <div class="legend-item" data-region="cerebellum">
+          <div class="legend-dot" style="background:#3B82F6"></div>Cerebellum</div>
+        <div class="legend-item" data-region="brainstem">
+          <div class="legend-dot" style="background:#6B7280"></div>Brainstem</div>
+        <div class="legend-item" data-region="corpus">
+          <div class="legend-dot" style="background:#EC4899"></div>Corpus Callosum</div>
+        <div class="legend-item" data-region="hippocampus">
+          <div class="legend-dot" style="background:#06B6D4"></div>Hippocampus</div>
+        <div class="legend-item" data-region="amygdala">
+          <div class="legend-dot" style="background:#F97316"></div>Amygdala</div>
+        <div class="legend-item" data-region="thalamus">
+          <div class="legend-dot" style="background:#84CC16"></div>Thalamus</div>
+        <div class="legend-item" data-region="hypothalamus">
+          <div class="legend-dot" style="background:#A78BFA"></div>Hypothalamus</div>
+      </div>
+    </div>
+
+    <!-- PROGRESS -->
+    <div class="counter-bar">
+      <span class="label">REGIONS EXPLORED</span>
+      <span class="count-display" id="countDisplay">0 / 12</span>
+      <div class="progress-dots" id="progressDots"></div>
+    </div>
+  </div>
+
+  <!-- RIGHT: Info Panel -->
+  <div class="info-panel">
+    <div class="panel-default" id="panelDefault">
+      <span class="big-icon">🧠</span>
+      <h3>Select a Region</h3>
+      <p>Click any coloured area on the brain diagram — or use the legend — to explore that region's function, a fascinating fact, and related conditions.</p>
+    </div>
+
+    <div class="info-card" id="infoCard">
+      <div class="card-header" id="cardHeader">
+        <button class="close-btn" id="closeBtn">✕</button>
+        <div class="card-accent-bar" id="cardAccent"></div>
+        <h2 id="cardName"></h2>
+        <div class="subtitle" id="cardSubtitle"></div>
+      </div>
+      <div class="card-body">
+        <div class="section-tag">Primary Function</div>
+        <p class="function-text" id="cardFunction"></p>
+        <div class="section-tag">Fun Fact</div>
+        <div class="fun-fact-box" id="cardFact"></div>
+        <div class="section-tag">Related Conditions</div>
+        <div class="disorders-list" id="cardDisorders"></div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- end main-layout -->
+
+<footer>
+  <p>© 2026 Neurovascular Dynamic Lab</p>
+  <p>Made with 🧠 for curious minds</p>
+</footer>
+
+<script>
+/* ── DATA ── */
+const REGIONS = {
+  frontal:{
+    name:"Frontal Lobe",subtitle:"The Executive Center",color:"#EF4444",bg:"#FFF5F5",
+    function:"The frontal lobe is the brain's command center, governing voluntary movement, speech production (through Broca's area), working memory, and executive functions — planning, reasoning, decision-making, and impulse control. It defines much of what makes us distinctly human.",
+    fact:"⚡ The frontal lobe is the last brain region to fully mature — it isn't completely developed until around age 25. This is the scientific reason teenagers often struggle with long-term planning and impulse control.",
+    disorders:["ADHD","Depression","Schizophrenia","Traumatic Brain Injury","Broca's Aphasia"]
+  },
+  prefrontal:{
+    name:"Prefrontal Cortex",subtitle:"The CEO of Your Brain",color:"#E11D48",bg:"#FFF1F2",
+    function:"The most evolutionarily advanced part of the human brain. It governs personality, complex social behaviour, moral reasoning, and the ability to predict consequences. It filters inappropriate impulses and allows deliberate, goal-directed thinking.",
+    fact:"🔬 In 1848, Phineas Gage survived an iron rod blasting through his prefrontal cortex. He lived — but his personality changed completely. This accident gave neuroscience its first clue that this region controls who we are.",
+    disorders:["PTSD","Antisocial Personality Disorder","Addiction","OCD","Impaired decision-making"]
+  },
+  parietal:{
+    name:"Parietal Lobe",subtitle:"The Sensory Integration Hub",color:"#F59E0B",bg:"#FFFBEB",
+    function:"Processes sensory information from the body — touch, temperature, pain, and proprioception (body position awareness). Also handles spatial reasoning, navigation, arithmetic, and integrating information from multiple senses into a unified world model.",
+    fact:"🗺️ Albert Einstein's parietal lobe was found to be 15% wider than average when researchers examined his preserved brain. This region is strongly linked to mathematical and spatial reasoning — talents Einstein famously possessed.",
+    disorders:["Spatial neglect","Apraxia","Gerstmann Syndrome","Sensory processing disorders","Astereognosis"]
+  },
+  temporal:{
+    name:"Temporal Lobe",subtitle:"The Language & Memory Bank",color:"#8B5CF6",bg:"#F5F3FF",
+    function:"Processes auditory information and houses Wernicke's area (language comprehension). Critical for long-term memory formation, facial recognition, and emotional processing through its connections to the limbic system.",
+    fact:"🎵 Certain seizures or tumours in the temporal lobe have caused people to hear vivid, detailed music inside their head with no external source — a phenomenon called musical hallucinations, sometimes mistaken for hearing voices.",
+    disorders:["Wernicke's Aphasia","Temporal Lobe Epilepsy","Prosopagnosia","Amnesia","Auditory hallucinations"]
+  },
+  occipital:{
+    name:"Occipital Lobe",subtitle:"The Visual Processing Center",color:"#10B981",bg:"#F0FDF4",
+    function:"Located at the back of the skull, this is the brain's dedicated visual processing unit. It interprets colour, motion, depth, and shape from signals arriving via the optic nerves, constructing the complete visual experience you perceive as reality.",
+    fact:"👁️ Your brain actually receives the world upside-down. The lens of the eye projects an inverted image onto the retina, and the occipital lobe automatically corrects it — within milliseconds and without any conscious effort from you.",
+    disorders:["Cortical blindness","Visual agnosia","Achromatopsia","Charles Bonnet Syndrome","Visual field defects"]
+  },
+  cerebellum:{
+    name:"Cerebellum",subtitle:"The Coordination Master",color:"#3B82F6",bg:"#EFF6FF",
+    function:"Latin for 'little brain,' the cerebellum contains over half of all the brain's neurons in just 10% of its volume. It fine-tunes motor movement, balance, and posture, and coordinates timing and precision. Emerging research links it to language and cognitive processing too.",
+    fact:"🎾 When you catch a ball, play an instrument, or type without looking, your cerebellum is running billions of calculations per second. Elite athletes and musicians show measurably denser cerebellar activity — it literally grows with practice.",
+    disorders:["Ataxia","Dysarthria","Intention tremors","Loss of balance","Dysdiadochokinesia"]
+  },
+  brainstem:{
+    name:"Brainstem",subtitle:"The Life Support System",color:"#6B7280",bg:"#F9FAFB",
+    function:"Connects the brain to the spinal cord and controls the most fundamental life functions: breathing, heart rate, blood pressure, swallowing, and the sleep-wake cycle. Comprises the midbrain, pons, and medulla oblongata. Life cannot continue without it.",
+    fact:"💓 Your brainstem initiates every single heartbeat — over 100,000 times per day — entirely without conscious thought. Even under full surgical anaesthesia, it continues regulating your breathing and cardiac rhythm autonomously.",
+    disorders:["Locked-in Syndrome","Brain death","Central sleep apnea","Wallenberg Syndrome","ALS progression"]
+  },
+  corpus:{
+    name:"Corpus Callosum",subtitle:"The Bridge Between Hemispheres",color:"#EC4899",bg:"#FDF2F8",
+    function:"A thick band of over 200 million nerve fibres connecting the left and right cerebral hemispheres. Enables both sides to share information instantly, allowing coordinated use of both hands, integration of logic with emotion, and holistic language processing.",
+    fact:"✂️ In the 1960s, surgeons severed the corpus callosum of severe epilepsy patients. These 'split-brain' patients could no longer transfer information between hemispheres — creating famous cases where the left hand literally did not know what the right hand was doing.",
+    disorders:["Agenesis of corpus callosum","Split-brain syndrome","Some autism presentations","Callosal disconnection syndrome"]
+  },
+  hippocampus:{
+    name:"Hippocampus",subtitle:"The Memory Archivist",color:"#06B6D4",bg:"#F0FDFE",
+    function:"Named after the Greek word for seahorse (its shape), the hippocampus converts short-term experiences into permanent long-term memories — a process called memory consolidation. It is also central to spatial navigation and forms the emotional context of memories.",
+    fact:"🚕 London black cab drivers must memorise 25,000+ streets. MRI studies show their hippocampi are measurably larger than average, and grow bigger the longer they've been driving. It is one of the most dramatic proofs that learning physically reshapes the brain.",
+    disorders:["Alzheimer's disease","Anterograde amnesia","PTSD","Major depression","Korsakoff syndrome"]
+  },
+  amygdala:{
+    name:"Amygdala",subtitle:"The Emotion Alarm System",color:"#F97316",bg:"#FFF7ED",
+    function:"An almond-shaped structure (amygdala means 'almond' in Greek) that processes fear, aggression, and anxiety. Acts as the brain's threat-detection alarm, triggering the fight-or-flight response. It also stamps emotional significance onto memories, which is why frightening experiences are unforgettable.",
+    fact:"⚡ The amygdala can detect and begin responding to a threat in just 12 milliseconds — faster than conscious awareness. This is why you flinch before you know what scared you: the amygdala physically bypasses your rational brain to keep you alive.",
+    disorders:["Generalised anxiety disorder","Phobias","PTSD","Urbach-Wiethe disease","Aggression disorders"]
+  },
+  thalamus:{
+    name:"Thalamus",subtitle:"The Brain's Relay Station",color:"#84CC16",bg:"#F7FEE7",
+    function:"The brain's central hub through which nearly all sensory information (except smell) must pass before reaching the cortex. Acts like a sophisticated switchboard, routing signals to the correct regions while filtering noise. Also regulates consciousness and the sleep-wake cycle.",
+    fact:"🔀 The thalamus handles roughly 40 million incoming signals per second but lets only about 40 of them reach conscious awareness. It is the brain's ultimate gatekeeper — deciding, moment to moment, what you actually notice and experience.",
+    disorders:["Thalamic syndrome","Fatal Familial Insomnia","Korsakoff syndrome","Certain stroke syndromes","Sensory processing disruptions"]
+  },
+  hypothalamus:{
+    name:"Hypothalamus",subtitle:"The Master Regulator",color:"#A78BFA",bg:"#F5F3FF",
+    function:"Despite being roughly the size of an almond, it controls the entire endocrine (hormonal) system via the pituitary gland, and regulates body temperature, hunger, thirst, circadian rhythms, and emotional states. It is the critical bridge between the brain and the hormonal system.",
+    fact:"🌡️ The hypothalamus maintains your core body temperature within 0.1°C of 37°C — rivalling precision laboratory instruments. When it detects a pathogen, it deliberately raises your temperature to create a fever that is hostile to bacterial survival.",
+    disorders:["Diabetes insipidus","Kallmann syndrome","Eating disorders","Sleep-wake disorders","Hormonal imbalances"]
+  }
+};
+
+/* ── STATE ── */
+let activeRegion = null;
+const visitedRegions = new Set();
+const svgEl = document.getElementById('brain-svg');
+
+/* ── DOM ── */
+const panelDefault = document.getElementById('panelDefault');
+const infoCard     = document.getElementById('infoCard');
+const cardHeader   = document.getElementById('cardHeader');
+const cardAccent   = document.getElementById('cardAccent');
+const cardName     = document.getElementById('cardName');
+const cardSubtitle = document.getElementById('cardSubtitle');
+const cardFunction = document.getElementById('cardFunction');
+const cardFact     = document.getElementById('cardFact');
+const cardDisorders= document.getElementById('cardDisorders');
+const closeBtn     = document.getElementById('closeBtn');
+const countDisplay = document.getElementById('countDisplay');
+const visitedText  = document.getElementById('visited-text');
+const progressDots = document.getElementById('progressDots');
+
+/* ── PROGRESS DOTS ── */
+Object.keys(REGIONS).forEach(key => {
+  const d = document.createElement('div');
+  d.className = 'progress-dot';
+  d.id = `dot-${key}`;
+  d.title = REGIONS[key].name;
+  progressDots.appendChild(d);
+});
+
+/* ── OPEN ── */
+function openRegion(key) {
+  const data = REGIONS[key];
+  if (!data) return;
+
+  if (activeRegion) {
+    document.getElementById(`region-${activeRegion}`)?.classList.remove('active');
+    document.querySelector(`.legend-item[data-region="${activeRegion}"]`)?.classList.remove('active');
+  }
+  activeRegion = key;
+
+  document.getElementById(`region-${key}`)?.classList.add('active');
+  document.querySelector(`.legend-item[data-region="${key}"]`)?.classList.add('active');
+  svgEl.classList.add('has-active');
+
+  visitedRegions.add(key);
+  document.getElementById(`dot-${key}`).classList.add('visited');
+  countDisplay.textContent = `${visitedRegions.size} / 12`;
+  visitedText.textContent  = `${visitedRegions.size} of 12 explored`;
+
+  cardAccent.style.background  = data.color;
+  cardHeader.style.background  = data.bg;
+  cardName.textContent         = data.name;
+  cardSubtitle.textContent     = data.subtitle;
+  cardFunction.textContent     = data.function;
+  cardFact.textContent         = data.fact;
+
+  cardDisorders.innerHTML = '';
+  data.disorders.forEach(d => {
+    const t = document.createElement('span');
+    t.className = 'disorder-tag';
+    t.textContent = d;
+    cardDisorders.appendChild(t);
+  });
+
+  panelDefault.style.display = 'none';
+  infoCard.classList.remove('visible');
+  void infoCard.offsetWidth;
+  infoCard.classList.add('visible');
+
+  if (window.innerWidth <= 920) {
+    setTimeout(() => infoCard.scrollIntoView({behavior:'smooth',block:'nearest'}), 120);
+  }
+}
+
+/* ── CLOSE ── */
+function closePanel() {
+  document.getElementById(`region-${activeRegion}`)?.classList.remove('active');
+  document.querySelector(`.legend-item[data-region="${activeRegion}"]`)?.classList.remove('active');
+  svgEl.classList.remove('has-active');
+  activeRegion = null;
+  infoCard.classList.remove('visible');
+  panelDefault.style.display = '';
+}
+
+closeBtn.addEventListener('click', closePanel);
+
+/* ── SVG CLICKS ── */
+document.querySelectorAll('.brain-region').forEach(el => {
+  el.addEventListener('click', () => {
+    const key = el.dataset.region || el.id.replace('region-','');
+    if (activeRegion === key) closePanel();
+    else openRegion(key);
+  });
+  el.addEventListener('keydown', e => {
+    if (e.key==='Enter'||e.key===' ') { e.preventDefault(); openRegion(el.dataset.region||el.id.replace('region-','')); }
+  });
+});
+
+/* ── LEGEND CLICKS ── */
+document.querySelectorAll('.legend-item').forEach(el => {
+  el.addEventListener('click', () => openRegion(el.dataset.region));
+});
+
+/* ── HAMBURGER ── */
+const hamburgerBtn = document.getElementById('hamburgerBtn');
+const mobileNav    = document.getElementById('mobileNav');
+hamburgerBtn.addEventListener('click', e => {
+  e.stopPropagation();
+  const open = mobileNav.classList.toggle('show');
+  hamburgerBtn.style.transform = open ? 'rotate(90deg)' : 'rotate(0deg)';
+});
+document.addEventListener('click', e => {
+  if (!mobileNav.contains(e.target) && !hamburgerBtn.contains(e.target)) {
+    mobileNav.classList.remove('show');
+    hamburgerBtn.style.transform = 'rotate(0deg)';
+  }
+});
+
+/* ── RESPONSIVE NAV ── */
+function checkNav() {
+  hamburgerBtn.style.display = window.innerWidth <= 920 ? 'block' : 'none';
+}
+checkNav();
+window.addEventListener('resize', checkNav);
+</script>
+</body>
+</html>

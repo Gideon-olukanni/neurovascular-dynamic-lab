@@ -1,0 +1,684 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>🧠Neurovascular Dynamic Lab - Community</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Inter, system-ui, sans-serif;
+        line-height: 1.6;
+        color: #0f172a;
+        background-color: #f8fafc;
+      }
+
+      /* Header animation */
+      header {
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        background: linear-gradient(135deg, #0a2540 0%, #2563eb 100%);
+        color: white;
+        padding: 0;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        animation: slideDown 0.8s ease-out forwards;
+      }
+
+      @keyframes slideDown {
+        from {
+          transform: translateY(-100%);
+          opacity: 0;
+        }
+        to {
+          transform: translateY(0);
+          opacity: 1;
+        }
+      }
+
+      .header-content {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 0 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .logo {
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: white;
+        padding: 15px 0;
+        animation: pulse 2s ease-in-out infinite;
+      }
+
+      @keyframes pulse {
+        0%,
+        100% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.05);
+        }
+      }
+
+      nav {
+        display: flex;
+        gap: 0;
+      }
+
+      nav a {
+        color: white;
+        text-decoration: none;
+        padding: 20px 18px;
+        transition: background-color 0.3s;
+        font-weight: 500;
+        font-size: 0.95rem;
+      }
+
+      nav a:hover {
+        background-color: rgba(255, 255, 255, 0.2);
+      }
+
+      nav a.active {
+        background-color: rgba(255, 255, 255, 0.3);
+        border-bottom: 3px solid white;
+      }
+
+      .content {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 40px 20px;
+      }
+
+      h2 {
+        color: #2563eb;
+        font-size: 2.5rem;
+        margin-bottom: 30px;
+        text-align: center;
+      }
+
+      .community-box {
+        background: white;
+        padding: 40px;
+        border-radius: 10px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        margin-bottom: 30px;
+        text-align: center;
+      }
+
+      .community-box h3 {
+        color: #0a2540;
+        font-size: 1.8rem;
+        margin-bottom: 20px;
+      }
+
+      .community-box p {
+        color: #475569;
+        font-size: 1.05rem;
+        line-height: 1.8;
+        margin-bottom: 20px;
+      }
+
+      .features-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 25px;
+        margin: 30px 0;
+      }
+
+      .feature-card {
+        background: linear-gradient(135deg, #2563eb15 0%, #22d3ee15 100%);
+        padding: 25px;
+        border-radius: 10px;
+        border-left: 4px solid #2563eb;
+      }
+
+      .feature-card h4 {
+        color: #2563eb;
+        margin-bottom: 10px;
+      }
+
+      .feature-card p {
+        color: #475569;
+        font-size: 0.95rem;
+      }
+
+      .btn {
+        padding: 12px 30px;
+        border: none;
+        border-radius: 8px;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: all 0.3s;
+        font-weight: bold;
+        text-decoration: none;
+        display: inline-block;
+        background-color: #2563eb;
+        color: white;
+        margin: 10px;
+      }
+
+      .btn:hover {
+        background-color: #22d3ee;
+        transform: translateY(-2px);
+      }
+
+      footer {
+        background: linear-gradient(135deg, #0a2540 0%, #1e3a5f 100%);
+        color: white;
+        text-align: center;
+        padding: 35px 20px;
+        margin-top: 60px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      footer::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 3px;
+        background: linear-gradient(90deg, transparent, #22d3ee, transparent);
+        animation: scan 3s linear infinite;
+      }
+
+      @keyframes scan {
+        0% {
+          left: -100%;
+        }
+        100% {
+          left: 100%;
+        }
+      }
+
+      @media (max-width: 1024px) {
+        .header-content {
+          padding: 0 15px;
+        }
+        nav a {
+          padding: 15px 12px;
+          font-size: 0.9rem;
+        }
+        .features-grid {
+          grid-template-columns: repeat(2, 1fr);
+          gap: 15px;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .header-content {
+          flex-wrap: wrap;
+          padding: 10px 15px;
+        }
+        .logo {
+          width: 100%;
+          padding: 10px 0;
+          font-size: 1.3rem;
+        }
+        nav {
+          width: 100%;
+          flex-wrap: wrap;
+        }
+        nav a {
+          flex: 1;
+          min-width: 80px;
+          padding: 12px 8px;
+          font-size: 0.75rem;
+          text-align: center;
+        }
+        .content {
+          padding: 20px 15px;
+        }
+        h2 {
+          font-size: 2rem;
+        }
+        .community-box {
+          padding: 20px 15px;
+        }
+        .community-box h3 {
+          font-size: 1.3rem;
+        }
+        .features-grid {
+          grid-template-columns: 1fr;
+          gap: 15px;
+        }
+        .feature-card {
+          padding: 15px;
+        }
+        .btn {
+          padding: 10px 15px;
+          font-size: 0.85rem;
+          margin: 8px 0;
+          width: 100%;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .header-content {
+          padding: 8px 10px;
+        }
+        .logo {
+          font-size: 1rem;
+        }
+        nav a {
+          padding: 10px 6px;
+          font-size: 0.7rem;
+        }
+        .content {
+          padding: 15px 10px;
+        }
+        h2 {
+          font-size: 1.5rem;
+        }
+        .community-box {
+          padding: 15px 10px;
+        }
+        .community-box h3 {
+          font-size: 1.1rem;
+        }
+        .btn {
+          padding: 8px 12px;
+          font-size: 0.8rem;
+        }
+      }
+
+      /* Float-in animation for sections */
+      @keyframes floatIn {
+        0% {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .community-box,
+      .feature-card {
+        opacity: 0;
+        transform: translateY(30px);
+        animation: floatIn 0.6s forwards;
+      }
+
+      /* Staggered delays */
+      .community-box:nth-of-type(1) {
+        animation-delay: 0.1s;
+      }
+      .features-grid .feature-card:nth-child(1) {
+        animation-delay: 0.2s;
+      }
+      .features-grid .feature-card:nth-child(2) {
+        animation-delay: 0.3s;
+      }
+      .features-grid .feature-card:nth-child(3) {
+        animation-delay: 0.4s;
+      }
+      .features-grid .feature-card:nth-child(4) {
+        animation-delay: 0.5s;
+      }
+      .features-grid .feature-card:nth-child(5) {
+        animation-delay: 0.6s;
+      }
+      .features-grid .feature-card:nth-child(6) {
+        animation-delay: 0.7s;
+      }
+      .community-box:nth-of-type(2) {
+        animation-delay: 0.8s;
+      }
+
+      /* ========================================================
+           HAMBURGER MENU STYLES
+           ======================================================== */
+
+      .hamburger-btn {
+        display: none;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 10px;
+        border-radius: 5px;
+        transition: background 0.3s ease;
+      }
+
+      .hamburger-btn:hover {
+        background: rgba(255, 255, 255, 0.1);
+      }
+
+      .hamburger-btn img {
+        width: 24px;
+        height: 24px;
+        filter: brightness(0) invert(1);
+      }
+
+      .mobile-nav {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: linear-gradient(135deg, #0a2540, #2563eb);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        flex-direction: column;
+        padding: 20px 0;
+        animation: slideDown 0.3s ease-out;
+      }
+
+      .mobile-nav.show {
+        display: flex;
+      }
+
+      .mobile-nav a {
+        color: white;
+        text-decoration: none;
+        padding: 15px 30px;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .mobile-nav a:hover {
+        background: rgba(255, 255, 255, 0.1);
+        transform: translateX(5px);
+      }
+
+      .mobile-nav a.active {
+        background: rgba(255, 255, 255, 0.1);
+        font-weight: 600;
+      }
+
+      /* ========================================================
+           RESPONSIVE DESIGN
+           ======================================================== */
+
+      @media (max-width: 768px) {
+        .header-content {
+          padding: 0 15px;
+        }
+
+        .logo {
+          font-size: 1.4rem;
+        }
+
+        nav {
+          display: none;
+        }
+
+        .hamburger-btn {
+          display: block;
+        }
+
+        header {
+          background: linear-gradient(
+            135deg,
+            #0a2540 0%,
+            #2563eb 100%
+          ) !important;
+          color: white !important;
+        }
+
+        .header-content {
+          display: flex !important;
+          flex-direction: row !important;
+          justify-content: space-between !important;
+          align-items: center !important;
+          flex-wrap: nowrap !important;
+          gap: 10px;
+          padding: 10px 16px !important;
+          min-height: auto !important;
+        }
+
+        .logo {
+          font-size: 1rem !important;
+          white-space: nowrap !important;
+          overflow: hidden !important;
+          text-overflow: ellipsis !important;
+          max-width: calc(100% - 58px) !important;
+          margin: 0;
+        }
+
+        .hamburger-btn {
+          flex: 0 0 auto !important;
+        }
+
+        nav {
+          display: none !important;
+        }
+
+        .mobile-nav {
+          background: linear-gradient(
+            135deg,
+            #0a2540 0%,
+            #2563eb 100%
+          ) !important;
+        }
+
+        footer {
+          padding: 30px 18px !important;
+          text-align: center !important;
+        }
+
+        body {
+          font-size: 16px;
+        }
+
+        .content,
+        .hero,
+        .section,
+        .card,
+        .quiz-panel,
+        .info-panel {
+          padding-left: 16px !important;
+          padding-right: 16px !important;
+        }
+
+        .button-group,
+        .footer-links,
+        .footer-grid,
+        .author-container,
+        .value-card,
+        .resource-grid {
+          gap: 16px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <script>
+      // HERO TYPEWRITER + ROTATING TEXT
+      document.addEventListener("DOMContentLoaded", () => {
+        // Hamburger menu functionality
+        const hamburgerBtn = document.getElementById("hamburgerBtn");
+        const mobileNav = document.getElementById("mobileNav");
+
+        if (hamburgerBtn && mobileNav) {
+          hamburgerBtn.addEventListener("click", () => {
+            mobileNav.classList.toggle("show");
+          });
+
+          // Close mobile nav when clicking outside
+          document.addEventListener("click", (e) => {
+            if (
+              !hamburgerBtn.contains(e.target) &&
+              !mobileNav.contains(e.target)
+            ) {
+              mobileNav.classList.remove("show");
+            }
+          });
+
+          // Close mobile nav when clicking a link
+          mobileNav.querySelectorAll("a").forEach((link) => {
+            link.addEventListener("click", () => {
+              mobileNav.classList.remove("show");
+            });
+          });
+        }
+
+        const heroH1 = document.querySelector(".hero h1");
+        const rotatingTexts = document.querySelectorAll(".rotating-text");
+        heroH1.addEventListener("animationend", () => {
+          heroH1.style.borderRight = "none";
+          rotatingTexts.forEach((el, i) => {
+            setTimeout(() => {
+              el.style.opacity = 1;
+              el.style.transform = "translateY(0)";
+            }, i * 1500);
+          });
+        });
+      });
+    </script>
+    <header>
+      <div class="header-content">
+        <div class="logo">🧠 Neurovascular Dynamic Lab</div>
+        <nav>
+          <a href="index.html">Home</a>
+          <a href="learn.html">Learn</a>
+          <a href="resources.html">Resources</a>
+          <a href="community.html" class="active">Community</a>
+          <a href="research.html">Latest Research</a>
+          <a href="brain-map.html">🧠 Interactive Brain Map</a>
+      <a href="quiz.html">Quiz</a>
+      <a href="flashcards.html">Flashcards</a>
+          <a href="about.html">About Us</a>
+          <a href="faq.html">FAQ</a>
+          <a href="contact.html">Contact</a>
+        </nav>
+        <button class="hamburger-btn" id="hamburgerBtn">
+          <img src="expand.png" alt="Menu" />
+        </button>
+      </div>
+      <div class="mobile-nav" id="mobileNav">
+        <a href="index.html">Home</a>
+        <a href="learn.html">Learn</a>
+        <a href="resources.html">Resources</a>
+        <a href="community.html" class="active">Community</a>
+        <a href="research.html">Latest Research</a>
+        <a href="brain-map.html">🧠 Interactive Brain Map</a>
+      <a href="quiz.html">Quiz</a>
+      <a href="flashcards.html">Flashcards</a>
+        <a href="about.html">About Us</a>
+        <a href="faq.html">FAQ</a>
+        <a href="contact.html">Contact</a>
+      </div>
+    </header>
+
+    <div class="content">
+      <h2>👥 Community</h2>
+
+      <div class="community-box">
+        <h3>Join Our Learning Community!</h3>
+        <p>
+          Connect with other curious learners who are passionate about
+          understanding the brain. Share your discoveries, ask questions, and
+          learn together from people around the world!
+        </p>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature-card">
+          <h4>💬 Discussion Forums</h4>
+          <p>
+            Ask questions about neuroscience topics and get answers from other
+            students and experts in our community forums.
+          </p>
+        </div>
+        <div class="feature-card">
+          <h4>🤝 Study Groups</h4>
+          <p>
+            Form or join study groups with other learners. Work together, share
+            notes, and help each other understand difficult concepts.
+          </p>
+        </div>
+        <div class="feature-card">
+          <h4>🎯 Challenges & Contests</h4>
+          <p>
+            Participate in monthly brain challenges and quizzes. Test your
+            knowledge and compete with other members for fun prizes!
+          </p>
+        </div>
+        <div class="feature-card">
+          <h4>🌟 Member Showcase</h4>
+          <p>
+            Share your brain experiments, creative projects, or interesting
+            discoveries with the community. Get featured on our website!
+          </p>
+        </div>
+        <div class="feature-card">
+          <h4>📣 News & Updates</h4>
+          <p>
+            Stay informed about latest neuroscience discoveries and what's
+            happening in the brain science world.
+          </p>
+        </div>
+        <div class="feature-card">
+          <h4>👨‍🎓 Expert AMA</h4>
+          <p>
+            Join "Ask Me Anything" sessions with neuroscience experts and
+            scientists. Get your questions answered directly!
+          </p>
+        </div>
+      </div>
+
+      <div class="community-box">
+        <h3>Community Rules & Values</h3>
+        <p>
+          ✓ Be respectful and kind to all members<br />
+          ✓ Ask questions without fear - there are no stupid questions!<br />
+          ✓ Share knowledge and help others learn<br />
+          ✓ Keep discussions on topic and appropriate<br />
+          ✓ Respect everyone's opinions and learning pace
+        </p>
+      </div>
+
+      <div style="text-align: center; margin: 40px 0">
+        <button class="btn">
+          <a
+            href="https://t.me/gideonreality"
+            style="text-decoration: none; color: white"
+            target="_blank">🚀 Join Us Now On Telegram
+          </a>
+        </button>
+        <button class="btn">
+          <a
+            href="https://chat.whatsapp.com/LHbyjA9LxfG4B1KMoDEIuu"
+            style="text-decoration: none; color: white"
+            target="_blank">🚀 Join Us Now On Our Whatsapp group
+          </a>
+        </button>
+        <button class="btn">
+          <a
+            href="https://whatsapp.com/channel/0029VbBftRH1dAw8ttK8HM0r"
+            style="text-decoration: none; color: white"
+            target="_blank">🚀 Join Us Now On Our Whatsapp channel
+          </a>
+        </button>
+        <!-- <button class="btn" onclick="alert('View Discussions')">💬 View Discussions</button>
+            <button class="btn" onclick="alert('Browse Members')">👥 Browse Members</button> -->
+      </div>
+    </div>
+
+    <footer>
+      <p>&copy; 2026 Neurovascular Dynamic Lab. All rights reserved.</p>
+      <p>Made with 🧠 for curious minds everywhere!</p>
+
+      <a href="https://www.free-counters.org/">powered by Free-Counters</a>
+      <script
+        type="text/javascript"
+        src="https://www.freevisitorcounters.com/auth.php?id=1307ae18c76bfe2379819c0d98c6f694adf30895"
+      ></script>
+      <script
+        type="text/javascript"
+        src="https://www.freevisitorcounters.com/en/home/counter/1530488/t/8"
+      ></script>
+    </footer>
+  </body>
+</html>
