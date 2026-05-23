@@ -550,12 +550,13 @@
   <footer>
     <p>&copy; 2026 Neurovascular Dynamic Lab. All rights reserved.</p>
   </footer>
-
   <script type="module">
-    import { auth } from './firebase-config.2.js';
+    // OPTION B FIX: Using the absolute path pointing directly to your correct filename
+    import { auth } from '/firebase-config.js';
     import { 
       signInWithEmailAndPassword, 
-      createUserWithEmailAndPassword 
+      createUserWithEmailAndPassword,
+      sendPasswordResetEmail 
     } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
     // App State Configuration Matrix
@@ -569,7 +570,6 @@
     const submitBtn = document.getElementById('submitBtn');
     const switchModeBtn = document.getElementById('switchModeBtn');
     const switchText = document.getElementById('switchText');
-    const formActionsRow = document.getElementById('form-actions-row');
     const statusMessage = document.getElementById('statusMessage');
     const formActionsZone = document.getElementById('formActionsRow');
 
@@ -671,7 +671,7 @@
           renderStatus("Authentication validated! Directing traffic flow to tracking deck dashboard...", "success");
           
           setTimeout(() => {
-            window.location.href = "flashcards.html";
+            window.location.href = "/flashcards.html";
           }, 1200);
         } else {
           // Profile Document Cloud Injection Engine Entry
@@ -679,12 +679,41 @@
           renderStatus("Cloud registration successful! Initializing primary session tokens...", "success");
           
           setTimeout(() => {
-            window.location.href = "flashcards.html";
+            window.location.href = "/flashcards.html";
           }, 1200);
         }
       } catch (error) {
         console.error("Auth Engine Fault Triggered: ", error);
-        // Strips technical syntax wrappers neatly out of view from final display strings
+        const refinedErrorMessage = error.message.replace("Firebase: ", "").replace(/rgba?\(.*?\)/, "");
+        renderStatus(refinedErrorMessage, "error");
+        setButtonLoadingState(false);
+      }
+    });
+
+    // Forgot Password Execution Engine
+    const forgotPassLink = document.getElementById('forgotPassLink');
+    forgotPassLink.addEventListener('click', async (e) => {
+      e.preventDefault();
+      clearStatusMessage();
+
+      const email = emailInput.value.trim();
+      
+      if (!email) {
+        renderStatus("Please enter your email address in the field above to reset your password.", "error");
+        return;
+      }
+
+      submitBtn.disabled = true;
+      submitBtn.style.opacity = '0.75';
+      submitBtn.querySelector('span').textContent = "Deploying Reset...";
+      submitBtn.querySelector('i').className = "fa-solid fa-circle-notch fa-spin";
+
+      try {
+        await sendPasswordResetEmail(auth, email);
+        renderStatus("Reset link deployed! Check your inbox (and spam) to update your credentials.", "success");
+        setButtonLoadingState(false);
+      } catch (error) {
+        console.error("Password Reset Fault: ", error);
         const refinedErrorMessage = error.message.replace("Firebase: ", "").replace(/rgba?\(.*?\)/, "");
         renderStatus(refinedErrorMessage, "error");
         setButtonLoadingState(false);
@@ -693,6 +722,7 @@
 
     // Helper Function Units
     function renderStatus(message, classification) {
+      statusMessage.style.display = 'flex';
       statusMessage.className = `status-banner ${classification}`;
       const icon = statusMessage.querySelector('i');
       icon.className = classification === 'success' ? 'fa-solid fa-circle-check' : 'fa-solid fa-circle-exclamation';
