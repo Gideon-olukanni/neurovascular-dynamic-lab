@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🧠 Neurovascular Lab — Admin Panel</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap');
+
+  :root {
+    --navy: #0A2540;
+    --blue: #2563EB;
+    --cyan: #22D3EE;
+    --white: #F8FAFC;
+    --soft: #E2E8F0;
+    --dark: #0F172A;
+    --green: #10B981;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background-color: var(--white);
+    color: var(--dark);
+    padding: 40px 20px;
+  }
+
+  .container {
+    max-width: 700px;
+    margin: 0 auto;
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(15, 23, 42, 0.08);
+  }
+
+  h1 {
+    font-size: 24px;
+    color: var(--navy);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  /* TABS */
+  .tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 30px;
+    border-bottom: 2px solid var(--soft);
+    padding-bottom: 10px;
+  }
+  .tab-btn {
+    padding: 10px 20px;
+    border: none;
+    background: none;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    color: #64748B;
+    transition: all 0.2s;
+  }
+  .tab-btn.active {
+    color: var(--blue);
+    border-bottom: 3px solid var(--blue);
+    margin-bottom: -13px;
+  }
+
+  /* FORMS */
+  .form-panel { display: none; }
+  .form-panel.active { display: block; }
+
+  .form-group {
+    margin-bottom: 18px;
+  }
+  label {
+    display: block;
+    font-weight: 500;
+    margin-bottom: 6px;
+    color: var(--navy);
+  }
+  input, select, textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--soft);
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 15px;
+    outline: none;
+    transition: border 0.2s;
+  }
+  input:focus, select:focus, textarea:focus {
+    border-color: var(--blue);
+  }
+  
+  .options-block {
+    background: var(--white);
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+  }
+
+  button.submit-btn {
+    width: 100%;
+    padding: 14px;
+    background: var(--navy);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  button.submit-btn:hover {
+    background: var(--blue);
+  }
+
+  /* STATUS MESSAGE TOAST */
+  #statusMessage {
+    margin-top: 15px;
+    padding: 12px;
+    border-radius: 8px;
+    display: none;
+    text-align: center;
+    font-weight: 500;
+  }
+  .success { background: #DCFCE7; color: #15803D; }
+  .error { background: #FEE2E2; color: #B91C1C; }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h1>🧠 Neurovascular Lab Admin Database Panel</h1>
+  
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchTab('quiz')">Add Quiz Question</button>
+    <button class="tab-btn" onclick="switchTab('flashcards')">Add Flashcard</button>
+  </div>
+
+  <div id="statusMessage"></div>
+
+  <div id="quizPanel" class="form-panel active">
+    <form id="quizForm">
+      <div class="form-group">
+        <label>Select Level Tier</label>
+        <select id="quizLevel" required>
+          <option value="beginner">Beginner</option>
+          <option value="intermediate">Intermediate</option>
+          <option value="advanced">Advanced</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Question Prompt</label>
+        <input type="text" id="quizQuestion" placeholder="e.g., Which artery supplies the lateral medulla?" required>
+      </div>
+
+      <div class="options-block">
+        <label style="margin-bottom: 10px;">Answer Choices</label>
+        <div class="form-group"><input type="text" id="opt0" placeholder="Option 1" required></div>
+        <div class="form-group"><input type="text" id="opt1" placeholder="Option 2" required></div>
+        <div class="form-group"><input type="text" id="opt2" placeholder="Option 3" required></div>
+        <div class="form-group"><input type="text" id="opt3" placeholder="Option 4" required></div>
+      </div>
+
+      <div class="form-group">
+        <label>Correct Answer Index (0 to 3)</label>
+        <select id="quizCorrect" required>
+          <option value="0">Option 1 is correct</option>
+          <option value="1">Option 2 is correct</option>
+          <option value="2">Option 3 is correct</option>
+          <option value="3">Option 4 is correct</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Anatomical Explanation</label>
+        <textarea id="quizExplanation" rows="3" placeholder="Provide clinical rationale for learning context..." required></textarea>
+      </div>
+
+      <button type="submit" class="submit-btn">Push to Firestore Database</button>
+    </form>
+  </div>
+
+  <div id="flashcardsPanel" class="form-panel">
+    <form id="flashcardForm">
+      <div class="form-group">
+        <label>Deck Category</label>
+        <select id="cardCat" required>
+          <option value="anatomy">🏛️ Brain Anatomy</option>
+          <option value="neuron">⚡ Neuron & Signals</option>
+          <option value="function">🧩 Brain Functions</option>
+          <option value="clinical">🏥 Clinical & Disorders</option>
+          <option value="neuro">🔬 Neuroscience Terms</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Display Icon (Single Emoji)</label>
+        <input type="text" id="cardIcon" placeholder="e.g., 🔬" maxlength="2" required>
+      </div>
+
+      <div class="form-group">
+        <label>Core Neuro Term / Concept</label>
+        <input type="text" id="cardTerm" placeholder="e.g., Circle of Willis" required>
+      </div>
+
+      <div class="form-group">
+        <label>Detailed Scientific Definition</label>
+        <textarea id="cardDef" rows="4" placeholder="Write full explanatory context here..." required></textarea>
+      </div>
+
+      <button type="submit" class="submit-btn">Add Card to Live Deck</button>
+    </form>
+  </div>
+</div>
+
+<script type="module">
+  import { db, collection, addDoc } from "./firebase-config.js";
+
+  // Form Switcher Tab Engine
+  function switchTab(tabName) {
+    document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+    document.querySelectorAll('.form-panel').forEach(panel => panel.classList.remove('active'));
+    
+    if (tabName === 'quiz') {
+      document.querySelector('[onclick="switchTab(\'quiz\')"]').classList.add('active');
+      document.getElementById('quizPanel').classList.add('active');
+    } else {
+      document.querySelector('[onclick="switchTab(\'flashcards\')"]').classList.add('active');
+      document.getElementById('flashcardsPanel').classList.add('active');
+    }
+  }
+  window.switchTab = switchTab;
+
+  // Status Alerts Flash System
+  function showStatus(text, type) {
+    const box = document.getElementById('statusMessage');
+    box.textContent = text;
+    box.className = type === 'success' ? 'success' : 'error';
+    box.style.display = 'block';
+    setTimeout(() => { box.style.display = 'none'; }, 4000);
+  }
+
+  // Submit Handler: QUIZ
+  document.getElementById('quizForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    try {
+      const docRef = await addDoc(collection(db, "questions"), {
+        level: document.getElementById('quizLevel').value,
+        q: document.getElementById('quizQuestion').value,
+        options: [
+          document.getElementById('opt0').value,
+          document.getElementById('opt1').value,
+          document.getElementById('opt2').value,
+          document.getElementById('opt3').value
+        ],
+        answer: parseInt(document.getElementById('quizCorrect').value),
+        explanation: document.getElementById('quizExplanation').value
+      });
+      showStatus("✨ Quiz Question successfully pushed to live Firestore!", "success");
+      document.getElementById('quizForm').reset();
+    } catch (err) {
+      console.error(err);
+      showStatus("❌ Database insertion failed. Verify config contexts.", "error");
+    }
+  });
+
+  // Submit Handler: FLASHCARDS
+  document.getElementById('flashcardForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    try {
+      // Generate a numeric unique timestamp ID to match local configurations smoothly
+      const uniqueId = Date.now();
+      
+      const docRef = await addDoc(collection(db, "flashcards"), {
+        id: uniqueId,
+        cat: document.getElementById('cardCat').value,
+        icon: document.getElementById('cardIcon').value,
+        term: document.getElementById('cardTerm').value,
+        def: document.getElementById('cardDef').value
+      });
+      showStatus("🎉 Flashcard successfully appended to remote deck database!", "success");
+      document.getElementById('flashcardForm').reset();
+    } catch (err) {
+      console.error(err);
+      showStatus("❌ Database insertion failed. Verify config contexts.", "error");
+    }
+  });
+</script>
+</body>
+</html>
