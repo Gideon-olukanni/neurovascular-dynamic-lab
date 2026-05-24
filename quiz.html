@@ -743,17 +743,24 @@ async function startQuiz() {
   document.getElementById('questionText').textContent = "Loading dynamic question updates...";
   document.getElementById('optionsGrid').innerHTML = '';
   
-  let firebaseQuestions = [];
-  
+  let firebaseQuestions
   try {
-    const q = query(collection(db, "questions"), where("level", "==", selectedLevel));
-    const querySnapshot = await getDocs(q);
-    
-    querySnapshot.forEach((doc) => {
-      firebaseQuestions.push(doc.data()); 
+  const levelCapitalized = selectedLevel.charAt(0).toUpperCase() + selectedLevel.slice(1);
+  const q = query(collection(db, "questions"), where("level", "==", levelCapitalized));
+  const querySnapshot = await getDocs(q);
+  
+  querySnapshot.forEach((docSnap) => {
+    const d = docSnap.data();
+    firebaseQuestions.push({
+      level: selectedLevel,
+      q: d.question || d.q || "",
+      options: d.options || [],
+      answer: typeof d.correctIndex === "number" ? d.correctIndex : (d.answer || 0),
+      explanation: d.explanation || d.anatomicalExplanation || ""
     });
-  } catch (error) {
-    console.error("Database connection bypass. Loading static models only: ", error);
+  });
+} catch (error) {
+  console.error("Database connection bypass. Loading static models only: ", error);
   }
 
   currentQuestions = [...localQuestions, ...firebaseQuestions];
