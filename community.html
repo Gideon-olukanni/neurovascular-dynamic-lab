@@ -75,16 +75,23 @@
         align-items: stretch;
       }
 
+            nav {
+        display: flex;
+        gap: 0;
+        align-items: stretch;
+      }
+
       nav a {
         color: white;
         text-decoration: none;
-        padding: 0 14px;
+        padding: 0 12px;
         transition: background-color 0.3s;
         font-weight: 500;
-        font-size: 0.9rem;
+        font-size: 0.85rem;
         display: flex;
         align-items: center;
         white-space: nowrap;
+        height: 100%;
         min-height: 70px;
       }
 
@@ -96,6 +103,7 @@
         background-color: rgba(255, 255, 255, 0.3);
         border-bottom: 4px solid white;
       }
+      
       
       .content {
         max-width: 1200px;
@@ -206,7 +214,7 @@
         }
       }
 
-      @media (max-width: 1024px) {
+      @media (max-width: 1300px) {
         .header-content {
           padding: 0 15px;
         }
@@ -220,7 +228,7 @@
         }
       }
 
-      @media (max-width: 768px) {
+      @media (max-width: 1150px) {
         .content {
           
           padding: 20px 15px;
