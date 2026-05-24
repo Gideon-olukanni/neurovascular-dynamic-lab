@@ -22,7 +22,6 @@
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
-  body {
     body {
     font-family: 'DM Sans', sans-serif;
     background-color: var(--white);
@@ -32,7 +31,10 @@
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    margin: 0;
+    padding: 0;
     }
+  
   /* ── HEADER ── */
   header {
     position: sticky; top: 0; z-index: 1000;
@@ -44,11 +46,17 @@
   @keyframes slideDown {
     from { transform: translateY(-100%); opacity: 0; }
     to   { transform: translateY(0);     opacity: 1; }
-  }
+  } 
   .header-content {
     max-width: 1400px; margin: 0 auto; padding: 0 20px;
-    display: flex; justify-content: space-between; align-items: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    flex-wrap: nowrap; /* Strictly forbids double-lines */
+    white-space: nowrap;
   }
+  
   .logo {
     font-size: 1.8rem; font-weight: 700; color: white; padding: 15px 0;
     animation: pulse 2s ease-in-out infinite;
@@ -341,7 +349,7 @@
     }
 
   /* ── RESPONSIVE ── */
-  @media (max-width: 1150px) {
+  @media (max-width: 1300px) {
     .hero h1 { font-size: 1.8rem; }
     nav { display: none !important; }
     .hamburger-btn { display: block !important; }
