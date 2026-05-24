@@ -125,6 +125,9 @@ nav a:hover { background:rgba(255,255,255,.12); }
   background:rgba(255,255,255,.025);
   border:1px solid rgba(255,255,255,.07);
   border-radius:22px; padding:20px; position:relative; overflow:hidden;
+  will-change: transform;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
 }
 .brain-container::before {
   content:''; position:absolute; inset:0; pointer-events:none;
