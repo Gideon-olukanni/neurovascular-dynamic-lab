@@ -69,18 +69,23 @@
         }
       }
 
-      nav {
+            nav {
         display: flex;
         gap: 0;
+        align-items: stretch;
       }
 
       nav a {
         color: white;
         text-decoration: none;
-        padding: 20px 18px;
+        padding: 0 14px;
         transition: background-color 0.3s;
         font-weight: 500;
-        font-size: 0.95rem;
+        font-size: 0.9rem;
+        display: flex;
+        align-items: center;
+        white-space: nowrap;
+        min-height: 70px;
       }
 
       nav a:hover {
@@ -89,9 +94,9 @@
 
       nav a.active {
         background-color: rgba(255, 255, 255, 0.3);
-        border-bottom: 3px solid white;
+        border-bottom: 4px solid white;
       }
-
+      
       .content {
         max-width: 1200px;
         margin: 0 auto;
@@ -382,7 +387,7 @@
            RESPONSIVE DESIGN
            ======================================================== */
 
-      @media (max-width: 768px) {
+      @media (max-width: 1150px) {
         .header-content {
           padding: 0 15px;
         }
