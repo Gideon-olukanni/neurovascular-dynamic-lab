@@ -125,6 +125,9 @@ nav a:hover { background:rgba(255,255,255,.12); }
   background:rgba(255,255,255,.025);
   border:1px solid rgba(255,255,255,.07);
   border-radius:22px; padding:20px; position:relative; overflow:hidden;
+  will-change: transform;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
 }
 .brain-container::before {
   content:''; position:absolute; inset:0; pointer-events:none;
@@ -144,27 +147,25 @@ nav a:hover { background:rgba(255,255,255,.12); }
 
 .brain-region {
   cursor:pointer;
-  transition:filter .2s ease, stroke-width .2s ease, opacity .2s ease;
+  transition:opacity .2s ease, stroke-width .2s ease;
   stroke-linecap:round; stroke-linejoin:round;
+  will-change: opacity;
 }
 .brain-region:hover {
-  filter:brightness(1.35) drop-shadow(0 0 10px currentColor);
   stroke-width:2.5 !important;
+  opacity:0.85;
 }
 .brain-region.active {
-  filter:brightness(1.5) drop-shadow(0 0 16px currentColor) drop-shadow(0 0 6px currentColor);
-  stroke-width:3 !important;
+  stroke-width:3.5 !important;
+  stroke:#ffffff !important;
 }
-/* dim unselected when one is active */
-.has-active .brain-region:not(.active) { opacity:.55; }
-
+.has-active .brain-region:not(.active) { opacity:.45; }
 .region-label {
   font-family:'Space Grotesk',sans-serif;
   font-size:10.5px; font-weight:600;
   fill:#fff; pointer-events:none;
   text-anchor:middle; dominant-baseline:middle;
-  letter-spacing:.02em; paint-order:stroke;
-  stroke:#000; stroke-width:2.5px; stroke-opacity:.45;
+  letter-spacing:.02em;
 }
 .region-label-sm { font-size:8.5px; }
 
@@ -414,11 +415,6 @@ footer p { margin-bottom:3px; }
           <clipPath id="cerebellumClip">
             <ellipse cx="690" cy="430" rx="120" ry="90"/>
           </clipPath>
-
-          <filter id="subtleGlow">
-            <feGaussianBlur stdDeviation="2" result="blur"/>
-            <feComposite in="SourceGraphic" in2="blur" operator="over"/>
-          </filter>
 
           <!-- Hatching for deep structures inset -->
           <pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
