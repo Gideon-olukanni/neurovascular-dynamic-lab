@@ -401,23 +401,23 @@
   <p>Select a difficulty level to begin. Each level unlocks harder questions about the brain.</p>
   <div class="level-cards">
     <div class="level-card beginner" onclick="selectLevel('beginner', this)">
-      <div class="level-icon">🌱</div>
-      <h3>Beginner</h3>
-      <p>Basic brain facts, anatomy, and simple neuroscience concepts</p>
-      <span class="level-badge">Questions 1–7</span>
-    </div>
-    <div class="level-card intermediate" onclick="selectLevel('intermediate', this)">
-      <div class="level-icon">⚡</div>
-      <h3>Intermediate</h3>
-      <p>Neurons, signals, brain functions, and how the nervous system works</p>
-      <span class="level-badge">Questions 8–14</span>
-    </div>
-    <div class="level-card advanced" onclick="selectLevel('advanced', this)">
-      <div class="level-icon">🔬</div>
-      <h3>Advanced</h3>
-      <p>Cerebrovascular system, neurological disorders, and neuroscience research</p>
-      <span class="level-badge">Questions 15–20</span>
-    </div>
+  <div class="level-icon">🌱</div>
+  <h3>Beginner</h3>
+  <p>Basic brain facts, anatomy, and simple neuroscience concepts</p>
+  <span class="level-badge" id="badge-beginner">Loading...</span>
+</div>
+<div class="level-card intermediate" onclick="selectLevel('intermediate', this)">
+  <div class="level-icon">⚡</div>
+  <h3>Intermediate</h3>
+  <p>Neurons, signals, brain functions, and how the nervous system works</p>
+  <span class="level-badge" id="badge-intermediate">Loading...</span>
+</div>
+<div class="level-card advanced" onclick="selectLevel('advanced', this)">
+  <div class="level-icon">🔬</div>
+  <h3>Advanced</h3>
+  <p>Cerebrovascular system, neurological disorders, and neuroscience research</p>
+  <span class="level-badge" id="badge-advanced">Loading...</span>
+</div>
   </div>
   <button class="start-btn" id="startBtn" onclick="startQuiz()">Start Quiz →</button>
 </div>
@@ -488,6 +488,24 @@ import {
 } from "./firebase-config.js";
 // ── CURRENT USER ──
 let currentUser = null;
+  // ── LIVE BADGE COUNTER ──
+async function updateLevelBadges() {
+  try {
+    const levels = ['beginner', 'intermediate', 'advanced'];
+    for (const level of levels) {
+      const localCount = allQuestions.filter(q => q.level === level).length;
+      const snap = await getDocs(query(collection(db, "questions"), where("level", "==", level)));
+      const total = localCount + snap.size;
+      const badge = document.getElementById('badge-' + level);
+      if (badge) badge.textContent = total + ' Questions';
+    }
+  } catch (err) {
+    // fallback to static counts if Firebase fails
+    document.getElementById('badge-beginner').textContent = '7 Questions';
+    document.getElementById('badge-intermediate').textContent = '7 Questions';
+    document.getElementById('badge-advanced').textContent = '6 Questions';
+  }
+}
 
 onAuthStateChanged(auth, (user) => {
   currentUser = user;
@@ -974,6 +992,7 @@ function changeLevel() {
 
 // ── INTERACTIVE HAMBURGER OVERLAYS ──
 document.addEventListener('DOMContentLoaded', () => {
+  updateLevelBadges();
   const btn = document.getElementById('hamburgerBtn');
   const nav = document.getElementById('mobileNav');
   if (btn && nav) {
