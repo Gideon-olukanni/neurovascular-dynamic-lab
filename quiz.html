@@ -392,7 +392,7 @@
 <!-- HERO -->
 <section class="hero">
   <h1>🧠 Brain Quiz Challenge</h1>
-  <p>Test your neuroscience knowledge — 20 questions, 30 seconds each. How far can your brain take you?</p>
+  <p>Test your neuroscience knowledge — <span id="heroTotalCount">20</span> questions, 30 seconds each. How far can your brain take you?</p>
 </section>
 
 <!-- LEVEL SELECTOR -->
@@ -492,13 +492,17 @@ let currentUser = null;
 async function updateLevelBadges() {
   try {
     const levels = ['beginner', 'intermediate', 'advanced'];
+    let grandTotal = 0;
     for (const level of levels) {
       const localCount = allQuestions.filter(q => q.level === level).length;
       const snap = await getDocs(query(collection(db, "questions"), where("level", "==", level)));
       const total = localCount + snap.size;
+      grandTotal += total;
       const badge = document.getElementById('badge-' + level);
       if (badge) badge.textContent = total + ' Questions';
     }
+    const heroCount = document.getElementById('heroTotalCount');
+    if (heroCount) heroCount.textContent = grandTotal;
   } catch (err) {
     // fallback to static counts if Firebase fails
     document.getElementById('badge-beginner').textContent = '7 Questions';
