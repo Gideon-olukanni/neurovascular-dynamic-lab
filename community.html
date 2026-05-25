@@ -23,87 +23,54 @@
         padding: 0;
       }
 
-      /* Header animation */
-      header {
-        position: sticky;
-        top: 0;
-        left: 0;
-        width: 100%;
-        z-index: 1000;
-        background: linear-gradient(135deg, #0a2540 0%, #2563eb 100%);
-        color: white;
-        padding: 0;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-        animation: slideDown 0.8s ease-out forwards;
-      }
-      
-      @keyframes slideDown {
-        from {
-          transform: translateY(-100%);
-          opacity: 0;
-        }
-        to {
-          transform: translateY(0);
-          opacity: 1;
-        }
-      }
-
-      .header-content {
-        max-width: 1400px;
-        margin: 0 auto;
-        padding: 0 20px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        flex-wrap: nowrap;
-      }
-
-      .logo {
-        font-size: 1.8rem;
-        font-weight: 700;
-        color: white;
-        padding: 15px 0;
-        animation: pulse 2s ease-in-out infinite;
-      }
-
-      @keyframes pulse {
-        0%, 100% {
-          transform: scale(1);
-        }
-        50% {
-          transform: scale(1.05);
-        }
-      }
-
-      nav {
-        display: flex;
-        gap: 0;
-        align-items: stretch;
-      }
-
-      nav a {
-        color: white;
-        text-decoration: none;
-        padding: 0 12px;
-        transition: background-color 0.3s;
-        font-weight: 500;
-        font-size: 0.85rem;
-        display: flex;
-        align-items: center;
-        white-space: nowrap;
-        height: 100%;
-        min-height: 70px;
-      }
-
-      nav a:hover {
-        background-color: rgba(255, 255, 255, 0.2);
-      }
-
-      nav a.active {
-        background-color: rgba(255, 255, 255, 0.3);
-        border-bottom: 4px solid white;
-      }
-      
+      /* ── HEADER ── */
+header {
+  position:sticky; top:0; z-index:100;
+  background:linear-gradient(135deg,#0A2540 0%,#2563EB 100%);
+  box-shadow:0 4px 15px rgba(0,0,0,.3);
+  animation:slideDown .7s ease-out forwards;
+}
+@keyframes slideDown {
+  from{transform:translateY(-100%);opacity:0}
+  to  {transform:translateY(0);opacity:1}
+}
+.header-content {
+  max-width:1400px; margin:0 auto; padding:0 20px;
+  display:flex; justify-content:space-between; align-items:center;
+}
+.logo {
+  font-size:1.5rem; font-weight:700; color:#fff;
+  padding:15px 0; text-decoration:none;
+  animation:pulse 2s ease-in-out infinite;
+}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.04)}}
+nav { display:flex; flex-wrap:wrap; }
+nav a {
+  color:#fff; text-decoration:none; padding:18px 14px;
+  font-size:.9rem; transition:all .3s ease; position:relative;
+}
+nav a::after {
+  content:''; position:absolute; bottom:0; left:50%;
+  width:0; height:3px; background:#fff;
+  transition:all .3s ease; transform:translateX(-50%);
+}
+nav a:hover::after, nav a.active::after { width:100%; }
+nav a:hover { background:rgba(255,255,255,.12); }
+.hamburger-btn {
+  display:none; background:none; border:none; cursor:pointer; padding:10px;
+}
+.hamburger-btn img { width:24px; height:24px; filter:brightness(0) invert(1); }
+.mobile-nav {
+  display:none; position:absolute; top:100%; left:0; right:0;
+  background:linear-gradient(135deg,#0A2540,#2563EB);
+  box-shadow:0 4px 15px rgba(0,0,0,.2);
+}
+.mobile-nav.show { display:block; }
+.mobile-nav a {
+  display:block; color:#fff; text-decoration:none;
+  padding:15px 20px; border-bottom:1px solid rgba(255,255,255,.1);
+}
+.mobile-nav a.active { background:rgba(255,255,255,.2); }
       .content {
         max-width: 1200px;
         margin: 0 auto;
@@ -420,40 +387,41 @@
         }
       });
     </script>
-    <header>
-      <div class="header-content">
-        <div class="logo">🧠 Neurovascular Dynamic Lab</div>
-        <nav>
-          <a href="index.html">Home</a>
-          <a href="learn.html">Learn</a>
-          <a href="resources.html">Resources</a>
-          <a href="community.html" class="active">Community</a>
-          <a href="research.html">Latest Research</a>
-          <a href="brain-map.html">🧠 Interactive Brain Map</a>
-          <a href="quiz.html">Quiz</a>
-          <a href="flashcards.html">Flashcards</a>
-          <a href="about.html">About Us</a>
-          <a href="faq.html">FAQ</a>
-          <a href="contact.html">Contact</a>
-        </nav>
-        <button class="hamburger-btn" id="hamburgerBtn">
-          <img src="expand.png" alt="Menu" />
-        </button>
-      </div>
-      <div class="mobile-nav" id="mobileNav">
-        <a href="index.html">Home</a>
-        <a href="learn.html">Learn</a>
-        <a href="resources.html">Resources</a>
-        <a href="community.html" class="active">Community</a>
-        <a href="research.html">Latest Research</a>
-        <a href="brain-map.html">🧠 Interactive Brain Map</a>
-        <a href="quiz.html">Quiz</a>
-        <a href="flashcards.html">Flashcards</a>
-        <a href="about.html">About Us</a>
-        <a href="faq.html">FAQ</a>
-        <a href="contact.html">Contact</a>
-      </div>
-    </header>
+    <!-- HEADER -->
+<header>
+  <div class="header-content">
+    <a href="index.html" class="logo">🧠 Neurovascular Dynamic Lab</a>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="learn.html">Learn</a>
+      <a href="resources.html">Resources</a>
+      <a href="community.html" class="active">Community</a>
+      <a href="research.html">Latest Research</a>
+      <a href="about.html">About Us</a>
+      <a href="brain-map.html">🧠 Interactive Brain Map</a>
+      <a href="quiz.html">Quiz</a>
+      <a href="flashcards.html">Flashcards</a>
+      <a href="faq.html">FAQ</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <button class="hamburger-btn" id="hamburgerBtn" style="display:none">
+      <img src="expand.png" alt="Menu">
+    </button>
+  </div>
+  <div class="mobile-nav" id="mobileNav">
+    <a href="index.html">Home</a>
+    <a href="learn.html">Learn</a>
+    <a href="resources.html">Resources</a>
+    <a href="community.html" class="active">Community</a>
+    <a href="research.html">Latest Research</a>
+    <a href="brain-map.html">🧠 Interactive Brain Map</a>
+    <a href="quiz.html">Quiz</a>
+      <a href="flashcards.html">Flashcards</a>
+    <a href="about.html">About Us</a>
+    <a href="faq.html">FAQ</a>
+    <a href="contact.html">Contact</a>
+  </div>
+</header>
 
     <div class="content">
       <h2>👥 Community</h2>
