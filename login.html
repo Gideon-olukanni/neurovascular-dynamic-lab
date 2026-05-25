@@ -403,21 +403,45 @@
     }
 
     /* ========================================================
-         FOOTER STYLES
-         ======================================================== */
-    footer {
-      background-color: var(--navy);
-      color: white;
-      text-align: center;
-      padding: 1.5rem;
-      font-size: 0.85rem;
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
-      margin-top: auto;
-    }
+       FOOTER STYLES (COMPLETELY FIXED EDGE-TO-EDGE)
+       ======================================================== */
+footer {
+background: linear-gradient(135deg, #0a2540 0%, #1e3a5f 100%);
+color: rgba(255, 255, 255, 0.85);
+text-align: center;
+padding: 24px 20px;
+/* Accommodates iPhone home indicators to prevent bottom whitespace */
+padding-bottom: calc(24px + env(safe-area-inset-bottom));
+margin: 0;
+margin-top: auto;
+/* Forces footer flush to the bottom */
+position: relative;
+overflow: hidden;
+font-size: 0.88rem;
+line-height: 1.8;
+width: 100vw;
+max-width: 100%;
+display: block;
+box-sizing: border-box;
+/* Crucial for preventing horizontal overflow */
+}
 
-    footer p {
-      opacity: 0.75;
-    }
+footer::before {
+content: "";
+position: absolute;
+top: 0;
+left: 0;
+right: 0;
+height: 3px;
+background: linear-gradient(90deg, #00d4ff, #7b2ff7, #00d4ff);
+}
+
+footer p {
+margin: 0;
+padding: 4px 0;
+word-break: keep-all;
+overflow-wrap: normal;
+}
 
     /* Responsive adjustments */
     @media (max-width: 768px) {
@@ -547,9 +571,14 @@
     </div>
   </div>
 
-  <footer>
-    <p>&copy; 2026 Neurovascular Dynamic Lab. All rights reserved.</p>
-  </footer>
+<footer>
+<p>
+&copy; 2026 Neurovascular Dynamic Lab. All rights reserved.
+</p>
+<p>
+Made with 🧠 for curious minds. <br>Powered by <strong>GIDEON REALITY</strong>
+</p>
+</footer>
   <script type="module">
     // OPTION B FIX: Using the absolute path pointing directly to your correct filename
     import { auth } from './firebase-config.js';
