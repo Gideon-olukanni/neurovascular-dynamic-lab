@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://gideon-olukanni.github.io/neurovascular-dynamic-lab/sitemap.xml
