@@ -307,7 +307,177 @@
         font-size: 1.1rem;
         color: rgba(255, 255, 255, 0.9);
     }
+/* ===================================================
+PLATFORM IDENTITY
+=================================================== */
 
+.platform-origin{
+
+background:
+linear-gradient(
+180deg,
+#0A2540 0%,
+#12335a 100%
+);
+
+padding:70px 22px;
+
+position:relative;
+
+overflow:hidden;
+
+text-align:center;
+
+}
+
+.platform-origin::before{
+
+content:'';
+
+position:absolute;
+
+top:-120px;
+
+left:-120px;
+
+width:340px;
+
+height:340px;
+
+border-radius:50%;
+
+background:
+
+radial-gradient(
+circle,
+rgba(34,211,238,.16),
+transparent 70%
+);
+
+}
+
+.platform-origin::after{
+
+content:'';
+
+position:absolute;
+
+bottom:-140px;
+
+right:-120px;
+
+width:320px;
+
+height:320px;
+
+border-radius:50%;
+
+background:
+
+radial-gradient(
+circle,
+rgba(37,99,235,.18),
+transparent 70%
+);
+
+}
+
+.platform-origin-inner{
+
+position:relative;
+
+z-index:2;
+
+max-width:760px;
+
+margin:auto;
+
+}
+
+.platform-chip{
+
+display:inline-block;
+
+padding:10px 22px;
+
+border-radius:999px;
+
+background:
+
+rgba(255,255,255,.08);
+
+border:
+
+1px solid rgba(255,255,255,.12);
+
+color:#67E8F9;
+
+font-size:.78rem;
+
+font-weight:700;
+
+letter-spacing:.08em;
+
+text-transform:uppercase;
+
+margin-bottom:26px;
+
+}
+
+.platform-origin h2{
+
+color:white;
+
+font-size:
+
+clamp(
+2rem,
+4vw,
+2.8rem
+);
+
+line-height:1.2;
+
+margin-bottom:22px;
+
+}
+
+.platform-origin p{
+
+color:
+
+rgba(
+255,
+255,
+255,
+.78
+);
+
+font-size:1.05rem;
+
+line-height:1.95;
+
+max-width:700px;
+
+margin:auto;
+
+}
+
+@media(max-width:768px){
+
+.platform-origin{
+
+padding:58px 18px;
+
+}
+
+.platform-origin p{
+
+font-size:1rem;
+
+}
+
+}
     /* ========================================================
        INTRO SECTION STYLES
        ======================================================== */
@@ -1030,6 +1200,32 @@ document.addEventListener('DOMContentLoaded', () => {
 </section> 
 
 <section class="brand-dna"> 
+    <!-- PLATFORM IDENTITY -->
+
+<section class="platform-origin">
+
+<div class="platform-origin-inner">
+
+<div class="platform-chip">
+Built by GIDEON REALITY
+</div>
+
+<h2>
+More Than a Website.
+A Growing Educational Initiative.
+</h2>
+
+<p>
+
+Neurovascular Dynamic Lab is an educational and scientific learning platform created under GIDEON REALITY.
+
+Built to expand access to neuroscience education, scientific thinking, and digital learning across Africa and beyond.
+
+</p>
+
+</div>
+
+</section>
   <h2>Our Mission</h2>
   <p>To democratize neuroscience education and make brain science accessible to curious minds, Africa and beyond through engaging, evidence-based content.</p>
 
