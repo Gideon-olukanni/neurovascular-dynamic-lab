@@ -480,19 +480,7 @@
                 </div>
                 <button type="submit" class="submit-btn">Add Card to Live Deck</button>
             </form>
-            <!-- ONE-TIME MIGRATION TOOL -->
-<hr class="section-divider">
-<h2>🚀 One-Time Migration — Upload 30 Cards to Firebase</h2>
-<p style="font-size:13px; color:#64748B; margin-bottom:14px;">
-  Tap this button <strong>once</strong> to upload your 30 hardcoded cards into Firebase.
-  Do not tap it twice — it will create duplicates.
-</p>
-<button class="submit-btn" id="migrateBtn" style="background:#10B981;">
-  ⬆️ Migrate 30 Cards to Firebase
-</button>
-<div id="migrateLog" style="margin-top:14px; font-size:13px; color:#334155; line-height:2;"></div>
         </div>
-
         <!-- ============================
                MAJOR SEGMENTS PANEL
                ============================ -->
@@ -641,7 +629,6 @@
 
     <script type="module">
         import {
-        import {
     db,
     collection,
     addDoc,
@@ -649,12 +636,14 @@
     getDoc,
     doc,
     updateDoc,
-    deleteDoc,
-    orderBy,
-    serverTimestamp,
     query,
     where
 } from "./firebase-config.js";
+import {
+    deleteDoc,
+    orderBy,
+    serverTimestamp
+} from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
         // ─── Utility ────────────────────────────────────────────────────────────────
 
         function slugify(str) {
@@ -1144,61 +1133,6 @@
             await loadMajorSegments();
             await loadAllMinorSegments();
         })();
-        // ─── ONE-TIME MIGRATION ───────────────────────────────────────────────────────
-const MIGRATE_CARDS = [
-  { id:1,  cat:'anatomy',  icon:'🧠', term:'Cerebral Cortex',    def:'The outermost layer of the brain responsible for higher-order thinking, language, memory, and voluntary movement. It is highly folded (gyrification) to maximise surface area within the skull.' },
-  { id:2,  cat:'anatomy',  icon:'🌊', term:'Frontal Lobe',        def:'The largest cerebral lobe, seated at the front. It governs executive functions — planning, decision-making, problem-solving, impulse control, and personality expression.' },
-  { id:3,  cat:'anatomy',  icon:'🎨', term:'Parietal Lobe',       def:'Positioned at the crown of the brain, it integrates sensory data including touch, temperature, and pain, and constructs our sense of spatial awareness and body position.' },
-  { id:4,  cat:'anatomy',  icon:'👂', term:'Temporal Lobe',       def:"Located on the lateral sides of the brain. Processes auditory information, supports language comprehension (Wernicke's area), and is critical for long-term memory formation." },
-  { id:5,  cat:'anatomy',  icon:'👁️', term:'Occipital Lobe',      def:'The rearmost cerebral lobe. Almost entirely dedicated to processing visual information received from the retinas, including colour, motion, and object recognition.' },
-  { id:6,  cat:'anatomy',  icon:'⚖️', term:'Cerebellum',          def:'Nestled beneath the cerebral hemispheres at the back. Coordinates voluntary movement, fine motor control, balance, and posture. Contains more neurons than any other brain region.' },
-  { id:7,  cat:'anatomy',  icon:'🌉', term:'Corpus Callosum',     def:'A wide, flat band of approximately 200 million nerve fibers that connects the left and right cerebral hemispheres, allowing continuous cross-hemisphere communication.' },
-  { id:8,  cat:'anatomy',  icon:'🔄', term:'Brainstem',           def:'The stalk-like structure linking the brain to the spinal cord. Autonomously governs life-sustaining functions: breathing rhythm, heart rate, blood pressure, and the sleep–wake cycle.' },
-  { id:9,  cat:'neuron',   icon:'⚡', term:'Neuron',              def:'The fundamental signalling unit of the nervous system. A specialised cell that integrates incoming electrochemical signals and propagates them onward. The brain contains ~86 billion neurons.' },
-  { id:10, cat:'neuron',   icon:'🌿', term:'Dendrite',            def:"Tree-like extensions projecting from the neuron's cell body. They receive and consolidate incoming signals from thousands of other neurons and convey them toward the soma." },
-  { id:11, cat:'neuron',   icon:'➡️', term:'Axon',               def:'A single, elongated projection that carries electrical impulses (action potentials) away from the cell body toward target neurons, muscle fibres, or glands — sometimes over distances of a metre.' },
-  { id:12, cat:'neuron',   icon:'🛡️', term:'Myelin Sheath',       def:'A segmented fatty insulating coat around axons formed by Schwann cells (peripheral) or oligodendrocytes (central). It dramatically accelerates signal speed via saltatory conduction and protects the nerve fibre.' },
-  { id:13, cat:'neuron',   icon:'🔗', term:'Synapse',             def:'The nanoscale junction between two neurons where communication occurs. The presynaptic terminal releases neurotransmitters into the synaptic cleft; the postsynaptic membrane receives and responds to them.' },
-  { id:14, cat:'neuron',   icon:'💬', term:'Neurotransmitter',    def:'Chemical messengers released from synaptic vesicles that bind to postsynaptic receptors. Key examples: dopamine (reward/motivation), serotonin (mood), glutamate (excitation), GABA (inhibition).' },
-  { id:15, cat:'neuron',   icon:'🔋', term:'Action Potential',    def:"A rapid, all-or-nothing electrical impulse travelling along the axon membrane, generated when a stimulus exceeds the neuron's threshold. It is the universal currency of neural communication." },
-  { id:16, cat:'function', icon:'🐠', term:'Hippocampus',         def:'A seahorse-shaped bilateral structure in the medial temporal lobe. Indispensable for converting short-term experiences into long-term declarative memories and for spatial navigation.' },
-  { id:17, cat:'function', icon:'😨', term:'Amygdala',            def:'An almond-shaped bilateral structure in the temporal lobe. Processes emotional significance — especially fear, threat detection, and pleasure — and tags memories with emotional salience.' },
-  { id:18, cat:'function', icon:'📡', term:'Thalamus',            def:"The brain's principal relay hub, routing virtually all sensory and motor signals to the appropriate cortical regions. Often described as the \"gateway to consciousness.\"" },
-  { id:19, cat:'function', icon:'🌡️', term:'Hypothalamus',        def:'A tiny but powerful structure that maintains homeostasis — regulating body temperature, hunger, thirst, circadian rhythms, and hormonal output via the pituitary gland.' },
-  { id:20, cat:'function', icon:'🎯', term:'Prefrontal Cortex',   def:'The anterior region of the frontal lobe. The seat of complex cognition: working memory, abstract reasoning, impulse inhibition, future planning, moral judgement, and social behaviour.' },
-  { id:21, cat:'function', icon:'🔁', term:'Neuroplasticity',     def:"The brain's lifelong capacity to reorganise its structure and function — forming new synapses, pruning unused ones, and even generating new neurons — in response to learning, experience, or injury." },
-  { id:22, cat:'clinical', icon:'💥', term:'Stroke',              def:'Occurs when cerebral blood flow is suddenly interrupted — by a clot (ischaemic, 87% of cases) or a ruptured vessel (haemorrhagic). Brain cells begin dying within minutes. A neurological emergency.' },
-  { id:23, cat:'clinical', icon:'🩸', term:'Cerebral Aneurysm',   def:'A localised bulge in a cerebral artery wall caused by weakened tissue. Rupture releases blood into the subarachnoid space, causing a sudden, severe headache and life-threatening haemorrhagic stroke.' },
-  { id:24, cat:'clinical', icon:'🌩️', term:'Epilepsy',            def:'A chronic neurological disorder defined by recurrent, unprovoked seizures arising from abnormal, synchronised electrical discharges across neuronal networks. Affects over 50 million people worldwide.' },
-  { id:25, cat:'clinical', icon:'🧩', term:"Alzheimer's Disease", def:"The most prevalent neurodegenerative disease and leading cause of dementia. Hallmarked by amyloid-beta plaques and tau tangles that progressively destroy neurons, impairing memory and cognition." },
-  { id:26, cat:'clinical', icon:'🚧', term:'Blood-Brain Barrier', def:'A selective semi-permeable barrier formed by specialised endothelial cells lining cerebral blood vessels. It shields the brain from pathogens and toxins while permitting glucose, oxygen, and vital nutrients to pass.' },
-  { id:27, cat:'neuro',    icon:'🖥️', term:'Computational Neuroscience', def:'An interdisciplinary field that builds mathematical models and computer simulations of neural circuits to understand how the brain encodes information, makes decisions, and generates behaviour.' },
-  { id:28, cat:'neuro',    icon:'📡', term:'fMRI',                def:'Functional Magnetic Resonance Imaging. Non-invasively maps brain activity by detecting the BOLD signal — changes in blood oxygenation — with millimetre spatial resolution. The gold standard for brain mapping.' },
-  { id:29, cat:'neuro',    icon:'🌊', term:'EEG',                 def:"Electroencephalography. Records the brain's spontaneous electrical activity through scalp electrodes. Offers millisecond temporal resolution; clinically essential for diagnosing epilepsy and sleep disorders." },
-  { id:30, cat:'neuro',    icon:'🔬', term:'Cerebrovascular',     def:'Relating to the blood vessels supplying the brain. Cerebrovascular disease encompasses conditions — stroke, aneurysm, arteriovenous malformation — that compromise cerebral blood flow and oxygenation.' },
-];
-
-document.getElementById('migrateBtn')?.addEventListener('click', async () => {
-  const btn = document.getElementById('migrateBtn');
-  const log = document.getElementById('migrateLog');
-  btn.disabled = true;
-  btn.textContent = '⏳ Uploading...';
-  log.innerHTML = '';
-
-  let successCount = 0;
-  for (const card of MIGRATE_CARDS) {
-    try {
-      await addDoc(collection(db, "flashcards"), card);
-      successCount++;
-      log.innerHTML += `✅ ${card.term}<br>`;
-    } catch (err) {
-      log.innerHTML += `❌ Failed: ${card.term} — ${err.message}<br>`;
-    }
-  }
-
-  btn.textContent = `🎉 Done — ${successCount}/30 cards uploaded`;
-  log.innerHTML += `<strong style="color:#10B981;">Migration complete! Go check Firebase.</strong>`;
-});
     </script>
 </body>
 </html>
