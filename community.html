@@ -11,7 +11,7 @@
         box-sizing: border-box;
       }
 
-            html, body {
+      html, body {
         font-family: "Segoe UI", Inter, system-ui, sans-serif;
         line-height: 1.6;
         color: #0f172a;
@@ -21,8 +21,9 @@
         max-width: 100vw;
         margin: 0;
         padding: 0;
-            }
-            /* Header animation */
+      }
+
+      /* Header animation */
       header {
         position: sticky;
         top: 0;
@@ -47,7 +48,7 @@
         }
       }
 
-            .header-content {
+      .header-content {
         max-width: 1400px;
         margin: 0 auto;
         padding: 0 20px;
@@ -55,8 +56,7 @@
         justify-content: space-between;
         align-items: center;
         flex-wrap: nowrap;
-            }
-      
+      }
 
       .logo {
         font-size: 1.8rem;
@@ -67,8 +67,7 @@
       }
 
       @keyframes pulse {
-        0%,
-        100% {
+        0%, 100% {
           transform: scale(1);
         }
         50% {
@@ -76,13 +75,7 @@
         }
       }
 
-            nav {
-        display: flex;
-        gap: 0;
-        align-items: stretch;
-      }
-
-            nav {
+      nav {
         display: flex;
         gap: 0;
         align-items: stretch;
@@ -110,7 +103,6 @@
         background-color: rgba(255, 255, 255, 0.3);
         border-bottom: 4px solid white;
       }
-      
       
       .content {
         max-width: 1200px;
@@ -213,84 +205,8 @@
       }
 
       @keyframes scan {
-        0% {
-          left: -100%;
-        }
-        100% {
-          left: 100%;
-        }
-      }
-
-      @media (max-width: 1300px) {
-        .header-content {
-          padding: 0 15px;
-        }
-        nav a {
-          padding: 15px 12px;
-          font-size: 0.9rem;
-        }
-        .features-grid {
-          grid-template-columns: repeat(2, 1fr);
-          gap: 15px;
-        }
-      }
-
-      @media (max-width: 1150px) {
-        .content {
-          
-          padding: 20px 15px;
-        }
-        h2 {
-          font-size: 2rem;
-        }
-        .community-box {
-          padding: 20px 15px;
-        }
-        .community-box h3 {
-          font-size: 1.3rem;
-        }
-        .features-grid {
-          grid-template-columns: 1fr;
-          gap: 15px;
-        }
-        .feature-card {
-          padding: 15px;
-        }
-        .btn {
-          padding: 10px 15px;
-          font-size: 0.85rem;
-          margin: 8px 0;
-          width: 100%;
-        }
-      }
-
-      @media (max-width: 480px) {
-        .header-content {
-          padding: 8px 10px;
-        }
-        .logo {
-          font-size: 1rem;
-        }
-        nav a {
-          padding: 10px 6px;
-          font-size: 0.7rem;
-        }
-        .content {
-          padding: 15px 10px;
-        }
-        h2 {
-          font-size: 1.5rem;
-        }
-        .community-box {
-          padding: 15px 10px;
-        }
-        .community-box h3 {
-          font-size: 1.1rem;
-        }
-        .btn {
-          padding: 8px 12px;
-          font-size: 0.8rem;
-        }
+        0% { left: -100%; }
+        100% { left: 100%; }
       }
 
       /* Float-in animation for sections */
@@ -313,30 +229,14 @@
       }
 
       /* Staggered delays */
-      .community-box:nth-of-type(1) {
-        animation-delay: 0.1s;
-      }
-      .features-grid .feature-card:nth-child(1) {
-        animation-delay: 0.2s;
-      }
-      .features-grid .feature-card:nth-child(2) {
-        animation-delay: 0.3s;
-      }
-      .features-grid .feature-card:nth-child(3) {
-        animation-delay: 0.4s;
-      }
-      .features-grid .feature-card:nth-child(4) {
-        animation-delay: 0.5s;
-      }
-      .features-grid .feature-card:nth-child(5) {
-        animation-delay: 0.6s;
-      }
-      .features-grid .feature-card:nth-child(6) {
-        animation-delay: 0.7s;
-      }
-      .community-box:nth-of-type(2) {
-        animation-delay: 0.8s;
-      }
+      .community-box:nth-of-type(1) { animation-delay: 0.1s; }
+      .features-grid .feature-card:nth-child(1) { animation-delay: 0.2s; }
+      .features-grid .feature-card:nth-child(2) { animation-delay: 0.3s; }
+      .features-grid .feature-card:nth-child(3) { animation-delay: 0.4s; }
+      .features-grid .feature-card:nth-child(4) { animation-delay: 0.5s; }
+      .features-grid .feature-card:nth-child(5) { animation-delay: 0.6s; }
+      .features-grid .feature-card:nth-child(6) { animation-delay: 0.7s; }
+      .community-box:nth-of-type(2) { animation-delay: 0.8s; }
 
       /* ========================================================
            HAMBURGER MENU STYLES
@@ -399,46 +299,20 @@
       }
 
       /* ========================================================
-           RESPONSIVE DESIGN
+           CONSOLIDATED RESPONSIVE DESIGN (FIXED OVERLAPS)
            ======================================================== */
 
-      @media (max-width: 1150px) {
+      @media (max-width: 1300px) {
         .header-content {
           padding: 0 15px;
         }
-
-        .logo {
-          font-size: 1.4rem;
+        nav a {
+          padding: 0 10px;
+          font-size: 0.8rem;
         }
+      }
 
-        nav {
-          display: none;
-        }
-
-        .hamburger-btn {
-          display: block;
-        }
-
-        header {
-          background: linear-gradient(
-            135deg,
-            #0a2540 0%,
-            #2563eb 100%
-          ) !important;
-          color: white !important;
-        }
-
-        .header-content {
-          display: flex !important;
-          flex-direction: row !important;
-          justify-content: space-between !important;
-          align-items: center !important;
-          flex-wrap: nowrap !important;
-          gap: 10px;
-          padding: 10px 16px !important;
-          min-height: auto !important;
-        }
-
+      @media (max-width: 1150px) {
         .logo {
           font-size: 1rem !important;
           white-space: nowrap !important;
@@ -448,55 +322,78 @@
           margin: 0;
         }
 
-        .hamburger-btn {
-          flex: 0 0 auto !important;
-        }
-
         nav {
           display: none !important;
         }
 
-        .mobile-nav {
-          background: linear-gradient(
-            135deg,
-            #0a2540 0%,
-            #2563eb 100%
-          ) !important;
+        .hamburger-btn {
+          display: block !important;
+          flex: 0 0 auto !important;
+        }
+
+        .content {
+          padding: 20px 15px !important;
+        }
+        
+        h2 {
+          font-size: 2rem !important;
+        }
+
+        .community-box {
+          padding: 20px 15px !important;
+        }
+
+        .community-box h3 {
+          font-size: 1.3rem !important;
+        }
+
+        .features-grid {
+          grid-template-columns: 1fr !important;
+          gap: 15px !important;
+        }
+
+        .feature-card {
+          padding: 15px !important;
+        }
+
+        .btn {
+          padding: 10px 15px !important;
+          font-size: 0.85rem !important;
+          margin: 8px 0 !important;
+          width: 100% !important;
         }
 
         footer {
           padding: 30px 18px !important;
           text-align: center !important;
         }
+      }
 
-        body {
-          font-size: 16px;
+      @media (max-width: 480px) {
+        .header-content {
+          padding: 8px 10px !important;
         }
-
-        .content,
-        .hero,
-        .section,
-        .card,
-        .quiz-panel,
-        .info-panel {
-          padding-left: 16px !important;
-          padding-right: 16px !important;
+        .content {
+          padding: 15px 10px !important;
         }
-
-        .button-group,
-        .footer-links,
-        .footer-grid,
-        .author-container,
-        .value-card,
-        .resource-grid {
-          gap: 16px;
+        h2 {
+          font-size: 1.5rem !important;
+        }
+        .community-box {
+          padding: 15px 10px !important;
+        }
+        .community-box h3 {
+          font-size: 1.1rem !important;
+        }
+        .btn {
+          padding: 8px 12px !important;
+          font-size: 0.8rem !important;
         }
       }
     </style>
   </head>
   <body>
     <script>
-      // HERO TYPEWRITER + ROTATING TEXT
       document.addEventListener("DOMContentLoaded", () => {
         // Hamburger menu functionality
         const hamburgerBtn = document.getElementById("hamburgerBtn");
@@ -509,10 +406,7 @@
 
           // Close mobile nav when clicking outside
           document.addEventListener("click", (e) => {
-            if (
-              !hamburgerBtn.contains(e.target) &&
-              !mobileNav.contains(e.target)
-            ) {
+            if (!hamburgerBtn.contains(e.target) && !mobileNav.contains(e.target)) {
               mobileNav.classList.remove("show");
             }
           });
@@ -524,18 +418,6 @@
             });
           });
         }
-
-        const heroH1 = document.querySelector(".hero h1");
-        const rotatingTexts = document.querySelectorAll(".rotating-text");
-        heroH1.addEventListener("animationend", () => {
-          heroH1.style.borderRight = "none";
-          rotatingTexts.forEach((el, i) => {
-            setTimeout(() => {
-              el.style.opacity = 1;
-              el.style.transform = "translateY(0)";
-            }, i * 1500);
-          });
-        });
       });
     </script>
     <header>
@@ -548,8 +430,8 @@
           <a href="community.html" class="active">Community</a>
           <a href="research.html">Latest Research</a>
           <a href="brain-map.html">🧠 Interactive Brain Map</a>
-      <a href="quiz.html">Quiz</a>
-      <a href="flashcards.html">Flashcards</a>
+          <a href="quiz.html">Quiz</a>
+          <a href="flashcards.html">Flashcards</a>
           <a href="about.html">About Us</a>
           <a href="faq.html">FAQ</a>
           <a href="contact.html">Contact</a>
@@ -565,8 +447,8 @@
         <a href="community.html" class="active">Community</a>
         <a href="research.html">Latest Research</a>
         <a href="brain-map.html">🧠 Interactive Brain Map</a>
-      <a href="quiz.html">Quiz</a>
-      <a href="flashcards.html">Flashcards</a>
+        <a href="quiz.html">Quiz</a>
+        <a href="flashcards.html">Flashcards</a>
         <a href="about.html">About Us</a>
         <a href="faq.html">FAQ</a>
         <a href="contact.html">Contact</a>
@@ -643,28 +525,14 @@
 
       <div style="text-align: center; margin: 40px 0">
         <button class="btn">
-          <a
-            href="https://t.me/gideonreality"
-            style="text-decoration: none; color: white"
-            target="_blank">🚀 Join Us Now On Telegram
-          </a>
+          <a href="https://t.me/gideonreality" style="text-decoration: none; color: white" target="_blank">🚀 Join Us Now On Telegram</a>
         </button>
         <button class="btn">
-          <a
-            href="https://chat.whatsapp.com/LHbyjA9LxfG4B1KMoDEIuu"
-            style="text-decoration: none; color: white"
-            target="_blank">🚀 Join Us Now On Our Whatsapp group
-          </a>
+          <a href="https://chat.whatsapp.com/LHbyjA9LxfG4B1KMoDEIuu" style="text-decoration: none; color: white" target="_blank">🚀 Join Us Now On Our Whatsapp group</a>
         </button>
         <button class="btn">
-          <a
-            href="https://whatsapp.com/channel/0029VbBftRH1dAw8ttK8HM0r"
-            style="text-decoration: none; color: white"
-            target="_blank">🚀 Join Us Now On Our Whatsapp channel
-          </a>
+          <a href="https://whatsapp.com/channel/0029VbBftRH1dAw8ttK8HM0r" style="text-decoration: none; color: white" target="_blank">🚀 Join Us Now On Our Whatsapp channel</a>
         </button>
-        <!-- <button class="btn" onclick="alert('View Discussions')">💬 View Discussions</button>
-            <button class="btn" onclick="alert('Browse Members')">👥 Browse Members</button> -->
       </div>
     </div>
 
@@ -673,14 +541,8 @@
       <p>Made with 🧠 for curious minds everywhere!</p>
 
       <a href="https://www.free-counters.org/">powered by Free-Counters</a>
-      <script
-        type="text/javascript"
-        src="https://www.freevisitorcounters.com/auth.php?id=1307ae18c76bfe2379819c0d98c6f694adf30895"
-      ></script>
-      <script
-        type="text/javascript"
-        src="https://www.freevisitorcounters.com/en/home/counter/1530488/t/8"
-      ></script>
+      <script type="text/javascript" src="https://www.freevisitorcounters.com/auth.php?id=1307ae18c76bfe2379819c0d98c6f694adf30895"></script>
+      <script type="text/javascript" src="https://www.freevisitorcounters.com/en/home/counter/1530488/t/8"></script>
     </footer>
   </body>
 </html>
