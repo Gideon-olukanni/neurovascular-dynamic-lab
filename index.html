@@ -650,7 +650,171 @@
         max-width: 700px;
         padding: 0 15px;
     }
+/* ========================================================
+   PREMIUM CTA SECTION
+   ======================================================== */
 
+.learn-cta-section {
+    position: relative;
+    padding: 110px 20px;
+    overflow: hidden;
+    background:
+        linear-gradient(135deg,
+        #071426 0%,
+        #0A2540 45%,
+        #1E40AF 100%);
+    text-align: center;
+}
+
+.learn-cta-section::before {
+    content: '';
+    position: absolute;
+    width: 500px;
+    height: 500px;
+    top: -180px;
+    left: -180px;
+    border-radius: 50%;
+    background: radial-gradient(circle,
+        rgba(34,211,238,0.18),
+        transparent 70%);
+    animation: pulseOrb 8s ease-in-out infinite;
+}
+
+.learn-cta-section::after {
+    content: '';
+    position: absolute;
+    width: 400px;
+    height: 400px;
+    bottom: -150px;
+    right: -150px;
+    border-radius: 50%;
+    background: radial-gradient(circle,
+        rgba(37,99,235,0.18),
+        transparent 70%);
+    animation: pulseOrb 8s ease-in-out infinite reverse;
+}
+
+@keyframes pulseOrb {
+    0%,100% {
+        transform: scale(1);
+        opacity: .7;
+    }
+    50% {
+        transform: scale(1.12);
+        opacity: 1;
+    }
+}
+
+.learn-cta-content {
+    position: relative;
+    z-index: 2;
+    max-width: 850px;
+    margin: 0 auto;
+}
+
+.learn-cta-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 22px;
+    border-radius: 999px;
+    background: rgba(34,211,238,0.08);
+    border: 1px solid rgba(34,211,238,0.25);
+    color: #67E8F9;
+    font-size: .8rem;
+    font-weight: 700;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    margin-bottom: 28px;
+    backdrop-filter: blur(12px);
+}
+
+.learn-cta-title {
+    font-size: clamp(2.2rem, 5vw, 4rem);
+    line-height: 1.15;
+    color: white;
+    font-weight: 800;
+    margin-bottom: 24px;
+    letter-spacing: -0.03em;
+}
+
+.learn-cta-title span {
+    color: #22D3EE;
+}
+
+.learn-cta-text {
+    font-size: 1.08rem;
+    line-height: 1.9;
+    color: rgba(255,255,255,0.78);
+    max-width: 720px;
+    margin: 0 auto 42px;
+}
+
+.learn-cta-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    padding: 20px 38px;
+    border-radius: 18px;
+    text-decoration: none;
+    color: white;
+    font-weight: 700;
+    font-size: 1rem;
+    background:
+        linear-gradient(135deg,
+        #2563EB 0%,
+        #22D3EE 100%);
+    box-shadow:
+        0 10px 35px rgba(34,211,238,.35);
+    transition: all .35s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.learn-cta-button::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(135deg,
+        rgba(255,255,255,.25),
+        transparent);
+    opacity: 0;
+    transition: opacity .35s ease;
+}
+
+.learn-cta-button:hover::before {
+    opacity: 1;
+}
+
+.learn-cta-button:hover {
+    transform: translateY(-6px) scale(1.03);
+    box-shadow:
+        0 18px 45px rgba(34,211,238,.5);
+}
+
+.learn-cta-sub {
+    margin-top: 20px;
+    font-size: .82rem;
+    color: rgba(255,255,255,.45);
+    letter-spacing: .06em;
+}
+
+@media (max-width: 768px) {
+
+    .learn-cta-section {
+        padding: 80px 18px;
+    }
+
+    .learn-cta-text {
+        font-size: 1rem;
+    }
+
+    .learn-cta-button {
+        width: 100%;
+        justify-content: center;
+    }
+        }
     /* ========================================================
        RESPONSIVE MEDIA QUERIES
        ======================================================== */
@@ -962,9 +1126,38 @@ document.addEventListener('DOMContentLoaded', () => {
 </div>
 <p class="video-description">Neuroscience and the future — how brain research is changing medicine, technology, and human potential.</p>
 
-<div style="text-align: center; padding: 60px 20px;">
-    <a href="learn.html"> <button class="cta-button">Start Learning Now</button></a>
-</div>
+<section class="learn-cta-section">
+
+    <div class="learn-cta-content">
+
+        <div class="learn-cta-badge">
+            🧠 BEGIN YOUR JOURNEY
+        </div>
+
+        <h2 class="learn-cta-title">
+            Start Exploring the
+            <span>Human Brain</span>
+        </h2>
+
+        <p class="learn-cta-text">
+            Dive into interactive neuroscience lessons,
+            flashcards, quizzes, brain anatomy, neural
+            communication, cognition, and cutting-edge
+            discoveries designed for curious minds across
+            Africa and beyond.
+        </p>
+
+        <a href="learn.html" class="learn-cta-button">
+            Start Learning Now →
+        </a>
+
+        <div class="learn-cta-sub">
+            Free • Interactive • Built for Students
+        </div>
+
+    </div>
+
+</section>
 
 <style>
 @keyframes ndl-glow {
