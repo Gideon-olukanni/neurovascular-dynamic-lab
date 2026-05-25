@@ -3,32 +3,26 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>🧠Neurovascular Dynamic Lab - Research</title>
+    <title>🧠 Neurovascular Dynamic Lab - Latest Research</title>
     <style>
+      /* GLOBAL STYLES */
       * {
         margin: 0;
         padding: 0;
         box-sizing: border-box;
       }
-
-      html, body {
-        font-family: "Segoe UI", Inter, system-ui, sans-serif;
+      body {
+        font-family: "Segoe UI", sans-serif;
         line-height: 1.6;
         color: #0f172a;
         background-color: #f8fafc;
         overflow-x: hidden;
-        width: 100%;
-        max-width: 100vw;
-        margin: 0;
-        padding: 0;
       }
 
-      /* Header animation */
+      /* HEADER & NAVIGATION */
       header {
         position: sticky;
         top: 0;
-        left: 0;
-        width: 100%;
         z-index: 1000;
         background: linear-gradient(135deg, #0a2540 0%, #2563eb 100%);
         color: white;
@@ -36,7 +30,12 @@
         box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
         animation: slideDown 0.8s ease-out forwards;
       }
-      
+      a{
+        text-decoration: none;
+        color: white;
+        font-weight: bold;
+      }
+
       @keyframes slideDown {
         from {
           transform: translateY(-100%);
@@ -47,7 +46,6 @@
           opacity: 1;
         }
       }
-
       .header-content {
         max-width: 1400px;
         margin: 0 auto;
@@ -55,9 +53,7 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        flex-wrap: nowrap;
       }
-
       .logo {
         font-size: 1.8rem;
         font-weight: 700;
@@ -67,7 +63,8 @@
       }
 
       @keyframes pulse {
-        0%, 100% {
+        0%,
+        100% {
           transform: scale(1);
         }
         50% {
@@ -77,182 +74,119 @@
 
       nav {
         display: flex;
-        gap: 0;
-        align-items: stretch;
+        align-items: center;
       }
-
       nav a {
         color: white;
         text-decoration: none;
-        padding: 0 12px;
-        transition: background-color 0.3s;
+        padding: 23px 15px;
         font-weight: 500;
-        font-size: 0.85rem;
-        display: flex;
-        align-items: center;
-        white-space: nowrap;
-        height: 100%;
-        min-height: 70px;
+        font-size: 0.9rem;
+        transition: 0.3s;
       }
-
       nav a:hover {
-        background-color: rgba(255, 255, 255, 0.2);
+        background: rgba(255, 255, 255, 0.1);
+      }
+      nav a.active {
+        background: rgba(255, 255, 255, 0.2);
+        border-bottom: 3px solid white;
       }
 
-      nav a.active {
-        background-color: rgba(255, 255, 255, 0.3);
-        border-bottom: 4px solid white;
+      /* HAMBURGER BUTTON (Hidden on Desktop) */
+      .hamburger-btn {
+        display: none;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 5px;
       }
-      
+      .hamburger-btn img {
+        width: 30px;
+        height: 30px;
+        filter: brightness(0) invert(1);
+      }
+
+      /* MOBILE NAV (Hidden by Default) */
+      .mobile-nav {
+        display: none;
+        background: #0a2540;
+        flex-direction: column;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+      }
+      .mobile-nav.show {
+        display: flex;
+      }
+      .mobile-nav a {
+        color: white;
+        padding: 15px 20px;
+        text-decoration: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      }
+
+      /* CONTENT STYLES */
       .content {
         max-width: 1200px;
         margin: 0 auto;
         padding: 40px 20px;
       }
-
       h2 {
         color: #2563eb;
-        font-size: 2.5rem;
+        font-size: 2.2rem;
         margin-bottom: 30px;
         text-align: center;
       }
 
       .research-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-        gap: 30px;
-        margin-bottom: 40px;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 25px;
       }
-
       .research-card {
         background: white;
-        border-radius: 12px;
-        overflow: hidden;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-        transition: transform 0.3s, box-shadow 0.3s;
-        display: flex;
-        flex-direction: column;
-      }
-
-      .research-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-      }
-
-      .research-image {
-        width: 100%;
-        height: 200px;
-        background: linear-gradient(135deg, #2563eb, #22d3ee);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: white;
-        font-size: 4rem;
-      }
-
-      .research-content {
         padding: 25px;
-        flex-grow: 1;
+        border-radius: 12px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        border-top: 4px solid #2563eb;
         display: flex;
         flex-direction: column;
       }
-
-      .tag {
-        display: inline-block;
-        padding: 5px 12px;
-        background-color: #22d3ee20;
-        color: #2563eb;
-        border-radius: 20px;
+      .date {
+        color: #64748b;
         font-size: 0.85rem;
-        font-weight: bold;
-        margin-bottom: 15px;
-        align-self: flex-start;
+        margin-bottom: 10px;
       }
-
       .research-card h3 {
         color: #0a2540;
-        font-size: 1.4rem;
         margin-bottom: 15px;
-        line-height: 1.4;
       }
-
       .research-card p {
         color: #475569;
-        font-size: 1rem;
         margin-bottom: 20px;
         flex-grow: 1;
       }
 
-      .read-more {
-        color: #2563eb;
-        text-decoration: none;
-        font-weight: bold;
-        display: inline-flex;
-        align-items: center;
-        gap: 5px;
-        transition: color 0.3s;
-      }
-
-      .read-more:hover {
-        color: #0a2540;
-      }
-
-      .read-more::after {
-        content: "→";
-        transition: transform 0.3s;
-      }
-
-      .read-more:hover::after {
-        transform: translateX(5px);
-      }
-
-      .newsletter-box {
-        background: linear-gradient(135deg, #0a2540 0%, #1e3a5f 100%);
-        color: white;
-        padding: 40px;
-        border-radius: 12px;
-        text-align: center;
-        margin-top: 40px;
-      }
-
-      .newsletter-box h3 {
-        font-size: 1.8rem;
+      .tag {
+        display: inline-block;
+        background: #e0f2fe;
+        color: #0369a1;
+        padding: 4px 10px;
+        border-radius: 4px;
+        font-size: 0.75rem;
+        margin-right: 5px;
         margin-bottom: 15px;
       }
-
-      .newsletter-box p {
-        margin-bottom: 25px;
-        color: #cbd5e1;
-      }
-
-      .subscribe-form {
-        display: flex;
-        gap: 10px;
-        max-width: 500px;
-        margin: 0 auto;
-      }
-
-      .subscribe-form input {
-        flex-grow: 1;
-        padding: 12px 20px;
-        border: none;
-        border-radius: 8px;
-        font-size: 1rem;
-      }
-
-      .btn-subscribe {
-        padding: 12px 30px;
-        background-color: #2563eb;
+      .btn {
+        background: #2563eb;
         color: white;
         border: none;
-        border-radius: 8px;
-        font-weight: bold;
+        padding: 12px;
+        border-radius: 6px;
         cursor: pointer;
-        transition: background-color 0.3s;
+        font-weight: bold;
+        transition: 0.3s;
       }
-
-      .btn-subscribe:hover {
-        background-color: #22d3ee;
+      .btn:hover {
+        background: #1d4ed8;
       }
 
       footer {
@@ -277,110 +211,56 @@
       }
 
       @keyframes scan {
-        0% { left: -100%; }
-        100% { left: 100%; }
+        0% {
+          left: -100%;
+        }
+        100% {
+          left: 100%;
+        }
       }
 
-      /* Float-in animation for cards */
-      @keyframes floatIn {
+      /* RESPONSIVE LOGIC */
+      @media (max-width: 900px) {
+        nav {
+          display: none;
+        }
+        .hamburger-btn {
+          display: block;
+        }
+      }
+      @keyframes floatingEntrance {
         0% {
           opacity: 0;
-          transform: translateY(30px);
+          transform: translateY(-50px) scale(0.9);
         }
         100% {
           opacity: 1;
-          transform: translateY(0);
+          transform: translateY(0) scale(1);
         }
       }
 
-      .research-card {
-        opacity: 0;
-        animation: floatIn 0.6s forwards;
-      }
+      /* Mobile responsive header/footer fallback */
+      @media (max-width: 768px) {
+        header {
+          background: linear-gradient(
+            135deg,
+            #0a2540 0%,
+            #2563eb 100%
+          ) !important;
+          color: white !important;
+        }
 
-      .research-card:nth-child(1) { animation-delay: 0.1s; }
-      .research-card:nth-child(2) { animation-delay: 0.2s; }
-      .research-card:nth-child(3) { animation-delay: 0.3s; }
-      .research-card:nth-child(4) { animation-delay: 0.4s; }
-
-      /* ========================================================
-           HAMBURGER MENU STYLES
-           ======================================================== */
-
-      .hamburger-btn {
-        display: none;
-        background: none;
-        border: none;
-        cursor: pointer;
-        padding: 10px;
-        border-radius: 5px;
-        transition: background 0.3s ease;
-      }
-
-      .hamburger-btn:hover {
-        background: rgba(255, 255, 255, 0.1);
-      }
-
-      .hamburger-btn img {
-        width: 24px;
-        height: 24px;
-        filter: brightness(0) invert(1);
-      }
-
-      .mobile-nav {
-        display: none;
-        position: absolute;
-        top: 100%;
-        left: 0;
-        right: 0;
-        background: linear-gradient(135deg, #0a2540, #2563eb);
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-        flex-direction: column;
-        padding: 20px 0;
-        animation: slideDown 0.3s ease-out;
-      }
-
-      .mobile-nav.show {
-        display: flex;
-      }
-
-      .mobile-nav a {
-        color: white;
-        text-decoration: none;
-        padding: 15px 30px;
-        font-size: 1rem;
-        transition: all 0.3s ease;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-      }
-
-      .mobile-nav a:hover {
-        background: rgba(255, 255, 255, 0.1);
-        transform: translateX(5px);
-      }
-
-      .mobile-nav a.active {
-        background: rgba(255, 255, 255, 0.1);
-        font-weight: 600;
-      }
-
-      /* ========================================================
-           CONSOLIDATED RESPONSIVE DESIGN (FIXED OVERLAPS)
-           ======================================================== */
-
-      @media (max-width: 1300px) {
         .header-content {
-          padding: 0 15px;
+          display: flex !important;
+          flex-direction: row !important;
+          justify-content: space-between !important;
+          align-items: center !important;
+          flex-wrap: nowrap !important;
+          gap: 10px;
+          padding: 10px 16px !important;
+          min-height: auto !important;
         }
-        nav a {
-          padding: 0 10px;
-          font-size: 0.8rem;
-        }
-        .research-grid {
-          grid-template-columns: repeat(2, 1fr);
-        }
-      }
 
-      @media (max-width: 1150px) {
         .logo {
           font-size: 1rem !important;
           white-space: nowrap !important;
@@ -390,99 +270,61 @@
           margin: 0;
         }
 
+        .hamburger-btn {
+          flex: 0 0 auto !important;
+        }
+
         nav {
           display: none !important;
         }
 
         .hamburger-btn {
           display: block !important;
-          flex: 0 0 auto !important;
         }
 
-        .content {
-          padding: 20px 15px !important;
-        }
-        
-        h2 {
-          font-size: 2rem !important;
-        }
-
-        .research-grid {
-          grid-template-columns: 1fr !important;
-          gap: 20px !important;
-        }
-
-        .subscribe-form {
-          flex-direction: column;
-        }
-        
-        .btn-subscribe {
-          width: 100%;
+        .mobile-nav {
+          background: linear-gradient(
+            135deg,
+            #0a2540 0%,
+            #2563eb 100%
+          ) !important;
         }
 
         footer {
           padding: 30px 18px !important;
           text-align: center !important;
         }
-      }
 
-      @media (max-width: 480px) {
-        .header-content {
-          padding: 8px 10px !important;
+        body {
+          font-size: 16px;
         }
-        .content {
-          padding: 15px 10px !important;
+
+        .content,
+        .hero,
+        .section,
+        .card,
+        .quiz-panel,
+        .info-panel {
+          padding-left: 16px !important;
+          padding-right: 16px !important;
         }
-        h2 {
-          font-size: 1.5rem !important;
-        }
-        .research-image {
-          height: 150px !important;
-          font-size: 3rem !important;
-        }
-        .newsletter-box {
-          padding: 20px 15px !important;
-        }
-        .newsletter-box h3 {
-          font-size: 1.4rem !important;
+
+        .button-group,
+        .footer-links,
+        .footer-grid,
+        .author-container,
+        .value-card,
+        .resource-grid {
+          gap: 16px;
         }
       }
     </style>
   </head>
   <body>
-    <script>
-      document.addEventListener("DOMContentLoaded", () => {
-        // Hamburger menu functionality
-        const hamburgerBtn = document.getElementById("hamburgerBtn");
-        const mobileNav = document.getElementById("mobileNav");
-
-        if (hamburgerBtn && mobileNav) {
-          hamburgerBtn.addEventListener("click", () => {
-            mobileNav.classList.toggle("show");
-          });
-
-          // Close mobile nav when clicking outside
-          document.addEventListener("click", (e) => {
-            if (
-              !hamburgerBtn.contains(e.target) &&
-              !mobileNav.contains(e.target)
-            ) {
-              mobileNav.classList.remove("show");
-            }
-          });
-
-          // Close mobile nav when clicking a link
-          mobileNav.querySelectorAll("a").forEach((link) => {
-            link.addEventListener("click", () => {
-              mobileNav.classList.remove("show");
-            });
-          });
-        }
-      });
-    </script>
     <header>
       <div class="header-content">
         <div class="logo">🧠 Neurovascular Dynamic Lab</div>
+
         <nav>
           <a href="index.html">Home</a>
           <a href="learn.html">Learn</a>
@@ -490,16 +332,18 @@
           <a href="community.html">Community</a>
           <a href="research.html" class="active">Latest Research</a>
           <a href="brain-map.html">🧠 Interactive Brain Map</a>
-          <a href="quiz.html">Quiz</a>
-          <a href="flashcards.html">Flashcards</a>
+      <a href="quiz.html">Quiz</a>
+      <a href="flashcards.html">Flashcards</a>
           <a href="about.html">About Us</a>
           <a href="faq.html">FAQ</a>
           <a href="contact.html">Contact</a>
         </nav>
+
         <button class="hamburger-btn" id="hamburgerBtn">
           <img src="expand.png" alt="Menu" />
         </button>
       </div>
+
       <div class="mobile-nav" id="mobileNav">
         <a href="index.html">Home</a>
         <a href="learn.html">Learn</a>
@@ -507,8 +351,8 @@
         <a href="community.html">Community</a>
         <a href="research.html" class="active">Latest Research</a>
         <a href="brain-map.html">🧠 Interactive Brain Map</a>
-        <a href="quiz.html">Quiz</a>
-        <a href="flashcards.html">Flashcards</a>
+      <a href="quiz.html">Quiz</a>
+      <a href="flashcards.html">Flashcards</a>
         <a href="about.html">About Us</a>
         <a href="faq.html">FAQ</a>
         <a href="contact.html">Contact</a>
@@ -516,79 +360,177 @@
     </header>
 
     <div class="content">
-      <h2>🔬 Latest Research & Discoveries</h2>
+      <h2>🔬 Latest Research Discoveries</h2>
 
       <div class="research-grid">
         <div class="research-card">
-          <div class="research-image">🏃‍♂️</div>
-          <div class="research-content">
+          <div class="date">📅 January 2024</div>
+          <h3>Brain Plasticity Breakthrough</h3>
+          <p>
+            Scientists discover new ways the brain can reorganize and create new
+            neural pathways, even in adults!
+          </p>
+          <div>
+            <span class="tag">Brain Plasticity</span>
+            <span class="tag">Neurons</span>
+          </div>
+          <button
+            class="btn"
+           
+          >
+        <a href="https://www.youtube.com/watch?v=B1ygYzcWqFY" target="_blank">See More on this Research</a>
+          </button>
+        </div>
+
+        <div class="research-card">
+          <div class="date">📅 December 2023</div>
+          <h3>Alzheimer's Research Progress</h3>
+          <p>
+            Breakthrough in understanding what causes Alzheimer's disease and
+            promising new treatment approaches.
+          </p>
+          <div>
+            <span class="tag">Brain Health</span>
+            <span class="tag">Medical</span>
+          </div>
+          <button
+            class="btn"
+            
+          >
+           <a href="https://www.youtube.com/watch?v=QtGjjuSQdZ8" target="_blank">See More on this Research</a>
+          </button>
+        </div>
+
+        <div class="research-card">
+          <div class="date">📅 November 2023</div>
+          <h3>Exercise & Brain Connection</h3>
+          <p>
+            New study reveals exactly how exercise strengthens brain health and
+            improves memory and focus.
+          </p>
+          <div>
+            <span class="tag">Brain Health</span>
             <span class="tag">Exercise</span>
-            <h3>How Exercise Changes Brain Blood Flow</h3>
-            <p>
-              New studies show that regular physical activity creates new blood
-              vessels in the brain, improving memory and learning capabilities
-              in students.
-            </p>
-            <a href="#" class="read-more">Read Full Summary</a>
           </div>
+          <button
+            class="btn"
+          >
+            <a href="https://www.youtube.com/watch?v=BHY0FxzoKZE" target="_blank">See More on this Research</a>
+          </button>
         </div>
 
         <div class="research-card">
-          <div class="research-image">😴</div>
-          <div class="research-content">
+          <div class="date">📅 October 2023</div>
+          <h3>Sleep & Memory Storage</h3>
+          <p>
+            Scientists map exactly how the brain stores memories during sleep,
+            especially during REM sleep stages.
+          </p>
+          <div>
             <span class="tag">Sleep</span>
-            <h3>The Brain's Nighttime Wash Cycle</h3>
-            <p>
-              Scientists have discovered that during deep sleep, cerebrospinal
-              fluid pulses through the brain, washing away toxins that build up
-              during the day.
-            </p>
-            <a href="#" class="read-more">Read Full Summary</a>
+            <span class="tag">Memory</span>
           </div>
+          <button
+            class="btn"
+          >
+            <a href="https://www.youtube.com/watch?v=6TyIY6u31gk" target="_blank">See More on this Research</a>
+          </button>
         </div>
 
         <div class="research-card">
-          <div class="research-image">🎮</div>
-          <div class="research-content">
+          <div class="date">📅 September 2023</div>
+          <h3>Meditation Changes Brain Structure</h3>
+          <p>
+            New research shows that regular meditation actually changes the
+            physical structure of the brain!
+          </p>
+          <div>
+            <span class="tag">Brain Plasticity</span>
+            <span class="tag">Wellness</span>
+          </div>
+          <button
+            class="btn"
+            
+          >
+            <a href="https://www.youtube.com/watch?v=8ihY2TZXuz0" target="_blank">See More on this Research</a>
+          </button>
+        </div>
+
+        <div class="research-card">
+          <div class="date">📅 August 2023</div>
+          <h3>Brain-Computer Interface Success</h3>
+          <p>
+            Scientists successfully create a brain-computer interface that lets
+            people control devices with thoughts!
+          </p>
+          <div>
+            <span class="tag">Technology</span>
+            <span class="tag">Innovation</span>
+          </div>
+          <button
+              class="btn"
+            
+          >
+            <a href="https://www.youtube.com/watch?v=3GCS9JqNJB0" target="_blank">See More on this Research</a>
+          </button>
+        </div>
+
+        <div class="research-card">
+          <div class="date">📅 July 2023</div>
+          <h3>Neurotransmitter Discovery</h3>
+          <p>
+            New neurotransmitter discovered that plays a key role in learning
+            and memory formation.
+          </p>
+          <div>
+            <span class="tag">Neurons</span>
             <span class="tag">Learning</span>
-            <h3>Video Games and Brain Development</h3>
-            <p>
-              Action video games might actually increase gray matter in
-              brain areas responsible for spatial navigation, strategic planning,
-              and memory.
-            </p>
-            <a href="#" class="read-more">Read Full Summary</a>
           </div>
+          <button
+            class="btn"
+           
+          >
+            <a href="https://www.youtube.com/watch?v=F9fsFuGULm0" target="_blank">See More on this Research</a>
+          </button>
         </div>
 
         <div class="research-card">
-          <div class="research-image">🥗</div>
-          <div class="research-content">
-            <span class="tag">Nutrition</span>
-            <h3>Brain Food: What Really Works?</h3>
-            <p>
-              A recent comprehensive review of how omega-3 fatty acids and
-              antioxidants directly impact neurovascular health and cognitive
-              performance.
-            </p>
-            <a href="#" class="read-more">Read Full Summary</a>
+          <div class="date">📅 June 2023</div>
+          <h3>Teen Brain Development Study</h3>
+          <p>
+            Comprehensive study reveals how teenage brains develop differently
+            and why they make certain decisions.
+          </p>
+          <div>
+            <span class="tag">Brain Development</span>
+            <span class="tag">Psychology</span>
           </div>
+          <button
+            class="btn"
+           
+          >
+            <a href="https://www.youtube.com/watch?v=1GSvzgrBKaM" target="_blank">See More on this Research</a>
+          </button>
         </div>
-      </div>
 
-      <div class="newsletter-box">
-        <h3>Stay Updated!</h3>
-        <p>
-          Get simple summaries of the latest brain research sent directly to
-          your inbox every month.
-        </p>
-        <form
-          class="subscribe-form"
-          onsubmit="event.preventDefault(); alert('Thanks for subscribing!');"
-        >
-          <input type="email" placeholder="Enter your email address" required />
-          <button type="submit" class="btn-subscribe">Subscribe</button>
-        </form>
+        <div class="research-card">
+          <div class="date">📅 May 2023</div>
+          <h3>AI & Brain Mapping</h3>
+          <p>
+            Artificial intelligence helps scientists create more detailed maps
+            of the brain's connections than ever before.
+          </p>
+          <div>
+            <span class="tag">Technology</span>
+            <span class="tag">AI</span>
+          </div>
+          <button
+            class="btn"
+            
+          >
+            <a href="https://www.youtube.com/watch?v=aB_ZmAM3tv8" target="_blank">See More on this Research</a>
+          </button>
+        </div>
       </div>
     </div>
 
@@ -606,6 +548,26 @@
         src="https://www.freevisitorcounters.com/en/home/counter/1530488/t/8"
       ></script>
     </footer>
+
+    <script>
+      // Extracting Expand/Collapse functionality
+      const btn = document.getElementById("hamburgerBtn");
+      const nav = document.getElementById("mobileNav");
+
+      btn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        nav.classList.toggle("show");
+      });
+
+      // Close menu if user clicks anywhere else
+      document.addEventListener("click", (e) => {
+        if (!nav.contains(e.target) && !btn.contains(e.target)) {
+          nav.classList.remove("show");
+        }
+      });
+    </script>
   </body>
 </html>
+
+  
 
