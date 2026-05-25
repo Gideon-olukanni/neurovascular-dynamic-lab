@@ -469,19 +469,44 @@
     /* ========================================================
        14. FOOTER
        ======================================================== */
-    footer {
-      background: linear-gradient(135deg, var(--primary-dark) 0%, #1e3a5f 100%);
-      color: white; text-align: center; padding: 38px 20px; margin-top: 40px;
-      border-top: 4px solid var(--primary-blue); position: relative; overflow: hidden;
-    }
-    footer::before {
-      content: ""; position: absolute; top: 0; left: -100%; width: 100%; height: 3px;
-      background: linear-gradient(90deg, transparent, var(--accent-cyan), transparent);
-      animation: scan 3s linear infinite;
-    }
-    @keyframes scan { 0% { left: -100%; } 100% { left: 100%; } }
-    footer p { margin-bottom: 6px; }
+footer {
+background: linear-gradient(135deg, #0a2540 0%, #1e3a5f 100%);
+color: rgba(255, 255, 255, 0.85);
+text-align: center;
+padding: 24px 20px;
+/* Accommodates iPhone home indicators to prevent bottom whitespace */
+padding-bottom: calc(24px + env(safe-area-inset-bottom));
+margin: 0;
+margin-top: auto;
+/* Forces footer flush to the bottom */
+position: relative;
+overflow: hidden;
+font-size: 0.88rem;
+line-height: 1.8;
+width: 100vw;
+max-width: 100%;
+display: block;
+box-sizing: border-box;
+/* Crucial for preventing horizontal overflow */
+}
 
+footer::before {
+content: "";
+position: absolute;
+top: 0;
+left: 0;
+right: 0;
+height: 3px;
+background: linear-gradient(90deg, #00d4ff, #7b2ff7, #00d4ff);
+}
+
+footer p {
+margin: 0;
+padding: 4px 0;
+word-break: keep-all;
+overflow-wrap: normal;
+}
+    
     /* ========================================================
        15. BACK-TO-TOP BUTTON
        ======================================================== */
@@ -790,14 +815,14 @@
       </div>
     </div>
   </div>
-
-  <footer>
-    <p>&copy; 2026 NeuroDynamic Learning Platform. Engineered for Excellence.</p>
-    <p>Made with 🧠 for curious minds everywhere!</p>
-    <a href="https://www.free-counters.org/" style="color:var(--accent-cyan);">powered by Free-Counters</a>
-    <script type="text/javascript" src="https://www.freevisitorcounters.com/auth.php?id=1307ae18c76bfe2379819c0d98c6f694adf30895"></script>
-    <script type="text/javascript" src="https://www.freevisitorcounters.com/en/home/counter/1530488/t/8"></script>
-  </footer>
+<footer>
+<p>
+&copy; 2026 Neurovascular Dynamic Lab. All rights reserved.
+</p>
+<p>
+Made with 🧠 for curious minds. <br>Powered by <strong>GIDEON REALITY</strong>
+</p>
+</footer>
 
   <!-- ============================================================
        SCRIPT 1 — Non-module: all synchronous logic
