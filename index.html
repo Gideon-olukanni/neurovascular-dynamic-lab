@@ -1082,8 +1082,8 @@ onAuthStateChanged(auth, async (user) => {
         getDoc(doc(db, 'users', user.uid)),
         getDocs(collection(db, 'flashcards'))
       ]);
-
-      const TOTAL_CARDS = cardsSnap.size;
+const STATIC_FLASHCARD_TOTAL = 30;
+const TOTAL_CARDS = STATIC_FLASHCARD_TOTAL + cardsSnap.size;
 
       if (snap.exists()) {
         const data = snap.data();
