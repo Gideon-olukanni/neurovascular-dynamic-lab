@@ -1107,8 +1107,7 @@ onAuthStateChanged(auth, async (user) => {
     if (mobileLink) { mobileLink.textContent = '👤 Sign In'; mobileLink.href = 'login.html'; }
     if (widget) widget.classList.remove('visible');
   }
-});
-document.getElementById('signOutBtn')?.addEventListener('click', async () => {
+});document.getElementById('signOutBtn')?.addEventListener('click', async () => {
   await signOut(auth);
 });
 </script>
