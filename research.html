@@ -46,14 +46,15 @@
           opacity: 1;
         }
       }
-      .header-content {
+            .header-content {
         max-width: 1400px;
         margin: 0 auto;
         padding: 0 20px;
         display: flex;
         justify-content: space-between;
         align-items: center;
-      }
+        flex-wrap: nowrap;
+            }
       .logo {
         font-size: 1.8rem;
         font-weight: 700;
@@ -219,106 +220,72 @@
         }
       }
 
-      /* RESPONSIVE LOGIC */
-      @media (max-width: 900px) {
-        nav {
-          display: none;
-        }
-        .hamburger-btn {
-          display: block;
-        }
-      }
-      @keyframes floatingEntrance {
-        0% {
-          opacity: 0;
-          transform: translateY(-50px) scale(0.9);
-        }
-        100% {
-          opacity: 1;
-          transform: translateY(0) scale(1);
-        }
-      }
-
-      /* Mobile responsive header/footer fallback */
-      @media (max-width: 768px) {
-        header {
-          background: linear-gradient(
-            135deg,
-            #0a2540 0%,
-            #2563eb 100%
-          ) !important;
-          color: white !important;
+        /* RESPONSIVE LOGIC */
+        @keyframes floatingEntrance {
+          0% {
+            opacity: 0;
+            transform: translateY(-50px) scale(0.9);
+          }
+          100% {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+          }
         }
 
-        .header-content {
-          display: flex !important;
-          flex-direction: row !important;
-          justify-content: space-between !important;
-          align-items: center !important;
-          flex-wrap: nowrap !important;
-          gap: 10px;
-          padding: 10px 16px !important;
-          min-height: auto !important;
-        }
+        @media (max-width: 768px) {
+          header {
+            background: linear-gradient(135deg, #0a2540 0%, #2563eb 100%) !important;
+            color: white !important;
+          }
 
-        .logo {
-          font-size: 1rem !important;
-          white-space: nowrap !important;
-          overflow: hidden !important;
-          text-overflow: ellipsis !important;
-          max-width: calc(100% - 58px) !important;
-          margin: 0;
-        }
+          .header-content {
+            display: flex !important;
+            flex-direction: row !important;
+            justify-content: space-between !important;
+            align-items: center !important;
+            flex-wrap: nowrap !important;
+            gap: 10px;
+            padding: 10px 16px !important;
+            min-height: auto !important;
+          }
 
-        .hamburger-btn {
-          flex: 0 0 auto !important;
-        }
+          .logo {
+            font-size: 1rem !important;
+            white-space: nowrap !important;
+            overflow: hidden !important;
+            text-overflow: ellipsis !important;
+            max-width: calc(100% - 58px) !important;
+            margin: 0;
+          }
 
-        nav {
-          display: none !important;
-        }
+          nav {
+            display: none !important;
+          }
 
-        .hamburger-btn {
-          display: block !important;
-        }
+          .hamburger-btn {
+            display: block !important;
+            flex: 0 0 auto !important;
+          }
 
-        .mobile-nav {
-          background: linear-gradient(
-            135deg,
-            #0a2540 0%,
-            #2563eb 100%
-          ) !important;
-        }
+          .mobile-nav {
+            background: linear-gradient(135deg, #0a2540 0%, #2563eb 100%) !important;
+          }
 
-        footer {
-          padding: 30px 18px !important;
-          text-align: center !important;
-        }
+          footer {
+            padding: 30px 18px !important;
+            text-align: center !important;
+          }
 
-        body {
-          font-size: 16px;
-        }
+          body {
+            font-size: 16px;
+          }
 
-        .content,
-        .hero,
-        .section,
-        .card,
-        .quiz-panel,
-        .info-panel {
-          padding-left: 16px !important;
-          padding-right: 16px !important;
+          .content {
+            padding-left: 16px !important;
+            padding-right: 16px !important;
+          }
         }
-
-        .button-group,
-        .footer-links,
-        .footer-grid,
-        .author-container,
-        .value-card,
-        .resource-grid {
-          gap: 16px;
-        }
-      }
-    </style>
+      </style>
   </head>
   <body>
     <header>
