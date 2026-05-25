@@ -190,7 +190,17 @@ padding: 4px 0;
 word-break: keep-all;
 overflow-wrap: normal;
 }
-
+      /* Float-in animation for sections */
+      @keyframes floatIn {
+        0% {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
       .community-box,
       .feature-card {
         opacity: 0;
