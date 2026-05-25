@@ -1,4 +1,4 @@
-// firebase-config.js — Version 10.8.0 (do not change this number)
+// 1. Core Firebase SDK Imports (Aligned to matching v10.8.0 versions)
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
 import {
   getFirestore,
@@ -11,9 +11,6 @@ import {
   setDoc,
   getDoc,
   updateDoc,
-  deleteDoc,
-  orderBy,
-  serverTimestamp,
   arrayUnion,
   arrayRemove
 } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
@@ -23,6 +20,7 @@ import {
   signOut
 } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
+// 2. Your unique web credentials
 const firebaseConfig = {
   apiKey: "AIzaSyDoiEOqSdTGtNVSxsD_-bvJe6FnVKaVN04",
   authDomain: "neurovascular-dynamic-la-ad574.firebaseapp.com",
@@ -33,15 +31,26 @@ const firebaseConfig = {
   measurementId: "G-KJZ39Z1J53"
 };
 
+// 3. Initialize Connections Once
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const auth = getAuth(app);
 
+// 4. Clean Export Strategy for Your Application Pages
 export {
-  db, auth,
-  collection, addDoc, getDocs, query, where,
-  doc, setDoc, getDoc, updateDoc, deleteDoc,
-  orderBy, serverTimestamp,
-  arrayUnion, arrayRemove,
-  onAuthStateChanged, signOut
+  db,
+  auth,
+  collection,
+  addDoc,
+  getDocs,
+  query,
+  where,
+  doc,
+  setDoc,
+  getDoc,
+  updateDoc,
+  arrayUnion,
+  arrayRemove,
+  onAuthStateChanged,
+  signOut
 };
