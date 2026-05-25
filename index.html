@@ -1054,11 +1054,10 @@ document.addEventListener('DOMContentLoaded', () => {
 <script type="module">
 import {
   auth, db,
-  doc, getDoc,
+  doc, getDoc,collection, getDocs,
   onAuthStateChanged, signOut
 } from "./firebase-config.js";
 
-const TOTAL_CARDS = 30;
 
 onAuthStateChanged(auth, async (user) => {
   const signInBtn   = document.getElementById('signInNavBtn');
@@ -1079,7 +1078,13 @@ onAuthStateChanged(auth, async (user) => {
     if (dashEmail) dashEmail.textContent = user.email;
 
     try {
-      const snap = await getDoc(doc(db, 'users', user.uid));
+      const [snap, cardsSnap] = await Promise.all([
+        getDoc(doc(db, 'users', user.uid)),
+        getDocs(collection(db, 'flashcards'))
+      ]);
+
+      const TOTAL_CARDS = cardsSnap.size;
+
       if (snap.exists()) {
         const data = snap.data();
         const learned = (data.learnedCardIds || []).length;
@@ -1095,6 +1100,7 @@ onAuthStateChanged(auth, async (user) => {
     } catch (err) {
       console.warn('Dashboard load error:', err);
     }
+
   } else {
     if (signInBtn) signInBtn.style.display = '';
     if (userDisplay) userDisplay.classList.remove('visible');
@@ -1102,7 +1108,6 @@ onAuthStateChanged(auth, async (user) => {
     if (widget) widget.classList.remove('visible');
   }
 });
-
 document.getElementById('signOutBtn')?.addEventListener('click', async () => {
   await signOut(auth);
 });
