@@ -1,0 +1,860 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-KJZ39Z1J53"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-KJZ39Z1J53');
+</script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>🧠Neurovascular Dynamic Lab - Resources</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Inter, system-ui, sans-serif;
+        line-height: 1.6;
+        color: #0f172a;
+        background-color: #f8fafc;
+        overflow-x: hidden;
+      }
+
+      header {
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        background: linear-gradient(135deg, #0a2540 0%, #2563eb 100%);
+        color: white;
+        padding: 0;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        animation: slideDown 0.8s ease-out forwards;
+      }
+
+      @keyframes slideDown {
+        from {
+          transform: translateY(-100%);
+          opacity: 0;
+        }
+        to {
+          transform: translateY(0);
+          opacity: 1;
+        }
+      }
+
+      .header-content {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 0 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .logo {
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: white;
+        padding: 15px 0;
+        animation: pulse 2s ease-in-out infinite;
+      }
+
+      @keyframes pulse {
+        0%,
+        100% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.05);
+        }
+      }
+
+      nav {
+        display: flex;
+        gap: 0;
+      }
+
+      nav a {
+        color: white;
+        text-decoration: none;
+        padding: 20px 18px;
+        transition:
+          background-color 0.3s,
+          transform 0.3s;
+        font-weight: 500;
+        font-size: 0.95rem;
+      }
+
+      nav a:hover {
+        background-color: rgba(255, 255, 255, 0.2);
+        transform: translateY(-3px);
+      }
+
+      nav a.active {
+        background-color: rgba(255, 255, 255, 0.3);
+        border-bottom: 3px solid white;
+      }
+
+      .content {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 40px 20px;
+      }
+
+      h2 {
+        color: #2563eb;
+        font-size: 2.5rem;
+        margin-bottom: 30px;
+        text-align: center;
+        animation: fadeIn 1.5s ease;
+      }
+
+      @keyframes fadeIn {
+        0% {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .resource-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 25px;
+        margin-bottom: 40px;
+      }
+
+      .resource-card {
+        background: white;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        transition:
+          transform 0.3s,
+          box-shadow 0.3s;
+        animation: cardFadeIn 1s ease;
+      }
+
+      @keyframes cardFadeIn {
+        0% {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .resource-card:hover {
+        transform: translateY(-5px) scale(1.02);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+      }
+
+      .resource-card h3 {
+        color: #0a2540;
+        margin-bottom: 15px;
+        font-size: 1.3rem;
+      }
+
+      .resource-card p {
+        color: #475569;
+        line-height: 1.8;
+        margin-bottom: 15px;
+      }
+
+      .btn {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 8px;
+        font-size: 0.95rem;
+        cursor: pointer;
+        transition: all 0.3s;
+        font-weight: bold;
+        text-decoration: none;
+        display: inline-block;
+        background-color: #2563eb;
+        color: white;
+        animation: btnFadeIn 1.5s ease;
+      }
+
+      @keyframes btnFadeIn {
+        0% {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .btn:hover {
+        background-color: #22d3ee;
+        transform: translateY(-2px) scale(1.05);
+      }
+/* ========================================================
+       FOOTER STYLES (COMPLETELY FIXED EDGE-TO-EDGE)
+       ======================================================== */
+footer {
+background: linear-gradient(135deg, #0a2540 0%, #1e3a5f 100%);
+color: rgba(255, 255, 255, 0.85);
+text-align: center;
+padding: 24px 20px;
+/* Accommodates iPhone home indicators to prevent bottom whitespace */
+padding-bottom: calc(24px + env(safe-area-inset-bottom));
+margin: 0;
+margin-top: auto;
+/* Forces footer flush to the bottom */
+position: relative;
+overflow: hidden;
+font-size: 0.88rem;
+line-height: 1.8;
+width: 100vw;
+max-width: 100%;
+display: block;
+box-sizing: border-box;
+/* Crucial for preventing horizontal overflow */
+}
+
+footer::before {
+content: "";
+position: absolute;
+top: 0;
+left: 0;
+right: 0;
+height: 3px;
+background: linear-gradient(90deg, #00d4ff, #7b2ff7, #00d4ff);
+}
+
+footer p {
+margin: 0;
+padding: 4px 0;
+word-break: keep-all;
+overflow-wrap: normal;
+}
+
+      button a {
+        text-decoration: none;
+        color: white;
+      }
+
+      /* Responsive styles unchanged */
+      @media (max-width: 1024px) {
+        .header-content {
+          padding: 0 15px;
+        }
+        nav a {
+          padding: 15px 12px;
+          font-size: 0.9rem;
+        }
+        .resource-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+      @media (max-width: 768px) {
+        .header-content {
+          flex-wrap: wrap;
+          padding: 10px 15px;
+        }
+        .logo {
+          width: 100%;
+          padding: 10px 0;
+          font-size: 1.3rem;
+        }
+        nav {
+          width: 100%;
+          flex-wrap: wrap;
+        }
+        nav a {
+          flex: 1;
+          min-width: 80px;
+          padding: 12px 8px;
+          font-size: 0.75rem;
+          text-align: center;
+        }
+        .content {
+          padding: 20px 15px;
+        }
+        h2 {
+          font-size: 2rem;
+        }
+        .resource-grid {
+          grid-template-columns: 1fr;
+          gap: 15px;
+        }
+        .resource-card {
+          padding: 20px;
+        }
+        .resource-card h3 {
+          font-size: 1.1rem;
+        }
+        .btn {
+          display: block;
+          width: 100%;
+          padding: 10px 15px;
+          font-size: 0.9rem;
+        }
+      }
+      @media (max-width: 480px) {
+        .header-content {
+          padding: 8px 10px;
+        }
+        .logo {
+          font-size: 1rem;
+        }
+        nav a {
+          padding: 10px 6px;
+          font-size: 0.7rem;
+        }
+        .content {
+          padding: 15px 10px;
+        }
+        h2 {
+          font-size: 1.5rem;
+        }
+        .resource-card {
+          padding: 15px 10px;
+        }
+        .resource-card h3 {
+          font-size: 1rem;
+        }
+        .btn {
+          padding: 8px 12px;
+          font-size: 0.85rem;
+        }
+      }
+      .header-content {
+        max-width: 1300px;
+        margin: 0 auto;
+        padding: 0 20px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .logo {
+        font-size: 1.6rem;
+        font-weight: 700;
+        color: white;
+        padding: 16px 0;
+        animation: pulse 2s ease-in-out infinite;
+      }
+
+      @keyframes pulse {
+        0%,
+        100% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.05);
+        }
+      }
+
+      nav {
+        display: flex;
+        flex-wrap: wrap;
+      }
+
+      nav a {
+        color: white;
+        text-decoration: none;
+        padding: 18px 16px;
+        font-size: 0.95rem;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+      }
+
+      nav a::before {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        width: 0;
+        height: 3px;
+        background: white;
+        transition: all 0.3s ease;
+        transform: translateX(-50%);
+      }
+
+      nav a:hover::before,
+      nav a.active::before {
+        width: 100%;
+      }
+
+      nav a:hover {
+        background: rgba(255, 255, 255, 0.15);
+        transform: translateY(-2px);
+      }
+
+      /* Hamburger menu button */
+      .hamburger-btn {
+        display: none;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 10px;
+        border-radius: 4px;
+        transition: background-color 0.3s;
+      }
+
+      .hamburger-btn:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+      }
+
+      .hamburger-btn img {
+        width: 24px;
+        height: 24px;
+        filter: brightness(0) invert(1);
+      }
+
+      /* Mobile navigation menu */
+      /* Mobile navigation menu - Hidden by default */
+      .mobile-nav {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: linear-gradient(135deg, #0a2540 0%, #2563eb 100%);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        animation: slideDown 0.3s ease-out;
+      }
+
+      /* The class added/removed by JavaScript to expand/collapse */
+      .mobile-nav.show {
+        display: block;
+      }
+
+      @keyframes slideDown {
+        from {
+          transform: translateY(-100%);
+          opacity: 0;
+        }
+        to {
+          transform: translateY(0);
+          opacity: 1;
+        }
+      }
+
+      .mobile-nav a {
+        display: block;
+        color: white;
+        text-decoration: none;
+        padding: 15px 20px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        transition: background-color 0.3s;
+      }
+
+      .mobile-nav a:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+      }
+
+      .mobile-nav a.active {
+        background-color: rgba(255, 255, 255, 0.2);
+        border-bottom: 3px solid white;
+      }
+
+      /* 1. Hide the expand button on large screens */
+      .hamburger-btn {
+        display: none; /* Default state */
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 10px;
+      }
+
+      .hamburger-btn img {
+        width: 24px;
+        height: 24px;
+        filter: brightness(0) invert(1); /* Makes the icon white */
+      }
+
+      /* 2. Media Query: Show the button and hide main nav on mobile */
+      @media (max-width: 768px) {
+        /* Hide the desktop navigation links */
+        nav {
+          display: none;
+        }
+
+        /* Show the expand.png button */
+        .hamburger-btn {
+          display: block;
+        }
+
+        /* Base styles for the hidden mobile menu */
+        .mobile-nav {
+          display: none;
+          position: absolute;
+          top: 100%;
+          left: 0;
+          right: 0;
+          background: #0a2540;
+          z-index: 1000;
+        }
+
+        /* The class that triggers the expansion */
+        .mobile-nav.show {
+          display: block;
+        }
+      }
+
+      /* Mobile responsive header/footer fallback */
+      @media (max-width: 768px) {
+        header {
+          background: linear-gradient(
+            135deg,
+            #0a2540 0%,
+            #2563eb 100%
+          ) !important;
+          color: white !important;
+        }
+
+        .header-content {
+          display: flex !important;
+          flex-direction: row !important;
+          justify-content: space-between !important;
+          align-items: center !important;
+          flex-wrap: nowrap !important;
+          gap: 10px;
+          padding: 10px 16px !important;
+          min-height: auto !important;
+        }
+
+        .logo {
+          font-size: 1rem !important;
+          white-space: nowrap !important;
+          overflow: hidden !important;
+          text-overflow: ellipsis !important;
+          max-width: calc(100% - 58px) !important;
+          margin: 0;
+        }
+
+        .hamburger-btn {
+          flex: 0 0 auto !important;
+        }
+
+        nav {
+          display: none !important;
+        }
+
+        .hamburger-btn {
+          display: block !important;
+        }
+
+        .mobile-nav {
+          background: linear-gradient(
+            135deg,
+            #0a2540 0%,
+            #2563eb 100%
+          ) !important;
+        }
+
+        footer {
+          padding: 30px 18px !important;
+          text-align: center !important;
+        }
+
+        body {
+          font-size: 16px;
+        }
+
+        .content,
+        .hero,
+        .section,
+        .card,
+        .quiz-panel,
+        .info-panel {
+          padding-left: 16px !important;
+          padding-right: 16px !important;
+        }
+
+        .button-group,
+        .footer-links,
+        .footer-grid,
+        .author-container,
+        .value-card,
+        .resource-grid {
+          gap: 16px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <script>
+      // HERO TYPEWRITER + ROTATING TEXT
+      document.addEventListener("DOMContentLoaded", () => {
+        // Hamburger menu functionality
+        const hamburgerBtn = document.getElementById("hamburgerBtn");
+        const mobileNav = document.getElementById("mobileNav");
+
+        if (hamburgerBtn && mobileNav) {
+          hamburgerBtn.addEventListener("click", () => {
+            mobileNav.classList.toggle("show");
+          });
+
+          // Close mobile nav when clicking outside
+          document.addEventListener("click", (e) => {
+            if (
+              !hamburgerBtn.contains(e.target) &&
+              !mobileNav.contains(e.target)
+            ) {
+              mobileNav.classList.remove("show");
+            }
+          });
+
+          // Close mobile nav when clicking a link
+          mobileNav.querySelectorAll("a").forEach((link) => {
+            link.addEventListener("click", () => {
+              mobileNav.classList.remove("show");
+            });
+          });
+        }
+
+        const heroH1 = document.querySelector(".hero h1");
+        const rotatingTexts = document.querySelectorAll(".rotating-text");
+        heroH1.addEventListener("animationend", () => {
+          heroH1.style.borderRight = "none";
+          rotatingTexts.forEach((el, i) => {
+            setTimeout(() => {
+              el.style.opacity = 1;
+              el.style.transform = "translateY(0)";
+            }, i * 1500);
+          });
+        });
+
+        // SCROLL TRIGGER
+        const scrollElements = document.querySelectorAll(
+          ".brand-dna h2,.brand-dna p,.intro-text h2,.intro-text p,.intro-img-1,.intro-img-2,.learning-card,.welcome-box,.welcome-box li",
+        );
+        const observer = new IntersectionObserver(
+          (entries, obs) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("in-view");
+                obs.unobserve(entry.target);
+              }
+            });
+          },
+          { threshold: 0.2 },
+        );
+        scrollElements.forEach((el) => observer.observe(el));
+      });
+
+      document.addEventListener("DOMContentLoaded", () => {
+        const btn = document.querySelector(".hamburger-btn");
+        const menu = document.querySelector(".mobile-nav");
+
+        if (btn && menu) {
+          btn.addEventListener("click", (e) => {
+            // Prevents the click from bubbling up to the document
+            e.stopPropagation();
+            // Toggles the 'show' class to expand/collapse
+            menu.classList.toggle("show");
+          });
+
+          // Optional: Close the menu if user clicks anywhere else on the screen
+          document.addEventListener("click", () => {
+            menu.classList.remove("show");
+          });
+        }
+      });
+
+      //  Extracting the click functionality for expand.png
+
+      document.addEventListener("DOMContentLoaded", function () {
+        const hamburgerBtn = document.querySelector(".hamburger-btn");
+        const mobileNav = document.querySelector(".mobile-nav");
+
+        if (hamburgerBtn && mobileNav) {
+          hamburgerBtn.addEventListener("click", function (e) {
+            // Prevents the click from closing immediately via the document listener
+            e.stopPropagation();
+
+            // Toggle the 'show' class to expand or collapse
+            mobileNav.classList.toggle("show");
+          });
+
+          // Close the menu if the user clicks anywhere else on the page
+          document.addEventListener("click", function (e) {
+            if (
+              !mobileNav.contains(e.target) &&
+              !hamburgerBtn.contains(e.target)
+            ) {
+              mobileNav.classList.remove("show");
+            }
+          });
+        }
+      });
+    </script>
+    <header>
+      <div class="header-content">
+        <div class="logo">🧠 Neurovascular Dynamic Lab</div>
+        <button class="hamburger-btn" id="hamburgerBtn">
+          <img src="expand.png" alt="Menu" />
+        </button>
+        <nav>
+          <a href="index.html">Home</a>
+          <a href="learn.html">Learn</a>
+          <a href="resources.html" class="active">Resources</a>
+          <a href="community.html">Community</a>
+          <a href="research.html">Latest Research</a>
+          <a href="brain-map.html">🧠 Interactive Brain Map</a>
+      <a href="quiz.html">Quiz</a>
+      <a href="flashcards.html">Flashcards</a>
+          <a href="about.html">About Us</a>
+          <a href="impact.html">Our Impact</a>
+          <a href="faq.html">FAQ</a>
+          <a href="contact.html">Contact</a>
+        </nav>
+        <div class="mobile-nav" id="mobileNav">
+          <a href="index.html">Home</a>
+          <a href="learn.html">Learn</a>
+          <a href="resources.html" class="active">Resources</a>
+          <a href="community.html">Community</a>
+          <a href="research.html">Latest Research</a>
+          <a href="brain-map.html">🧠 Interactive Brain Map</a>
+      <a href="quiz.html">Quiz</a>
+      <a href="flashcards.html">Flashcards</a>
+          <a href="about.html">About Us</a>
+          <a href="impact.html">Our Impact</a>
+          <a href="faq.html">FAQ</a>
+          <a href="contact.html">Contact</a>
+        </div>
+      </div>
+    </header>
+
+    <div class="content">
+      <h2>📚 Resources</h2>
+      <div class="resource-grid">
+        <div class="resource-card">
+          <h3>🧠 Brain Anatomy Poster</h3>
+          <p>
+            A colorful and detailed poster showing all the main parts of the
+            brain and their locations. Perfect for hanging in your room!
+          </p>
+          <button class="btn">
+            <a href="brain_anatomy.pdf" download="brain_anatomy.pdf"
+              >📥 Download PDF
+            </a>
+          </button>
+        </div>
+        <div class="resource-card">
+          <h3>📖 Neuroscience Glossary</h3>
+          <p>
+            A complete A-Z glossary of neuroscience terms explained in simple,
+            kid-friendly language with illustrations.
+          </p>
+          <button class="btn">
+            <a
+              href="Neuroscience_Glossary.pdf"
+              download="Neuroscience_Glossary.pdf"
+              >📥 Download PDF
+            </a>
+          </button>
+        </div>
+        <div class="resource-card">
+          <h3>✏️ Brain Function Worksheet</h3>
+          <p>
+            Fun worksheets to test your knowledge about brain parts and their
+            functions with fill-in-the-blank questions.
+          </p>
+          <button class="btn">
+            <a
+              href="images/brain function .png"
+              download="brain_function_worksheet.png"
+              >📥 Download Worksheet</a
+            >
+          </button>
+        </div>
+        <div class="resource-card">
+          <h3>📚 Recommended Books for Kids</h3>
+          <p>
+            A curated list of the best neuroscience and brain books for young
+            learners, organized by age group.
+          </p>
+          <button class="btn">
+            <a
+              href="Recommended Books for Kids.pdf"
+              download="Recommended Books for Kids.pdf"
+            >
+              📥 Download PDF
+            </a>
+          </button>
+        </div>
+        <div class="resource-card">
+          <h3>🎥 Video Recommendations</h3>
+          <p>
+            Links to the best educational videos about neuroscience from trusted
+            sources like Khan Academy and TED-Ed.
+          </p>
+          <button class="btn">
+            <a
+              href="https://www.youtube.com/watch?v=HiyzzcuaAac&pp=ygUodW5kZXJzdGFuZGluZyB0aGUgYnJhaW4gYW5kIGhvdyBpdCB3b3Jrcw%3D%3D"
+              >🎬 View Links
+            </a>
+          </button>
+        </div>
+        <div class="resource-card">
+          <h3>🧪 Fun Experiments to Try</h3>
+          <p>
+            Simple brain experiments and activities you can do at home to
+            understand neuroscience concepts better!
+          </p>
+          <button class="btn">
+            <a href="fun_experiment.docx">📥 Download PDF</a>
+          </button>
+        </div>
+        <div class="resource-card">
+          <h3>🎨 Brain Coloring Pages</h3>
+          <p>
+            Detailed coloring pages of the brain with labels. A fun and creative
+            way to learn brain anatomy!
+          </p>
+          <button class="btn">
+            <a href="images/brain.png" download="brain_coloring_page.png">📥 Download Image</a>
+          </button>
+        </div>
+        <div class="resource-card">
+          <h3>🧩 Brain Parts Puzzle</h3>
+          <p>
+            Printable brain puzzle with all the parts labeled. Cut them out and
+            put the brain together!
+          </p>
+          <button class="btn">
+            <a href="images/brain part puzzle.png" download="brain_parts_puzzle.png">📥 Download Image</a>
+          </button>
+        </div>
+        <div class="resource-card">
+          <h3>📊 Study Notes</h3>
+          <p>
+            Comprehensive study notes covering all 15 topics with key points,
+            diagrams, and summaries.
+          </p>
+          <button class="btn"><a href="study.docx">📥 Download PDF</a></button>
+        </div>
+      </div>
+    </div>
+<footer>
+<p>
+&copy; 2026 Neurovascular Dynamic Lab. All rights reserved.
+</p>
+<p>
+Made with 🧠 for curious minds. <br>Powered by <strong>GIDEON REALITY</strong>
+</p>
+</footer>
+    </footer>
+  </body>
+</html>
