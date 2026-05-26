@@ -895,6 +895,15 @@ function handleCardClick(el, id) {
       if (!learned.has(id)) {
         learned.add(id);
         el.classList.add('learned');
+                 // --- GA4 TRACKING: FLASHCARD LEARNED ---
+        const cardData = cardOrder.find(c => c.id === id);
+        if (cardData && typeof gtag === 'function') {
+          gtag('event', 'flashcard_learned', {
+            'card_category': cardData.cat,
+            'card_term': cardData.term
+          });
+        }
+        // ---------------------------------------
         await saveProgress();
         updateProgress();
         
