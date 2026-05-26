@@ -843,8 +843,10 @@
         async function loadNotesList(majorId, minorId) {
             const el = document.getElementById('notesList');
             el.innerHTML = '<div class="loading-spinner">Loading notes...</div>';
-            try {
-                const snap = await getDocs(collection(db, `majorSegments/${majorId}/minorSegments/${minorId}/notes`));
+            try {const snap = await getDocs(query(
+    collection(db, `majorSegments/${majorId}/minorSegments/${minorId}/notes`), 
+    orderBy('createdAt', 'asc')
+));
                 if (snap.empty) {
                     el.innerHTML = '<div class="empty-state">No notes yet for this minor segment.</div>'; return;
                 }
