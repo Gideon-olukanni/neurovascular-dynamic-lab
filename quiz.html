@@ -812,11 +812,10 @@ function selectLevel(level, el) {
 
 // ── LOCAL QUESTIONS FILTERING ──
 function getQuestions(level) {
-  if (level === 'beginner') return allQuestions.filter(q => q.level === 'beginner');
-  if (level === 'intermediate') return allQuestions.filter(q => q.level === 'beginner' || q.level === 'intermediate');
-  if (level === 'advanced') return [...allQuestions];
-  return allQuestions;
+  // This strict equality ensures Beginner only gets Beginner, Advanced only gets Advanced, etc.
+  return allQuestions.filter(q => q.level === level);
 }
+  
 
 // ── DATABASE INTEGRATED START MECHANISM ──
 async function startQuiz() {
@@ -848,14 +847,14 @@ async function startQuiz() {
     console.error("Database connection bypass. Loading static models only: ", error);
   }
 
-  currentQuestions = [...localQuestions, ...firebaseQuestions];
+    currentQuestions = [...localQuestions, ...firebaseQuestions];
   currentQuestions = currentQuestions.sort(() => Math.random() - 0.5);
   
-  if (currentQuestions.length > 20) {
-    currentQuestions = currentQuestions.slice(0, 20);
-  }
+  // The slice limit has been removed so the quiz loads the exact 
+  // number of questions available in the selected tier!
 
   currentIndex = 0; 
+  
   score = 0;
   correctCount = 0; 
   wrongCount = 0;
