@@ -1022,7 +1022,16 @@ function showResults() {
   document.getElementById('resultsTitle').textContent = title;
   document.getElementById('resultsSubtitle').textContent = subtitle;
   document.getElementById('resultMsg').textContent = msg;
-
+    // --- GA4 TRACKING: QUIZ COMPLETED ---
+  if (typeof gtag === 'function') {
+    gtag('event', 'quiz_completed', {
+      'quiz_level': selectedLevel,
+      'score_percent': pct,
+      'correct_answers': correctCount
+    });
+  }
+  // ------------------------------------
+  
   // ── CLOUD SCORE SAVE ──
   if (currentUser) {
     const scoreRecord = {
