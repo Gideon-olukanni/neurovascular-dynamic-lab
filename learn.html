@@ -1567,8 +1567,11 @@ Made with 🧠 for curious minds. <br>Powered by <strong>GIDEON REALITY</strong>
       try {
         const minorDoc  = await getDoc(doc(db, `majorSegments/${majorId}/minorSegments/${minorId}`));
         const minorData = minorDoc.exists() ? minorDoc.data() : { title: minorTitle || minorId };
-
-        const notesSnap = await getDocs(collection(db, `majorSegments/${majorId}/minorSegments/${minorId}/notes`));
+const notesSnap = await getDocs(query(
+    collection(db, `majorSegments/${majorId}/minorSegments/${minorId}/notes`), 
+    orderBy("createdAt", "asc")
+));
+        
         const notes = notesSnap.docs.map(d => ({ id: d.id, ...d.data() })).filter(n => n.isActive !== false);
 
         renderTopicContent(minorData, notes, dynContent);
