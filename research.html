@@ -1,0 +1,575 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-KJZ39Z1J53"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-KJZ39Z1J53');
+</script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>🧠 Neurovascular Dynamic Lab - Latest Research</title>
+    <style>
+      /* GLOBAL STYLES */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family: "Segoe UI", sans-serif;
+        line-height: 1.6;
+        color: #0f172a;
+        background-color: #f8fafc;
+        overflow-x: hidden;
+      }
+
+      /* HEADER & NAVIGATION */
+      header {
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        background: linear-gradient(135deg, #0a2540 0%, #2563eb 100%);
+        color: white;
+        padding: 0;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        animation: slideDown 0.8s ease-out forwards;
+      }
+      a{
+        text-decoration: none;
+        color: white;
+        font-weight: bold;
+      }
+
+      @keyframes slideDown {
+        from {
+          transform: translateY(-100%);
+          opacity: 0;
+        }
+        to {
+          transform: translateY(0);
+          opacity: 1;
+        }
+      }
+      .header-content {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 0 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .logo {
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: white;
+        padding: 15px 0;
+        animation: pulse 2s ease-in-out infinite;
+      }
+
+      @keyframes pulse {
+        0%,
+        100% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.05);
+        }
+      }
+
+      nav {
+        display: flex;
+        align-items: center;
+      }
+      nav a {
+        color: white;
+        text-decoration: none;
+        padding: 23px 15px;
+        font-weight: 500;
+        font-size: 0.9rem;
+        transition: 0.3s;
+      }
+      nav a:hover {
+        background: rgba(255, 255, 255, 0.1);
+      }
+      nav a.active {
+        background: rgba(255, 255, 255, 0.2);
+        border-bottom: 3px solid white;
+      }
+
+      /* HAMBURGER BUTTON (Hidden on Desktop) */
+      .hamburger-btn {
+        display: none;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 5px;
+      }
+      .hamburger-btn img {
+        width: 30px;
+        height: 30px;
+        filter: brightness(0) invert(1);
+      }
+
+      /* MOBILE NAV (Hidden by Default) */
+      .mobile-nav {
+        display: none;
+        background: #0a2540;
+        flex-direction: column;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+      }
+      .mobile-nav.show {
+        display: flex;
+      }
+      .mobile-nav a {
+        color: white;
+        padding: 15px 20px;
+        text-decoration: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      }
+
+      /* CONTENT STYLES */
+      .content {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 40px 20px;
+      }
+      h2 {
+        color: #2563eb;
+        font-size: 2.2rem;
+        margin-bottom: 30px;
+        text-align: center;
+      }
+
+      .research-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 25px;
+      }
+      .research-card {
+        background: white;
+        padding: 25px;
+        border-radius: 12px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        border-top: 4px solid #2563eb;
+        display: flex;
+        flex-direction: column;
+      }
+      .date {
+        color: #64748b;
+        font-size: 0.85rem;
+        margin-bottom: 10px;
+      }
+      .research-card h3 {
+        color: #0a2540;
+        margin-bottom: 15px;
+      }
+      .research-card p {
+        color: #475569;
+        margin-bottom: 20px;
+        flex-grow: 1;
+      }
+
+      .tag {
+        display: inline-block;
+        background: #e0f2fe;
+        color: #0369a1;
+        padding: 4px 10px;
+        border-radius: 4px;
+        font-size: 0.75rem;
+        margin-right: 5px;
+        margin-bottom: 15px;
+      }
+      .btn {
+        background: #2563eb;
+        color: white;
+        border: none;
+        padding: 12px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: 0.3s;
+      }
+      .btn:hover {
+        background: #1d4ed8;
+      }
+
+      /* ========================================================
+       FOOTER STYLES (COMPLETELY FIXED EDGE-TO-EDGE)
+       ======================================================== */
+footer {
+background: linear-gradient(135deg, #0a2540 0%, #1e3a5f 100%);
+color: rgba(255, 255, 255, 0.85);
+text-align: center;
+padding: 24px 20px;
+/* Accommodates iPhone home indicators to prevent bottom whitespace */
+padding-bottom: calc(24px + env(safe-area-inset-bottom));
+margin: 0;
+margin-top: auto;
+/* Forces footer flush to the bottom */
+position: relative;
+overflow: hidden;
+font-size: 0.88rem;
+line-height: 1.8;
+width: 100vw;
+max-width: 100%;
+display: block;
+box-sizing: border-box;
+/* Crucial for preventing horizontal overflow */
+}
+
+footer::before {
+content: "";
+position: absolute;
+top: 0;
+left: 0;
+right: 0;
+height: 3px;
+background: linear-gradient(90deg, #00d4ff, #7b2ff7, #00d4ff);
+}
+
+footer p {
+margin: 0;
+padding: 4px 0;
+word-break: keep-all;
+overflow-wrap: normal;
+}
+
+      /* RESPONSIVE LOGIC */
+      @media (max-width: 900px) {
+        nav {
+          display: none;
+        }
+        .hamburger-btn {
+          display: block;
+        }
+      }
+      @keyframes floatingEntrance {
+        0% {
+          opacity: 0;
+          transform: translateY(-50px) scale(0.9);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+        }
+      }
+
+      /* Mobile responsive header/footer fallback */
+      @media (max-width: 768px) {
+        header {
+          background: linear-gradient(
+            135deg,
+            #0a2540 0%,
+            #2563eb 100%
+          ) !important;
+          color: white !important;
+        }
+
+        .header-content {
+          display: flex !important;
+          flex-direction: row !important;
+          justify-content: space-between !important;
+          align-items: center !important;
+          flex-wrap: nowrap !important;
+          gap: 10px;
+          padding: 10px 16px !important;
+          min-height: auto !important;
+        }
+
+        .logo {
+          font-size: 1rem !important;
+          white-space: nowrap !important;
+          overflow: hidden !important;
+          text-overflow: ellipsis !important;
+          max-width: calc(100% - 58px) !important;
+          margin: 0;
+        }
+
+        .hamburger-btn {
+          flex: 0 0 auto !important;
+        }
+
+        nav {
+          display: none !important;
+        }
+
+        .hamburger-btn {
+          display: block !important;
+        }
+
+        .mobile-nav {
+          background: linear-gradient(
+            135deg,
+            #0a2540 0%,
+            #2563eb 100%
+          ) !important;
+        }
+
+        footer {
+          padding: 30px 18px !important;
+          text-align: center !important;
+        }
+
+        body {
+          font-size: 16px;
+        }
+
+        .content,
+        .hero,
+        .section,
+        .card,
+        .quiz-panel,
+        .info-panel {
+          padding-left: 16px !important;
+          padding-right: 16px !important;
+        }
+
+        .button-group,
+        .footer-links,
+        .footer-grid,
+        .author-container,
+        .value-card,
+        .resource-grid {
+          gap: 16px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="header-content">
+        <div class="logo">🧠 Neurovascular Dynamic Lab</div>
+
+        <nav>
+          <a href="index.html">Home</a>
+          <a href="learn.html">Learn</a>
+          <a href="resources.html">Resources</a>
+          <a href="community.html">Community</a>
+          <a href="research.html" class="active">Latest Research</a>
+          <a href="brain-map.html">🧠 Interactive Brain Map</a>
+      <a href="quiz.html">Quiz</a>
+      <a href="flashcards.html">Flashcards</a>
+          <a href="about.html">About Us</a>
+          <a href="impact.html">Our Impact</a>
+          <a href="faq.html">FAQ</a>
+          <a href="contact.html">Contact</a>
+        </nav>
+
+        <button class="hamburger-btn" id="hamburgerBtn">
+          <img src="expand.png" alt="Menu" />
+        </button>
+      </div>
+
+      <div class="mobile-nav" id="mobileNav">
+        <a href="index.html">Home</a>
+        <a href="learn.html">Learn</a>
+        <a href="resources.html">Resources</a>
+        <a href="community.html">Community</a>
+        <a href="research.html" class="active">Latest Research</a>
+        <a href="brain-map.html">🧠 Interactive Brain Map</a>
+      <a href="quiz.html">Quiz</a>
+      <a href="flashcards.html">Flashcards</a>
+        <a href="about.html">About Us</a>
+          <a href="impact.html">Our Impact</a>
+        <a href="faq.html">FAQ</a>
+        <a href="contact.html">Contact</a>
+      </div>
+    </header>
+
+    <div class="content">
+      <h2>🔬 Latest Research Discoveries</h2>
+
+      <!-- Founder's Note Banner -->
+      <div style="background:linear-gradient(135deg,#0a2540,#2563eb);color:white;border-radius:12px;padding:20px 28px;margin-bottom:32px;display:flex;align-items:flex-start;gap:16px;">
+        <div style="font-size:2rem;flex-shrink:0;">🧠</div>
+        <div>
+          <div style="font-weight:700;font-size:1rem;margin-bottom:6px;">Founder's Research Commentary</div>
+          <p style="font-size:0.9rem;line-height:1.7;color:rgba(255,255,255,0.88);margin:0;">
+            As someone preparing to study Neuroscience at university level, I curate these discoveries not just as headlines — but as windows into where the field is heading. 
+            Each entry below reflects research I have personally studied and believe matters most for the next generation of African neuroscientists. 
+            The brain sciences are moving faster than ever. Stay curious. — <strong>Gideon Olukanni, Founder</strong>
+          </p>
+        </div>
+      </div>
+
+      <div class="research-grid">
+
+        <div class="research-card">
+          <div class="date">📅 March 2026</div>
+          <h3>AI Decodes Brain Signals in Real Time</h3>
+          <p>
+            Researchers demonstrate a non-invasive system that uses AI to translate neural activity into text with over 80% accuracy — a major leap for patients who cannot speak.
+          </p>
+          <div>
+            <span class="tag">Brain-Computer Interface</span>
+            <span class="tag">AI</span>
+          </div>
+          <button class="btn">
+            <a href="https://www.youtube.com/watch?v=3GCS9JqNJB0" target="_blank">Explore This Research</a>
+          </button>
+        </div>
+
+        <div class="research-card">
+          <div class="date">📅 January 2026</div>
+          <h3>New Map of the Human Connectome</h3>
+          <p>
+            Scientists release the most detailed map of human brain connections ever created — over 200 trillion synapses visualised using electron microscopy and machine learning.
+          </p>
+          <div>
+            <span class="tag">Neuroimaging</span>
+            <span class="tag">Connectomics</span>
+          </div>
+          <button class="btn">
+            <a href="https://www.youtube.com/watch?v=aB_ZmAM3tv8" target="_blank">Explore This Research</a>
+          </button>
+        </div>
+
+        <div class="research-card">
+          <div class="date">📅 November 2025</div>
+          <h3>Stroke Recovery Accelerated by Light Therapy</h3>
+          <p>
+            A clinical trial shows that targeted near-infrared light therapy applied to the skull significantly speeds up motor recovery after ischaemic stroke — with no adverse effects.
+          </p>
+          <div>
+            <span class="tag">Cerebrovascular</span>
+            <span class="tag">Stroke</span>
+            <span class="tag">Neurology</span>
+          </div>
+          <button class="btn">
+            <a href="https://www.youtube.com/watch?v=B1ygYzcWqFY" target="_blank">Explore This Research</a>
+          </button>
+        </div>
+
+        <div class="research-card">
+          <div class="date">📅 September 2025</div>
+          <h3>Sleep Clears Alzheimer's Proteins Nightly</h3>
+          <p>
+            New research confirms that the brain's glymphatic system — active primarily during deep sleep — flushes amyloid-beta and tau proteins that accumulate in Alzheimer's disease.
+          </p>
+          <div>
+            <span class="tag">Alzheimer's</span>
+            <span class="tag">Sleep</span>
+            <span class="tag">Glymphatic System</span>
+          </div>
+          <button class="btn">
+            <a href="https://www.youtube.com/watch?v=QtGjjuSQdZ8" target="_blank">Explore This Research</a>
+          </button>
+        </div>
+
+        <div class="research-card">
+          <div class="date">📅 July 2025</div>
+          <h3>Exercise Grows New Neurons at Any Age</h3>
+          <p>
+            A landmark study in adults over 70 confirms that aerobic exercise triggers neurogenesis in the hippocampus, improving memory scores by up to 23% after 12 weeks.
+          </p>
+          <div>
+            <span class="tag">Neurogenesis</span>
+            <span class="tag">Exercise</span>
+            <span class="tag">Memory</span>
+          </div>
+          <button class="btn">
+            <a href="https://www.youtube.com/watch?v=BHY0FxzoKZE" target="_blank">Explore This Research</a>
+          </button>
+        </div>
+
+        <div class="research-card">
+          <div class="date">📅 May 2025</div>
+          <h3>Teen Brain Uniquely Vulnerable to Stress</h3>
+          <p>
+            Research shows the adolescent prefrontal cortex is still forming key inhibitory circuits until age 25, making teenagers neurologically more susceptible to chronic stress and anxiety.
+          </p>
+          <div>
+            <span class="tag">Adolescent Brain</span>
+            <span class="tag">Stress</span>
+            <span class="tag">Development</span>
+          </div>
+          <button class="btn">
+            <a href="https://www.youtube.com/watch?v=1GSvzgrBKaM" target="_blank">Explore This Research</a>
+          </button>
+        </div>
+
+        <div class="research-card">
+          <div class="date">📅 March 2025</div>
+          <h3>Meditation Thickens the Prefrontal Cortex</h3>
+          <p>
+            Long-term meditators show measurably greater cortical thickness in regions governing attention and emotional regulation — supporting mindfulness as a genuine neurological intervention.
+          </p>
+          <div>
+            <span class="tag">Neuroplasticity</span>
+            <span class="tag">Mindfulness</span>
+          </div>
+          <button class="btn">
+            <a href="https://www.youtube.com/watch?v=8ihY2TZXuz0" target="_blank">Explore This Research</a>
+          </button>
+        </div>
+
+        <div class="research-card">
+          <div class="date">📅 January 2025</div>
+          <h3>New Neurotransmitter Linked to Focus</h3>
+          <p>
+            Researchers identify a previously unstudied neuromodulator active in the thalamus that appears to gate attention — opening a potential new target for ADHD and concentration disorders.
+          </p>
+          <div>
+            <span class="tag">Neurotransmitters</span>
+            <span class="tag">Attention</span>
+            <span class="tag">ADHD</span>
+          </div>
+          <button class="btn">
+            <a href="https://www.youtube.com/watch?v=F9fsFuGULm0" target="_blank">Explore This Research</a>
+          </button>
+        </div>
+
+        <div class="research-card">
+          <div class="date">📅 October 2024</div>
+          <h3>REM Sleep Consolidates Emotional Memory</h3>
+          <p>
+            Scientists using high-density EEG show that REM sleep selectively replays emotionally significant events, helping the brain reduce their distress while preserving the factual memory.
+          </p>
+          <div>
+            <span class="tag">Sleep</span>
+            <span class="tag">Memory</span>
+            <span class="tag">Emotion</span>
+          </div>
+          <button class="btn">
+            <a href="https://www.youtube.com/watch?v=6TyIY6u31gk" target="_blank">Explore This Research</a>
+          </button>
+        </div>
+
+      </div>
+    </div>
+<footer>
+<p>
+&copy; 2026 Neurovascular Dynamic Lab. All rights reserved.
+</p>
+<p>
+Made with 🧠 for curious minds. <br>Powered by <strong>GIDEON REALITY</strong>
+</p>
+</footer>
+
+    <script>
+      // Extracting Expand/Collapse functionality
+      const btn = document.getElementById("hamburgerBtn");
+      const nav = document.getElementById("mobileNav");
+
+      btn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        nav.classList.toggle("show");
+      });
+
+      // Close menu if user clicks anywhere else
+      document.addEventListener("click", (e) => {
+        if (!nav.contains(e.target) && !btn.contains(e.target)) {
+          nav.classList.remove("show");
+        }
+      });
+    </script>
+  </body>
+</html>
+
+  
+
