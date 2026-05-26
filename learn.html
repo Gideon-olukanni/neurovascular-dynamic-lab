@@ -1013,6 +1013,13 @@ Made with 🧠 for curious minds. <br>Powered by <strong>GIDEON REALITY</strong>
     function downloadNotes() {
       const notes = localStorage.getItem("neuroscience_notes") || "";
       if (!notes.trim()) { alert("No notes to download."); return; }
+            // --- GA4 TRACKING: NOTES EXPORTED ---
+      if (typeof gtag === 'function') {
+        gtag('event', 'note_downloaded', {
+          'topic': window.currentTopicId || 'General Notes'
+        });
+      }
+      // ------------------------------------
       const blob = new Blob([notes], { type: "text/plain" });
       const a = document.createElement("a");
       a.href = URL.createObjectURL(blob); a.download = `ND_Notes_${new Date().toISOString().split("T")[0]}.txt`;
