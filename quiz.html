@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-KJZ39Z1J53"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-KJZ39Z1J53');
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🧠 Neurovascular Dynamic Lab - Brain Quiz</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500;600;700&display=swap');
+
+    :root {
+      --navy: #0A2540;
+      --blue: #2563EB;
+      --cyan: #22D3EE;
+      --white: #F8FAFC;
+      --soft: #E2E8F0;
+      --green: #10B981;
+      --red: #EF4444;
+      --gold: #F59E0B;
+      --text: #0F172A;
+      --card: #ffffff;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background-color: var(--white);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    
+    /* ── HEADER ── */
+    header {
+      position: sticky; top: 0; z-index: 1000;
+      background: linear-gradient(135deg, #0A2540 0%, #2563EB 100%);
+      color: white; padding: 0;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+    .header-content {
+      max-width: 1400px; margin: 0 auto; padding: 0 20px;
+      display: flex; justify-content: space-between; align-items: center;
+      /* Fixed: Removed white-space nowrap to allow safe mobile wrapping */
+    }
+    
+    .logo {
+      font-size: 1.5rem; font-weight: 700; color: white; padding: 15px 0;
+    }
+    
+    nav { display: flex; gap: 0; align-items: stretch; }
+    nav a {
+      color: white; text-decoration: none; padding: 18px 16px;
+      font-size: 0.95rem; transition: all 0.3s ease; position: relative;
+    }
+    nav a::before {
+      content: ''; position: absolute; bottom: 0; left: 50%;
+      width: 0; height: 3px; background: white;
+      transition: all 0.3s ease; transform: translateX(-50%);
+    }
+    nav a:hover::before, nav a.active::before { width: 100%; }
+    nav a:hover { background: rgba(255,255,255,0.15); }
+
+    .hamburger-btn {
+      display: none; background: none; border: none;
+      cursor: pointer; padding: 10px;
+    }
+    .hamburger-btn img { width: 24px; height: 24px; filter: brightness(0) invert(1); }
+    
+    .mobile-nav {
+      display: none; position: absolute; top: 100%; left: 0; right: 0;
+      background: linear-gradient(135deg, #0A2540 0%, #2563EB 100%);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+    .mobile-nav.show { display: block; }
+    .mobile-nav a {
+      display: block; color: white; text-decoration: none;
+      padding: 15px 20px; border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    /* ── HERO ── */
+    .hero {
+      background: linear-gradient(135deg, #0A2540, #2563EB);
+      color: white; padding: 50px 20px; text-align: center;
+    }
+    .hero h1 { font-size: 2.4rem; margin-bottom: 12px; }
+    .hero p  { font-size: 1.1rem; opacity: 0.85; }
+
+    /* ── DYNAMIC QUIZ CONFIG SYSTEM ── */
+    #quiz-config-screen {
+      max-width: 800px; margin: 40px auto; padding: 0 20px;
+    }
+    .config-card {
+      background: white; border-radius: 20px; padding: 30px;
+      box-shadow: 0 10px 40px rgba(0,0,0,.08); border: 1px solid rgba(226,232,240,.8);
+    }
+    .config-header { text-align: center; margin-bottom: 30px; }
+    .config-header h2 { font-size: 1.8rem; color: var(--navy); margin-bottom: 8px; }
+    .config-header p { color: #64748B; font-size: 0.95rem; }
+    
+    .config-section { margin-bottom: 28px; }
+    .config-label { display: block; margin-bottom: 12px; font-weight: 700; color: var(--navy); font-size: .95rem; }
+    
+    .config-select {
+      width: 100%; padding: 16px 20px; border-radius: 12px; border: 2px solid var(--soft);
+      background: white; font-size: 1rem; font-family: 'DM Sans', sans-serif; transition: .3s ease; outline: none; cursor: pointer;
+    }
+    .config-select:focus { border-color: var(--blue); box-shadow: 0 0 0 4px rgba(37,99,235,.1); }
+    
+    .level-selector-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .modern-level-btn {
+      border: 2px solid var(--soft); background: white; padding: 16px;
+      border-radius: 12px; font-size: 0.95rem; font-weight: 700; cursor: pointer;
+      transition: all .3s ease; font-family: 'DM Sans', sans-serif; text-align: center;
+    }
+    .modern-level-btn:hover { transform: translateY(-2px); border-color: var(--blue); }
+    .modern-level-btn.active.beginner { border-color: var(--green); background: #f0fdf4; color: #166534; }
+    .modern-level-btn.active.intermediate { border-color: var(--gold); background: #fffbeb; color: #92400e; }
+    .modern-level-btn.active.advanced { border-color: var(--red); background: #fef2f2; color: #991b1b; }
+
+    .count-pills { display: flex; flex-wrap: wrap; gap: 10px; }
+    .count-pill {
+      border: 2px solid var(--soft); background: white; padding: 10px 18px;
+      border-radius: 50px; font-weight: 700; cursor: pointer; transition: .25s ease;
+    }
+    .count-pill:hover { border-color: var(--blue); background: #eff6ff; }
+    .count-pill.active { background: linear-gradient(135deg, var(--navy), var(--blue)); color: white; border-color: transparent; }
+    
+    .question-meta { margin-top: 12px; color: #64748B; font-size: .85rem; }
+    
+    .dynamic-start-btn {
+      width: 100%; border: none; padding: 18px; border-radius: 12px;
+      background: linear-gradient(135deg, var(--navy), var(--blue)); color: white;
+      font-size: 1.05rem; font-weight: 700; cursor: pointer; transition: .3s ease;
+      opacity: .45; pointer-events: none; font-family: 'DM Sans', sans-serif;
+    }
+    .dynamic-start-btn.ready { opacity: 1; pointer-events: all; }
+    .dynamic-start-btn.ready:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(37,99,235,0.3); }
+
+    /* ── QUIZ SCREEN ── */
+    #quiz-screen { display: none; max-width: 820px; margin: 40px auto; padding: 0 20px; }
+    .progress-wrap { background: var(--soft); border-radius: 10px; height: 8px; margin-bottom: 24px; overflow: hidden; }
+    .progress-bar { height: 100%; border-radius: 10px; background: linear-gradient(90deg, var(--blue), var(--cyan)); transition: width 0.5s ease; }
+    .quiz-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+    .q-counter, .score-display { font-size: 0.9rem; color: #64748B; font-weight: 600; }
+    
+    .timer-wrap { text-align: center; margin-bottom: 20px; }
+    .timer-circle {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 64px; height: 64px; border-radius: 50%; border: 4px solid var(--soft);
+      font-family: 'Space Mono', monospace; font-size: 1.2rem; font-weight: 700; color: var(--navy);
+    }
+    .timer-circle.warning { border-color: var(--gold); color: var(--gold); }
+    .timer-circle.danger  { border-color: var(--red);  color: var(--red); }
+
+    .question-card { background: white; border-radius: 16px; padding: 30px; box-shadow: 0 4px 20px rgba(0,0,0,0.06); margin-bottom: 20px; }
+    .q-level-tag { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; margin-bottom: 16px; text-transform: uppercase; }
+    .tag-beginner    { background: #dcfce7; color: #166534; }
+    .tag-intermediate{ background: #fef3c7; color: #92400e; }
+    .tag-advanced    { background: #fee2e2; color: #991b1b; }
+    .question-text { font-size: 1.15rem; font-weight: 600; color: var(--navy); line-height: 1.5; }
+
+    .options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
+    .option-btn {
+      background: var(--white); border: 2px solid var(--soft); border-radius: 12px;
+      padding: 16px; text-align: left; cursor: pointer; font-size: 0.95rem;
+      font-family: 'DM Sans', sans-serif; color: var(--text); transition: all 0.2s ease;
+    }
+    .option-btn:hover:not(:disabled) { border-color: var(--blue); background: #eff6ff; }
+    .option-btn.correct  { background: #dcfce7; border-color: var(--green); color: #166534; font-weight: 600; }
+    .option-btn.wrong    { background: #fee2e2; border-color: var(--red);   color: #991b1b; font-weight: 600; }
+    .option-btn.reveal   { background: #dcfce7; border-color: var(--green); color: #166534; }
+
+    .feedback-box { padding: 14px 18px; border-radius: 10px; font-weight: 500; font-size: 0.9rem; margin-bottom: 16px; display: none; }
+    .feedback-box.correct { background: #dcfce7; color: #166534; border-left: 4px solid var(--green); }
+    .feedback-box.wrong   { background: #fee2e2; color: #991b1b; border-left: 4px solid var(--red); }
+
+    .next-btn {
+      display: none; width: 100%; padding: 16px; border-radius: 12px;
+      background: linear-gradient(135deg, var(--navy), var(--blue)); color: white;
+      font-size: 1rem; font-weight: 600; border: none; cursor: pointer;
+    }
+
+    /* ── RESULTS SCREEN ── */
+    #results-screen { display: none; max-width: 600px; margin: 50px auto; padding: 0 20px; text-align: center; }
+    .results-card { background: white; border-radius: 20px; padding: 50px 30px; box-shadow: 0 8px 30px rgba(0,0,0,0.08); }
+    .results-emoji { font-size: 4rem; margin-bottom: 16px; }
+    .results-card h2 { font-size: 1.8rem; color: var(--navy); margin-bottom: 8px; }
+    .score-big { font-family: 'Space Mono', monospace; font-size: 3.5rem; font-weight: 700; color: var(--blue); margin-bottom: 24px; }
+    
+    .stats-row { display: flex; justify-content: center; gap: 24px; margin-bottom: 30px; flex-wrap: wrap; }
+    .stat-num { font-size: 1.5rem; font-weight: 700; font-family: 'Space Mono', monospace; }
+    .stat-lbl { font-size: 0.75rem; color: #64748B; text-transform: uppercase; letter-spacing: 0.05em; }
+    .stat-correct .stat-num { color: var(--green); }
+    .stat-wrong   .stat-num { color: var(--red); }
+    .stat-skipped .stat-num { color: var(--gold); }
+    
+    .result-msg { background: #eff6ff; border-radius: 12px; padding: 16px; margin-bottom: 24px; font-weight: 500; font-size: 0.95rem; color: var(--navy); }
+    .results-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+    .btn-retry, .btn-change { padding: 12px 24px; border-radius: 50px; border: none; font-size: 0.95rem; font-weight: 600; cursor: pointer; font-family: 'DM Sans', sans-serif; }
+    .btn-retry  { background: linear-gradient(135deg, var(--navy), var(--blue)); color: white; }
+    .btn-change { background: var(--soft); color: var(--navy); }
+
+    /* ── AUTH SYSTEM BADGES ── */
+    .auth-nav-btn {
+      display: inline-flex; align-items: center; gap: 6px; background: rgba(255,255,255,.15); border: 1px solid rgba(255,255,255,.3);
+      color: white; border-radius: 50px; padding: 6px 14px; font-size: .8rem; font-weight: 600; cursor: pointer; text-decoration: none; margin-left: 8px;
+    }
+    .auth-user-display { display: none; align-items: center; gap: 8px; padding: 8px 12px; }
+    .auth-user-display.visible { display: flex; }
+    .auth-avatar { width: 28px; height: 28px; border-radius: 50%; background: linear-gradient(135deg, var(--cyan), var(--blue)); display: flex; align-items: center; justify-content: center; font-size: .8rem; font-weight: 700; color: white; }
+    .auth-user-email { font-size: .75rem; color: rgba(255,255,255,.8); max-width: 120px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .score-saved-badge { display: inline-flex; align-items: center; gap: 6px; background: #dcfce7; border: 1px solid #bbf7d0; color: #166534; border-radius: 50px; padding: 6px 14px; font-size: .75rem; font-weight: 700; margin-top: 16px; }
+
+    footer {
+      background: linear-gradient(135deg, #0a2540 0%, #1e3a5f 100%); color: rgba(255, 255, 255, 0.85); text-align: center;
+      padding: 20px; padding-bottom: calc(20px + env(safe-area-inset-bottom)); margin-top: auto; font-size: 0.85rem;
+    }
+
+    @media (max-width: 1024px) {
+      nav { display: none !important; }
+      .hamburger-btn { display: block !important; }
+    }
+    @media (max-width: 768px) {
+      .level-selector-grid { grid-template-columns: 1fr; }
+      .options-grid { grid-template-columns: 1fr; }
+      .logo { font-size: 1.2rem; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-content">
+    <div class="logo">🧠 Neurovascular Dynamic Lab</div>
+    <button class="hamburger-btn" id="hamburgerBtn">
+      <img src="expand.png" alt="Menu">
+    </button>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="learn.html">Learn</a>
+      <a href="resources.html">Resources</a>
+      <a href="community.html">Community</a>
+      <a href="research.html">Latest Research</a>
+      <a href="brain-map.html">🧠 Interactive Brain Map</a>
+      <a href="quiz.html" class="active">Quiz</a>
+      <a href="flashcards.html">Flashcards</a>
+      <a href="about.html">About Us</a>
+      <div class="auth-user-display" id="authUserDisplay">
+        <div class="auth-avatar" id="authAvatar">?</div>
+        <span class="auth-user-email" id="authUserEmail"></span>
+        <button class="auth-nav-btn" style="background:rgba(239,68,68,0.2); border-color:rgba(239,68,68,0.4);" id="signOutBtn">Sign Out</button>
+      </div>
+      <a href="login.html" class="auth-nav-btn" id="signInNavBtn">👤 Sign In</a>
+    </nav>
+    <div class="mobile-nav" id="mobileNav">
+      <a href="index.html">Home</a>
+      <a href="learn.html">Learn</a>
+      <a href="quiz.html" class="active">Quiz</a>
+      <a href="login.html" id="mobileAuthLink">👤 Sign In</a>
+    </div>
+  </div>
+</header>
+
+<section class="hero" id="heroSection">
+  <h1>🧠 Brain Quiz Challenge</h1>
+  <p>Test your neuroscience knowledge dynamically. Select your settings below to begin.</p>
+</section>
+
+<div id="quiz-config-screen">
+  <div class="config-card">
+    <div class="config-header">
+      <h2>Configure Your Quiz</h2>
+      <p>Choose a topic, difficulty level, and number of questions.</p>
+    </div>
+
+    <div class="config-section">
+      <label class="config-label">1. Select Quiz Topic</label>
+      <select id="topicSelect" class="config-select">
+        <option value="">Loading Topics...</option>
+      </select>
+    </div>
+
+    <div class="config-section" id="levelSection" style="display:none;">
+      <label class="config-label">2. Select Difficulty Level</label>
+      <div class="level-selector-grid">
+        <button class="modern-level-btn beginner" data-level="beginner">🌱 Beginner</button>
+        <button class="modern-level-btn intermediate" data-level="intermediate">⚡ Intermediate</button>
+        <button class="modern-level-btn advanced" data-level="advanced">🔬 Advanced</button>
+      </div>
+    </div>
+
+    <div class="config-section" id="questionCountSection" style="display:none;">
+      <label class="config-label">3. Number of Questions</label>
+      <div class="count-pills" id="countPills"></div>
+      <div class="question-meta">
+        <span id="availableQuestionsText"></span>
+      </div>
+    </div>
+
+    <button id="dynamicStartBtn" class="dynamic-start-btn">Start Quiz →</button>
+  </div>
+</div>
+
+<div id="quiz-screen">
+  <div class="progress-wrap">
+    <div class="progress-bar" id="progressBar" style="width:0%"></div>
+  </div>
+  <div class="quiz-top">
+    <span class="q-counter" id="qCounter">Question 1</span>
+    <span class="score-display" id="scoreDisplay">Score: 0</span>
+  </div>
+  <div class="timer-wrap">
+    <div class="timer-circle" id="timerCircle">30</div>
+  </div>
+  <div class="question-card">
+    <span class="q-level-tag" id="levelTag">-</span>
+    <p class="question-text" id="questionText">Loading question...</p>
+  </div>
+  <div class="options-grid" id="optionsGrid"></div>
+  <div class="feedback-box" id="feedbackBox"></div>
+  <button class="next-btn" id="nextBtn">Next Question →</button>
+</div>
+
+<div id="results-screen">
+  <div class="results-card">
+    <div class="results-emoji" id="resultsEmoji">🧠</div>
+    <h2 id="resultsTitle">Quiz Complete!</h2>
+    <p id="resultsSubtitle">Here's how your brain performed.</p>
+    <div class="score-big" id="scoreBig">0/0</div>
+    <div class="stats-row">
+      <div class="stat-item stat-correct">
+        <div class="stat-num" id="statCorrect">0</div>
+        <div class="stat-lbl">Correct</div>
+      </div>
+      <div class="stat-item stat-wrong">
+        <div class="stat-num" id="statWrong">0</div>
+        <div class="stat-lbl">Wrong</div>
+      </div>
+      <div class="stat-item stat-skipped">
+        <div class="stat-num" id="statSkipped">0</div>
+        <div class="stat-lbl">Timed Out</div>
+      </div>
+    </div>
+    <div class="result-msg" id="resultMsg"></div>
+    <div class="results-btns">
+      <button class="btn-retry" id="retryQuizBtn">Retry Quiz</button>
+      <button class="btn-change" id="changeSettingsBtn">Change Setup</button>
+    </div>
+    <div id="scoreSavedBadge" class="score-saved-badge" style="display:none;">
+      ☁️ Score saved to your cloud profile!
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>&copy; 2026 Neurovascular Dynamic Lab. All rights reserved.</p>
+  <p>Made with 🧠 for curious minds. <br>Powered by <strong>GIDEON REALITY</strong></p>
+</footer>
+
+<script type="module">
+// ==========================================
+// FIREBASE IMPORTS & GLOBAL STATE
+// ==========================================
+import {
+  db, auth, collection, getDocs, query, where,
+  doc, setDoc, getDoc, arrayUnion,
+  onAuthStateChanged, signOut
+} from "./firebase-config.js";
+
+let currentUser = null;
+let selectedTopic = null;
+let selectedLevel = null;
+let selectedQuestionCount = null;
+
+let currentQuestions = [];
+let currentIndex = 0;
+let score = 0;
+let correctCount = 0;
+let wrongCount = 0;
+let skippedCount = 0;
+
+let timerInterval = null;
+let timeLeft = 30;
+let answered = false;
+
+let quizCounts = {};
+let quizTopics = [];
+
+const MAX_QUESTIONS_LIMIT = 60;
+
+// ==========================================
+// INITIALIZATION ON DOM LOAD
+// ==========================================
+document.addEventListener('DOMContentLoaded', () => {
+  setupAuthListeners();
+  setupUIEventListeners();
+  loadQuizMetadata();
+});
+
+// ==========================================
+// AUTHENTICATION LOGIC
+// ==========================================
+function setupAuthListeners() {
+  onAuthStateChanged(auth, (user) => {
+    currentUser = user;
+    const signInBtn = document.getElementById('signInNavBtn');
+    const userDisplay = document.getElementById('authUserDisplay');
+    const avatar = document.getElementById('authAvatar');
+    const emailEl = document.getElementById('authUserEmail');
+    const mobileLink = document.getElementById('mobileAuthLink');
+
+    if (user) {
+      if (signInBtn) signInBtn.style.display = 'none';
+      if (userDisplay) userDisplay.classList.add('visible');
+      if (avatar) avatar.textContent = (user.email || 'U').charAt(0).toUpperCase();
+      if (emailEl) emailEl.textContent = user.email;
+    } else {
+      if (signInBtn) signInBtn.style.display = '';
+      if (userDisplay) userDisplay.classList.remove('visible');
+    }
+  });
+
+  document.getElementById('signOutBtn')?.addEventListener('click', async () => {
+    await signOut(auth);
+  });
+}
+
+// ==========================================
+// DATA FETCHING LOGIC
+// ==========================================
+async function loadQuizMetadata() {
+  try {
+    const countsRef = doc(db, "quizMetadata", "counts");
+    const countsSnap = await getDoc(countsRef);
+    if (countsSnap.exists()) {
+      quizCounts = countsSnap.data();
+    }
+
+    const topicsSnap = await getDocs(query(collection(db, "quizTopics")));
+    quizTopics = [];
+    topicsSnap.forEach((topicDoc) => {
+      quizTopics.push({ id: topicDoc.id, ...topicDoc.data() });
+    });
+
+    // Ensure Mixed Topics remains at top
+    quizTopics.sort((a, b) => {
+      if (a.slug === 'mixed-topics') return -1;
+      if (b.slug === 'mixed-topics') return 1;
+      return a.name.localeCompare(b.name);
+    });
+
+    populateTopicDropdown();
+  } catch (err) {
+    console.error("Quiz metadata load failed:", err);
+    document.getElementById('topicSelect').innerHTML = `<option value="">Error Loading Topics</option>`;
+  }
+}
+
+function populateTopicDropdown() {
+  const topicSelect = document.getElementById('topicSelect');
+  if (!topicSelect) return;
+  
+  topicSelect.innerHTML = `<option value="">-- Choose a Topic --</option>`;
+  quizTopics.forEach((topic) => {
+    const option = document.createElement('option');
+    option.value = topic.slug;
+    option.textContent = topic.name;
+    topicSelect.appendChild(option);
+  });
+}
+
+// ==========================================
+// EVENT LISTENERS BINDING
+// ==========================================
+function setupUIEventListeners() {
+  // 1. Mobile Menu
+  const btn = document.getElementById('hamburgerBtn');
+  const nav = document.getElementById('mobileNav');
+  if (btn && nav) {
+    btn.addEventListener('click', () => nav.classList.toggle('show'));
+  }
+
+  // 2. Topic Selection
+  document.getElementById('topicSelect')?.addEventListener('change', handleTopicChange);
+
+  // 3. Level Selection (Event Delegation pattern)
+  document.querySelectorAll('.modern-level-btn').forEach(button => {
+    button.addEventListener('click', handleLevelSelection);
+  });
+
+  // 4. Core Quiz Buttons
+  document.getElementById('dynamicStartBtn')?.addEventListener('click', startQuiz);
+  document.getElementById('nextBtn')?.addEventListener('click', nextQuestion);
+  
+  document.getElementById('retryQuizBtn')?.addEventListener('click', () => {
+    document.getElementById('results-screen').style.display = 'none';
+    startQuiz();
+  });
+
+  document.getElementById('changeSettingsBtn')?.addEventListener('click', () => {
+    document.getElementById('results-screen').style.display = 'none';
+    document.getElementById('heroSection').style.display = 'block';
+    document.getElementById('quiz-config-screen').style.display = 'block';
+    resetConfigWorkflow();
+  });
+}
+
+// ==========================================
+// UI STATE MANAGEMENT
+// ==========================================
+function handleTopicChange(e) {
+  selectedTopic = e.target.value;
+
+  // Reset downstream selections cleanly
+  selectedLevel = null;
+  selectedQuestionCount = null;
+  document.getElementById('questionCountSection').style.display = 'none';
+  document.getElementById('dynamicStartBtn').classList.remove('ready');
+  
+  if (selectedTopic) {
+    document.getElementById('levelSection').style.display = 'block';
+    updateLevelButtonsUI();
+  } else {
+    document.getElementById('levelSection').style.display = 'none';
+  }
+}
+
+function handleLevelSelection(e) {
+  if (!selectedTopic) return;
+  
+  const targetLevel = e.currentTarget.getAttribute('data-level');
+  const available = quizCounts?.[selectedTopic]?.[targetLevel] || 0;
+
+  if (available < 1) {
+    alert("No questions available for this level yet.");
+    return;
+  }
+
+  selectedLevel = targetLevel;
+  selectedQuestionCount = null; // Reset pill choice
+  document.getElementById('dynamicStartBtn').classList.remove('ready');
+  
+  updateLevelButtonsUI();
+  renderQuestionCountSelector(available);
+}
+
+function updateLevelButtonsUI() {
+  document.querySelectorAll('.modern-level-btn').forEach(btn => {
+    const lvl = btn.getAttribute('data-level');
+    const count = quizCounts?.[selectedTopic]?.[lvl] || 0;
+    
+    // Inject dynamic count text safely
+    const titleMap = { beginner: '🌱 Beginner', intermediate: '⚡ Intermediate', advanced: '🔬 Advanced' };
+    btn.textContent = `${titleMap[lvl]} (${count})`;
+    
+    // Toggle active state CSS
+    if (lvl === selectedLevel) {
+      btn.classList.add('active');
+    } else {
+      btn.classList.remove('active');
+    }
+  });
+}
+
+function renderQuestionCountSelector(totalAvailable) {
+  const wrap = document.getElementById('countPills');
+  const countSection = document.getElementById('questionCountSection');
+  if (!wrap || !countSection) return;
+
+  wrap.innerHTML = '';
+  countSection.style.display = 'block';
+
+  const capped = Math.min(totalAvailable, MAX_QUESTIONS_LIMIT);
+  const presets = [5, 10, 15, 20, 30, 40, 50, 60];
+
+  presets.forEach((count) => {
+    if (count > capped) return;
+    
+    const btn = document.createElement('button');
+    btn.className = 'count-pill';
+    btn.textContent = count;
+
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.count-pill').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      selectedQuestionCount = count;
+      document.getElementById('dynamicStartBtn').classList.add('ready');
+    });
+
+    wrap.appendChild(btn);
+  });
+
+  document.getElementById('availableQuestionsText').textContent = `Found ${totalAvailable} total matching questions.`;
+}
+
+function resetConfigWorkflow() {
+  selectedTopic = null;
+  selectedLevel = null;
+  selectedQuestionCount = null;
+  
+  const topicSelect = document.getElementById('topicSelect');
+  if(topicSelect) topicSelect.value = '';
+  
+  document.getElementById('levelSection').style.display = 'none';
+  document.getElementById('questionCountSection').style.display = 'none';
+  document.getElementById('dynamicStartBtn').classList.remove('ready');
+}
+
+// ==========================================
+// QUIZ ENGINE RUNTIME
+// ==========================================
+async function startQuiz() {
+  if (!selectedTopic || !selectedLevel || !selectedQuestionCount) return;
+
+  // Lock UI from double clicks
+  document.getElementById('dynamicStartBtn').disabled = true;
+
+  try {
+    const qRef = query(
+      collection(db, "questions"),
+      where("topic", "==", selectedTopic),
+      where("level", "==", selectedLevel)
+    );
+
+    const snap = await getDocs(qRef);
+    let pool = [];
+    snap.forEach((docSnap) => {
+      pool.push({ id: docSnap.id, ...docSnap.data() });
+    });
+
+    if (pool.length === 0) {
+      alert("Error: Data synchronization mismatch. No questions found.");
+      document.getElementById('dynamicStartBtn').disabled = false;
+      return;
+    }
+
+    // Array Randomization
+    pool = pool.sort(() => Math.random() - 0.5);
+    currentQuestions = pool.slice(0, selectedQuestionCount);
+
+    // Reset Engine States
+    currentIndex = 0;
+    score = 0;
+    correctCount = 0;
+    wrongCount = 0;
+    skippedCount = 0;
+
+    // Transition Screens
+    document.getElementById('heroSection').style.display = 'none';
+    document.getElementById('quiz-config-screen').style.display = 'none';
+    document.getElementById('quiz-screen').style.display = 'block';
+
+    loadQuestion();
+  } catch (err) {
+    console.error("Quiz Initialization Failure:", err);
+    alert("Unable to safely load quiz questions from the cloud server.");
+  } finally {
+    document.getElementById('dynamicStartBtn').disabled = false;
+  }
+}
+
+function loadQuestion() {
+  answered = false;
+  timeLeft = 30;
+
+  const q = currentQuestions[currentIndex];
+  const total = currentQuestions.length;
+
+  document.getElementById('progressBar').style.width = (((currentIndex) / total) * 100) + '%';
+  document.getElementById('qCounter').textContent = `Question ${currentIndex + 1} of ${total}`;
+  document.getElementById('scoreDisplay').textContent = `Score: ${score}`;
+
+  const tag = document.getElementById('levelTag');
+  tag.textContent = q.level.charAt(0).toUpperCase() + q.level.slice(1);
+  tag.className = 'q-level-tag tag-' + q.level;
+
+  document.getElementById('questionText').textContent = q.q;
+
+  const grid = document.getElementById('optionsGrid');
+  grid.innerHTML = '';
+  q.options.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'option-btn';
+    btn.textContent = opt;
+    btn.addEventListener('click', () => selectAnswer(i));
+    grid.appendChild(btn);
+  });
+
+  const fb = document.getElementById('feedbackBox');
+  fb.style.display = 'none';
+  document.getElementById('nextBtn').style.display = 'none';
+
+  updateTimerDisplay();
+  clearInterval(timerInterval);
+  timerInterval = setInterval(() => {
+    timeLeft--;
+    updateTimerDisplay();
+    if (timeLeft <= 0) {
+      clearInterval(timerInterval);
+      timeOut();
+    }
+  }, 1000);
+}
+
+function updateTimerDisplay() {
+  const circle = document.getElementById('timerCircle');
+  if(!circle) return;
+  circle.textContent = timeLeft;
+  circle.className = 'timer-circle';
+  if (timeLeft <= 10 && timeLeft > 5) circle.classList.add('warning');
+  if (timeLeft <= 5) circle.classList.add('danger');
+}
+
+function selectAnswer(chosen) {
+  if (answered) return;
+  answered = true;
+  clearInterval(timerInterval);
+
+  const q = currentQuestions[currentIndex];
+  const btns = document.querySelectorAll('.option-btn');
+  btns.forEach(b => b.disabled = true);
+
+  const fb = document.getElementById('feedbackBox');
+
+  if (chosen === q.answer) {
+    btns[chosen].classList.add('correct');
+    score += timeLeft > 0 ? Math.max(1, timeLeft) : 1;
+    correctCount++;
+    fb.className = 'feedback-box correct';
+    fb.innerHTML = `✅ Correct! ${q.explanation || ''}`;
+  } else {
+    btns[chosen].classList.add('wrong');
+    if(btns[q.answer]) btns[q.answer].classList.add('reveal');
+    wrongCount++;
+    fb.className = 'feedback-box wrong';
+    fb.innerHTML = `❌ Incorrect. ${q.explanation || ''}`;
+  }
+
+  fb.style.display = 'block';
+  document.getElementById('scoreDisplay').textContent = `Score: ${score}`;
+  document.getElementById('nextBtn').style.display = 'block';
+  document.getElementById('progressBar').style.width = (((currentIndex + 1) / currentQuestions.length) * 100) + '%';
+}
+
+function timeOut() {
+  if (answered) return;
+  answered = true;
+
+  const q = currentQuestions[currentIndex];
+  const btns = document.querySelectorAll('.option-btn');
+  btns.forEach(b => b.disabled = true);
+  if(btns[q.answer]) btns[q.answer].classList.add('reveal');
+  skippedCount++;
+
+  const fb = document.getElementById('feedbackBox');
+  fb.className = 'feedback-box wrong';
+  fb.innerHTML = `⏰ Time's up! ${q.explanation || ''}`;
+  fb.style.display = 'block';
+  document.getElementById('nextBtn').style.display = 'block';
+  document.getElementById('progressBar').style.width = (((currentIndex + 1) / currentQuestions.length) * 100) + '%';
+}
+
+function nextQuestion() {
+  currentIndex++;
+  if (currentIndex >= currentQuestions.length) {
+    showResults();
+  } else {
+    loadQuestion();
+  }
+}
+
+function showResults() {
+  clearInterval(timerInterval);
+  document.getElementById('quiz-screen').style.display = 'none';
+  document.getElementById('results-screen').style.display = 'block';
+
+  const total = currentQuestions.length;
+  const pct = Math.round((correctCount / total) * 100);
+
+  document.getElementById('scoreBig').textContent = `${correctCount}/${total}`;
+  document.getElementById('statCorrect').textContent = correctCount;
+  document.getElementById('statWrong').textContent = wrongCount;
+  document.getElementById('statSkipped').textContent = skippedCount;
+
+  let emoji, title, subtitle, msg;
+  if (pct >= 90) {
+    emoji = '🏆'; title = 'Outstanding!'; subtitle = 'Your brain is working at elite level.';
+    msg = `You answered ${pct}% correctly. Awesome job!`;
+  } else if (pct >= 70) {
+    emoji = '🧠'; title = 'Great Work!'; subtitle = 'You know your stuff well.';
+    msg = `You answered ${pct}% correctly. Solid performance!`;
+  } else {
+    emoji = '🌱'; title = 'Keep Learning!'; subtitle = 'Building knowledge takes time.';
+    msg = `You answered ${pct}% correctly. Keep reviewing and growing!`;
+  }
+
+  document.getElementById('resultsEmoji').textContent = emoji;
+  document.getElementById('resultsTitle').textContent = title;
+  document.getElementById('resultsSubtitle').textContent = subtitle;
+  document.getElementById('resultMsg').textContent = msg;
+
+  if (typeof gtag === 'function') {
+    gtag('event', 'quiz_completed', { 'quiz_level': selectedLevel, 'score_percent': pct, 'correct_answers': correctCount });
+  }
+  
+  if (currentUser) {
+    const scoreRecord = { level: selectedLevel, score: score, correct: correctCount, total: total, pct: pct, date: new Date().toISOString() };
+    setDoc(doc(db, 'users', currentUser.uid), {
+      quizScores: arrayUnion(scoreRecord),
+      lastQuizScore: pct,
+      lastQuizDate: scoreRecord.date
+    }, { merge: true }).then(() => {
+      const badge = document.getElementById('scoreSavedBadge');
+      if (badge) badge.style.display = 'inline-flex';
+    }).catch(err => console.warn('Score save cloud sync failed:', err));
+  }
+}
+</script>
+</body>
+</html
