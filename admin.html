@@ -1335,14 +1335,14 @@ window.deleteTopic = async function(id) {
   }
 };
 
-
 document.getElementById('quizForm').addEventListener('submit', async (e) => {
     e.preventDefault();
     
-    const topicId = document.getElementById('quizTopicSelect').value;
-    const level = document.getElementById('quizLevelSelect').value;
-    const text = document.getElementById('questionText').value;
-    const explanation = document.getElementById('questionExplanation').value;
+    // FETCHING THE EXACT IDs FROM YOUR HTML
+    const topicId = document.getElementById('quizTopic').value;
+    const level = document.getElementById('quizLevel').value;
+    const text = document.getElementById('quizQuestion').value;
+    const explanation = document.getElementById('quizExplanation').value;
     
     // Verification check to make sure elements are filled
     if(!topicId || !level) {
@@ -1355,12 +1355,12 @@ document.getElementById('quizForm').addEventListener('submit', async (e) => {
         level: level,
         q: text,
         options: [
-            document.getElementById('qOptA').value,
-            document.getElementById('qOptB').value,
-            document.getElementById('qOptC').value,
-            document.getElementById('qOptD').value
+            document.getElementById('opt0').value,
+            document.getElementById('opt1').value,
+            document.getElementById('opt2').value,
+            document.getElementById('opt3').value
         ],
-        answer: parseInt(document.getElementById('correctOption').value),
+        answer: parseInt(document.getElementById('quizCorrect').value),
         explanation: explanation
     };
 
@@ -1373,7 +1373,7 @@ document.getElementById('quizForm').addEventListener('submit', async (e) => {
         } else {
             await addDoc(collection(db, 'questions'), questionData);
             
-            // Increment the tracker map so quiz.html instantly recognizes it
+            // Increment the tracker map so the quiz loads it immediately
             await updateDoc(COUNTS_REF, {
                 [`${topicId}.${level}`]: increment(1)
             });
@@ -1382,7 +1382,7 @@ document.getElementById('quizForm').addEventListener('submit', async (e) => {
         document.getElementById('quizForm').reset();
         await loadQuestions();
         
-        // Triggers safe rebuilding of structural counters across database references
+        // Triggers safe rebuilding of structural counters
         if (typeof rebuildQuestionCounts === "function") {
             await rebuildQuestionCounts();
         }
@@ -1391,7 +1391,7 @@ document.getElementById('quizForm').addEventListener('submit', async (e) => {
         showStatus('❌ Failed to save question. Check database connectivity logs.', 'error');
     }
 });
-
+       
 
 // LOAD QUESTIONS
 async function loadQuestions() {
