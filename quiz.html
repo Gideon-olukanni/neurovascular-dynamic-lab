@@ -526,6 +526,21 @@
   </div>
   <div class="options-grid" id="optionsGrid"></div>
   <div class="feedback-box" id="feedbackBox"></div>
+  <div id="quizAIBox" style="display:none; margin-top:12px;">
+  <div style="display:flex; gap:8px;">
+    <input id="quizAIInput" type="text" placeholder="Ask NeuroAI a follow-up question..."
+      style="flex:1; padding:9px 12px; border:1px solid #cbd5e1;
+      border-radius:8px; font-size:0.88rem; outline:none;"
+      onkeydown="if(event.key==='Enter') sendQuizFollowUp()" />
+    <button onclick="sendQuizFollowUp()" style="
+      padding:9px 14px; background:#2563EB; color:white;
+      border:none; border-radius:8px; cursor:pointer;">🤖</button>
+  </div>
+  <div id="quizAIResponse" style="display:none; margin-top:10px;
+    background:#f0f4ff; border-left:3px solid #2563EB;
+    padding:12px; border-radius:6px; font-size:0.88rem; color:#0f172a;">
+  </div>
+  </div>
   <button class="next-btn" id="nextBtn" onclick="nextQuestion()">Next Question →</button>
 </div>
 
@@ -1215,8 +1230,19 @@ window.selectAnswer = function(chosen) {
   }
 
   fb.style.display = 'block';
+  fb.style.display = 'block';
   document.getElementById('scoreDisplay').textContent = 'Score: ' + score;
   document.getElementById('nextBtn').style.display    = 'block';
+  
+  // Show NeuroAI follow-up
+  const aiBox = document.getElementById('quizAIBox');
+  const aiResp = document.getElementById('quizAIResponse');
+  if (aiBox) {
+    aiBox.style.display = 'block';
+    aiResp.style.display = 'none';
+    aiResp.innerHTML = '';
+    document.getElementById('quizAIInput').value = '';
+                                     }
 };
 
 // ─────────────────────────────
@@ -1237,6 +1263,14 @@ function timeOut() {
   fb.innerHTML = "⏰ Time's up! " + (q.explanation || '');
   fb.style.display                                = 'block';
   document.getElementById('nextBtn').style.display = 'block';
+  // Show NeuroAI follow-up
+  const aiBox = document.getElementById('quizAIBox');
+  const aiResp = document.getElementById('quizAIResponse');
+  if (aiBox) {
+    aiBox.style.display = 'block';
+    aiResp.style.display = 'none';
+    aiResp.innerHTML = '';
+    document.getElementById('quizAIInput').value = '';
 }
 
 // ─────────────────────────────
@@ -1387,6 +1421,35 @@ window.nextQuestion      = window.nextQuestion;
 window.retryQuiz         = window.retryQuiz;
 window.changeLevel       = window.changeLevel;
 
+  const WORKER_URL = "https://neurovascular-ai.gideonolukanni20103.workers.dev";
+
+async function sendQuizFollowUp() {
+  const input = document.getElementById('quizAIInput');
+  const question = input.value.trim();
+  if (!question) return;
+
+  const responseDiv = document.getElementById('quizAIResponse');
+  responseDiv.innerHTML = '🧠 Thinking...';
+  responseDiv.style.display = 'block';
+  input.value = '';
+
+  try {
+    const res = await fetch(WORKER_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        question: question,
+        topic: selectedTopicName || 'Neuroscience',
+        mode: 'tutor'
+      })
+    });
+    const data = await res.json();
+    responseDiv.innerHTML = data.response.replace(/\n/g, '<br>');
+  } catch(e) {
+    responseDiv.innerHTML = 'Could not connect to NeuroAI. Please try again.';
+  }
+}
+window.sendQuizFollowUp = sendQuizFollowUp;
 </script>
 </body>
 </html>
