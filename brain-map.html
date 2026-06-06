@@ -1038,6 +1038,18 @@ overflow-wrap: normal;
             background:#f0f4ff; border-left:3px solid #2563EB;
             padding:12px; border-radius:6px; font-size:0.88rem; color:#0f172a;">
           </div>
+          <div id="neuroAIChat" style="display:none; margin-top:10px;">
+            <div style="display:flex; gap:8px;">
+              <input id="neuroAIChatInput" type="text" placeholder="Ask a follow-up question..."
+                style="flex:1; padding:9px 12px; border:1px solid #cbd5e1;
+                border-radius:8px; font-size:0.88rem; outline:none;"
+                onkeydown="if(event.key==='Enter') sendFollowUp()" />
+              <button onclick="sendFollowUp()" style="
+                padding:9px 14px; background:#2563EB; color:white;
+                border:none; border-radius:8px; cursor:pointer; font-size:1rem;">➤
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -1273,6 +1285,7 @@ async function askNeuroAI() {
     const data = await res.json();
     responseDiv.innerHTML = data.response.replace(/\n/g, "<br>");
     responseDiv.style.display = "block";
+document.getElementById("neuroAIChat").style.display = "block";
   } catch (e) {
     responseDiv.innerHTML = "Could not connect to NeuroAI. Please try again.";
     responseDiv.style.display = "block";
@@ -1281,6 +1294,34 @@ async function askNeuroAI() {
   btn.textContent = "🤖 Ask NeuroAI about this region";
   btn.disabled = false;
 }
+   async function sendFollowUp() {
+  const input = document.getElementById("neuroAIChatInput");
+  const question = input.value.trim();
+  if (!question) return;
+
+  const regionName = REGIONS[activeRegion]?.name || activeRegion;
+  const responseDiv = document.getElementById("neuroAIResponse");
+
+  responseDiv.innerHTML += `<br><strong>You:</strong> ${question}<br><em>NeuroAI thinking...</em>`;
+  input.value = "";
+
+  try {
+    const res = await fetch(WORKER_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        question: question,
+        topic: regionName,
+        mode: "tutor"
+      })
+    });
+    const data = await res.json();
+    const last = responseDiv.innerHTML.replace("<br><em>NeuroAI thinking...</em>", "");
+    responseDiv.innerHTML = last + `<br><strong>NeuroAI:</strong> ${data.response.replace(/\n/g, "<br>")}`;
+  } catch(e) {
+    responseDiv.innerHTML += " Could not connect.";
+  }
+   }
 </script>
    
 </body>
