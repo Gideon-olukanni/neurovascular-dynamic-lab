@@ -1969,7 +1969,7 @@ const notesSnap = await getDocs(query(
       if (sendBtn) sendBtn.disabled = true;
       aiAddMessage("", "thinking");
       try {
-        const response = await fetch(WORKER_URL, {
+        const response = await fetch( "https://neurovascular-ai.gideonolukanni20103.workers.dev", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
@@ -1985,7 +1985,8 @@ const notesSnap = await getDocs(query(
         aiAddMessage(data.response || "I couldn't generate a response. Please try again.", "ai");
       } catch (error) {
         aiRemoveThinking();
-        aiAddMessage("Connection issue. Please check your internet and try again.", "ai");
+        // This will print the actual technical error to your chat screen!
+        aiAddMessage(`System Error: ${error.message}. If this says 'Failed to fetch', it is a CORS block. Please test on the live GitHub site.`, "ai");
       }
       if (sendBtn) sendBtn.disabled = false;
     }
