@@ -1968,7 +1968,7 @@ const notesSnap = await getDocs(query(
       input.style.height = "auto";
       if (sendBtn) sendBtn.disabled = true;
       aiAddMessage("", "thinking");
-      try {
+            try {
         const response = await fetch( "https://neurovascular-ai.gideonolukanni20103.workers.dev", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -1982,15 +1982,15 @@ const notesSnap = await getDocs(query(
         });
         const data = await response.json();
         aiRemoveThinking();
-        aiAddMessage(data.response || "I couldn't generate a response. Please try again.", "ai");
+        
+        // 🔴 TEMPORARY DEBUGGING LINE: Print exactly what Cloudflare sends back
+        aiAddMessage(`RAW WORKER DATA: ${JSON.stringify(data)}`, "ai");
+        
       } catch (error) {
         aiRemoveThinking();
-        // This will print the actual technical error to your chat screen!
-        aiAddMessage(`System Error: ${error.message}. If this says 'Failed to fetch', it is a CORS block. Please test on the live GitHub site.`, "ai");
-      }
-      if (sendBtn) sendBtn.disabled = false;
-    }
-
+        aiAddMessage(`System Error: ${error.message}`, "ai");
+            }
+      
     document.addEventListener("DOMContentLoaded", function() {
       const sendBtn = document.getElementById("ai-send-btn");
       const input = document.getElementById("ai-input");
