@@ -1027,6 +1027,18 @@ overflow-wrap: normal;
         <div class="fun-fact-box" id="cardFact"></div>
         <div class="section-tag">Related Conditions</div>
         <div class="disorders-list" id="cardDisorders"></div>
+        <div style="margin-top:16px;">
+          <button id="askNeuroAIBtn" onclick="askNeuroAI()" style="
+            width:100%; padding:10px; background:linear-gradient(135deg,#0A2540,#2563EB);
+            color:white; border:none; border-radius:8px; font-size:0.9rem;
+            font-weight:600; cursor:pointer;">
+            🤖 Ask NeuroAI about this region
+          </button>
+          <div id="neuroAIResponse" style="display:none; margin-top:12px;
+            background:#f0f4ff; border-left:3px solid #2563EB;
+            padding:12px; border-radius:6px; font-size:0.88rem; color:#0f172a;">
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -1238,6 +1250,37 @@ document.addEventListener('click', e => {
 
 /* ── RESPONSIVE NAV ── */
 /* Handled completely by CSS media queries now */
+
+   /* ── NEUROAI INTEGRATION ── */
+const WORKER_URL = "https://neurovascular-ai.gideonolukanni20103.workers.dev";
+
+async function askNeuroAI() {
+  if (!activeRegion) return;
+  const regionName = REGIONS[activeRegion]?.name || activeRegion;
+  const btn = document.getElementById("askNeuroAIBtn");
+  const responseDiv = document.getElementById("neuroAIResponse");
+
+  btn.textContent = "🧠 Thinking...";
+  btn.disabled = true;
+  responseDiv.style.display = "none";
+
+  try {
+    const res = await fetch(WORKER_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ question: regionName, topic: regionName, mode: "brain_region" })
+    });
+    const data = await res.json();
+    responseDiv.innerHTML = data.response.replace(/\n/g, "<br>");
+    responseDiv.style.display = "block";
+  } catch (e) {
+    responseDiv.innerHTML = "Could not connect to NeuroAI. Please try again.";
+    responseDiv.style.display = "block";
+  }
+
+  btn.textContent = "🤖 Ask NeuroAI about this region";
+  btn.disabled = false;
+}
 </script>
    
 </body>
