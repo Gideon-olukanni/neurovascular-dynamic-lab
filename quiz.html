@@ -1250,37 +1250,7 @@ window.selectAnswer = function(chosen) {
   const aiResp = document.getElementById('quizAIResponse');
   if (aiBox) {
     aiBox.style.display = 'block';
-    aiResp.style.display = 'block';
-    aiResp.innerHTML = '🧠 NeuroAI is explaining...(may take 5-10 seconds)';
-    document.getElementById('quizAIInput').value = '';
-
-    // Auto-explain the question
-    const autoQuestion = isCorrect 
-  ? `The student got this right. Explain: "${q.options[q.answer]}" in the context of ${selectedTopicName || 'neuroscience'}.`
-  : `The student got this wrong. They chose "${q.options[selected]}" but the correct answer is "${q.options[q.answer]}". Explain why.`;
-
-    const controller = new AbortController();
-const timeout = setTimeout(() => controller.abort(), 15000);
-
-fetch(WORKER_URL, {
-  method: 'POST',
-  headers: { 'Content-Type': 'application/json' },
-  signal: controller.signal,
-  body: JSON.stringify({
-    question: autoQuestion,
-    topic: selectedTopicName || 'Neuroscience',
-    mode: 'quiz_explain'
-  })
-})
-.then(r => r.json())
-.then(data => {
-  clearTimeout(timeout);
-  aiResp.innerHTML = data.response.replace(/\n/g, '<br>');
-})
-.catch(() => {
-  clearTimeout(timeout);
-  aiResp.innerHTML = '⚠️ Auto-explain timed out. Ask a follow-up question below!';
-});
+    aiResp.style.display = 'none';
   }
 };
 
