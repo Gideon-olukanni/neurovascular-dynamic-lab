@@ -1511,13 +1511,34 @@ const WORKER = "https://neurovascular-ai.gideonolukanni20103.workers.dev";
 
 // Populate AI dropdowns when tab is clicked
 document.querySelector('[data-tab="aiimport"]').addEventListener('click', async () => {
-  // Load major segments
-  const majSnap = await getDocs(query(collection(db,'majorSegments'), orderBy('order','asc')));
+  // Use existing cache from main script
   const aiMaj = document.getElementById('aiMajorSelect');
   aiMaj.innerHTML = '<option value="">— Select Major Segment —</option>';
-  majSnap.docs.forEach(d => {
-    aiMaj.innerHTML += `<option value="${d.id}">${d.data().title}</option>`;
-  });
+  if (typeof majorSegmentsCache !== 'undefined' && majorSegmentsCache.length) {
+    majorSegmentsCache.forEach(s => {
+      aiMaj.innerHTML += `<option value="${s.id}">${s.title}</option>`;
+    });
+  } else {
+    const majSnap = await getDocs(query(collection(db,'majorSegments'), orderBy('order','asc')));
+    majSnap.docs.forEach(d => {
+      aiMaj.innerHTML += `<option value="${d.id}">${d.data().title}</option>`;
+    });
+  }
+
+  // Load quiz topics — they use slug as doc ID
+  const aiTop = document.getElementById('aiTopicSelect');
+  aiTop.innerHTML = '<option value="">— Select Quiz Topic —</option>';
+  if (typeof topicsCache !== 'undefined' && topicsCache.length) {
+    topicsCache.forEach(t => {
+      aiTop.innerHTML += `<option value="${t.slug}">${t.title}</option>`;
+    });
+  } else {
+    const topSnap = await getDocs(query(collection(db,'quizTopics'), orderBy('createdAt','asc')));
+    topSnap.docs.forEach(d => {
+      aiTop.innerHTML += `<option value="${d.data().slug}">${d.data().title}</option>`;
+    });
+  }
+});
 
   // Load quiz topics
   const topSnap = await getDocs(collection(db,'quizTopics'));
@@ -1638,8 +1659,9 @@ Return ONLY a valid JSON array, nothing else, no markdown:
 ]
 Level must be exactly: "beginner", "intermediate", or "advanced".
 The "answer" field is the 0-based index of the correct option.
-Extract 2 beginner, 2 intermediate, 2 advanced questions.`;
-
+Level must be exactly: "beginner", "intermediate", or "advanced" — all lowercase.
+The content has sections marked with 🟢 BEGINNER QUESTIONS, 🟡 INTERMEDIATE QUESTIONS, 🔴 ADVANCED QUESTIONS.
+Extract 2 from each section = 6 total.`;
   try {
     const raw = await callGroq(systemPrompt, qContent);
     const clean = raw.replace(/```json|```/g,'').trim();
