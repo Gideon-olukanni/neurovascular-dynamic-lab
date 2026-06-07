@@ -758,7 +758,8 @@ function renderTopics() {
 }
 
 function populateTopicDropdowns() {
-  ['quizTopic','filterTopic'].forEach(id => {
+  ['quizTopic','filterTopic', 'aiTopicSelect'].forEach(id => {
+
     const el = document.getElementById(id);
     if (!el) return;
     const current = el.value;
@@ -1197,7 +1198,8 @@ function renderMajorList() {
 }
 
 function populateMajorDropdowns() {
-  ['minorParentMajor','minorFilterMajor','notesMajorSelect','notesFilterSelect'].forEach(id => {
+  ['minorParentMajor','minorFilterMajor','notesMajorSelect','notesFilterSelect', 'aiMajorSelect'].forEach(id => {
+    
     const el = document.getElementById(id);
     if (!el) return;
     const cur = el.value;
@@ -1389,6 +1391,19 @@ document.getElementById('notesMajorSelect').addEventListener('change', function(
       minorSel.appendChild(opt);
     });
 });
+document.getElementById('aiMajorSelect').addEventListener('change', function() {
+  const majorId  = this.value;
+  const minorSel = document.getElementById('aiMinorSelect');
+  minorSel.innerHTML = '<option value="">— Select Minor Segment —</option>';
+  if (!majorId) return;
+  minorSegmentsCache
+    .filter(s => s.majorId===majorId && s.isActive!==false)
+    .forEach(s => {
+      const opt = document.createElement('option');
+      opt.value = s.id; opt.textContent = s.title;
+      minorSel.appendChild(opt);
+    });
+});
 
 document.getElementById('notesFilterSelect').addEventListener('change', async function() {
   if (!this.value) {
@@ -1508,24 +1523,6 @@ import { db } from './firebase-config.js';
 import { collection, addDoc, serverTimestamp, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
 const WORKER = "https://neurovascular-ai.gideonolukanni20103.workers.dev";
-
-// Populate AI dropdowns when tab is clicked
-document.querySelector('[data-tab="ai-import"]').addEventListener('click', async () => {
-  
-  // Use existing cache from main script
-  const aiMaj = document.getElementById('aiMajorSelect');
-  aiMaj.innerHTML = '<option value="">— Select Major Segment —</option>';
-  if (typeof majorSegmentsCache !== 'undefined' && majorSegmentsCache.length) {
-    majorSegmentsCache.forEach(s => {
-      aiMaj.innerHTML += `<option value="${s.id}">${s.title}</option>`;
-    });
-  } else {
-    const majSnap = await getDocs(query(collection(db,'majorSegments'), orderBy('order','asc')));
-    majSnap.docs.forEach(d => {
-      aiMaj.innerHTML += `<option value="${d.id}">${d.data().title}</option>`;
-    });
-  }
-
   // Load quiz topics — they use slug as doc ID
   const aiTop = document.getElementById('aiTopicSelect');
   aiTop.innerHTML = '<option value="">— Select Quiz Topic —</option>';
