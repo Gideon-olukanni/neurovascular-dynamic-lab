@@ -1746,16 +1746,23 @@ Extract exactly 10 flashcards, 2 per category.`;
   }
 };
 
-window.aiImportAll = async function() {
+window.aiImportAll = async function(topicSlug, topicName) {
   aiLogClear();
-  aiLog('🚀 Starting full import...\n');
-  await window.aiParseNotes();
+  // You can use template literals (backticks) to log the actual topic name
+  aiLog(`🚀 Starting full import for: ${topicName}...\n`);
+  
+  // Pass the variables down to your specific parsers
+  await window.aiParseNotes(topicSlug, topicName);
   aiLog('\n');
-  await window.aiParseQuestions();
+  
+  await window.aiParseQuestions(topicSlug, topicName);
   aiLog('\n');
-  await window.aiParseFlashcards();
-  aiLog('\n✅ FULL IMPORT COMPLETE!');
+  
+  await window.aiParseFlashcards(topicSlug, topicName);
+  
+  aiLog(`\n✅ FULL IMPORT COMPLETE FOR ${topicName.toUpperCase()}!`);
 };
+    
   </script>
 </body>
 </html>
