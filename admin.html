@@ -340,10 +340,50 @@
       <button class="tab-btn" data-tab="major">📚 Major Segments</button>
       <button class="tab-btn" data-tab="minor">📖 Minor Segments</button>
       <button class="tab-btn" data-tab="notes">📝 Notes</button>
+      <button class="tab-btn" data-tab="aiimport">🤖 AI Import</button>
     </div>
 
     <div id="statusMessage"></div>
+<!-- ══ AI IMPORT PANEL ══ -->
+    <div id="aiImportPanel" class="form-panel">
+      <h2 style="font-size:16px;color:#0a2540;margin-bottom:6px;padding-bottom:8px;border-bottom:1px solid #e5e7eb;">🤖 AI Content Import</h2>
+      <p style="font-size:13px;color:#6b7280;margin-bottom:16px;">Paste a complete minor segment (Notes + Questions + Flashcards) and the AI will automatically save everything to Firebase.</p>
 
+      <div style="margin-bottom:12px;">
+        <label style="font-size:13px;font-weight:600;color:#374151;display:block;margin-bottom:6px;">Select Major Segment</label>
+        <select id="aiMajorSelect" style="width:100%;padding:9px 12px;border:1px solid #d1d5db;border-radius:8px;font-size:13px;outline:none;">
+          <option value="">— Select Major Segment —</option>
+        </select>
+      </div>
+
+      <div style="margin-bottom:12px;">
+        <label style="font-size:13px;font-weight:600;color:#374151;display:block;margin-bottom:6px;">Select Minor Segment</label>
+        <select id="aiMinorSelect" style="width:100%;padding:9px 12px;border:1px solid #d1d5db;border-radius:8px;font-size:13px;outline:none;">
+          <option value="">— Select Major Segment first —</option>
+        </select>
+      </div>
+
+      <div style="margin-bottom:12px;">
+        <label style="font-size:13px;font-weight:600;color:#374151;display:block;margin-bottom:6px;">Quiz Topic Slug (for questions)</label>
+        <select id="aiTopicSelect" style="width:100%;padding:9px 12px;border:1px solid #d1d5db;border-radius:8px;font-size:13px;outline:none;">
+          <option value="">— Select Quiz Topic —</option>
+        </select>
+      </div>
+
+      <div style="margin-bottom:16px;">
+        <label style="font-size:13px;font-weight:600;color:#374151;display:block;margin-bottom:6px;">Paste Full Minor Segment Content</label>
+        <textarea id="aiRawContent" rows="14" placeholder="Paste the complete content here — Notes, Questions, and Flashcards all at once..." style="width:100%;padding:10px 12px;border:1px solid #d1d5db;border-radius:8px;font-size:12px;font-family:monospace;resize:vertical;outline:none;line-height:1.5;"></textarea>
+      </div>
+
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;">
+        <button onclick="aiParseNotes()" style="flex:1;min-width:120px;padding:10px;background:#0a2540;color:white;border:none;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;">📝 Import Notes</button>
+        <button onclick="aiParseQuestions()" style="flex:1;min-width:120px;padding:10px;background:#1d4ed8;color:white;border:none;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;">❓ Import Questions</button>
+        <button onclick="aiParseFlashcards()" style="flex:1;min-width:120px;padding:10px;background:#7c3aed;color:white;border:none;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;">🃏 Import Flashcards</button>
+        <button onclick="aiImportAll()" style="flex:1;min-width:120px;padding:10px;background:linear-gradient(135deg,#059669,#0891b2);color:white;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;">🚀 Import Everything</button>
+      </div>
+
+      <div id="aiImportLog" style="display:none;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:14px;font-size:12px;font-family:monospace;line-height:1.8;max-height:300px;overflow-y:auto;white-space:pre-wrap;"></div>
+    </div>
     <!-- ══ QUIZ PANEL ══ -->
     <div id="quizPanel" class="form-panel active">
       <div class="quiz-admin-header">
@@ -613,7 +653,8 @@ function showStatus(text, type = 'success') {
 // ── TAB SWITCHING ─────────────────────────────────────────────────────────────
 const panelMap = {
   quiz:'quizPanel', flashcards:'flashcardsPanel',
-  major:'majorPanel', minor:'minorPanel', notes:'notesPanel'
+  major:'majorPanel', minor:'minorPanel', notes:'notesPanel',
+  aiimport:'aiImportPanel'
 };
 function switchTab(tabName) {
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
@@ -1461,7 +1502,238 @@ document.getElementById('editModalCancel').addEventListener('click', closeEditMo
 document.getElementById('editModal').addEventListener('click', function(e) {
   if (e.target === this) closeEditModal();
 });
-
 </script>
+  <script type="module">
+import { db } from './firebase-config.js';
+import { collection, addDoc, serverTimestamp, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+const WORKER = "https://neurovascular-ai.gideonolukanni20103.workers.dev";
+
+// Populate AI dropdowns when tab is clicked
+document.querySelector('[data-tab="aiimport"]').addEventListener('click', async () => {
+  // Load major segments
+  const majSnap = await getDocs(query(collection(db,'majorSegments'), orderBy('order','asc')));
+  const aiMaj = document.getElementById('aiMajorSelect');
+  aiMaj.innerHTML = '<option value="">— Select Major Segment —</option>';
+  majSnap.docs.forEach(d => {
+    aiMaj.innerHTML += `<option value="${d.id}">${d.data().title}</option>`;
+  });
+
+  // Load quiz topics
+  const topSnap = await getDocs(collection(db,'quizTopics'));
+  const aiTop = document.getElementById('aiTopicSelect');
+  aiTop.innerHTML = '<option value="">— Select Quiz Topic —</option>';
+  topSnap.docs.forEach(d => {
+    aiTop.innerHTML += `<option value="${d.id}">${d.data().title}</option>`;
+  });
+});
+
+// Load minor segments when major changes
+document.getElementById('aiMajorSelect').addEventListener('change', async function() {
+  const majorId = this.value;
+  const aiMin = document.getElementById('aiMinorSelect');
+  aiMin.innerHTML = '<option value="">Loading...</option>';
+  if (!majorId) { aiMin.innerHTML = '<option value="">— Select Major Segment first —</option>'; return; }
+  const snap = await getDocs(query(collection(db,`majorSegments/${majorId}/minorSegments`), orderBy('order','asc')));
+  aiMin.innerHTML = '<option value="">— Select Minor Segment —</option>';
+  snap.docs.forEach(d => {
+    aiMin.innerHTML += `<option value="${d.id}">${d.data().title}</option>`;
+  });
+});
+
+function aiLog(msg) {
+  const log = document.getElementById('aiImportLog');
+  log.style.display = 'block';
+  log.textContent += msg + '\n';
+  log.scrollTop = log.scrollHeight;
+}
+
+function aiLogClear() {
+  const log = document.getElementById('aiImportLog');
+  log.style.display = 'block';
+  log.textContent = '';
+}
+
+async function callGroq(systemPrompt, userContent) {
+  const res = await fetch(WORKER, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ question: userContent, mode: 'ai_import', systemPromptOverride: systemPrompt })
+  });
+  const data = await res.json();
+  return data.response;
+}
+
+window.aiParseNotes = async function() {
+  const majorId = document.getElementById('aiMajorSelect').value;
+  const minorId = document.getElementById('aiMinorSelect').value;
+  const content = document.getElementById('aiRawContent').value.trim();
+  if (!majorId || !minorId) { alert('Select Major and Minor Segment first!'); return; }
+  if (!content) { alert('Paste content first!'); return; }
+
+  aiLogClear();
+  aiLog('📝 Parsing notes with AI...');
+
+  const systemPrompt = `You are a content parser. Extract the notes section from the provided neuroscience content.
+Return ONLY a valid JSON object in this exact format, nothing else, no markdown:
+{
+  "title": "exact notes title here",
+  "summary": "exact summary here",
+  "content": "full content here with all sections preserved exactly",
+  "keywords": ["keyword1", "keyword2", "keyword3"]
+}
+Extract everything between the Notes Title and the QUESTION BANK section.
+Preserve all formatting including section dividers and bullet points.`;
+
+  try {
+    const raw = await callGroq(systemPrompt, content.substring(0, 8000));
+    const clean = raw.replace(/```json|```/g,'').trim();
+    const parsed = JSON.parse(clean);
+
+    await addDoc(collection(db,`majorSegments/${majorId}/minorSegments/${minorId}/notes`), {
+      title: parsed.title,
+      summary: parsed.summary,
+      content: parsed.content,
+      keywords: parsed.keywords,
+      version: 1, isActive: true,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString()
+    });
+    aiLog('✅ Notes saved to Firebase!');
+    aiLog(`   Title: ${parsed.title}`);
+    aiLog(`   Keywords: ${parsed.keywords?.length || 0} extracted`);
+  } catch(e) {
+    aiLog('❌ Notes parsing failed: ' + e.message);
+  }
+};
+
+window.aiParseQuestions = async function() {
+  const topicSlug = document.getElementById('aiTopicSelect').value;
+  const content = document.getElementById('aiRawContent').value.trim();
+  if (!topicSlug) { alert('Select a Quiz Topic first!'); return; }
+  if (!content) { alert('Paste content first!'); return; }
+
+  aiLogClear();
+  aiLog('❓ Parsing questions with AI...');
+
+  // Find questions section
+  const qStart = content.indexOf('QUESTION BANK');
+  const qEnd = content.indexOf('🃏 FLASHCARDS');
+  const qContent = qStart > -1 ? content.substring(qStart, qEnd > -1 ? qEnd : qStart + 6000) : content.substring(0, 6000);
+
+  const topicSnap = await getDocs(collection(db,'quizTopics'));
+  const topicDoc = topicSnap.docs.find(d => d.id === topicSlug);
+  const topicName = topicDoc?.data()?.title || topicSlug;
+
+  const systemPrompt = `You are a content parser. Extract exactly 6 quiz questions from the provided content.
+Return ONLY a valid JSON array, nothing else, no markdown:
+[
+  {
+    "level": "beginner",
+    "q": "question text",
+    "options": ["Option A", "Option B", "Option C", "Option D"],
+    "answer": 1,
+    "explanation": "why this answer is correct"
+  }
+]
+Level must be exactly: "beginner", "intermediate", or "advanced".
+The "answer" field is the 0-based index of the correct option.
+Extract 2 beginner, 2 intermediate, 2 advanced questions.`;
+
+  try {
+    const raw = await callGroq(systemPrompt, qContent);
+    const clean = raw.replace(/```json|```/g,'').trim();
+    const questions = JSON.parse(clean);
+
+    let count = 0;
+    for (const q of questions) {
+      await addDoc(collection(db,'questions'), {
+        topic: topicSlug,
+        topicName: topicName,
+        level: q.level,
+        q: q.q,
+        options: q.options,
+        answer: q.answer,
+        explanation: q.explanation,
+        createdAt: serverTimestamp()
+      });
+      count++;
+      aiLog(`✅ Saved question ${count}: ${q.q.substring(0,60)}...`);
+    }
+    aiLog(`\n🎉 ${count} questions saved to Firebase!`);
+  } catch(e) {
+    aiLog('❌ Questions parsing failed: ' + e.message);
+    aiLog('Raw response: ' + e.toString());
+  }
+};
+
+window.aiParseFlashcards = async function() {
+  const content = document.getElementById('aiRawContent').value.trim();
+  if (!content) { alert('Paste content first!'); return; }
+
+  aiLogClear();
+  aiLog('🃏 Parsing flashcards with AI...');
+
+  // Find flashcards section
+  const fStart = content.indexOf('🃏 FLASHCARDS');
+  const fContent = fStart > -1 ? content.substring(fStart) : content.substring(content.length - 6000);
+
+  const catMap = {
+    'brain anatomy': 'anatomy',
+    'neuron & signals': 'neuron',
+    'brain functions': 'function',
+    'clinical & disorders': 'clinical',
+    'neuroscience terms': 'terms'
+  };
+
+  const systemPrompt = `You are a content parser. Extract exactly 10 flashcards from the provided neuroscience content.
+Return ONLY a valid JSON array, nothing else, no markdown:
+[
+  {
+    "cat": "anatomy",
+    "icon": "🧠",
+    "term": "Core Term here",
+    "def": "Full detailed definition here"
+  }
+]
+The "cat" field must be exactly one of: "anatomy", "neuron", "function", "clinical", "terms".
+Map categories: Brain Anatomy=anatomy, Neuron & Signals=neuron, Brain Functions=function, Clinical & Disorders=clinical, Neuroscience Terms=terms.
+Extract exactly 10 flashcards, 2 per category.`;
+
+  try {
+    const raw = await callGroq(systemPrompt, fContent.substring(0, 8000));
+    const clean = raw.replace(/```json|```/g,'').trim();
+    const cards = JSON.parse(clean);
+
+    let count = 0;
+    for (const card of cards) {
+      await addDoc(collection(db,'flashcards'), {
+        id: Date.now() + count,
+        cat: card.cat,
+        icon: card.icon,
+        term: card.term,
+        def: card.def,
+        createdAt: new Date().toISOString()
+      });
+      count++;
+      aiLog(`✅ Saved flashcard: ${card.term.substring(0,50)}`);
+    }
+    aiLog(`\n🎉 ${count} flashcards saved to Firebase!`);
+  } catch(e) {
+    aiLog('❌ Flashcard parsing failed: ' + e.message);
+  }
+};
+
+window.aiImportAll = async function() {
+  aiLogClear();
+  aiLog('🚀 Starting full import...\n');
+  await window.aiParseNotes();
+  aiLog('\n');
+  await window.aiParseQuestions();
+  aiLog('\n');
+  await window.aiParseFlashcards();
+  aiLog('\n✅ FULL IMPORT COMPLETE!');
+};
+  </script>
 </body>
 </html>
