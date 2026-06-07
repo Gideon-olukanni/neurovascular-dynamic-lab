@@ -1539,16 +1539,6 @@ document.querySelector('[data-tab="aiimport"]').addEventListener('click', async 
     });
   }
 });
-
-  // Load quiz topics
-  const topSnap = await getDocs(collection(db,'quizTopics'));
-  const aiTop = document.getElementById('aiTopicSelect');
-  aiTop.innerHTML = '<option value="">— Select Quiz Topic —</option>';
-  topSnap.docs.forEach(d => {
-    aiTop.innerHTML += `<option value="${d.id}">${d.data().title}</option>`;
-  });
-});
-
 // Load minor segments when major changes
 document.getElementById('aiMajorSelect').addEventListener('change', async function() {
   const majorId = this.value;
@@ -1746,21 +1736,19 @@ Extract exactly 10 flashcards, 2 per category.`;
   }
 };
 
-window.aiImportAll = async function(topicSlug, topicName) {
+window.aiImportAll = async function() {
   aiLogClear();
-  // You can use template literals (backticks) to log the actual topic name
-  aiLog(`🚀 Starting full import for: ${topicName}...\n`);
+  aiLog(`🚀 Starting full import...\n`);
   
-  // Pass the variables down to your specific parsers
-  await window.aiParseNotes(topicSlug, topicName);
+  await window.aiParseNotes();
   aiLog('\n');
   
-  await window.aiParseQuestions(topicSlug, topicName);
+  await window.aiParseQuestions();
   aiLog('\n');
   
-  await window.aiParseFlashcards(topicSlug, topicName);
+  await window.aiParseFlashcards();
   
-  aiLog(`\n✅ FULL IMPORT COMPLETE FOR ${topicName.toUpperCase()}!`);
+  aiLog(`\n✅ FULL IMPORT COMPLETE!`);
 };
     
   </script>
