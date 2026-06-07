@@ -1250,11 +1250,13 @@ window.selectAnswer = function(chosen) {
   if (aiBox) {
     aiBox.style.display = 'block';
     aiResp.style.display = 'block';
-    aiResp.innerHTML = '🧠 NeuroAI is explaining...';
+    aiResp.innerHTML = '🧠 NeuroAI is explaining...(may take 5-10 seconds)';
     document.getElementById('quizAIInput').value = '';
 
     // Auto-explain the question
-    const autoQuestion = `Question: "${q.q}" — The correct answer is: "${q.options[q.answer]}". The student ${isCorrect ? 'got it right' : 'got it wrong and chose: "' + q.options[selected] + '"'}. Explain why the correct answer is right.`;
+    const autoQuestion = isCorrect 
+  ? `The student got this right. Explain: "${q.options[q.answer]}" in the context of ${selectedTopicName || 'neuroscience'}.`
+  : `The student got this wrong. They chose "${q.options[selected]}" but the correct answer is "${q.options[q.answer]}". Explain why.`;
 
     fetch(WORKER_URL, {
       method: 'POST',
