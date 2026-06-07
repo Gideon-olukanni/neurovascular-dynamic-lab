@@ -1510,7 +1510,8 @@ import { collection, addDoc, serverTimestamp, getDocs, query, orderBy } from "ht
 const WORKER = "https://neurovascular-ai.gideonolukanni20103.workers.dev";
 
 // Populate AI dropdowns when tab is clicked
-document.querySelector('[data-tab="aiimport"]').addEventListener('click', async () => {
+document.querySelector('[data-tab="ai-import"]').addEventListener('click', async () => {
+  
   // Use existing cache from main script
   const aiMaj = document.getElementById('aiMajorSelect');
   aiMaj.innerHTML = '<option value="">— Select Major Segment —</option>';
