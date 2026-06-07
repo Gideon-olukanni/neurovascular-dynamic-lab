@@ -593,6 +593,7 @@ import {
   doc, query, where, orderBy, increment, writeBatch,
   arrayUnion, onAuthStateChanged, signOut, serverTimestamp
 } from "./firebase-config.js";
+  const WORKER_URL = "https://neurovascular-ai.gideonolukanni20103.workers.dev";
 
 // ─────────────────────────────
 // THE 20 HARDCODED QUESTIONS
@@ -1458,9 +1459,6 @@ window.selectAnswer      = window.selectAnswer;
 window.nextQuestion      = window.nextQuestion;
 window.retryQuiz         = window.retryQuiz;
 window.changeLevel       = window.changeLevel;
-
-  
-const WORKER_URL = "https://neurovascular-ai.gideonolukanni20103.workers.dev";
 
 async function sendQuizFollowUp() {
   const input = document.getElementById('quizAIInput');
