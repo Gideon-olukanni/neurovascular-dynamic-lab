@@ -541,7 +541,7 @@
     padding:12px; border-radius:6px; font-size:0.88rem; color:#0f172a;">
   </div>
   </div>
-  <button class="next-btn" id="nextBtn" onclick="nextQuestion()">Next Question →</button>
+  <button class="next-btn" id="nextBtn" onclick="nextQuestion()" style="margin-top:12px;">Next Question →</button>
 </div>
 
 <!-- RESULTS SCREEN -->
@@ -1149,6 +1149,16 @@ window.startQuiz = async function() {
 // LOAD QUESTION
 // ─────────────────────────────
 function loadQuestion() {
+  // Reset NeuroAI box
+  const aiBox = document.getElementById('quizAIBox');
+  const aiResp = document.getElementById('quizAIResponse');
+  if (aiBox) {
+    aiBox.style.display = 'none';
+    aiResp.style.display = 'none';
+    aiResp.innerHTML = '';
+    document.getElementById('quizAIInput').value = '';
+  }
+  // ... rest of your existing loadQuestion code
   answered = false;
   timeLeft = 30;
 
@@ -1239,10 +1249,30 @@ window.selectAnswer = function(chosen) {
   const aiResp = document.getElementById('quizAIResponse');
   if (aiBox) {
     aiBox.style.display = 'block';
-    aiResp.style.display = 'none';
-    aiResp.innerHTML = '';
+    aiResp.style.display = 'block';
+    aiResp.innerHTML = '🧠 NeuroAI is explaining...';
     document.getElementById('quizAIInput').value = '';
-                                     }
+
+    // Auto-explain the question
+    const autoQuestion = `Question: "${q.q}" — The correct answer is: "${q.options[q.answer]}". The student ${isCorrect ? 'got it right' : 'got it wrong and chose: "' + q.options[selected] + '"'}. Explain why the correct answer is right.`;
+
+    fetch(WORKER_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        question: autoQuestion,
+        topic: selectedTopicName || 'Neuroscience',
+        mode: 'quiz_explain'
+      })
+    })
+    .then(r => r.json())
+    .then(data => {
+      aiResp.innerHTML = data.response.replace(/\n/g, '<br>');
+    })
+    .catch(() => {
+      aiResp.innerHTML = 'Could not load explanation. Ask a follow-up below!';
+    });
+  }
 };
 
 // ─────────────────────────────
