@@ -1523,20 +1523,15 @@ import { db } from './firebase-config.js';
 import { collection, addDoc, serverTimestamp, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
 const WORKER = "https://neurovascular-ai.gideonolukanni20103.workers.dev";
-  // Load quiz topics — they use slug as doc ID
-  const aiTop = document.getElementById('aiTopicSelect');
-  aiTop.innerHTML = '<option value="">— Select Quiz Topic —</option>';
-  if (typeof topicsCache !== 'undefined' && topicsCache.length) {
-    topicsCache.forEach(t => {
-      aiTop.innerHTML += `<option value="${t.slug}">${t.title}</option>`;
-    });
-  } else {
+// Load quiz topics — they use slug as doc ID
+  (async () => {
+    const aiTop = document.getElementById('aiTopicSelect');
+    aiTop.innerHTML = '<option value="">— Select Quiz Topic —</option>';
     const topSnap = await getDocs(query(collection(db,'quizTopics'), orderBy('createdAt','asc')));
     topSnap.docs.forEach(d => {
       aiTop.innerHTML += `<option value="${d.data().slug}">${d.data().title}</option>`;
     });
-  }
-});
+  })();
 // Load minor segments when major changes
 document.getElementById('aiMajorSelect').addEventListener('change', async function() {
   const majorId = this.value;
