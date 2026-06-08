@@ -1690,20 +1690,34 @@ window.aiParseFlashcards = async function() {
     'neuroscience terms': 'terms'
   };
 
-  const systemPrompt = `You are a content parser. Extract exactly 10 flashcards from the provided neuroscience content.
+  const systemPrompt = `You are a strict content parser. The user will provide text containing flashcards in this EXACT format:
+
+Flashcard N
+Deck Category: [category with emoji]
+Display Icon: [emoji]
+Core Term: [term]
+Detailed Definition: [definition]
+
+Your job: extract EVERY flashcard exactly as written. Do NOT invent, summarize, rename, or add any flashcard not explicitly present in the text.
+
 Return ONLY a valid JSON array, nothing else, no markdown:
 [
   {
     "cat": "anatomy",
     "icon": "🧠",
-    "term": "Core Term here",
-    "def": "Full detailed definition here"
+    "term": "exact Core Term here",
+    "def": "exact Detailed Definition here"
   }
 ]
-The "cat" field must be exactly one of: "anatomy", "neuron", "function", "clinical", "terms".
-Map categories: Brain Anatomy=anatomy, Neuron & Signals=neuron, Brain Functions=function, Clinical & Disorders=clinical, Neuroscience Terms=terms.
-Extract exactly 10 flashcards, 2 per category.`;
 
+Map Deck Category to cat exactly like this:
+- "Brain Anatomy" → "anatomy"
+- "Neuron & Signals" → "neuron"  
+- "Brain Functions" → "function"
+- "Clinical & Disorders" → "clinical"
+- "Neuroscience Terms" → "terms"
+
+Return ONLY the flashcards that are literally written in the content. If there are 10, return 10. If there are 2, return 2. Never hallucinate.`;
   try {
     const raw = await callGroq(systemPrompt, fContent.substring(0, 8000));
     const clean = raw.replace(/```json|```/g,'').trim();
