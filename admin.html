@@ -1519,8 +1519,7 @@ document.getElementById('editModal').addEventListener('click', function(e) {
 });
 </script>
   <script type="module">
-import { db } from './firebase-config.js';
-import { collection, addDoc, serverTimestamp, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import { db, collection, addDoc, serverTimestamp, getDocs, query, orderBy } from './firebase-config.js';
 
 const WORKER = "https://neurovascular-ai.gideonolukanni20103.workers.dev";
 // Load quiz topics — they use slug as doc ID
