@@ -569,6 +569,39 @@ overflow-wrap: normal;
   .filter-bar { top: 54px; }
   .flip-front .card-term { font-size: .92rem; }
 }
+   .study-nav {
+    padding: 12px 24px;
+}
+
+.back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+
+    background: #f1f5f9;
+    border: 1px solid #dbe2ea;
+    border-radius: 999px;
+
+    padding: 10px 18px;
+
+    color: #2563eb;
+    font-size: 15px;
+    font-weight: 600;
+
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.back-btn:hover {
+    background: #2563eb;
+    color: white;
+    transform: translateY(-1px);
+}
+
+.back-btn .arrow {
+    font-size: 18px;
+    line-height: 1;
+}
 </style>
 </head>
 <body>
@@ -626,7 +659,7 @@ overflow-wrap: normal;
   <div class="hero-eyebrow">✦ Study Mode Active</div>
   <h1>Neuroscience <span>Flashcards</span></h1>
   <p class="hero-sub">Tap any card to reveal the definition. Mark cards as learned to track your mastery.</p>
-  <p class="hero-meta">30 cards across 5 categories · Curated for deep understanding</p>
+  <p class="hero-meta">Curated for deep understanding</p>
   <div class="hero-stats">
     <div class="hero-stat"><strong id="totalCount">30</strong><span>Total Cards</span></div>
     <div class="hero-stat"><strong id="learnedCount">0</strong><span>Learned</span></div>
@@ -654,31 +687,31 @@ overflow-wrap: normal;
         <!-- Anatomy -->
         <div class="category-card" data-cat="anatomy">
           <div class="cat-icon">🏛️</div>
-          <div class="cat-name">Anatomy</div>
+          <div class="cat-name">Brain Anatomy</div>
           <div class="cat-count">8 Cards</div>
         </div>
         <!-- Neuron -->
         <div class="category-card" data-cat="neuron">
           <div class="cat-icon">⚡</div>
-          <div class="cat-name">Neurons</div>
+          <div class="cat-name">Neurons & Signals</div>
           <div class="cat-count">7 Cards</div>
         </div>
         <!-- Function -->
         <div class="category-card" data-cat="function">
           <div class="cat-icon">🧩</div>
-          <div class="cat-name">Functions</div>
+          <div class="cat-name">Brain Functions</div>
           <div class="cat-count">6 Cards</div>
         </div>
         <!-- Clinical -->
         <div class="category-card" data-cat="clinical">
           <div class="cat-icon">🏥</div>
-          <div class="cat-name">Clinical</div>
+          <div class="cat-name">Clinical & Disorders</div>
           <div class="cat-count">5 Cards</div>
         </div>
         <!-- Neuro -->
         <div class="category-card" data-cat="neuro">
           <div class="cat-icon">🔬</div>
-          <div class="cat-name">Neuroscience</div>
+          <div class="cat-name">Neuroscience Terms</div>
           <div class="cat-count">4 Cards</div>
         </div>
       </div>
@@ -703,8 +736,12 @@ overflow-wrap: normal;
 </section>
 
 <!-- ═══════════════════ STUDY SCREEN ═══════════════════ -->
-<div id="study-screen" style="display: none;">
-  <button class="back-btn" id="backToSetupBtn">← Back to Settings</button>
+<div class="study-nav">
+    <button class="back-btn" id="backToSetupBtn">
+        <span class="arrow">←</span>
+        <span>Flashcard Library</span>
+    </button>
+</div>
 
   <!-- ═══════════════════ FILTER BAR ═══════════════════ -->
   <div class="filter-bar" role="navigation" aria-label="Filter cards by category">
