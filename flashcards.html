@@ -396,6 +396,87 @@ nav a:hover { background: rgba(255,255,255,.13); }
 }
 .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
 
+/* ══════════════════════════════════════════  SETUP SCREEN */
+#setup-screen {
+  max-width: 900px; margin: 40px auto; padding: 0 24px;
+  animation: fadeIn .6s ease both;
+}
+@keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+.setup-title {
+  font-size: 1.8rem; font-weight: 800; color: var(--navy);
+  margin-bottom: 12px; text-align: center; font-family: 'Playfair Display', serif;
+}
+.setup-subtitle {
+  font-size: 1rem; color: var(--slate-500); text-align: center; margin-bottom: 40px;
+}
+
+.config-block { margin-bottom: 40px; }
+.config-label {
+  display: block; font-size: .88rem; font-weight: 700; color: var(--slate-500);
+  text-transform: uppercase; letter-spacing: .08em; margin-bottom: 16px;
+}
+
+.category-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px; margin-bottom: 24px;
+}
+.category-card {
+  background: white; border: 2px solid var(--slate-200); border-radius: 16px;
+  padding: 20px; cursor: pointer; transition: all var(--transition);
+  display: flex; flex-direction: column; align-items: center; text-align: center;
+  position: relative; overflow: hidden;
+}
+.category-card:hover { border-color: var(--blue-light); transform: translateY(-4px); box-shadow: var(--shadow-card); }
+.category-card.active { border-color: var(--blue); background: var(--slate-50); box-shadow: 0 8px 24px rgba(37,99,235,.15); }
+.category-card.active::after {
+  content: '✓'; position: absolute; top: 10px; right: 12px;
+  background: var(--blue); color: white; width: 22px; height: 22px;
+  border-radius: 50%; font-size: .75rem; display: flex; align-items: center; justify-content: center;
+}
+.cat-icon { font-size: 2.4rem; margin-bottom: 12px; }
+.cat-name { font-size: 1rem; font-weight: 700; color: var(--navy); margin-bottom: 4px; }
+.cat-count { font-size: .75rem; color: var(--slate-400); font-family: 'Space Mono', monospace; }
+
+.quantity-config {
+  display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+}
+.quantity-input-group {
+  display: flex; align-items: center; background: white;
+  border: 2px solid var(--slate-200); border-radius: 12px; padding: 4px 12px;
+}
+.quantity-input-group:focus-within { border-color: var(--blue); }
+.quantity-input {
+  border: none; outline: none; width: 80px; padding: 8px 4px;
+  font-size: 1.2rem; font-weight: 700; font-family: 'Space Mono', monospace;
+  color: var(--blue); text-align: center;
+}
+.quantity-label { font-size: .92rem; font-weight: 600; color: var(--slate-700); }
+
+.study-all-btn {
+  padding: 10px 20px; border-radius: 10px; background: var(--slate-100);
+  border: none; font-size: .88rem; font-weight: 600; color: var(--slate-600);
+  cursor: pointer; transition: all var(--transition);
+}
+.study-all-btn:hover { background: var(--slate-200); }
+.study-all-btn.active { background: var(--navy); color: white; }
+
+.start-study-btn {
+  width: 100%; padding: 18px; border-radius: 16px; background: linear-gradient(135deg, var(--blue), var(--blue-mid));
+  color: white; font-size: 1.1rem; font-weight: 700; border: none; cursor: pointer;
+  transition: all var(--transition); box-shadow: 0 10px 25px rgba(37,99,235,.3);
+  margin-top: 20px;
+}
+.start-study-btn:hover { transform: translateY(-3px); box-shadow: 0 15px 35px rgba(37,99,235,.45); }
+
+/* ── STUDY SCREEN UTILS ── */
+.back-btn {
+  margin: 0 auto 20px; background: none; border: none; color: var(--slate-500);
+  font-size: .88rem; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 6px;
+  max-width: 1100px; padding: 0 24px;
+}
+.back-btn:hover { color: var(--blue); }
+
 
 /* ========================================================
        FOOTER STYLES (COMPLETELY FIXED EDGE-TO-EDGE)
@@ -554,39 +635,111 @@ overflow-wrap: normal;
   </div>
 </section>
 
-<!-- ═══════════════════ FILTER BAR ═══════════════════ -->
-<div class="filter-bar" role="navigation" aria-label="Filter cards by category">
-  <div class="filter-inner">
-    <span class="filter-label">Filter by category</span>
-    <div class="filter-btns">
-      <button class="filter-btn active" onclick="filterCards('all', this)">All (30)</button>
-      <button class="filter-btn" onclick="filterCards('anatomy', this)">🏛️ Brain Anatomy (8)</button>
-      <button class="filter-btn" onclick="filterCards('neuron', this)">⚡ Neuron &amp; Signals (7)</button>
-      <button class="filter-btn" onclick="filterCards('function', this)">🧩 Brain Functions (6)</button>
-      <button class="filter-btn" onclick="filterCards('clinical', this)">🏥 Clinical &amp; Disorders (5)</button>
-      <button class="filter-btn" onclick="filterCards('neuro', this)">🔬 Neuroscience Terms (4)</button>
+<!-- ═══════════════════ SETUP SCREEN ═══════════════════ -->
+<section id="setup-screen">
+  <div class="setup-container">
+    <h1 class="setup-title">Start Learning</h1>
+    <p class="setup-subtitle">Configure your custom flashcard session.</p>
+
+    <!-- STEP 1: CATEGORY -->
+    <div class="config-block">
+      <label class="config-label">📚 Choose a Category</label>
+      <div class="category-grid" id="setupCategoryGrid">
+        <!-- All Topics -->
+        <div class="category-card active" data-cat="all">
+          <div class="cat-icon">🌐</div>
+          <div class="cat-name">All Topics</div>
+          <div class="cat-count">All Cards</div>
+        </div>
+        <!-- Anatomy -->
+        <div class="category-card" data-cat="anatomy">
+          <div class="cat-icon">🏛️</div>
+          <div class="cat-name">Anatomy</div>
+          <div class="cat-count">8 Cards</div>
+        </div>
+        <!-- Neuron -->
+        <div class="category-card" data-cat="neuron">
+          <div class="cat-icon">⚡</div>
+          <div class="cat-name">Neurons</div>
+          <div class="cat-count">7 Cards</div>
+        </div>
+        <!-- Function -->
+        <div class="category-card" data-cat="function">
+          <div class="cat-icon">🧩</div>
+          <div class="cat-name">Functions</div>
+          <div class="cat-count">6 Cards</div>
+        </div>
+        <!-- Clinical -->
+        <div class="category-card" data-cat="clinical">
+          <div class="cat-icon">🏥</div>
+          <div class="cat-name">Clinical</div>
+          <div class="cat-count">5 Cards</div>
+        </div>
+        <!-- Neuro -->
+        <div class="category-card" data-cat="neuro">
+          <div class="cat-icon">🔬</div>
+          <div class="cat-name">Neuroscience</div>
+          <div class="cat-count">4 Cards</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 2: QUANTITY -->
+    <div class="config-block">
+      <label class="config-label">🔢 Number of Cards</label>
+      <div class="quantity-config">
+        <div class="quantity-input-group">
+          <input type="number" id="quantityInput" class="quantity-input" value="10" min="1" max="170">
+          <span class="quantity-label">cards</span>
+        </div>
+        <label class="study-all-label">
+          <input type="checkbox" id="studyAllToggle"> Study All
+        </label>
+      </div>
+    </div>
+
+    <button class="start-study-btn" id="startStudyBtn">Begin Session →</button>
+  </div>
+</section>
+
+<!-- ═══════════════════ STUDY SCREEN ═══════════════════ -->
+<div id="study-screen" style="display: none;">
+  <button class="back-btn" id="backToSetupBtn">← Back to Settings</button>
+
+  <!-- ═══════════════════ FILTER BAR ═══════════════════ -->
+  <div class="filter-bar" role="navigation" aria-label="Filter cards by category">
+    <div class="filter-inner">
+      <span class="filter-label">Current Session: <span id="sessionCategoryName">All Topics</span></span>
+      <div class="filter-btns">
+        <button class="filter-btn active" onclick="filterCards('all', this)">All</button>
+        <button class="filter-btn" onclick="filterCards('anatomy', this)">Anatomy</button>
+        <button class="filter-btn" onclick="filterCards('neuron', this)">Neurons</button>
+        <button class="filter-btn" onclick="filterCards('function', this)">Functions</button>
+        <button class="filter-btn" onclick="filterCards('clinical', this)">Clinical</button>
+        <button class="filter-btn" onclick="filterCards('neuro', this)">Neuroscience</button>
+      </div>
     </div>
   </div>
-</div>
 
-<!-- ═══════════════════ PROGRESS ═══════════════════ -->
-<div class="progress-section">
-  <div class="progress-row">
-    <span class="progress-label">Your Progress</span>
-    <span class="progress-count" id="progressText">0 / 30 learned</span>
+  <!-- ═══════════════════ PROGRESS ═══════════════════ -->
+  <div class="progress-section">
+    <div class="progress-row">
+      <span class="progress-label">Session Progress</span>
+      <span class="progress-count" id="progressText">0 / 0 learned</span>
+    </div>
+    <div class="progress-track" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
   </div>
-  <div class="progress-track" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
-    <div class="progress-fill" id="progressFill"></div>
+
+  <!-- ═══════════════════ CARDS ═══════════════════ -->
+  <div class="cards-section" id="cardsSection"></div>
+
+  <!-- ═══════════════════ ACTIONS ═══════════════════ -->
+  <div class="actions-bar">
+    <button class="btn btn-outline" onclick="resetAll()">↺ Reset All Progress</button>
+    <button class="btn btn-primary" onclick="shuffleCards()">⇌ Shuffle Session</button>
   </div>
-</div>
-
-<!-- ═══════════════════ CARDS ═══════════════════ -->
-<div class="cards-section" id="cardsSection"></div>
-
-<!-- ═══════════════════ ACTIONS ═══════════════════ -->
-<div class="actions-bar">
-  <button class="btn btn-outline" onclick="resetAll()">↺ Reset All Progress</button>
-  <button class="btn btn-primary" onclick="shuffleCards()">⇌ Shuffle Cards</button>
 </div>
 
 <!-- ═══════════════════ TOAST ═══════════════════ -->
@@ -601,6 +754,7 @@ overflow-wrap: normal;
 Made with 🧠 for curious minds. <br>Powered by <strong>GIDEON REALITY</strong>
 </p>
 </footer>
+
 
 <!-- ═══════════════════════════════════════════════
      JAVASCRIPT
@@ -690,10 +844,14 @@ const CAT_LABEL  = { anatomy:'Brain Anatomy', neuron:'Neuron & Signals', functio
 const CAT_ICON   = { anatomy:'🏛️', neuron:'⚡', function:'🧩', clinical:'🏥', neuro:'🔬' };
 
 /* ── STATE SYSTEMS ── */
-let learned       = new Set();
-let currentFilter = 'all';
-let cardOrder     = [];
-let currentUser   = null;
+let learned          = new Set();
+let currentFilter    = 'all';
+let cardOrder        = [];
+let currentUser      = null;
+let selectedCategory = 'all';
+let selectedCount    = 10;
+let studyAll         = false;
+let sessionCards     = [];
 
 /* ── AUTH STATE CONTROLLER ── */
 onAuthStateChanged(auth, async (user) => {
@@ -720,7 +878,10 @@ onAuthStateChanged(auth, async (user) => {
     syncBadge.style.display = 'none';
     learned = new Set(JSON.parse(localStorage.getItem('ndl_learned') || '[]'));
   }
-  buildCards(currentFilter);
+  
+  if (sessionCards.length) {
+    buildCards(currentFilter);
+  }
   updateProgress();
 });
 
@@ -728,7 +889,9 @@ onAuthStateChanged(auth, async (user) => {
 document.getElementById('signOutBtn')?.addEventListener('click', async () => {
   await signOut(auth);
   learned = new Set(JSON.parse(localStorage.getItem('ndl_learned') || '[]'));
-  buildCards(currentFilter);
+  if (sessionCards.length) {
+    buildCards(currentFilter);
+  }
   updateProgress();
   showToast('👋 Signed out. Progress saved to cloud.');
 });
@@ -765,6 +928,7 @@ async function saveProgress() {
     }
   }
 }
+
 /* ── NOTIFICATION TOASTS ── */
 let toastTimer;
 function showToast(msg) {
@@ -796,32 +960,152 @@ async function initializeFlashcards() {
   cardOrder = [...CARDS, ...dbFlashcards];
   
   // Recalculates dynamically loaded context totals inside UI tags
-  updateHeroAndFilterCounters();
-  
-  // Render presentation grid
-  // Auth listener handles the initial render with correct learned state
+  setupSetupScreenCounters();
+  updateProgress();
 }
-/* ── RE-COUNTER ENGINE FOR LOADED BALANCES ── */
-function updateHeroAndFilterCounters() {
-  const totalCount = cardOrder.length;
-  document.getElementById('totalCount').textContent = totalCount;
-  document.getElementById('remainingCount').textContent = totalCount - learned.size;
-  
-  // Recount groups for filter labels
-  const tallies = { all: totalCount, anatomy: 0, neuron: 0, function: 0, clinical: 0, neuro: 0 };
+
+/* ── SETUP SCREEN DYNAMIC COUNTERS ── */
+function setupSetupScreenCounters() {
+  const tallies = { all: cardOrder.length, anatomy: 0, neuron: 0, function: 0, clinical: 0, neuro: 0 };
   cardOrder.forEach(c => { if (tallies[c.cat] !== undefined) tallies[c.cat]++; });
   
-  const filterSection = document.querySelector('.filter-btns');
-  if (filterSection) {
-    filterSection.innerHTML = `
-      <button class="filter-btn ${currentFilter === 'all' ? 'active' : ''}" onclick="filterCards('all', this)">All (${tallies.all})</button>
-      <button class="filter-btn ${currentFilter === 'anatomy' ? 'active' : ''}" onclick="filterCards('anatomy', this)">🏛️ Brain Anatomy (${tallies.anatomy})</button>
-      <button class="filter-btn ${currentFilter === 'neuron' ? 'active' : ''}" onclick="filterCards('neuron', this)">⚡ Neuron &amp; Signals (${tallies.neuron})</button>
-      <button class="filter-btn ${currentFilter === 'function' ? 'active' : ''}" onclick="filterCards('function', this)">🧩 Brain Functions (${tallies.function})</button>
-      <button class="filter-btn ${currentFilter === 'clinical' ? 'active' : ''}" onclick="filterCards('clinical', this)">🏥 Clinical &amp; Disorders (${tallies.clinical})</button>
-      <button class="filter-btn ${currentFilter === 'neuro' ? 'active' : ''}" onclick="filterCards('neuro', this)">🔬 Neuroscience Terms (${tallies.neuro})</button>
-    `;
+  // Update category card count displays on setup screen
+  document.querySelectorAll('#setupCategoryGrid .category-card').forEach(card => {
+    const cat = card.dataset.cat;
+    const badge = card.querySelector('.cat-count');
+    if (badge) {
+      if (cat === 'all') {
+        badge.textContent = `${tallies.all} Cards`;
+      } else {
+        badge.textContent = `${tallies[cat] || 0} Cards`;
+      }
+    }
+  });
+
+  // Set initial max value on numeric input
+  const maxLimit = tallies[selectedCategory] || tallies.all;
+  const quantityInput = document.getElementById('quantityInput');
+  if (quantityInput) {
+    quantityInput.max = maxLimit;
+    quantityInput.value = Math.min(10, maxLimit);
   }
+}
+
+/* ── SETUP SCREEN EVENTS CONFIGURATION ── */
+function setupSetupScreenEvents() {
+  const categoryCards = document.querySelectorAll('#setupCategoryGrid .category-card');
+  categoryCards.forEach(card => {
+    card.addEventListener('click', () => {
+      categoryCards.forEach(c => c.classList.remove('active'));
+      card.classList.add('active');
+      selectedCategory = card.dataset.cat;
+      
+      // Update max limit based on selected category count
+      const tallies = { all: cardOrder.length, anatomy: 0, neuron: 0, function: 0, clinical: 0, neuro: 0 };
+      cardOrder.forEach(c => { if (tallies[c.cat] !== undefined) tallies[c.cat]++; });
+      
+      const maxLimit = tallies[selectedCategory] || tallies.all;
+      const quantityInput = document.getElementById('quantityInput');
+      if (quantityInput) {
+        quantityInput.max = maxLimit;
+        if (parseInt(quantityInput.value) > maxLimit || quantityInput.value === '10') {
+          quantityInput.value = Math.min(10, maxLimit);
+        }
+      }
+    });
+  });
+
+  const studyAllToggle = document.getElementById('studyAllToggle');
+  const quantityInput = document.getElementById('quantityInput');
+  if (studyAllToggle && quantityInput) {
+    studyAllToggle.addEventListener('change', () => {
+      studyAll = studyAllToggle.checked;
+      quantityInput.disabled = studyAll;
+      quantityInput.style.opacity = studyAll ? '0.5' : '1';
+    });
+  }
+
+  const startBtn = document.getElementById('startStudyBtn');
+  if (startBtn) {
+    startBtn.addEventListener('click', startStudySession);
+  }
+
+  const backBtn = document.getElementById('backToSetupBtn');
+  if (backBtn) {
+    backBtn.addEventListener('click', exitStudySession);
+  }
+}
+
+/* ── BEGIN FLASHCARD SESSION FLOW ── */
+function startStudySession() {
+  // 1. Get filtered pool
+  let pool = selectedCategory === 'all' ? [...cardOrder] : cardOrder.filter(c => c.cat === selectedCategory);
+  
+  if (!pool.length) {
+    showToast('⚠️ No cards available in this category.');
+    return;
+  }
+
+  // 2. Shuffle pool to guarantee randomness
+  pool.sort(() => Math.random() - 0.5);
+
+  // 3. Slice pool based on quantity limit
+  let limit = pool.length;
+  if (!studyAll) {
+    const inputVal = parseInt(document.getElementById('quantityInput').value);
+    if (!isNaN(inputVal) && inputVal > 0) {
+      limit = Math.min(inputVal, pool.length);
+    } else {
+      showToast('⚠️ Please specify a valid quantity.');
+      return;
+    }
+  }
+  
+  sessionCards = pool.slice(0, limit);
+
+  // 4. Update Category Name Display
+  const categoryLabelMap = {
+    all: 'All Topics',
+    anatomy: 'Brain Anatomy',
+    neuron: 'Neuron & Signals',
+    function: 'Brain Functions',
+    clinical: 'Clinical & Disorders',
+    neuro: 'Neuroscience Terms'
+  };
+  const labelSpan = document.getElementById('sessionCategoryName');
+  if (labelSpan) {
+    labelSpan.textContent = `${categoryLabelMap[selectedCategory]} (${sessionCards.length} cards)`;
+  }
+
+  // 5. Hide other filter buttons if a specific category was chosen
+  const filterBtns = document.querySelectorAll('#study-screen .filter-btn');
+  filterBtns.forEach(btn => {
+    btn.style.display = 'inline-block'; // show all by default
+  });
+
+  // 6. Switch screens
+  document.getElementById('setup-screen').style.display = 'none';
+  document.getElementById('study-screen').style.display = 'block';
+
+  // 7. Reset current session filter to 'all'
+  currentFilter = 'all';
+  filterBtns.forEach(btn => btn.classList.remove('active'));
+  const allBtn = document.querySelector(`#study-screen .filter-btn[onclick*="'all'"]`) || filterBtns[0];
+  if (allBtn) allBtn.classList.add('active');
+
+  // 8. Render and update progress
+  buildCards('all');
+  updateProgress();
+  showToast(`📚 Session started with ${sessionCards.length} cards!`);
+}
+
+/* ── EXIT SESSION FLOW ── */
+function exitStudySession() {
+  document.getElementById('study-screen').style.display = 'none';
+  document.getElementById('setup-screen').style.display = 'block';
+  sessionCards = [];
+  updateProgress(); // Reset metrics to default setups
+  showToast('🔄 Settings updated. Configure a new session!');
 }
 
 /* ── DOM RENDERING LAB ── */
@@ -830,10 +1114,11 @@ function buildCards(filter) {
   if (!section) return;
   section.innerHTML = '';
 
-  const filtered = filter === 'all' ? cardOrder : cardOrder.filter(c => c.cat === filter);
+  const activePool = sessionCards.length ? sessionCards : cardOrder;
+  const filtered = filter === 'all' ? activePool : activePool.filter(c => c.cat === filter);
 
   if (!filtered.length) {
-    section.innerHTML = '<div class="empty-state"><span class="empty-icon">🔍</span>No cards in this category.</div>';
+    section.innerHTML = '<div class="empty-state"><span class="empty-icon">🔍</span>No cards in this category in this session.</div>';
     return;
   }
 
@@ -897,7 +1182,8 @@ function handleCardClick(el, id) {
       if (!learned.has(id)) {
         learned.add(id);
         el.classList.add('learned');
-                 // --- GA4 TRACKING: FLASHCARD LEARNED ---
+        
+        // --- GA4 TRACKING: FLASHCARD LEARNED ---
         const cardData = cardOrder.find(c => c.id === id);
         if (cardData && typeof gtag === 'function') {
           gtag('event', 'flashcard_learned', {
@@ -906,12 +1192,23 @@ function handleCardClick(el, id) {
           });
         }
         // ---------------------------------------
+        
         await saveProgress();
         updateProgress();
         
-        const total = cardOrder.length;
-        if (learned.size === total) showToast('🎉 You\'ve mastered all active flashcards!');
-        else showToast(`✓ Learned! ${total - learned.size} remaining.`);
+        if (sessionCards.length) {
+          const sessionTotal = sessionCards.length;
+          const sessionLearned = sessionCards.filter(c => learned.has(c.id)).length;
+          if (sessionLearned === sessionTotal) {
+            showToast('🎉 Session Complete! You have mastered all cards in this session!');
+          } else {
+            showToast(`✓ Learned! ${sessionTotal - sessionLearned} remaining in this session.`);
+          }
+        } else {
+          const total = cardOrder.length;
+          if (learned.size === total) showToast('🎉 You\'ve mastered all active flashcards!');
+          else showToast(`✓ Learned! ${total - learned.size} remaining.`);
+        }
       }
     }, 900);
   } else {
@@ -922,27 +1219,46 @@ function handleCardClick(el, id) {
 /* ── DECK FILTERS ── */
 function filterCards(filter, btn) {
   currentFilter = filter;
-  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('#study-screen .filter-btn').forEach(b => b.classList.remove('active'));
   if (btn) btn.classList.add('active');
   buildCards(filter);
 }
 
-/* ── METER STATS TRACKER ── */
+/* ── METER STATS TRACKER (lifetime mastery vs active study progress) ── */
 function updateProgress() {
-  const total = cardOrder.length || 30;
-  const count = learned.size;
-  const pct   = Math.round((count / total) * 100) || 0;
+  // 1. Lifetime progress calculations
+  const totalGlobal = cardOrder.length || 30;
+  const countGlobal = learned.size;
+  const pctGlobal   = Math.round((countGlobal / totalGlobal) * 100) || 0;
   
-  document.getElementById('learnedCount').textContent   = count;
-  document.getElementById('remainingCount').textContent = total - count;
-  document.getElementById('pctCount').textContent       = pct + '%';
-  document.getElementById('progressText').textContent   = count + ' / ' + total + ' learned';
-  
-  const fill = document.getElementById('progressFill');
-  if (fill) fill.style.width = pct + '%';
-  
-  const bar = document.querySelector('.progress-track');
-  if (bar) bar.setAttribute('aria-valuenow', pct);
+  const totalCountEl = document.getElementById('totalCount');
+  const learnedCountEl = document.getElementById('learnedCount');
+  const remainingCountEl = document.getElementById('remainingCount');
+  const pctCountEl = document.getElementById('pctCount');
+
+  if (totalCountEl) totalCountEl.textContent = totalGlobal;
+  if (learnedCountEl) learnedCountEl.textContent = countGlobal;
+  if (remainingCountEl) remainingCountEl.textContent = Math.max(0, totalGlobal - countGlobal);
+  if (pctCountEl) pctCountEl.textContent = pctGlobal + '%';
+
+  // 2. Active Session Progress
+  const progressText = document.getElementById('progressText');
+  const progressFill = document.getElementById('progressFill');
+  const progressBar  = document.querySelector('.progress-track');
+
+  if (sessionCards.length) {
+    const sessionTotal = sessionCards.length;
+    const sessionLearned = sessionCards.filter(c => learned.has(c.id)).length;
+    const sessionPct = Math.round((sessionLearned / sessionTotal) * 100) || 0;
+
+    if (progressText) progressText.textContent = `${sessionLearned} / ${sessionTotal} learned`;
+    if (progressFill) progressFill.style.width = sessionPct + '%';
+    if (progressBar) progressBar.setAttribute('aria-valuenow', sessionPct);
+  } else {
+    if (progressText) progressText.textContent = `0 / 0 learned`;
+    if (progressFill) progressFill.style.width = '0%';
+    if (progressBar) progressBar.setAttribute('aria-valuenow', 0);
+  }
 }
 
 /* ── SYSTEM DATA SCRUBBER ── */
@@ -957,14 +1273,21 @@ async function resetAll() {
 
 /* ── DECK RANDOMIZER ── */
 function shuffleCards() {
-  cardOrder = [...cardOrder].sort(() => Math.random() - .5);
-  buildCards(currentFilter);
-  showToast('⇌ Cards shuffled!');
+  if (sessionCards.length) {
+    sessionCards.sort(() => Math.random() - .5);
+    buildCards(currentFilter);
+    showToast('⇌ Session shuffled!');
+  } else {
+    cardOrder.sort(() => Math.random() - .5);
+    buildCards(currentFilter);
+    showToast('⇌ Cards shuffled!');
+  }
 }
 
 /* ── LIFE CYCLE ENGINE ACCESS ROUTINE ── */
 document.addEventListener('DOMContentLoaded', () => {
   initializeFlashcards();
+  setupSetupScreenEvents();
 
   // Mobile navigation hamburger toggler
   const btn = document.getElementById('hamburgerBtn');
