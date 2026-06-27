@@ -1,0 +1,1588 @@
+<!doctype html>
+<html lang="en">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-KJZ39Z1J53"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-KJZ39Z1J53');
+</script>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>🧠 NeuroDynamic Learning — Learn</title>
+<meta name="description" content="Advanced neuroscience learning platform featuring dynamic curriculums, Pomodoro study timers, and interactive quizzes."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<style>
+/* ═══════════════════════════════════════════════
+   1. VARIABLES & RESET
+═══════════════════════════════════════════════ */
+:root {
+  --blue:      #2563eb;
+  --dark:      #0a2540;
+  --cyan:      #22d3ee;
+  --green:     #10b981;
+  --amber:     #f59e0b;
+  --red:       #ef4444;
+  --bg:        #f0f4f8;
+  --surface:   #ffffff;
+  --txt:       #0f172a;
+  --muted:     #64748b;
+  --border:    #e2e8f0;
+  --sh-sm:     0 1px 3px rgba(0,0,0,.07);
+  --sh-md:     0 4px 14px rgba(0,0,0,.10);
+  --sh-lg:     0 12px 32px rgba(0,0,0,.14);
+  --hdr:       56px;
+  --crumb:     40px;
+  --tabbar:    62px;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:"Inter",system-ui,sans-serif;
+  background:var(--bg); color:var(--txt);
+  line-height:1.6; -webkit-font-smoothing:antialiased;
+  /* offset for fixed header+breadcrumb */
+  padding-top:calc(var(--hdr) + var(--crumb));
+}
+a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,summary:focus-visible{
+  outline:2px solid var(--cyan); outline-offset:2px; border-radius:4px;
+}
+
+/* ═══════════════════════════════════════════════
+   2. HEADER
+═══════════════════════════════════════════════ */
+header{
+  position:fixed; top:0; left:0; right:0; z-index:1000;
+  height:var(--hdr);
+  background:var(--dark);
+  box-shadow:0 2px 12px rgba(0,0,0,.25);
+}
+.hdr-inner{
+  max-width:1440px; margin:0 auto;
+  height:100%; padding:0 18px;
+  display:flex; align-items:center; gap:12px;
+}
+.logo{
+  font-size:1rem; font-weight:800; color:#fff;
+  letter-spacing:-.3px; display:flex; align-items:center; gap:8px;
+  white-space:nowrap; flex-shrink:0;
+}
+.logo-chip{
+  background:var(--cyan); color:var(--dark);
+  font-size:.6rem; font-weight:800; padding:2px 7px;
+  border-radius:20px; letter-spacing:.5px;
+}
+nav{display:flex; align-items:center; margin-left:auto; overflow:hidden;}
+nav a{
+  color:rgba(255,255,255,.7); text-decoration:none;
+  padding:0 11px; height:var(--hdr); display:flex; align-items:center;
+  font-size:.78rem; font-weight:500; white-space:nowrap;
+  transition:color .15s,background .15s; flex-shrink:0;
+}
+nav a:hover{color:#fff; background:rgba(255,255,255,.07);}
+nav a.active{color:var(--cyan); box-shadow:inset 0 -2px 0 var(--cyan);}
+.hbtn{
+  display:none; background:none; border:none; cursor:pointer;
+  width:38px; height:38px; align-items:center; justify-content:center;
+  border-radius:8px; transition:background .15s; flex-shrink:0;
+}
+.hbtn:hover{background:rgba(255,255,255,.1);}
+.hbtn-bar{
+  display:block; width:20px; height:2px;
+  background:#fff; border-radius:1px; position:relative;
+}
+.hbtn-bar::before,.hbtn-bar::after{
+  content:''; position:absolute; width:20px; height:2px;
+  background:#fff; border-radius:1px; left:0;
+}
+.hbtn-bar::before{top:-6px;} .hbtn-bar::after{bottom:-6px;}
+
+/* Mobile dropdown nav */
+.mnav{
+  display:none; position:fixed;
+  top:var(--hdr); left:0; right:0; z-index:999;
+  background:var(--dark);
+  border-top:1px solid rgba(255,255,255,.07);
+  box-shadow:0 8px 24px rgba(0,0,0,.3);
+  max-height:calc(100dvh - var(--hdr) - var(--tabbar));
+  overflow-y:auto;
+}
+.mnav.show{display:block; animation:slidedown .2s ease;}
+@keyframes slidedown{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
+.mnav a{
+  display:block; color:rgba(255,255,255,.8); text-decoration:none;
+  padding:13px 20px; border-bottom:1px solid rgba(255,255,255,.05);
+  font-size:.9rem; transition:background .15s;
+}
+.mnav a.active{color:var(--cyan); border-left:3px solid var(--cyan); padding-left:28px;}
+.mnav a:hover{background:rgba(255,255,255,.06);}
+
+/* ═══════════════════════════════════════════════
+   3. BREADCRUMB BAR
+═══════════════════════════════════════════════ */
+.crumb-bar{
+  position:fixed; top:var(--hdr); left:0; right:0; z-index:900;
+  height:var(--crumb);
+  background:var(--surface);
+  border-bottom:1px solid var(--border);
+  display:flex; align-items:center; padding:0 16px; gap:0;
+}
+#breadcrumb{
+  display:flex; align-items:center; gap:5px;
+  font-size:.75rem; overflow:hidden; white-space:nowrap; min-width:0; flex:1;
+}
+#breadcrumb .bc-home{color:var(--blue); font-weight:700; flex-shrink:0;}
+#breadcrumb .bc-sep{color:#cbd5e1; flex-shrink:0;}
+#breadcrumb .bc-maj{
+  color:var(--muted); overflow:hidden; text-overflow:ellipsis;
+  max-width:35vw; flex-shrink:1;
+}
+#breadcrumb .bc-cur{
+  color:var(--txt); font-weight:600;
+  overflow:hidden; text-overflow:ellipsis;
+  max-width:40vw; flex-shrink:1;
+}
+.crumb-badge{
+  margin-left:auto; flex-shrink:0;
+  background:#eff6ff; color:var(--blue);
+  font-size:.65rem; font-weight:700; padding:2px 8px;
+  border-radius:20px; border:1px solid #bfdbfe;
+  display:none;
+}
+
+/* ═══════════════════════════════════════════════
+   4. THREE-COLUMN LAYOUT (DESKTOP)
+═══════════════════════════════════════════════ */
+.wrap{
+  max-width:1440px; margin:0 auto;
+  display:grid;
+  grid-template-columns:260px 1fr 310px;
+  min-height:calc(100dvh - var(--hdr) - var(--crumb));
+}
+
+/* ═══════════════════════════════════════════════
+   5. LEFT SIDEBAR
+═══════════════════════════════════════════════ */
+.sidebar{
+  background:var(--surface);
+  border-right:1px solid var(--border);
+  position:sticky; top:calc(var(--hdr) + var(--crumb));
+  height:calc(100dvh - var(--hdr) - var(--crumb));
+  display:flex; flex-direction:column; overflow:hidden;
+}
+.sb-head{
+  padding:14px 14px 10px;
+  border-bottom:1px solid var(--border);
+  flex-shrink:0; background:var(--surface); z-index:5;
+}
+.sb-label{
+  font-size:.66rem; font-weight:700; letter-spacing:.8px;
+  text-transform:uppercase; color:var(--muted); margin-bottom:9px;
+}
+.sb-search-wrap{position:relative; margin-bottom:8px;}
+.sb-search-wrap svg{
+  position:absolute; left:10px; top:50%; transform:translateY(-50%);
+  color:var(--muted); pointer-events:none; flex-shrink:0;
+}
+#topicSearch{
+  width:100%; padding:8px 10px 8px 32px;
+  background:var(--bg); border:1px solid var(--border);
+  border-radius:8px; font-size:.83rem; font-family:inherit; color:var(--txt);
+  transition:border-color .15s,box-shadow .15s;
+}
+#topicSearch:focus{border-color:var(--blue); outline:none; box-shadow:0 0 0 3px rgba(37,99,235,.12);}
+#topicSearch::placeholder{color:#94a3b8;}
+.sb-actions{display:flex; gap:6px;}
+.pill-btn{
+  flex:1; padding:5px; font-size:.68rem; font-weight:600;
+  background:var(--bg); color:var(--muted);
+  border:1px solid var(--border); border-radius:20px;
+  cursor:pointer; transition:all .15s; font-family:inherit; white-space:nowrap;
+}
+.pill-btn:hover{background:#e2e8f0; color:var(--txt);}
+
+.sb-body{flex:1; overflow-y:auto; padding:8px 10px 24px;}
+
+/* Topic tree */
+#dynamicTopicList details{margin-bottom:3px;}
+#dynamicTopicList details[open]{margin-bottom:6px;}
+
+#dynamicTopicList summary{
+  display:flex; align-items:center; gap:7px;
+  padding:9px 11px; border-radius:8px;
+  background:var(--bg); border:1px solid var(--border);
+  cursor:pointer; user-select:none; list-style:none;
+  font-size:.75rem; font-weight:700; letter-spacing:.2px;
+  color:var(--dark); transition:background .15s,border-color .15s;
+}
+#dynamicTopicList summary::-webkit-details-marker{display:none;}
+#dynamicTopicList summary .tree-arrow{
+  font-size:.55rem; color:var(--muted);
+  transition:transform .2s; flex-shrink:0;
+}
+#dynamicTopicList details[open]>summary .tree-arrow{transform:rotate(90deg);}
+#dynamicTopicList summary:hover{background:#eff6ff; border-color:#bfdbfe;}
+#dynamicTopicList details[open]>summary{
+  background:#eff6ff; border-color:#bfdbfe; color:var(--blue);
+  border-radius:8px 8px 0 0;
+}
+
+#dynamicTopicList ul{
+  list-style:none; margin:0; padding:2px 0;
+  border:1px solid var(--border); border-top:none;
+  border-radius:0 0 8px 8px; background:var(--surface);
+}
+#dynamicTopicList li{margin:0;}
+#dynamicTopicList a{
+  display:block; padding:8px 10px 8px 22px;
+  color:var(--muted); text-decoration:none;
+  font-size:.82rem; font-weight:500;
+  transition:all .15s; cursor:pointer;
+  border-left:3px solid transparent;
+}
+#dynamicTopicList a:hover{
+  background:#f8fafc; color:var(--dark);
+  border-left-color:var(--cyan);
+  padding-left:24px;
+}
+#dynamicTopicList a.active{
+  color:var(--blue); font-weight:600;
+  background:#eff6ff; border-left-color:var(--blue);
+}
+
+/* Loading dots */
+.load-dots{
+  display:flex; gap:5px; align-items:center; justify-content:center; padding:28px;
+}
+.load-dots span{
+  width:6px; height:6px; border-radius:50%; background:var(--blue);
+  animation:bounce 1.1s ease-in-out infinite;
+}
+.load-dots span:nth-child(2){animation-delay:.18s;}
+.load-dots span:nth-child(3){animation-delay:.36s;}
+@keyframes bounce{0%,80%,100%{transform:scale(.6);opacity:.4}40%{transform:scale(1);opacity:1}}
+
+/* ═══════════════════════════════════════════════
+   6. MAIN CONTENT
+═══════════════════════════════════════════════ */
+.content{
+  padding:36px 44px; background:var(--bg);
+  overflow-y:auto;
+  min-height:calc(100dvh - var(--hdr) - var(--crumb));
+}
+.topic-content{display:none; animation:fadeup .3s ease;}
+.topic-content.active{display:block;}
+@keyframes fadeup{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+/* Welcome screen */
+.welcome{text-align:center; padding:50px 16px 40px; max-width:520px; margin:0 auto;}
+.welcome-brain{font-size:3.2rem; margin-bottom:18px;}
+.welcome h2{font-size:1.85rem; color:var(--dark); letter-spacing:-.4px; margin-bottom:10px;}
+.welcome p{color:var(--muted); font-size:.97rem; margin-bottom:32px;}
+.welcome-cards{
+  display:grid; grid-template-columns:repeat(3,1fr); gap:12px; text-align:center;
+}
+.wcard{
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:12px; padding:18px 12px;
+}
+.wcard-num{
+  width:26px; height:26px; border-radius:50%;
+  background:var(--blue); color:#fff;
+  font-size:.72rem; font-weight:700;
+  display:flex; align-items:center; justify-content:center; margin:0 auto 9px;
+}
+.wcard h4{font-size:.82rem; color:var(--dark); margin-bottom:4px;}
+.wcard p{font-size:.74rem; color:var(--muted); line-height:1.5;}
+
+/* Topic header */
+.topic-content h2{
+  font-size:1.8rem; color:var(--dark);
+  letter-spacing:-.4px; margin-bottom:6px;
+}
+.topic-tags{display:flex; gap:6px; margin-bottom:22px; flex-wrap:wrap;}
+.tag{
+  font-size:.66rem; font-weight:700; padding:3px 9px;
+  border-radius:20px; letter-spacing:.2px;
+}
+.tag-blue{background:#eff6ff; color:var(--blue); border:1px solid #bfdbfe;}
+.tag-green{background:#ecfdf5; color:#059669; border:1px solid #a7f3d0;}
+
+/* Content cards */
+.intro-box{
+  background:linear-gradient(135deg,#eff6ff,#f0fdfa);
+  border:1px solid #bfdbfe; border-left:4px solid var(--blue);
+  border-radius:12px; padding:22px; margin-bottom:22px;
+}
+.intro-box p{font-size:.97rem; color:#334155; line-height:1.78;}
+
+.explanation{
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:12px; padding:26px; margin-bottom:18px;
+  box-shadow:var(--sh-sm); transition:box-shadow .2s, transform .2s;
+}
+.explanation:hover{box-shadow:var(--sh-md); transform:translateY(-1px);}
+.explanation h3{
+  color:var(--dark); font-size:1.05rem; margin-bottom:14px;
+  display:flex; align-items:center; gap:6px;
+}
+.explanation p,.explanation li{
+  font-size:.95rem; color:var(--muted); line-height:1.8; margin-bottom:9px;
+}
+.explanation ul{margin:6px 0 10px 20px;}
+
+.fun-fact{
+  background:#ecfdf5; border:1px solid #a7f3d0;
+  border-left:4px solid var(--green);
+  padding:13px 17px; margin:16px 0; border-radius:10px;
+  color:#065f46; font-size:.91rem; line-height:1.6;
+}
+
+.topic-resource-panel{
+  background:#eff6ff; border:1px solid #bfdbfe;
+  border-radius:12px; padding:20px; margin:22px 0;
+}
+.topic-resource-panel h3{color:var(--blue); margin-bottom:8px; font-size:.97rem;}
+.topic-resource-panel p,.topic-resource-panel li{
+  color:#334155; font-size:.9rem; line-height:1.7;
+}
+.topic-resource-panel ul{margin:6px 0 0 18px;}
+
+/* ═══════════════════════════════════════════════
+   7. RIGHT TOOL PANEL
+═══════════════════════════════════════════════ */
+.tools{
+  background:var(--surface); border-left:1px solid var(--border);
+  position:sticky; top:calc(var(--hdr) + var(--crumb));
+  height:calc(100dvh - var(--hdr) - var(--crumb));
+  display:flex; flex-direction:column; overflow:hidden;
+}
+.tools-head{
+  padding:12px 14px 8px; border-bottom:1px solid var(--border); flex-shrink:0;
+}
+.tools-label{
+  font-size:.66rem; font-weight:700; letter-spacing:.8px;
+  text-transform:uppercase; color:var(--muted);
+}
+.tools-body{flex:1; overflow-y:auto; padding:12px 13px 20px;}
+
+/* Timer card */
+.timer-card{
+  background:var(--bg); border:1px solid var(--border);
+  border-radius:12px; padding:14px; margin-bottom:12px; text-align:center;
+}
+.timer-chip{
+  font-size:.64rem; font-weight:700; letter-spacing:.9px;
+  text-transform:uppercase; color:var(--blue); margin-bottom:6px;
+}
+.timer-disp{
+  font-size:2.3rem; font-weight:700; color:var(--dark);
+  font-family:"Courier New",monospace; letter-spacing:2px; margin-bottom:11px;
+}
+.timer-btns{display:grid; grid-template-columns:1fr 1fr; gap:6px;}
+
+/* Stats / stat boxes */
+.stats-row{display:grid; grid-template-columns:1fr 1fr; gap:6px; margin:9px 0;}
+.stat-box{
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:8px; padding:7px; text-align:center;
+}
+.stat-lbl{font-size:.6rem; font-weight:700; text-transform:uppercase; letter-spacing:.4px; color:var(--muted); margin-bottom:2px;}
+.stat-val{font-size:.97rem; font-weight:700; color:var(--dark);}
+
+/* Goal card */
+.goal-card{
+  background:linear-gradient(135deg,rgba(16,185,129,.05),rgba(20,184,166,.05));
+  border:1px solid rgba(16,185,129,.18); border-radius:10px;
+  padding:11px; margin:9px 0;
+}
+.goal-row{display:flex; gap:5px; margin-bottom:6px;}
+.goal-inp{
+  flex:1; padding:5px 7px; border:1px solid var(--border);
+  border-radius:6px; font-size:.78rem; font-family:inherit;
+}
+.goal-disp{
+  background:var(--surface); border-radius:6px;
+  padding:5px 9px; font-size:.78rem; color:var(--txt); margin-bottom:5px;
+}
+.goal-bar{width:100%; height:14px; background:#e2e8f0; border-radius:20px; overflow:hidden;}
+.goal-fill{
+  height:100%; background:linear-gradient(90deg,var(--green),#34d399);
+  display:flex; align-items:center; justify-content:center;
+  color:#fff; font-size:.58rem; font-weight:700; transition:width .4s;
+}
+
+/* Stats card */
+.stats-card{
+  background:linear-gradient(135deg,rgba(245,158,11,.05),rgba(249,115,22,.05));
+  border:1px solid rgba(245,158,11,.18); border-radius:10px;
+  padding:11px; margin:9px 0;
+}
+
+/* History */
+.hist-hdr{
+  display:flex; align-items:center; justify-content:space-between;
+  margin:10px 0 5px;
+}
+.hist-ttl{font-size:.74rem; font-weight:700; color:var(--blue);}
+.hist-btns{display:flex; gap:4px;}
+.hist-list{
+  border:1px solid var(--border); border-radius:8px;
+  background:var(--surface); max-height:140px; overflow-y:auto;
+}
+.history-item{
+  display:flex; align-items:center; gap:6px;
+  padding:7px 10px; border-bottom:1px solid var(--border);
+  font-size:.75rem;
+}
+.history-item:last-child{border-bottom:none;}
+.history-item-date{color:var(--muted); flex:1;}
+.history-item-duration{font-weight:600; color:var(--dark);}
+.history-item-delete{
+  background:none; border:none; cursor:pointer;
+  color:var(--red); font-size:.7rem; padding:2px 6px;
+  border-radius:4px; transition:background .15s;
+}
+.history-item-delete:hover{background:#fef2f2;}
+
+/* Tabs */
+.tabs{
+  display:flex; gap:2px;
+  border-bottom:1px solid var(--border);
+  padding:8px 13px 0; flex-shrink:0; background:var(--surface);
+}
+.tab{
+  padding:6px 13px; border:none; background:none;
+  font-size:.78rem; font-weight:600; cursor:pointer;
+  color:var(--muted); border-bottom:2px solid transparent;
+  border-radius:5px 5px 0 0; transition:all .15s; font-family:inherit;
+}
+.tab:hover{color:var(--dark); background:var(--bg);}
+.tab.active{color:var(--blue); border-bottom-color:var(--blue);}
+.tab-content{display:none; padding:12px 13px;}
+.tab-content.active{display:block;}
+.tools textarea{
+  width:100%; resize:vertical; padding:9px; font-size:.85rem;
+  border:1px solid var(--border); border-radius:8px;
+  font-family:inherit; color:var(--txt); min-height:150px; line-height:1.6;
+}
+.tools textarea:focus{border-color:var(--blue); outline:none; box-shadow:0 0 0 3px rgba(37,99,235,.1);}
+
+/* Quiz */
+.quiz-box{
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:10px; padding:13px;
+}
+.quiz-q{
+  background:var(--bg); border-radius:8px; padding:11px 13px;
+  margin-bottom:10px; border-left:3px solid var(--cyan);
+  font-size:.87rem; line-height:1.6;
+}
+.quiz-actions{display:flex; flex-direction:column; gap:6px; margin:9px 0;}
+.quiz-fb{
+  background:var(--bg); border-radius:8px; padding:9px 11px;
+  font-size:.83rem; margin-bottom:9px; min-height:44px;
+}
+.score-row{
+  display:flex; justify-content:space-between; padding:7px 10px;
+  border-radius:8px; background:#eff6ff;
+  color:var(--blue); font-weight:600; font-size:.75rem;
+}
+
+/* Buttons */
+.btn,.btn-s,.btn-d{
+  padding:7px 13px; border:none; border-radius:8px;
+  cursor:pointer; font-weight:600; font-size:.82rem;
+  transition:all .15s; text-align:center; font-family:inherit;
+}
+.btn{background:var(--blue); color:#fff;}
+.btn:hover{background:#1d4ed8;}
+.btn-s{background:var(--bg); color:var(--txt); border:1px solid var(--border);}
+.btn-s:hover{background:#e2e8f0;}
+.btn-d{background:var(--red); color:#fff;}
+.btn-d:hover{background:#dc2626;}
+
+/* ═══════════════════════════════════════════════
+   8. MOBILE BOTTOM TAB BAR
+═══════════════════════════════════════════════ */
+.tabbar{display:none;}
+
+/* ═══════════════════════════════════════════════
+   9. MODAL
+═══════════════════════════════════════════════ */
+.modal{
+  display:none; position:fixed; z-index:9999;
+  inset:0; background:rgba(15,23,42,.65); backdrop-filter:blur(4px);
+}
+.modal-box{
+  background:var(--surface); margin:10vh auto; padding:26px;
+  border-radius:16px; width:90%; max-width:370px;
+  box-shadow:var(--sh-lg); animation:popin .22s ease;
+}
+@keyframes popin{from{opacity:0;transform:translateY(-14px)}to{opacity:1;transform:translateY(0)}}
+.modal-hdr{
+  display:flex; justify-content:space-between; align-items:center;
+  margin-bottom:14px; padding-bottom:12px; border-bottom:1px solid var(--border);
+}
+.break-disp{
+  font-size:3rem; font-weight:700; text-align:center;
+  color:var(--blue); margin:14px 0; font-family:"Courier New",monospace;
+}
+.break-presets{display:grid; grid-template-columns:1fr 1fr; gap:7px; margin-bottom:12px;}
+.preset-btn{
+  padding:9px; background:#f0f4ff; border:2px solid var(--blue);
+  border-radius:8px; cursor:pointer; font-weight:700; font-size:.8rem;
+  color:var(--blue); transition:all .15s; font-family:inherit;
+}
+.preset-btn:hover{background:var(--blue); color:#fff;}
+.modal-acts{display:flex; gap:8px; margin-top:10px;}
+.modal-acts button{
+  flex:1; padding:10px; border:none; border-radius:8px;
+  font-weight:700; cursor:pointer; transition:all .15s; font-family:inherit;
+}
+
+/* Back to top */
+#backToTop{
+  position:fixed; bottom:22px; right:20px;
+  background:var(--blue); color:#fff; border:none;
+  border-radius:50%; width:42px; height:42px;
+  font-size:1.1rem; cursor:pointer;
+  display:none; align-items:center; justify-content:center;
+  box-shadow:var(--sh-md); transition:all .2s; z-index:2000;
+}
+#backToTop:hover{background:var(--cyan); transform:translateY(-2px);}
+
+/* ═══════════════════════════════════════════════
+   10. FOOTER
+═══════════════════════════════════════════════ */
+footer{
+  background:linear-gradient(135deg,#0a2540,#1e3a5f);
+  color:rgba(255,255,255,.8);
+  text-align:center; padding:22px 20px;
+  padding-bottom:calc(22px + env(safe-area-inset-bottom));
+  font-size:.82rem; line-height:1.8; position:relative; overflow:hidden;
+}
+footer::before{
+  content:''; position:absolute; top:0; left:0; right:0; height:2px;
+  background:linear-gradient(90deg,var(--cyan),#7b2ff7,var(--cyan));
+}
+footer p{margin:2px 0;}
+
+/* ═══════════════════════════════════════════════
+   11. RESPONSIVE
+═══════════════════════════════════════════════ */
+@media(max-width:1100px){
+  .wrap{grid-template-columns:248px 1fr;}
+  .tools{display:none;}
+}
+
+/* ─── MOBILE ─── */
+@media(max-width:768px){
+  body{padding-top:calc(var(--hdr) + var(--crumb)); padding-bottom:var(--tabbar);}
+
+  /* hamburger on */
+  .hbtn{display:flex;} nav{display:none;}
+
+  /* bottom tab bar */
+  .tabbar{
+    display:flex;
+    position:fixed; bottom:0; left:0; right:0; z-index:1000;
+    height:var(--tabbar);
+    background:var(--dark);
+    border-top:1px solid rgba(255,255,255,.1);
+    padding-bottom:env(safe-area-inset-bottom);
+  }
+  .tbbtn{
+    flex:1; background:none; border:none; cursor:pointer;
+    display:flex; flex-direction:column; align-items:center;
+    justify-content:center; gap:3px;
+    color:rgba(255,255,255,.45); font-size:.57rem; font-weight:700;
+    letter-spacing:.4px; text-transform:uppercase;
+    transition:color .15s; font-family:inherit;
+    -webkit-tap-highlight-color:transparent;
+  }
+  .tbbtn .tbi{font-size:1.25rem; line-height:1;}
+  .tbbtn.active{color:var(--cyan);}
+  .tbbtn.active .tbi{
+    filter:drop-shadow(0 0 5px rgba(34,211,238,.55));
+  }
+
+  /* panels: stacked, only tab-active shown */
+  .wrap{display:block; min-height:0;}
+  .sidebar,.content,.tools{
+    display:none; width:100%; position:static; border:none; border-radius:0;
+    box-shadow:none; height:auto;
+    min-height:calc(100dvh - var(--hdr) - var(--crumb) - var(--tabbar));
+  }
+  .sidebar.tab-active{display:flex; flex-direction:column;}
+  .content.tab-active{display:block;}
+  .tools.tab-active{display:flex; flex-direction:column;}
+
+  /* breadcrumb on mobile */
+  .crumb-badge{display:none !important;}
+  .crumb-bar{padding:0 12px;}
+
+  /* content padding on mobile */
+  .content{padding:18px 15px 24px;}
+
+  /* sidebar sticky header on mobile */
+  .sb-head{position:sticky; top:0; z-index:5;}
+
+  /* tools panel full height */
+  .tools.tab-active{height:auto;}
+}
+
+@media(max-width:480px){
+  .content{padding:14px 12px 20px;}
+  .topic-content h2{font-size:1.4rem;}
+  .timer-disp{font-size:1.9rem;}
+  .welcome-cards{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="hdr-inner">
+    <div class="logo">🧠 NVD Lab <span class="logo-chip">LEARN</span></div>
+    <button class="hbtn" id="hamburgerBtn" aria-label="Toggle navigation" aria-expanded="false">
+      <span class="hbtn-bar"></span>
+    </button>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="learn.html" class="active">Learn</a>
+      <a href="resources.html">Resources</a>
+      <a href="community.html">Community</a>
+      <a href="research.html">Research</a>
+      <a href="brain-map.html">🧠 Brain Map</a>
+      <a href="quiz.html">Quiz</a>
+      <a href="flashcards.html">Flashcards</a>
+      <a href="about.html">About</a>
+      <a href="faq.html">FAQ</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <div class="mnav" id="mobileNav">
+      <a href="index.html">Home</a>
+      <a href="learn.html" class="active">Learn</a>
+      <a href="resources.html">Resources</a>
+      <a href="community.html">Community</a>
+      <a href="research.html">Research</a>
+      <a href="brain-map.html">🧠 Brain Map</a>
+      <a href="quiz.html">Quiz</a>
+      <a href="flashcards.html">Flashcards</a>
+      <a href="about.html">About</a>
+      <a href="faq.html">FAQ</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </div>
+</header>
+
+<!-- BREADCRUMB -->
+<div class="crumb-bar">
+  <div id="breadcrumb">
+    <span class="bc-home">🧠 NVD Lab</span>
+    <span class="bc-sep" id="bcs1" style="display:none">›</span>
+    <span class="bc-maj" id="bcmaj" style="display:none"></span>
+    <span class="bc-sep" id="bcs2" style="display:none">›</span>
+    <span class="bc-cur" id="bccur" style="display:none"></span>
+  </div>
+  <span class="crumb-badge" id="bcbadge"></span>
+</div>
+
+<!-- MAIN WRAPPER -->
+<div class="wrap">
+
+  <!-- LEFT SIDEBAR -->
+  <aside class="sidebar tab-active" id="panel-curriculum">
+    <div class="sb-head">
+      <div class="sb-label">📚 Curriculum</div>
+      <div class="sb-search-wrap">
+        <svg width="13" height="13" viewBox="0 0 16 16" fill="currentColor">
+          <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+        </svg>
+        <input type="text" id="topicSearch" placeholder="Search topics…" aria-label="Search topics" autocomplete="off"/>
+      </div>
+      <div class="sb-actions">
+        <button id="expandAll" class="pill-btn">▽ Expand all</button>
+        <button id="collapseAll" class="pill-btn">△ Collapse all</button>
+      </div>
+    </div>
+    <div class="sb-body">
+      <div id="dynamicTopicList">
+        <div class="load-dots"><span></span><span></span><span></span></div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="content" id="panel-learn">
+    <!-- Welcome state -->
+    <div id="lmsWelcome" class="topic-content active">
+      <div class="welcome">
+        <div class="welcome-brain">🧠</div>
+        <h2>Welcome to NVD Lab Learning</h2>
+        <p>Your curriculum loads live from Firebase. Tap a topic in the Curriculum tab to start learning.</p>
+        <div class="welcome-cards">
+          <div class="wcard">
+            <div class="wcard-num">1</div>
+            <h4>Browse Topics</h4>
+            <p>Open Curriculum and pick any topic</p>
+          </div>
+          <div class="wcard">
+            <div class="wcard-num">2</div>
+            <h4>Read & Learn</h4>
+            <p>Notes load instantly here</p>
+          </div>
+          <div class="wcard">
+            <div class="wcard-num">3</div>
+            <h4>Test Yourself</h4>
+            <p>Use Tools for quizzes & timer</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Dynamic content -->
+    <div id="lmsDynamicContent" class="topic-content" style="display:none;"></div>
+  </main>
+
+  <!-- RIGHT TOOL PANEL -->
+  <aside class="tools" id="panel-tools">
+    <div class="tools-head">
+      <div class="tools-label">🛠 Study Tools</div>
+    </div>
+    <div class="tools-body">
+
+      <!-- Timer -->
+      <div class="timer-card">
+        <div class="timer-chip">⏱ Pomodoro Timer</div>
+        <div class="timer-disp" id="timerDisplay">00:00:00</div>
+        <div class="timer-btns">
+          <button class="btn" id="startTimer">Start</button>
+          <button class="btn-d" id="stopTimer">Stop</button>
+          <button class="btn-s" id="breakTimer">☕ Break</button>
+          <button class="btn-s" id="resetTimer">Reset</button>
+        </div>
+        <div class="stats-row" style="margin-top:9px;">
+          <div class="stat-box">
+            <div class="stat-lbl">Session</div>
+            <div class="stat-val" id="sessionTime" style="color:var(--blue)">0h 0m</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-lbl">Today</div>
+            <div class="stat-val" id="todayTime" style="color:var(--green)">0h 0m</div>
+          </div>
+        </div>
+        <!-- History -->
+        <div class="hist-hdr">
+          <span class="hist-ttl">📋 Session History</span>
+          <div class="hist-btns">
+            <button class="btn-s" id="exportData" style="padding:3px 8px;font-size:.68rem;">⬇ Export</button>
+            <button class="btn-s" id="clearHistory" style="padding:3px 8px;font-size:.68rem;">🗑 Clear</button>
+          </div>
+        </div>
+        <div class="hist-list" id="historyList">
+          <div style="padding:9px;text-align:center;color:var(--muted);font-size:.75rem;">No sessions yet</div>
+        </div>
+        <!-- Goals -->
+        <div class="goal-card">
+          <div class="timer-chip" style="color:var(--green);text-align:left;margin-bottom:7px;">🎯 Daily Goal</div>
+          <div class="goal-row">
+            <input type="number" id="goalHours" class="goal-inp" placeholder="Hrs" min="0" max="24" value="2"/>
+            <input type="number" id="goalMinutes" class="goal-inp" placeholder="Mins" min="0" max="59" value="0"/>
+            <button class="btn" id="setGoal" style="padding:5px 9px;font-size:.73rem;">Set</button>
+          </div>
+          <div class="goal-disp" id="goalDisplay"></div>
+          <div class="goal-bar"><div class="goal-fill" id="goalProgressFill" style="width:0%">0%</div></div>
+        </div>
+        <!-- Stats -->
+        <div class="stats-card">
+          <div class="timer-chip" style="color:var(--amber);text-align:left;margin-bottom:7px;">📊 Statistics</div>
+          <div class="stats-row">
+            <div class="stat-box"><div class="stat-lbl">This Week</div><div class="stat-val" id="weekTotal">0h</div></div>
+            <div class="stat-box"><div class="stat-lbl">Best Day</div><div class="stat-val" id="bestDay">0h</div></div>
+            <div class="stat-box"><div class="stat-lbl">Sessions</div><div class="stat-val" id="totalSessions">0</div></div>
+            <div class="stat-box"><div class="stat-lbl">Streak</div><div class="stat-val" id="streak" style="color:var(--amber)">0 days</div></div>
+          </div>
+        </div>
+      </div><!-- /timer-card -->
+
+      <!-- Tool Tabs -->
+      <div class="tabs">
+        <button class="tab active" data-tab="notes">Notes</button>
+        <button class="tab" data-tab="diagram">Question</button>
+        <button class="tab" data-tab="quiz">Quiz</button>
+      </div>
+      <!-- NOTES -->
+      <div class="tab-content active" id="notes">
+        <textarea id="notes-textarea" rows="8" placeholder="Personal notes save automatically…"></textarea>
+        <div style="display:flex;gap:7px;margin-top:6px;">
+          <button class="btn" id="saveNotesBtn" style="flex:1;">Save Status</button>
+          <button class="btn-s" id="download-notes-btn" style="flex:1;">Export .txt</button>
+        </div>
+      </div>
+      <!-- QUESTION -->
+      <div class="tab-content" id="diagram">
+        <div class="quiz-box">
+          <div id="question-content" class="quiz-q" style="border-left-color:var(--amber);">
+            <p style="color:var(--muted);">Select a topic to see focused study questions.</p>
+          </div>
+          <button id="new-question-btn" class="btn" style="width:100%;margin-top:7px;">New Question</button>
+        </div>
+      </div>
+      <!-- QUIZ -->
+      <div class="tab-content" id="quiz">
+        <div class="quiz-box">
+          <h3 style="font-size:.92rem;color:var(--dark);margin-bottom:3px;">Knowledge Check</h3>
+          <p id="quiz-topic-label" style="font-size:.72rem;color:var(--muted);margin-bottom:9px;">Select a topic to assess.</p>
+          <div id="quiz-question" class="quiz-q">
+            <p style="color:var(--muted);">Awaiting topic selection.</p>
+          </div>
+          <textarea id="quiz-answer" rows="3" placeholder="Type your answer here…" style="margin-top:7px;"></textarea>
+          <div class="quiz-actions">
+            <button id="submit-quiz-answer" class="btn">Submit Answer</button>
+            <button id="reveal-answer" class="btn-s">Reveal Guidance</button>
+            <button id="next-quiz-question" class="btn-s">Next Question</button>
+          </div>
+          <div id="quiz-feedback" class="quiz-fb">
+            <p style="color:var(--muted);">Feedback will appear here.</p>
+          </div>
+          <div class="score-row">
+            <span id="quiz-attempts">Attempts: 0</span>
+            <span id="quiz-correct">Correct: 0</span>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /tools-body -->
+  </aside>
+
+</div><!-- /.wrap -->
+
+<!-- MOBILE BOTTOM TAB BAR -->
+<nav class="tabbar" aria-label="Page sections">
+  <button class="tbbtn active" data-target="curriculum">
+    <span class="tbi">📚</span>Curriculum
+  </button>
+  <button class="tbbtn" data-target="learn">
+    <span class="tbi">📖</span>Learn
+  </button>
+  <button class="tbbtn" data-target="tools">
+    <span class="tbi">🛠</span>Tools
+  </button>
+</nav>
+
+<!-- BREAK MODAL -->
+<div id="breakTimerModal" class="modal">
+  <div class="modal-box">
+    <div class="modal-hdr">
+      <h3 style="color:var(--dark);">☕ Pomodoro Break</h3>
+      <span id="closeBreakModal" style="cursor:pointer;font-size:1.4rem;color:var(--muted);">&times;</span>
+    </div>
+    <div class="break-presets">
+      <button class="preset-btn" data-minutes="5">5 Min (Short)</button>
+      <button class="preset-btn" data-minutes="10">10 Min (Medium)</button>
+      <button class="preset-btn" data-minutes="15">15 Min (Long)</button>
+      <button class="preset-btn" data-minutes="30">30 Min (Extended)</button>
+    </div>
+    <div class="break-disp" id="breakTimerDisplay">05:00</div>
+    <div class="modal-acts">
+      <button id="startBreakTimer" style="background:var(--cyan);color:white;">Start Break</button>
+      <button id="cancelBreakTimer" style="background:var(--red);color:white;">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>&copy; 2026 Neurovascular Dynamic Lab. All rights reserved.</p>
+  <p>Made with 🧠 for curious minds. Powered by <strong>GIDEON REALITY</strong></p>
+</footer>
+
+<script>
+/* ══════════════════════════════════════════════════════
+   GLOBAL UTILITIES — Mobile tab switching & breadcrumb
+══════════════════════════════════════════════════════ */
+window.switchMobileTab = function(target) {
+  if (window.innerWidth > 768) return;
+  const map = { curriculum:'panel-curriculum', learn:'panel-learn', tools:'panel-tools' };
+  Object.entries(map).forEach(([name, id]) => {
+    const el = document.getElementById(id);
+    if (el) el.classList.toggle('tab-active', name === target);
+  });
+  document.querySelectorAll('.tbbtn').forEach(btn =>
+    btn.classList.toggle('active', btn.dataset.target === target));
+};
+
+window.updateBreadcrumb = function(majorTitle, minorTitle) {
+  const set = (id, text, show) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    if (text !== undefined) el.textContent = text;
+    el.style.display = show ? '' : 'none';
+  };
+  set('bcs1',  '›',         !!majorTitle);
+  set('bcmaj', majorTitle,  !!majorTitle);
+  set('bcs2',  '›',         !!minorTitle);
+  set('bccur', minorTitle,  !!minorTitle);
+};
+
+/* Bottom tab bar clicks */
+document.querySelectorAll('.tbbtn').forEach(btn =>
+  btn.addEventListener('click', () => window.switchMobileTab(btn.dataset.target)));
+
+/* ══════════════════════════════════════════════════════
+   TOPIC QUESTIONS (27 segments × 10 questions)
+══════════════════════════════════════════════════════ */
+const topicQuestions = {
+  topic1:["What is neuroscience and why is it considered an interdisciplinary field?","Describe the major divisions of the nervous system.","How does the central nervous system differ from the peripheral nervous system?","What is the significance of the blood-brain barrier?","Explain the concept of neural plasticity and give an example.","How have neuroimaging techniques revolutionized neuroscience research?","What are the key ethical considerations in neuroscience research?","Describe the role of model organisms in advancing neuroscience.","What is the difference between structural and functional neuroscience?","How does neuroscience intersect with psychology and medicine?"],
+  topic2:["Describe the basic structure of a neuron and the function of each component.","What is the difference between a neuron and a glial cell?","Name and describe the main types of glial cells and their roles.","How do astrocytes support neuronal function?","What is myelin and how does it affect signal transmission speed?","Explain the difference between afferent and efferent neurons.","What are interneurons and what role do they play in the nervous system?","How do microglia act as the brain's immune defense?","What happens to neurons during apoptosis?","Describe how neurons are classified by shape and function."],
+  topic3:["What is an action potential and how is it generated?","Describe the resting membrane potential and how it is maintained.","What is the role of sodium-potassium ATPase in neuronal function?","Explain the all-or-none principle of action potentials.","What is the refractory period and why does it exist?","How does saltatory conduction work in myelinated neurons?","What is the difference between graded potentials and action potentials?","How do ion channels open and close during depolarisation?","What triggers the hyperpolarization phase of an action potential?","Explain how the threshold potential determines whether an action potential fires."],
+  topic4:["Define a synapse and describe the difference between chemical and electrical synapses.","What happens at the presynaptic terminal during neurotransmission?","Describe the steps of synaptic transmission from action potential to postsynaptic response.","What is the role of calcium ions in neurotransmitter release?","How are neurotransmitters cleared from the synaptic cleft?","What is synaptic plasticity and why is it important for learning?","Explain the difference between excitatory and inhibitory postsynaptic potentials.","What is long-term potentiation and how does it relate to memory?","Describe the concept of synaptic integration.","How do drugs affect synaptic transmission?"],
+  topic5:["List the major neurotransmitters and their primary functions.","What is the difference between ionotropic and metabotropic receptors?","How does dopamine contribute to reward and motivation?","Describe the role of serotonin in mood regulation.","What is the function of GABA in the nervous system?","How does glutamate act as the primary excitatory neurotransmitter?","What are neuropeptides and how do they differ from classical neurotransmitters?","Explain how acetylcholine functions at the neuromuscular junction.","What happens when neurotransmitter systems are disrupted?","How are neurotransmitter imbalances linked to psychiatric disorders?"],
+  topic6:["What is the spinal cord and what are its primary functions?","Describe the organisation of grey and white matter in the spinal cord.","What is a spinal reflex arc and how does it work?","Explain the difference between sensory and motor tracts in the spinal cord.","What is the role of the dorsal horn in pain processing?","How does the spinal cord relay signals between the brain and periphery?","What are dermatomes and why are they clinically important?","Describe how a spinal cord injury affects motor and sensory function.","What is the central pattern generator and what role does it play in locomotion?","How can spinal cord injuries potentially be treated in the future?"],
+  topic7:["What structures make up the brainstem?","Describe the functions of the medulla oblongata.","What is the pons and what roles does it serve?","How does the midbrain contribute to visual and auditory reflexes?","What cranial nerves originate from the brainstem?","Explain the role of the reticular formation in arousal and consciousness.","How does the brainstem regulate vital autonomic functions?","What is the red nucleus and what is its role in motor control?","Describe what happens when specific brainstem regions are damaged.","How does the brainstem coordinate with higher brain regions?"],
+  topic8:["What is the cerebellum and where is it located?","Describe the three functional regions of the cerebellum.","How does the cerebellum contribute to motor coordination?","What is the role of Purkinje cells in cerebellar function?","How does the cerebellum learn and refine motor skills?","What are the inputs and outputs of the cerebellum?","Describe the symptoms of cerebellar damage.","How does the cerebellum interact with the motor cortex?","What is the role of the cerebellum in timing and rhythm?","How might the cerebellum contribute to cognitive functions?"],
+  topic9:["What structures comprise the basal ganglia?","Describe the direct and indirect pathways through the basal ganglia.","How do the basal ganglia contribute to voluntary movement?","What is the role of dopamine in basal ganglia function?","How is Parkinson's disease related to basal ganglia dysfunction?","What is Huntington's disease and how does it affect the basal ganglia?","Describe the role of the striatum in reward and habit formation.","How do the basal ganglia interact with the cortex and thalamus?","What is the substantia nigra and what is its significance?","How do the basal ganglia influence decision-making?"],
+  topic10:["What structures are included in the limbic system?","Describe the role of the hippocampus in memory formation.","How does the amygdala process emotional responses?","What is the function of the hypothalamus in the limbic system?","How does the limbic system regulate emotional behaviour?","What is the role of the cingulate cortex in emotion and attention?","How does the limbic system interact with the prefrontal cortex?","What happens to emotion regulation when the amygdala is damaged?","Describe the Papez circuit and its significance.","How does the limbic system influence the HPA stress axis?"],
+  topic11:["What are the four lobes of the cerebral cortex and their primary functions?","Describe the function of the primary motor cortex.","What is the role of the primary somatosensory cortex?","How is the cerebral cortex organised into columns and layers?","What is the prefrontal cortex responsible for?","Describe the role of Broca's area and Wernicke's area in language.","What is cortical localisation and what are its limitations?","How do the two cerebral hemispheres differ in function?","Describe the role of association areas in higher cognition.","What is cortical plasticity and why does it matter?"],
+  topic12:["What are the main sensory systems of the body?","Describe the pathway of visual information from the eye to the cortex.","How does the auditory system process sound?","What is somatosensation and how is touch encoded?","Describe the olfactory pathway to the brain.","How does the taste system work at the receptor level?","What is the vestibular system and how does it maintain balance?","How do the primary and secondary sensory cortices differ?","What is sensory adaptation and why does it occur?","How does the brain integrate information from multiple senses?"],
+  topic13:["What is the motor system and what structures comprise it?","Describe the role of the primary motor cortex in voluntary movement.","What is the corticospinal tract and how does it function?","How do upper and lower motor neurons differ?","Describe the role of the supplementary motor area in movement planning.","How does the cerebellum contribute to movement refinement?","What is the motor homunculus and what does it tell us?","Describe how voluntary movement is initiated and executed.","What happens to movement when the motor cortex is damaged?","How does the motor system control fine versus gross movements?"],
+  topic14:["What is the autonomic nervous system?","Describe the difference between the sympathetic and parasympathetic divisions.","How does the ANS regulate heart rate and blood pressure?","What is the enteric nervous system?","Describe the fight-or-flight response and its neural basis.","How does the hypothalamus coordinate autonomic activity?","What is the vagus nerve and why is it clinically important?","How does the ANS regulate digestion?","Describe autonomic dysfunction and its consequences.","How does the ANS maintain homeostasis?"],
+  topic15:["What is neuroplasticity?","Describe the difference between structural and functional plasticity.","How does experience shape synaptic connections?","What is Hebbian learning and how does it relate to plasticity?","Describe critical periods in brain development.","How does the adult brain retain plasticity?","What is long-term depression and how does it differ from LTP?","How does sensory deprivation affect cortical organisation?","What are the mechanisms of recovery after brain injury?","How can plasticity be harnessed for rehabilitation?"],
+  topic16:["What are the main types of memory?","Describe the role of the hippocampus in declarative memory.","What is the difference between short-term and long-term memory?","How are memories encoded at the synaptic level?","What is memory consolidation and where does it occur?","Describe the role of sleep in memory consolidation.","What are the neural substrates of procedural memory?","How does the amygdala influence emotional memory?","What causes forgetting at the neural level?","How do ageing and disease affect memory systems?"],
+  topic17:["What are the stages of sleep and what characterises each?","Describe the neural mechanisms that generate REM sleep.","How does the suprachiasmatic nucleus regulate circadian rhythms?","What is the role of adenosine in sleep drive?","How does sleep deprivation affect brain function?","Describe the neural correlates of consciousness.","What is the default mode network and what does it do during rest?","How do anaesthetics alter consciousness?","What is the difference between wakefulness and arousal?","How does the brain transition between sleep stages?"],
+  topic18:["How does the brain process and regulate emotion?","Describe the neural basis of fear and anxiety.","What is the stress response and which brain regions mediate it?","How does chronic stress alter brain structure?","Describe the role of cortisol in the stress response.","What is emotional regulation and which brain regions are involved?","How does the prefrontal cortex modulate amygdala activity?","What is the neural basis of reward and pleasure?","How do positive emotions affect brain function?","What role does emotion play in decision-making?"],
+  topic19:["What brain regions are involved in language processing?","Describe the difference between Broca's and Wernicke's aphasia.","How is language lateralised in the brain?","What is the role of the arcuate fasciculus in language?","How does the brain process reading versus speech?","Describe how infants acquire language from a neuroscientific perspective.","What is the critical period for language acquisition?","How does bilingualism affect brain organisation?","What can sign language tell us about language and the brain?","How do semantic and syntactic processing differ neurally?"],
+  topic20:["What is attention and how is it implemented in the brain?","Describe the difference between top-down and bottom-up attention.","What is the role of the prefrontal cortex in executive function?","How does working memory relate to attention?","Describe the neural basis of selective attention.","What is cognitive control and how is it measured?","How do the parietal and frontal lobes interact during attention tasks?","What is attentional blink and what does it reveal about neural processing?","How does ADHD relate to attentional neural circuits?","What is the role of the anterior cingulate cortex in conflict monitoring?"],
+  topic21:["How does the brain develop from neural tube to mature organ?","What is neurogenesis and when does it occur?","Describe the process of cortical layering during development.","How do axons find their synaptic targets?","What is programmed cell death in neural development?","How do critical periods shape brain connectivity?","What environmental factors influence brain development?","How does myelination progress across childhood and adolescence?","What is the role of trophic factors in neural survival?","How does adolescent brain development affect behaviour?"],
+  topic22:["What are the most common neurological disorders?","Describe the pathophysiology of Alzheimer's disease.","What is the difference between ischaemic and haemorrhagic stroke?","How does epilepsy arise from abnormal neural activity?","Describe the neural basis of Parkinson's disease.","What is multiple sclerosis and how does it affect the nervous system?","How does traumatic brain injury affect brain function?","What is the role of neuroinflammation in neurodegenerative disease?","Describe the diagnostic approach to a patient with a neurological complaint.","What are the current treatments for major neurological conditions?"],
+  topic23:["How do psychiatric disorders differ from neurological disorders?","Describe the neurobiology of depression.","What are the neural correlates of schizophrenia?","How does anxiety arise from dysregulation of neural circuits?","Describe the role of the dopamine system in bipolar disorder.","What is the default mode network's role in psychiatric illness?","How do antidepressants work at the synaptic level?","What is the role of genetics in psychiatric disorders?","How does childhood trauma affect neural development and psychiatric risk?","What are the current frontiers in psychiatric neuroscience research?"],
+  topic24:["What is neuropharmacology?","Describe the pharmacokinetics of drugs that act on the CNS.","How do benzodiazepines affect GABA receptors?","What is the mechanism of action of SSRIs?","How do opioids produce analgesia and addiction?","Describe the pharmacology of antipsychotic medications.","What is the blood-brain barrier and how does it affect drug delivery?","How do stimulants like amphetamine affect dopamine signalling?","What is pharmacogenomics and how might it personalise neurology?","Describe the risks of polypharmacy in psychiatric treatment."],
+  topic25:["What neuroimaging techniques are available and what do they measure?","Describe how fMRI detects brain activity.","What is diffusion tensor imaging used for?","How does PET imaging differ from fMRI?","What can EEG tell us that fMRI cannot?","Describe the spatial and temporal resolution trade-offs in neuroimaging.","How is neuroimaging used in clinical diagnosis?","What ethical issues arise from neuroimaging research?","How has neuroimaging changed our understanding of brain function?","What are the newest advances in neuroimaging technology?"],
+  topic26:["What is computational neuroscience?","Describe the Hodgkin-Huxley model of the action potential.","What are neural network models and how do they relate to real brains?","How is machine learning applied to neuroscience data?","What is a connectome and why is it important?","Describe how computational models help us understand neural coding.","What is population coding in neural circuits?","How do reinforcement learning models map onto the brain's reward circuits?","What is the relationship between artificial intelligence and neuroscience?","How can computational models guide treatment of brain disorders?"],
+  topic27:["What are the most exciting open questions in neuroscience?","How might brain-computer interfaces transform medicine?","What is optogenetics and how has it advanced neuroscience?","Describe the goals of large-scale brain-mapping projects.","How might we achieve treatments for currently incurable brain diseases?","What is the role of the microbiome-gut-brain axis?","How could neuroscience change education?","What ethical issues will future neuroscience technologies raise?","How might consciousness research progress in the next decade?","What skills does a future neuroscientist need?"]
+};
+
+/* ══════════════════════════════════════════════════════
+   TOPIC META (title, emoji, difficulty)
+══════════════════════════════════════════════════════ */
+const topicMeta = {
+  topic1:{title:"Introduction to Neuroscience",emoji:"🧠",difficulty:"Beginner"},
+  topic2:{title:"Neurons and Glial Cells",emoji:"🔬",difficulty:"Beginner"},
+  topic3:{title:"Action Potentials",emoji:"⚡",difficulty:"Intermediate"},
+  topic4:{title:"Synaptic Transmission",emoji:"🔗",difficulty:"Intermediate"},
+  topic5:{title:"Neurotransmitters",emoji:"💊",difficulty:"Intermediate"},
+  topic6:{title:"The Spinal Cord",emoji:"🦴",difficulty:"Intermediate"},
+  topic7:{title:"The Brainstem",emoji:"🫀",difficulty:"Intermediate"},
+  topic8:{title:"The Cerebellum",emoji:"⚖️",difficulty:"Intermediate"},
+  topic9:{title:"The Basal Ganglia",emoji:"🎯",difficulty:"Advanced"},
+  topic10:{title:"The Limbic System",emoji:"❤️",difficulty:"Intermediate"},
+  topic11:{title:"The Cerebral Cortex",emoji:"🧩",difficulty:"Advanced"},
+  topic12:{title:"Sensory Systems",emoji:"👁️",difficulty:"Intermediate"},
+  topic13:{title:"Motor Systems",emoji:"💪",difficulty:"Intermediate"},
+  topic14:{title:"Autonomic Nervous System",emoji:"⚙️",difficulty:"Intermediate"},
+  topic15:{title:"Neuroplasticity",emoji:"🌱",difficulty:"Advanced"},
+  topic16:{title:"Learning and Memory",emoji:"📚",difficulty:"Advanced"},
+  topic17:{title:"Sleep and Consciousness",emoji:"💤",difficulty:"Advanced"},
+  topic18:{title:"Emotion and Stress",emoji:"😤",difficulty:"Intermediate"},
+  topic19:{title:"Language and Communication",emoji:"💬",difficulty:"Advanced"},
+  topic20:{title:"Attention and Executive Function",emoji:"🎯",difficulty:"Advanced"},
+  topic21:{title:"Developmental Neuroscience",emoji:"🌿",difficulty:"Advanced"},
+  topic22:{title:"Neurological Disorders",emoji:"⚠️",difficulty:"Advanced"},
+  topic23:{title:"Psychiatric Disorders",emoji:"🧪",difficulty:"Advanced"},
+  topic24:{title:"Neuropharmacology",emoji:"💉",difficulty:"Advanced"},
+  topic25:{title:"Neuroimaging",emoji:"📡",difficulty:"Advanced"},
+  topic26:{title:"Computational Neuroscience",emoji:"💻",difficulty:"Expert"},
+  topic27:{title:"Future of Neuroscience",emoji:"🚀",difficulty:"Expert"}
+};
+
+/* ══════════════════════════════════════════════════════
+   QUESTION / QUIZ HELPERS
+══════════════════════════════════════════════════════ */
+let currentTopicId    = null;
+let currentMinorIdGlobal = null;
+let currentQuestionIndex = 0;
+let quizAttempts = 0;
+let quizCorrect  = 0;
+
+function updateQuestion(topicId) {
+  const questions = topicQuestions[topicId];
+  if (!questions || !questions.length) return;
+  const idx = Math.floor(Math.random() * questions.length);
+  const qEl = document.getElementById('question-content');
+  if (qEl) qEl.innerHTML = `<p><strong>Study Question:</strong><br>${questions[idx]}</p>`;
+}
+
+function loadQuizQuestion(topicId) {
+  const questions = topicQuestions[topicId];
+  if (!questions || !questions.length) return;
+  const idx = Math.floor(Math.random() * questions.length);
+  currentQuestionIndex = idx;
+  const qEl = document.getElementById('quiz-question');
+  const fbEl = document.getElementById('quiz-feedback');
+  const ansEl = document.getElementById('quiz-answer');
+  const lbl  = document.getElementById('quiz-topic-label');
+  if (qEl) qEl.innerHTML = `<p>${questions[idx]}</p>`;
+  if (fbEl) fbEl.innerHTML = '<p style="color:var(--muted)">Feedback will appear here.</p>';
+  if (ansEl) { ansEl.value = ''; ansEl.focus(); }
+  if (lbl && topicMeta[topicId]) lbl.textContent = `Topic: ${topicMeta[topicId].title}`;
+}
+
+function submitQuizAnswer() {
+  const ansEl = document.getElementById('quiz-answer');
+  const fbEl  = document.getElementById('quiz-feedback');
+  if (!ansEl || !fbEl) return;
+  const ans = ansEl.value.trim();
+  if (!ans) { fbEl.innerHTML = '<p style="color:var(--red)">Please write an answer first.</p>'; return; }
+  quizAttempts++;
+  document.getElementById('quiz-attempts').textContent = `Attempts: ${quizAttempts}`;
+  fbEl.innerHTML = `<p style="color:var(--green)">✓ Answer submitted! Review the topic notes to check your understanding. Keep reviewing to reinforce retention.</p>`;
+}
+
+function revealSampleAnswer() {
+  const topicId = currentMinorIdGlobal || currentTopicId;
+  const fbEl = document.getElementById('quiz-feedback');
+  if (!fbEl || !topicId) return;
+  const questions = topicQuestions[topicId];
+  if (!questions) return;
+  const q = questions[currentQuestionIndex] || questions[0];
+  fbEl.innerHTML = `<p style="color:var(--blue)"><strong>Guidance:</strong> Review the relevant section in your topic notes for a complete answer to: "${q}" Compare your response with the key concepts covered in that section.</p>`;
+}
+
+function downloadNotes() {
+  const notes = document.getElementById('notes-textarea')?.value || '';
+  const blob = new Blob([notes], {type:'text/plain'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'nvd-lab-notes.txt';
+  a.click();
+}
+
+/* ══════════════════════════════════════════════════════
+   STUDY TIMER
+══════════════════════════════════════════════════════ */
+class StudyTimer {
+  constructor() {
+    this.seconds   = 0;
+    this.isRunning = false;
+    this.interval  = null;
+    this.sessions  = this.loadSessions();
+    this.goal      = parseInt(localStorage.getItem('studyGoal') || '7200');
+    this.breakSeconds = 300;
+    this.breakRunning = false;
+    this.breakInterval = null;
+    this.todayKey  = new Date().toDateString();
+    this.init();
+    this.updateStats();
+    this.renderHistory();
+    this.updateGoalDisplay();
+  }
+
+  init() {
+    document.getElementById('startTimer')?.addEventListener('click', () => this.start());
+    document.getElementById('stopTimer')?.addEventListener('click',  () => this.stop());
+    document.getElementById('resetTimer')?.addEventListener('click', () => this.reset());
+    document.getElementById('exportData')?.addEventListener('click', () => this.exportData());
+    document.getElementById('clearHistory')?.addEventListener('click', () => this.clearHistory());
+    document.getElementById('setGoal')?.addEventListener('click',   () => this.setGoal());
+    document.getElementById('breakTimer')?.addEventListener('click', () => {
+      document.getElementById('breakTimerModal').style.display = 'flex';
+    });
+    document.getElementById('closeBreakModal')?.addEventListener('click',  () => this.closeBreakModal());
+    document.getElementById('cancelBreakTimer')?.addEventListener('click', () => this.closeBreakModal());
+    document.getElementById('startBreakTimer')?.addEventListener('click',  () => this.startBreakTimer());
+    document.querySelectorAll('.preset-btn').forEach(btn =>
+      btn.addEventListener('click', () => {
+        this.breakSeconds = parseInt(btn.dataset.minutes) * 60;
+        this.updateBreakDisplay();
+      })
+    );
+  }
+
+  start() {
+    if (this.isRunning) return;
+    this.isRunning = true;
+    this.interval = setInterval(() => {
+      this.seconds++;
+      this.updateDisplay();
+      if (this.seconds % 60 === 0) this.updateStats();
+    }, 1000);
+  }
+
+  stop() {
+    if (!this.isRunning) return;
+    this.isRunning = false;
+    clearInterval(this.interval);
+    if (this.seconds > 0) {
+      this.saveSession(this.seconds);
+      this.seconds = 0;
+      this.updateDisplay();
+      this.updateStats();
+      this.renderHistory();
+    }
+  }
+
+  reset() {
+    this.isRunning = false;
+    clearInterval(this.interval);
+    this.seconds = 0;
+    this.updateDisplay();
+  }
+
+  updateDisplay() {
+    const h = Math.floor(this.seconds / 3600);
+    const m = Math.floor((this.seconds % 3600) / 60);
+    const s = this.seconds % 60;
+    const fmt = n => String(n).padStart(2,'0');
+    const el = document.getElementById('timerDisplay');
+    if (el) el.textContent = `${fmt(h)}:${fmt(m)}:${fmt(s)}`;
+    const sessionEl = document.getElementById('sessionTime');
+    if (sessionEl) sessionEl.textContent = `${h}h ${m}m`;
+  }
+
+  saveSession(secs) {
+    const now  = new Date();
+    const entry = { date:now.toLocaleDateString(), time:now.toLocaleTimeString(), duration:secs, key:now.toDateString() };
+    this.sessions.unshift(entry);
+    if (this.sessions.length > 100) this.sessions.pop();
+    localStorage.setItem('studySessions', JSON.stringify(this.sessions));
+  }
+
+  loadSessions() {
+    try { return JSON.parse(localStorage.getItem('studySessions')) || []; }
+    catch { return []; }
+  }
+
+  updateStats() {
+    const today = new Date().toDateString();
+    const todaySecs = this.sessions.filter(s => s.key === today).reduce((a,s) => a + s.duration,0) + this.seconds;
+    const th = Math.floor(todaySecs / 3600), tm = Math.floor((todaySecs % 3600) / 60);
+    const todayEl = document.getElementById('todayTime');
+    if (todayEl) todayEl.textContent = `${th}h ${tm}m`;
+
+    // Weekly
+    const now = new Date();
+    const weekStart = new Date(now); weekStart.setDate(now.getDate() - now.getDay());
+    const weekSecs = this.sessions.filter(s => new Date(s.key) >= weekStart).reduce((a,s) => a + s.duration,0);
+    const wEl = document.getElementById('weekTotal');
+    if (wEl) wEl.textContent = `${(weekSecs/3600).toFixed(1)}h`;
+
+    // Total sessions
+    const tsEl = document.getElementById('totalSessions');
+    if (tsEl) tsEl.textContent = this.sessions.length;
+
+    // Streak
+    let streak = 0, d = new Date();
+    for (let i = 0; i < 365; i++) {
+      const key = d.toDateString();
+      if (this.sessions.some(s => s.key === key)) { streak++; d.setDate(d.getDate()-1); }
+      else break;
+    }
+    const stEl = document.getElementById('streak');
+    if (stEl) stEl.textContent = `${streak} day${streak!==1?'s':''}`;
+
+    // Best day
+    const byDay = {};
+    this.sessions.forEach(s => { byDay[s.key] = (byDay[s.key]||0) + s.duration; });
+    const best = Math.max(...Object.values(byDay), 0);
+    const bdEl = document.getElementById('bestDay');
+    if (bdEl) bdEl.textContent = `${(best/3600).toFixed(1)}h`;
+
+    // Goal progress
+    const pct = Math.min(100, Math.round((todaySecs / this.goal) * 100));
+    const fill = document.getElementById('goalProgressFill');
+    if (fill) { fill.style.width = pct+'%'; fill.textContent = pct+'%'; }
+  }
+
+  setGoal() {
+    const h = parseInt(document.getElementById('goalHours')?.value  || 0);
+    const m = parseInt(document.getElementById('goalMinutes')?.value || 0);
+    this.goal = h*3600 + m*60;
+    localStorage.setItem('studyGoal', this.goal);
+    this.updateGoalDisplay();
+    this.updateStats();
+  }
+
+  updateGoalDisplay() {
+    const h = Math.floor(this.goal/3600), m = Math.floor((this.goal%3600)/60);
+    const el = document.getElementById('goalDisplay');
+    if (el) el.textContent = `Goal: ${h}h ${m}m`;
+    const gh = document.getElementById('goalHours');
+    const gm = document.getElementById('goalMinutes');
+    if (gh) gh.value = h;
+    if (gm) gm.value = m;
+  }
+
+  renderHistory() {
+    const list = document.getElementById('historyList');
+    if (!list) return;
+    if (!this.sessions.length) {
+      list.innerHTML = '<div style="padding:9px;text-align:center;color:var(--muted);font-size:.75rem;">No sessions yet</div>';
+      return;
+    }
+    list.innerHTML = this.sessions.slice(0,10).map((s,i) => {
+      const h = Math.floor(s.duration/3600), m = Math.floor((s.duration%3600)/60), sc = s.duration%60;
+      const dur = h?`${h}h ${m}m`:`${m}m ${sc}s`;
+      return `<div class="history-item">
+        <span class="history-item-date">${s.date} ${s.time}</span>
+        <span class="history-item-duration">${dur}</span>
+        <button class="history-item-delete" onclick="studyTimer.deleteSession(${i})">✕</button>
+      </div>`;
+    }).join('');
+  }
+
+  deleteSession(idx) {
+    this.sessions.splice(idx,1);
+    localStorage.setItem('studySessions', JSON.stringify(this.sessions));
+    this.renderHistory(); this.updateStats();
+  }
+
+  clearHistory() {
+    if (!confirm('Clear all session history?')) return;
+    this.sessions = [];
+    localStorage.removeItem('studySessions');
+    this.renderHistory(); this.updateStats();
+  }
+
+  exportData() {
+    let csv = 'Date,Time,Duration(seconds)\n';
+    this.sessions.forEach(s => { csv += `${s.date},${s.time},${s.duration}\n`; });
+    const blob = new Blob([csv], {type:'text/csv'});
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob); a.download = 'nvd-study-sessions.csv'; a.click();
+  }
+
+  startBreakTimer() {
+    this.stop();
+    if (this.breakInterval) clearInterval(this.breakInterval);
+    this.breakRunning = true;
+    this.breakInterval = setInterval(() => {
+      this.breakSeconds--;
+      this.updateBreakDisplay();
+      if (this.breakSeconds <= 0) {
+        clearInterval(this.breakInterval);
+        this.breakRunning = false;
+        alert('Break time is over! Back to studying 🧠');
+        this.closeBreakModal();
+        this.breakSeconds = 300;
+        this.updateBreakDisplay();
+      }
+    }, 1000);
+  }
+
+  updateBreakDisplay() {
+    const m = Math.floor(this.breakSeconds/60), s = this.breakSeconds%60;
+    const el = document.getElementById('breakTimerDisplay');
+    if (el) el.textContent = `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+  }
+
+  closeBreakModal() {
+    if (this.breakInterval) { clearInterval(this.breakInterval); this.breakRunning = false; }
+    document.getElementById('breakTimerModal').style.display = 'none';
+    this.breakSeconds = 300; this.updateBreakDisplay();
+  }
+}
+
+/* ══════════════════════════════════════════════════════
+   DOM READY
+══════════════════════════════════════════════════════ */
+document.addEventListener('DOMContentLoaded', () => {
+
+  /* Hamburger */
+  const hBtn = document.getElementById('hamburgerBtn');
+  const mNav = document.getElementById('mobileNav');
+  if (hBtn && mNav) {
+    hBtn.addEventListener('click', () => {
+      const open = mNav.classList.toggle('show');
+      hBtn.setAttribute('aria-expanded', open);
+    });
+    document.addEventListener('click', e => {
+      if (!hBtn.contains(e.target) && !mNav.contains(e.target)) {
+        mNav.classList.remove('show');
+        hBtn.setAttribute('aria-expanded','false');
+      }
+    });
+    mNav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+      mNav.classList.remove('show'); hBtn.setAttribute('aria-expanded','false');
+    }));
+  }
+
+  /* Topic search filter */
+  document.getElementById('topicSearch')?.addEventListener('input', function() {
+    const q = this.value.toLowerCase();
+    document.querySelectorAll('#dynamicTopicList details').forEach(detail => {
+      const links = detail.querySelectorAll('a');
+      let anyVisible = false;
+      links.forEach(a => {
+        const match = a.textContent.toLowerCase().includes(q);
+        a.closest('li').style.display = match ? '' : 'none';
+        if (match) anyVisible = true;
+      });
+      const summaryText = detail.querySelector('summary')?.textContent.toLowerCase() || '';
+      const summaryMatch = summaryText.includes(q);
+      detail.style.display = (anyVisible || summaryMatch) ? '' : 'none';
+      if (q && anyVisible) detail.open = true;
+    });
+  });
+
+  /* Expand / Collapse all */
+  document.getElementById('expandAll')?.addEventListener('click', () =>
+    document.querySelectorAll('#dynamicTopicList details').forEach(d => d.open = true));
+  document.getElementById('collapseAll')?.addEventListener('click', () =>
+    document.querySelectorAll('#dynamicTopicList details').forEach(d => d.open = false));
+
+  /* Tool panel inner tabs */
+  const tabs    = document.querySelectorAll('.tabs .tab');
+  const tabCnts = document.querySelectorAll('.tab-content');
+  tabs.forEach(tab => tab.addEventListener('click', () => {
+    tabs.forEach(t => t.classList.remove('active'));
+    tabCnts.forEach(c => c.classList.remove('active'));
+    tab.classList.add('active');
+    const target = document.getElementById(tab.dataset.tab);
+    if (target) target.classList.add('active');
+  }));
+
+  /* Notes auto-save */
+  const notesTA = document.getElementById('notes-textarea');
+  if (notesTA) {
+    notesTA.value = localStorage.getItem('nvd_notes') || '';
+    notesTA.addEventListener('input', () => localStorage.setItem('nvd_notes', notesTA.value));
+  }
+  document.getElementById('saveNotesBtn')?.addEventListener('click', () => {
+    if (notesTA) localStorage.setItem('nvd_notes', notesTA.value);
+    const btn = document.getElementById('saveNotesBtn');
+    if (btn) { btn.textContent = 'Saved ✓'; setTimeout(() => btn.textContent = 'Save Status', 2000); }
+  });
+  document.getElementById('download-notes-btn')?.addEventListener('click', downloadNotes);
+
+  /* Quiz buttons */
+  document.getElementById('new-question-btn')?.addEventListener('click',   () => updateQuestion(currentMinorIdGlobal || currentTopicId || 'topic1'));
+  document.getElementById('submit-quiz-answer')?.addEventListener('click', submitQuizAnswer);
+  document.getElementById('reveal-answer')?.addEventListener('click',      revealSampleAnswer);
+  document.getElementById('next-quiz-question')?.addEventListener('click', () => loadQuizQuestion(currentMinorIdGlobal || currentTopicId || 'topic1'));
+
+  /* Back to top */
+  const btt = document.createElement('button');
+  btt.id = 'backToTop'; btt.title = 'Back to top'; btt.textContent = '↑';
+  document.body.appendChild(btt);
+  btt.addEventListener('click', () => window.scrollTo({top:0,behavior:'smooth'}));
+  window.addEventListener('scroll', () => {
+    btt.style.display = window.scrollY > 300 ? 'flex' : 'none';
+  });
+
+  /* Init timer */
+  window.studyTimer = new StudyTimer();
+});
+</script>
+
+<script type="module">
+/* ══════════════════════════════════════════════════════
+   FIREBASE MODULE — Firestore content loader
+   All Firebase config + LMS logic lives here.
+   NOTE: ./firebase-config.js must be in the same folder.
+══════════════════════════════════════════════════════ */
+import { db } from "./firebase-config.js";
+import {
+  collection, getDocs, doc, getDoc, query, orderBy
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+/* ── Render sidebar from Firestore majorSegments ── */
+async function renderSidebar() {
+  const listEl = document.getElementById('dynamicTopicList');
+  if (!listEl) return;
+  listEl.innerHTML = '<div class="load-dots"><span></span><span></span><span></span></div>';
+
+  try {
+    const q = query(collection(db, 'majorSegments'), orderBy('order'));
+    const snap = await getDocs(q);
+
+    if (snap.empty) {
+      listEl.innerHTML = '<p style="padding:16px;color:var(--muted);font-size:.83rem;">No curriculum content found.</p>';
+      return;
+    }
+
+    let html = '';
+    snap.forEach(docSnap => {
+      const data   = docSnap.data();
+      const majId  = docSnap.id;
+      const title  = data.title || majId;
+      const minors = data.minorSegments || [];
+
+      const minorLinks = minors.map(ms => {
+        const minId    = ms.id || ms.title?.toLowerCase().replace(/\s+/g,'-') || 'segment';
+        const minTitle = ms.title || minId;
+        return `<li><a href="#" onclick="lmsShowTopic('${majId}','${minId}','${minTitle.replace(/'/g,"\\'")}');return false;">${minTitle}</a></li>`;
+      }).join('');
+
+      html += `
+        <details id="major-${majId}">
+          <summary><span class="tree-arrow">▶</span>${title}</summary>
+          <ul>${minorLinks || '<li style="padding:8px 12px;color:var(--muted);font-size:.8rem;">No topics yet</li>'}</ul>
+        </details>`;
+    });
+    listEl.innerHTML = html;
+
+  } catch (err) {
+    console.error('Sidebar load error:', err);
+    listEl.innerHTML = '<p style="padding:16px;color:var(--red);font-size:.83rem;">Could not load curriculum. Check your connection.</p>';
+  }
+}
+
+/* ── Show topic content ── */
+window.lmsShowTopic = async function(majorId, minorId, minorTitle) {
+  /* Mark active link */
+  document.querySelectorAll('#dynamicTopicList a').forEach(a => a.classList.remove('active'));
+  const activeLink = document.querySelector(`#dynamicTopicList a[onclick*="'${minorId}'"]`);
+  if (activeLink) activeLink.classList.add('active');
+
+  /* Update breadcrumb */
+  const majSummary = document.querySelector(`#major-${majorId} > summary`);
+  const majTitle   = majSummary
+    ? majSummary.textContent.replace(/[▶►▷]/,'').trim()
+    : majorId;
+  window.updateBreadcrumb(majTitle, minorTitle || minorId);
+
+  /* Switch to Learn tab on mobile */
+  window.switchMobileTab('learn');
+
+  /* Update quiz context */
+  window.currentMinorIdGlobal = minorId;
+  window.currentTopicId       = minorId;
+  const qLabel = document.getElementById('quiz-topic-label');
+  if (qLabel) qLabel.textContent = `Topic: ${minorTitle || minorId}`;
+
+  /* Show loading in content area */
+  document.getElementById('lmsWelcome').classList.remove('active');
+  const dynEl = document.getElementById('lmsDynamicContent');
+  dynEl.style.display = 'block';
+  dynEl.classList.add('active');
+  dynEl.innerHTML = `
+    <div style="text-align:center;padding:60px 20px;">
+      <div class="load-dots" style="justify-content:center;">
+        <span></span><span></span><span></span>
+      </div>
+      <p style="color:var(--muted);font-size:.9rem;margin-top:14px;">Loading content…</p>
+    </div>`;
+
+  try {
+    /* Load major segment document */
+    const majRef = doc(db, 'majorSegments', majorId);
+    const majSnap = await getDoc(majRef);
+
+    let minorData = null;
+    if (majSnap.exists()) {
+      const majData  = majSnap.data();
+      const minors   = majData.minorSegments || [];
+      minorData = minors.find(m => (m.id || m.title?.toLowerCase().replace(/\s+/g,'-')) === minorId);
+    }
+
+    /* Fallback: try standalone collection */
+    if (!minorData) {
+      const minRef  = doc(db, 'majorSegments', majorId, 'minorSegments', minorId);
+      const minSnap = await getDoc(minRef);
+      if (minSnap.exists()) minorData = minSnap.data();
+    }
+
+    if (!minorData) {
+      dynEl.innerHTML = `
+        <div style="padding:40px 20px;text-align:center;">
+          <div style="font-size:2.5rem;margin-bottom:16px;">📭</div>
+          <h2 style="color:var(--dark);">Content Coming Soon</h2>
+          <p style="color:var(--muted);margin-top:8px;">This topic hasn't been uploaded yet. Check back soon.</p>
+        </div>`;
+      return;
+    }
+
+    /* ── Build the content HTML ── */
+    const meta = topicMeta[minorId] || {};
+    const difficulty = minorData.difficulty || meta.difficulty || '';
+    const emoji      = meta.emoji || '🧠';
+
+    let html = `
+      <h2>${emoji} ${minorTitle || minorData.title || minorId}</h2>
+      <div class="topic-tags">
+        <span class="tag tag-blue">📚 ${majTitle}</span>
+        ${difficulty ? `<span class="tag tag-green">${difficulty}</span>` : ''}
+      </div>`;
+
+    /* Introduction */
+    if (minorData.introduction || minorData.intro) {
+      html += `
+        <div class="intro-box">
+          <p>${minorData.introduction || minorData.intro}</p>
+        </div>`;
+    }
+
+    /* Notes / explanations array */
+    const notes = minorData.notes || minorData.explanations || minorData.content || [];
+    if (Array.isArray(notes) && notes.length) {
+      notes.forEach(note => {
+        const heading  = note.heading  || note.title   || note.subtitle || '';
+        const body     = note.body     || note.content || note.text     || '';
+        const funFact  = note.funFact  || note.fun_fact || '';
+        const keywords = note.keywords || [];
+
+        html += `<div class="explanation">`;
+        if (heading) html += `<h3>📌 ${heading}</h3>`;
+        if (body)    html += `<p>${body}</p>`;
+        if (keywords.length) {
+          html += `<div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:5px;">`;
+          keywords.forEach(k => { html += `<span class="tag tag-blue" style="font-size:.68rem;">${k}</span>`; });
+          html += `</div>`;
+        }
+        html += `</div>`;
+
+        if (funFact) html += `<div class="fun-fact">💡 <strong>Fun Fact:</strong> ${funFact}</div>`;
+      });
+    }
+
+    /* Key points / summary */
+    const keyPoints = minorData.keyPoints || minorData.key_points || minorData.summary || [];
+    if ((Array.isArray(keyPoints) && keyPoints.length) || typeof keyPoints === 'string') {
+      html += `<div class="topic-resource-panel"><h3>🎯 Key Points</h3><ul>`;
+      const pts = Array.isArray(keyPoints) ? keyPoints : [keyPoints];
+      pts.forEach(p => { html += `<li>${p}</li>`; });
+      html += `</ul></div>`;
+    }
+
+    /* Clinical relevance / applications */
+    const clinical = minorData.clinicalRelevance || minorData.applications || minorData.clinical || '';
+    if (clinical) {
+      html += `
+        <div class="explanation" style="border-left:4px solid var(--amber);">
+          <h3>🏥 Clinical Relevance</h3>
+          <p>${typeof clinical === 'string' ? clinical : clinical.join(' ')}</p>
+        </div>`;
+    }
+
+    dynEl.innerHTML = html;
+
+    /* Prime the quiz */
+    updateQuestion(minorId);
+    loadQuizQuestion(minorId);
+
+    /* Scroll content to top on mobile */
+    if (window.innerWidth <= 768) {
+      document.getElementById('panel-learn')?.scrollTo({top:0,behavior:'smooth'});
+    }
+
+  } catch (err) {
+    console.error('Topic load error:', err);
+    dynEl.innerHTML = `
+      <div style="padding:40px 20px;text-align:center;">
+        <div style="font-size:2rem;margin-bottom:12px;">⚠️</div>
+        <h2 style="color:var(--red);">Failed to Load</h2>
+        <p style="color:var(--muted);margin-top:8px;">Could not fetch content from Firestore. Check your connection and try again.</p>
+      </div>`;
+  }
+};
+
+/* ── Kick off sidebar load ── */
+renderSidebar();
+</script>
+
+</body>
+</html>
