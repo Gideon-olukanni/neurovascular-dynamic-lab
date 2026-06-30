@@ -100,7 +100,7 @@
   nav.site-nav a.active { color: var(--cyan); border-bottom-color: var(--cyan); }
 
   /* Auth display */
-  .nav-right { display: flex; align-items: center; gap: 6px; }
+  .nav-right { display: flex; align-items: center; gap: 12px; }
   .sync-badge {
     display: none; align-items: center; gap: 5px;
     background: rgba(16,185,129,0.15); border: 1px solid rgba(16,185,129,0.3);
@@ -172,6 +172,42 @@
   }
   .mobile-nav a:hover { background: rgba(255,255,255,0.06); color: #fff; }
   .mobile-nav a.active { color: var(--cyan); border-left: 3px solid var(--cyan); padding-left: 17px; }
+    /* ============================================================
+   MOBILE RESPONSIVE FIX (Prevents Layout Scattering)
+   ============================================================ */
+@media (max-width: 915px) {
+  /* 1. Hide the desktop navigation links from the header */
+  nav.site-nav {
+    display: none;
+  }
+
+  /* 2. Show the hamburger button */
+  .hamburger-btn {
+    display: block;
+  }
+
+  /* 3. Hide the long email address so it doesn't push elements out */
+  .auth-email {
+    display: none;
+  }
+
+  /* 4. Reduce padding on the user bubble so only the avatar shows nicely */
+  .auth-user {
+    padding: 4px;
+  }
+
+  /* 5. Tighten the layout gap on mobile */
+  .nav-right {
+    gap: 8px;
+  }
+  
+  /* 6. Optional: Hide the text sync badge on small screens if it still crowds the logo */
+  .sync-badge {
+    padding: 3px 6px;
+    font-size: 0.65rem;
+  }
+}
+    
 
   /* ============================================================
      3. HERO SECTION
