@@ -67,7 +67,7 @@
   }
   :focus-visible { outline: 2.5px solid var(--blue); outline-offset: 2px; border-radius: var(--r-sm); }
 
-  /* ============================================================
+      /* ==========================================================
      2. HEADER & NAV
      ============================================================ */
   header {
@@ -80,10 +80,14 @@
     max-width: 1400px; margin: 0 auto; padding: 0 24px;
     height: 100%; display: flex; align-items: center; justify-content: space-between;
   }
+  
+  /* UPDATED: Locked logo so NVD Lab never breaks apart */
   .logo {
     font-size: 1.2rem; font-weight: 800; color: #fff;
     letter-spacing: -0.04em; display: flex; align-items: center; gap: 8px;
     text-decoration: none;
+    white-space: nowrap; 
+    flex-shrink: 0; 
   }
   .logo-accent { color: var(--cyan); }
 
@@ -101,34 +105,41 @@
 
   /* Auth display */
   .nav-right { display: flex; align-items: center; gap: 12px; }
-  .sync-badge {
-    display: none; align-items: center; gap: 5px;
-    background: rgba(16,185,129,0.15); border: 1px solid rgba(16,185,129,0.3);
-    color: var(--emerald); font-size: 0.72rem; font-weight: 700;
-    padding: 3px 10px; border-radius: 100px; letter-spacing: 0.04em;
+  
+  /* UPDATED: Completely hide Cloud Sync */
+  .sync-badge, .sync-badge.visible {
+    display: none !important;
   }
-  .sync-badge.visible { display: flex; }
+
+  /* UPDATED: Pro Auth Design (Pill shape) */
   .auth-user {
     display: none; align-items: center; gap: 8px;
-    background: rgba(255,255,255,0.1); border-radius: 100px;
-    padding: 4px 12px 4px 4px; cursor: pointer;
+    background: rgba(255, 255, 255, 0.08); 
+    border: 1px solid rgba(255, 255, 255, 0.1); 
+    border-radius: 100px;
+    padding: 4px 6px 4px 4px; 
+    cursor: pointer;
     transition: background var(--t);
   }
   .auth-user.visible { display: flex; }
-  .auth-user:hover { background: rgba(255,255,255,0.18); }
+  .auth-user:hover { background: rgba(255, 255, 255, 0.12); }
+  
   .auth-avatar {
     width: 28px; height: 28px; border-radius: 50%;
     background: var(--blue); color: #fff; font-weight: 700; font-size: 0.78rem;
     display: flex; align-items: center; justify-content: center;
   }
   .auth-email { color: rgba(255,255,255,0.85); font-size: 0.8rem; }
+  
+  /* UPDATED: Clean Sign Out Button */
   .sign-out-btn {
-    background: none; border: 1px solid rgba(255,255,255,0.2);
-    color: rgba(255,255,255,0.7); font-size: 0.72rem; font-family: inherit;
-    padding: 3px 8px; border-radius: var(--r-sm); cursor: pointer;
-    transition: var(--t); margin-left: 2px;
+    background: transparent; border: none; 
+    color: rgba(255,255,255,0.8); font-size: 0.75rem; font-family: inherit;
+    font-weight: 600; padding: 4px 10px; border-radius: 100px; cursor: pointer;
+    transition: all 0.2s ease; margin-left: 2px;
   }
-  .sign-out-btn:hover { background: rgba(255,0,0,0.15); color: #fca5a5; }
+  .sign-out-btn:hover { background: rgba(239, 68, 68, 0.2); color: #fca5a5; }
+  
   .sign-in-btn {
     background: var(--blue); color: #fff; border: none;
     padding: 7px 16px; border-radius: var(--r-md); font-size: 0.82rem;
@@ -172,40 +183,16 @@
   }
   .mobile-nav a:hover { background: rgba(255,255,255,0.06); color: #fff; }
   .mobile-nav a.active { color: var(--cyan); border-left: 3px solid var(--cyan); padding-left: 17px; }
-    /* ============================================================
+
+/* ============================================================
    MOBILE RESPONSIVE FIX (Prevents Layout Scattering)
    ============================================================ */
 @media (max-width: 915px) {
-  /* 1. Hide the desktop navigation links from the header */
-  nav.site-nav {
-    display: none;
-  }
-
-  /* 2. Show the hamburger button */
-  .hamburger-btn {
-    display: block;
-  }
-
-  /* 3. Hide the long email address so it doesn't push elements out */
-  .auth-email {
-    display: none;
-  }
-
-  /* 4. Reduce padding on the user bubble so only the avatar shows nicely */
-  .auth-user {
-    padding: 4px;
-  }
-
-  /* 5. Tighten the layout gap on mobile */
-  .nav-right {
-    gap: 8px;
-  }
-  
-  /* 6. Optional: Hide the text sync badge on small screens if it still crowds the logo */
-  .sync-badge {
-    padding: 3px 6px;
-    font-size: 0.65rem;
-  }
+  nav.site-nav { display: none; }
+  .hamburger-btn { display: block; }
+  .auth-email { display: none; }
+  .auth-user { padding: 4px; }
+  .nav-right { gap: 8px; }
 }
     
 
