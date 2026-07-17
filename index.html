@@ -1,0 +1,2292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-KJZ39Z1J53"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-KJZ39Z1J53');
+</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>🧠 Neurovascular Dynamic Lab - Home</title>
+
+    <meta name="google-site-verification" content="google8174e1c7661ab4cd" />
+
+<meta name="description" content="Free neuroscience education for students across Africa and beyond. Learn brain anatomy, neurons, neurovascular diseases, quizzes, flashcards and more." />
+<meta name="keywords" content="neuroscience, brain anatomy, neurons, neurovascular, Africa education, free learning, brain science, neurology, secondary school science" />
+<meta name="author" content="Gideon Olukanni" />
+<meta name="robots" content="index, follow" />
+<link rel="canonical" href="https://gideon-olukanni.github.io/neurovascular-dynamic-lab/" />
+
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Neurovascular Dynamic Lab — Free Brain Science Education" />
+<meta property="og:description" content="Free neuroscience education built for Africa. Learn brain anatomy, neurons, neurovascular disease, and more — quizzes, flashcards, interactive brain map." />
+<meta property="og:url" content="https://gideon-olukanni.github.io/neurovascular-dynamic-lab/" />
+<meta property="og:image" content="https://gideon-olukanni.github.io/neurovascular-dynamic-lab/preview.jpg" />
+<meta property="og:site_name" content="Neurovascular Dynamic Lab" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Neurovascular Dynamic Lab — Free Brain Science Education" />
+<meta name="twitter:description" content="Free neuroscience education built for Africa. Learn brain anatomy, neurons, neurovascular disease — quizzes, flashcards, interactive brain map." />
+<meta name="twitter:image" content="https://gideon-olukanni.github.io/neurovascular-dynamic-lab/preview.jpg" />
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500;600;700&display=swap');
+
+/* ============================================================
+   DESIGN TOKENS — same system as learn.html / flashcards.html / quiz.html
+   ============================================================ */
+:root {
+  --navy:    #0A2540;
+  --navy-2:  #0D3B6E;
+  --blue:    #2563EB;
+  --blue-dk: #1D4ED8;
+  --cyan:    #22D3EE;
+  --white:   #F8FAFC;
+  --soft:    #E2E8F0;
+  --green:   #10B981;
+  --red:     #EF4444;
+  --gold:    #F59E0B;
+  --violet:  #8B5CF6;
+  --text:    #0F172A;
+  --muted:   #64748B;
+  --light:   #94A3B8;
+
+  --header-h: 64px;
+  --r-sm: 8px; --r-md: 12px; --r-lg: 18px; --r-xl: 24px; --r-2xl: 32px;
+  --sh-xs: 0 1px 4px rgba(0,0,0,0.06);
+  --sh-sm: 0 2px 10px rgba(0,0,0,0.09);
+  --sh-md: 0 6px 24px rgba(0,0,0,0.12);
+  --sh-lg: 0 16px 48px rgba(0,0,0,0.18);
+  --t: 0.2s ease;
+  --t-md: 0.32s cubic-bezier(0.4,0,0.2,1);
+}
+
+/* ========================================================
+       GLOBAL & RESET STYLES
+       ======================================================== */
+
+* {
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+}
+
+body {
+font-family: 'DM Sans', 'Segoe UI', Inter, system-ui, sans-serif;
+background-color: #F8FAFC;
+color: #0F172A;
+line-height: 1.6;
+overflow-x: hidden;
+/* Sticky Footer Fix: Forces footer to the absolute bottom on short pages */
+display: flex;
+flex-direction: column;
+min-height: 100vh;
+margin: 0;
+padding: 0;
+}
+:focus-visible { outline: 2.5px solid var(--blue); outline-offset: 2px; border-radius: var(--r-sm); }
+
+/* ========================================================
+       HEADER & NAVIGATION STYLES — fixed height, compact nav,
+       auth controls ALWAYS visible (fixes mobile sign-out)
+       ======================================================== */
+
+header {
+position: sticky;
+top: 0;
+z-index: 1000;
+height: var(--header-h);
+background: linear-gradient(135deg, #0A2540 0%, #2563EB 100%);
+color: white;
+box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+.header-content {
+max-width: 1400px;
+margin: 0 auto;
+padding: 0 20px;
+height: 100%;
+display: flex;
+justify-content: space-between;
+align-items: center;
+flex-wrap: nowrap;
+gap: 12px;
+}
+
+.logo {
+font-size: 1.2rem;
+font-weight: 800;
+color: white;
+letter-spacing: -0.03em;
+text-decoration: none;
+display: flex;
+align-items: center;
+gap: 2px;
+flex-shrink: 0;
+white-space: nowrap;
+}
+.logo-accent { color: var(--cyan); }
+
+nav {
+display: flex;
+gap: 0;
+align-items: center;
+flex-wrap: nowrap;
+min-width: 0;
+}
+
+nav a {
+color: rgba(255,255,255,0.82);
+text-decoration: none;
+padding: 0 11px;
+line-height: var(--header-h);
+font-size: 0.8rem;
+font-weight: 500;
+transition: color 0.25s ease;
+position: relative;
+white-space: nowrap;
+}
+
+nav a::before {
+content: '';
+position: absolute;
+bottom: 14px;
+left: 50%;
+width: 0;
+height: 2px;
+background: var(--cyan);
+transition: all 0.25s ease;
+transform: translateX(-50%);
+}
+
+nav a:hover::before,
+nav a.active::before {
+width: calc(100% - 22px);
+}
+
+nav a:hover, nav a.active { color: #fff; }
+
+/* Auth + hamburger — ALWAYS visible on every breakpoint */
+.nav-right { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+
+/* CSS-only hamburger — zero image dependency */
+.hamburger-btn {
+display: none;
+background: none;
+border: none;
+cursor: pointer;
+padding: 10px;
+border-radius: var(--r-sm);
+transition: background-color 0.3s;
+flex-shrink: 0;
+}
+
+.hamburger-btn:hover { background-color: rgba(255, 255, 255, 0.1); }
+
+.ham-icon, .ham-icon::before, .ham-icon::after {
+display: block; width: 22px; height: 2px; background: #fff; border-radius: 2px;
+}
+.ham-icon { position: relative; }
+.ham-icon::before, .ham-icon::after { content: ''; position: absolute; left: 0; }
+.ham-icon::before { top: -7px; }
+.ham-icon::after  { top: 7px; }
+
+/* Mobile navigation menu */
+.mobile-nav {
+display: none;
+position: absolute;
+top: 100%;
+left: 0;
+right: 0;
+background: linear-gradient(135deg, #0A2540 0%, #2563EB 100%);
+box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+animation: slideDown 0.25s ease-out;
+max-height: calc(100vh - 64px);
+overflow-y: auto;
+}
+
+.mobile-nav.show { display: block; }
+
+@keyframes slideDown {
+from { opacity: 0; transform: translateY(-8px); }
+to   { opacity: 1; transform: translateY(0); }
+}
+
+.mobile-nav a {
+display: block;
+color: white;
+text-decoration: none;
+padding: 15px 20px;
+border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+transition: background-color 0.3s;
+}
+
+.mobile-nav a:hover { background-color: rgba(255, 255, 255, 0.1); }
+
+.mobile-nav a.active {
+background-color: rgba(255, 255, 255, 0.2);
+border-bottom: 3px solid white;
+}
+
+/* ========================================================
+       AUTH NAV STYLES
+       ======================================================== */
+.auth-nav-btn {
+display: inline-flex;
+align-items: center;
+gap: 7px;
+background: rgba(255,255,255,.15);
+border: 1px solid rgba(255,255,255,.3);
+color: white;
+border-radius: 50px;
+padding: 7px 16px;
+font-size: .82rem;
+font-weight: 600;
+cursor: pointer;
+text-decoration: none;
+transition: all .25s ease;
+white-space: nowrap;
+}
+.auth-nav-btn:hover {
+background: rgba(255,255,255,.25);
+transform: translateY(-1px);
+}
+.auth-nav-btn.signout {
+background: rgba(239,68,68,.18);
+border-color: rgba(239,68,68,.4);
+}
+.auth-nav-btn.signout:hover { background: rgba(239,68,68,.32); }
+.auth-user-display { display: none; align-items: center; gap: 8px; }
+.auth-user-display.visible { display: flex; }
+.auth-avatar {
+width: 30px;
+height: 30px;
+border-radius: 50%;
+background: linear-gradient(135deg, #22D3EE, #2563EB);
+display: flex;
+align-items: center;
+justify-content: center;
+font-size: .82rem;
+font-weight: 700;
+color: white;
+flex-shrink: 0;
+}
+.auth-user-email {
+font-size: .78rem;
+color: rgba(255,255,255,.8);
+max-width: 120px;
+overflow: hidden;
+text-overflow: ellipsis;
+white-space: nowrap;
+display: none;
+}
+@media (min-width: 900px) { .auth-user-email { display: inline; } }
+
+/* ========================================================
+       PERSONALIZED DASHBOARD WIDGET — elevated stat cards
+       ======================================================== */
+.dashboard-widget {
+display: none;
+background: linear-gradient(135deg, #0A2540 0%, #1a3a60 100%);
+border-bottom: 1px solid rgba(255,255,255,.08);
+padding: 22px 24px;
+}
+.dashboard-widget.visible { display: block; }
+.dashboard-inner {
+max-width: 1100px;
+margin: 0 auto;
+display: flex;
+align-items: center;
+gap: 22px;
+flex-wrap: wrap;
+}
+.dash-greeting-col { display: flex; align-items: center; gap: 12px; flex: 1; min-width: 200px; }
+.dash-greeting-icon {
+width: 42px; height: 42px; border-radius: 12px; flex-shrink: 0;
+background: linear-gradient(135deg, var(--cyan), var(--blue));
+display: flex; align-items: center; justify-content: center; font-size: 1.3rem;
+}
+.dashboard-greeting h3 { color: white; font-size: 1rem; font-weight: 700; margin-bottom: 2px; }
+.dashboard-greeting p  { color: rgba(255,255,255,.5); font-size: .78rem; }
+
+.dashboard-stats { display: flex; gap: 12px; flex-wrap: wrap; }
+.dash-stat {
+display: flex; align-items: center; gap: 10px;
+background: rgba(255,255,255,.06);
+border: 1px solid rgba(255,255,255,.12);
+border-radius: var(--r-lg);
+padding: 11px 16px;
+min-width: 104px;
+transition: background var(--t), transform var(--t);
+}
+.dash-stat:hover { background: rgba(255,255,255,.1); transform: translateY(-2px); }
+.dash-stat-icon { font-size: 1.25rem; flex-shrink: 0; }
+.dash-stat-val {
+font-size: 1.3rem;
+font-weight: 800;
+color: #22D3EE;
+font-family: 'Space Mono', 'Courier New', monospace;
+line-height: 1;
+display: block;
+}
+.dash-stat-lbl {
+font-size: .64rem;
+color: rgba(255,255,255,.45);
+text-transform: uppercase;
+letter-spacing: .07em;
+margin-top: 4px;
+display: block;
+}
+.dash-cta {
+display: inline-flex;
+align-items: center;
+gap: 6px;
+background: linear-gradient(135deg, #2563EB, #22D3EE);
+color: white;
+border-radius: 50px;
+padding: 10px 22px;
+font-size: .84rem;
+font-weight: 700;
+text-decoration: none;
+transition: all .25s ease;
+white-space: nowrap;
+box-shadow: 0 4px 16px rgba(37,99,235,.3);
+}
+.dash-cta:hover {
+transform: translateY(-2px);
+box-shadow: 0 8px 24px rgba(34,211,238,.4);
+}
+
+/* Certificates strip */
+.dash-cert-strip { display: none; max-width: 1100px; margin: 16px auto 0; padding: 16px 0 0; border-top: 1px solid rgba(255,255,255,.08); }
+.dash-cert-strip.visible { display: block; }
+.dash-cert-strip-label {
+color: rgba(255,255,255,.55);
+font-size: .72rem;
+font-weight: 700;
+text-transform: uppercase;
+letter-spacing: .08em;
+margin-bottom: 10px;
+}
+.dash-cert-row { display: flex; gap: 10px; flex-wrap: wrap; }
+.dash-cert-chip {
+display: inline-flex;
+align-items: center;
+gap: 8px;
+background: rgba(245,158,11,.12);
+border: 1px solid rgba(245,158,11,.35);
+border-radius: 12px;
+padding: 8px 14px;
+color: #FCD34D;
+font-size: .8rem;
+font-weight: 600;
+text-decoration: none;
+transition: all .25s ease;
+}
+.dash-cert-chip:hover {
+background: rgba(245,158,11,.22);
+transform: translateY(-2px);
+}
+
+/* ========================================================
+       HERO SECTION STYLES
+       ======================================================== */
+
+.hero {
+background: linear-gradient(135deg, #0A2540, #2563EB);
+color: white;
+padding: 90px 20px;
+text-align: center;
+position: relative;
+overflow: hidden;
+}
+
+.hero::before,
+.hero::after {
+content: '';
+position: absolute;
+top: 0;
+width: 50%;
+height: 100%;
+opacity: 0.4;
+pointer-events: none;
+background-size: cover;
+background-position: center;
+}
+
+.hero::before {
+left: 0;
+background-image: url('images/download (12).jpeg');
+animation: floatAndSwapLeft 14s ease-in-out infinite;
+mask-image: linear-gradient(90deg, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 100%);
+-webkit-mask-image: linear-gradient(90deg, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 100%);
+}
+
+.hero::after {
+right: 0;
+background-image: url('images/Mental Health Tips.jpeg');
+animation: floatAndSwapRight 14s ease-in-out infinite;
+mask-image: linear-gradient(90deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.8) 100%);
+-webkit-mask-image: linear-gradient(90deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.8) 100%);
+}
+
+@keyframes floatAndSwapLeft {
+0%, 100% { opacity: 0; transform: translateY(0); }
+5%, 65% { opacity: 0.4; transform: translateY(0); }
+50% { opacity: 0; }
+}
+
+@keyframes floatAndSwapRight {
+0%, 100% { opacity: 0; transform: translateY(0); }
+5%, 65% { opacity: 0.4; transform: translateY(0); }
+50% { opacity: 0; }
+}
+
+.hero h1 {
+font-family: 'Playfair Display', serif;
+font-weight: 900;
+font-size: clamp(2rem, 6vw, 3rem);
+margin-bottom: 20px;
+position: relative;
+z-index: 2;
+width: 100%;
+letter-spacing: -0.02em;
+}
+
+/* ========================================================
+       BRAND DNA SECTION STYLES (Mission, Vision, Values)
+       ======================================================== */
+
+.brand-dna {
+text-align: center;
+background: linear-gradient(135deg, #0A2540 0%, #1e3a5f 100%);
+color: white;
+padding: 60px 20px;
+position: relative;
+overflow: hidden;
+}
+
+.brand-dna::before {
+content: '';
+position: absolute;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background:
+radial-gradient(circle at 20% 50%, rgba(37, 99, 235, 0.3) 0%, transparent 50%),
+radial-gradient(circle at 80% 50%, rgba(34, 211, 238, 0.3) 0%, transparent 50%);
+animation: pulseGlow 4s ease-in-out infinite;
+}
+
+@keyframes pulseGlow {
+0%, 100% { opacity: 0.5; transform: scale(1); }
+50% { opacity: 1; transform: scale(1.1); }
+}
+
+.brand-dna::after {
+content: '';
+position: absolute;
+top: -50%;
+left: -50%;
+width: 200%;
+height: 200%;
+background: linear-gradient(45deg, transparent 40%, rgba(255, 255, 255, 0.05) 50%, transparent 60%);
+animation: shine 6s linear infinite;
+}
+
+@keyframes shine {
+0% { transform: translate(-100%, -100%) rotate(45deg); }
+100% { transform: translate(100%, 100%) rotate(45deg); }
+}
+
+.brand-dna > * { position: relative; z-index: 1; }
+
+.brand-dna h2 {
+font-family: 'Playfair Display', serif;
+font-weight: 900;
+margin: 40px 0 15px;
+font-size: 2rem;
+letter-spacing: -0.01em;
+}
+
+.brand-dna p {
+max-width: 700px;
+margin: 0 auto 30px;
+font-size: 1.1rem;
+color: rgba(255, 255, 255, 0.9);
+}
+
+/* ===================================================
+    PLATFORM IDENTITY
+    =================================================== */
+
+.platform-origin {
+background: linear-gradient(180deg, #0A2540 0%, #12335a 100%);
+padding: 70px 22px;
+position: relative;
+overflow: hidden;
+text-align: center;
+}
+
+.platform-origin::before {
+content: '';
+position: absolute;
+top: -120px;
+left: -120px;
+width: 340px;
+height: 340px;
+border-radius: 50%;
+background: radial-gradient(circle, rgba(34,211,238,.16), transparent 70%);
+}
+
+.platform-origin::after {
+content: '';
+position: absolute;
+bottom: -140px;
+right: -120px;
+width: 320px;
+height: 320px;
+border-radius: 50%;
+background: radial-gradient(circle, rgba(37,99,235,.18), transparent 70%);
+}
+
+.platform-origin-inner { position: relative; z-index: 2; max-width: 760px; margin: auto; }
+
+.platform-chip {
+display: inline-block;
+padding: 10px 22px;
+border-radius: 999px;
+background: rgba(255,255,255,.08);
+border: 1px solid rgba(255,255,255,.12);
+color: #67E8F9;
+font-size: .78rem;
+font-weight: 700;
+letter-spacing: .08em;
+text-transform: uppercase;
+margin-bottom: 26px;
+}
+
+.platform-origin h2 {
+font-family: 'Playfair Display', serif;
+font-weight: 900;
+color: white;
+font-size: clamp(2rem, 4vw, 2.8rem);
+line-height: 1.2;
+margin-bottom: 22px;
+letter-spacing: -0.01em;
+}
+
+.platform-origin p {
+color: rgba(255, 255, 255, .78);
+font-size: 1.05rem;
+line-height: 1.95;
+max-width: 700px;
+margin: auto;
+}
+
+@media(max-width:768px) {
+.platform-origin { padding: 58px 18px; }
+.platform-origin p { font-size: 1rem; }
+}
+
+/* ========================================================
+       INTRO SECTION STYLES
+       ======================================================== */
+
+.intro-section {
+padding: 80px 20px;
+background: linear-gradient(135deg, #f8fafc 0%, #e0f2fe 100%);
+position: relative;
+overflow: hidden;
+}
+
+.intro-section::before {
+content: '';
+position: absolute;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background-image:
+radial-gradient(circle at 10% 20%, rgba(37, 99, 235, 0.05) 0%, transparent 50%),
+radial-gradient(circle at 90% 80%, rgba(34, 211, 238, 0.05) 0%, transparent 50%);
+animation: pulseBackground 8s ease-in-out infinite;
+}
+
+@keyframes pulseBackground {
+0%, 100% { opacity: 0.5; }
+50% { opacity: 1; }
+}
+
+.intro-container {
+max-width: 1200px;
+margin: 0 auto;
+display: grid;
+grid-template-columns: 1.2fr 1fr;
+gap: 60px;
+align-items: center;
+position: relative;
+z-index: 1;
+}
+
+.intro-text h2 {
+font-family: 'Playfair Display', serif;
+font-weight: 900;
+font-size: 2.5rem;
+color: #2563EB;
+margin-bottom: 30px;
+letter-spacing: -0.01em;
+}
+
+.intro-text p {
+font-size: 1.1rem;
+line-height: 1.8;
+color: #334155;
+margin-bottom: 20px;
+text-align: justify;
+}
+
+.intro-images { position: relative; height: 500px; }
+
+.intro-img-1 {
+position: absolute;
+top: 0;
+right: 0;
+width: 70%;
+border-radius: 20px;
+box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+animation: floatImage 6s ease-in-out infinite;
+z-index: 2;
+}
+
+.intro-img-2 {
+position: absolute;
+bottom: 0;
+left: 0;
+width: 70%;
+border-radius: 20px;
+box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+animation: floatImageReverse 6s ease-in-out infinite;
+z-index: 1;
+}
+
+@keyframes floatImage {
+0%, 100% { transform: translateY(0px); }
+50% { transform: translateY(-15px); }
+}
+
+@keyframes floatImageReverse {
+0%, 100% { transform: translateY(0px); }
+50% { transform: translateY(15px); }
+}
+
+/* ========================================================
+       BRAIN FACT SECTION
+       ======================================================== */
+
+.brain-fact-section {
+padding: 80px 20px;
+background: linear-gradient(135deg, #f8fafc 0%, #eef6ff 100%);
+position: relative;
+overflow: hidden;
+}
+
+.brain-fact-section::before {
+content: '';
+position: absolute;
+inset: 0;
+background:
+radial-gradient(circle at 15% 20%, rgba(37, 99, 235, 0.08) 0%, transparent 35%),
+radial-gradient(circle at 85% 80%, rgba(34, 211, 238, 0.08) 0%, transparent 35%);
+pointer-events: none;
+}
+
+.brain-fact-card {
+position: relative;
+max-width: 900px;
+margin: 0 auto;
+background: rgba(255,255,255,0.92);
+backdrop-filter: blur(10px);
+border: 1px solid rgba(226,232,240,0.9);
+border-top: 5px solid #2563EB;
+border-radius: 24px;
+padding: 52px 42px;
+text-align: center;
+box-shadow: 0 18px 44px rgba(15, 23, 42, 0.08);
+}
+
+.brain-fact-badge {
+display: inline-flex;
+align-items: center;
+gap: 8px;
+padding: 8px 18px;
+border-radius: 999px;
+background: rgba(37, 99, 235, 0.10);
+color: #2563EB;
+font-size: 0.74rem;
+font-weight: 800;
+letter-spacing: 0.12em;
+text-transform: uppercase;
+margin-bottom: 18px;
+}
+
+.brain-fact-card h2 {
+font-family: 'Playfair Display', serif;
+font-weight: 900;
+font-size: clamp(1.7rem, 3.6vw, 2.4rem);
+line-height: 1.15;
+color: #0A2540;
+margin-bottom: 18px;
+letter-spacing: -0.02em;
+}
+
+#factDisplay {
+font-size: 1.08rem;
+line-height: 1.9;
+color: #334155;
+min-height: 96px;
+max-width: 720px;
+margin: 0 auto 34px;
+}
+
+.fact-btn {
+display: inline-flex;
+align-items: center;
+justify-content: center;
+gap: 8px;
+background: linear-gradient(135deg, #2563EB 0%, #22D3EE 100%);
+color: #fff;
+border: none;
+border-radius: 999px;
+padding: 15px 30px;
+font-size: 0.98rem;
+font-weight: 700;
+cursor: pointer;
+box-shadow: 0 10px 28px rgba(37,99,235,.22);
+transition: transform .25s ease, box-shadow .25s ease, filter .25s ease;
+}
+
+.fact-btn:hover {
+transform: translateY(-3px);
+box-shadow: 0 16px 34px rgba(37,99,235,.30);
+filter: saturate(1.05);
+}
+
+.fact-btn:active {
+transform: translateY(-1px) scale(0.99);
+}
+
+.fact-btn:focus-visible {
+outline: 2.5px solid #22D3EE;
+outline-offset: 4px;
+}
+
+@media (max-width: 768px) {
+.brain-fact-section { padding: 60px 16px; }
+.brain-fact-card { padding: 36px 22px; border-radius: 20px; }
+#factDisplay { font-size: 1rem; min-height: 110px; }
+.fact-btn { width: 100%; }
+}
+
+/* ========================================================
+       LEARNING SECTION STYLES
+       ======================================================== */
+
+.learning-content {
+padding: 80px 40px;
+background: linear-gradient(135deg, rgba(37, 99, 235, 0.05) 0%, rgba(34, 211, 238, 0.05) 100%);
+color: #0A2540;
+position: relative;
+overflow: hidden;
+}
+
+.learning-content h2 {
+font-family: 'Playfair Display', serif;
+font-weight: 900;
+text-align: center;
+font-size: 2.5rem;
+margin-bottom: 50px;
+color: #2563EB;
+letter-spacing: -0.01em;
+}
+
+.learning-grid {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+gap: 30px;
+max-width: 1200px;
+margin: 0 auto;
+}
+
+.learning-card {
+background: white;
+padding: 30px;
+border-radius: 16px;
+box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+transition: all 0.4s ease;
+}
+
+.learning-card:hover {
+transform: translateY(-10px) scale(1.03);
+box-shadow: 0 12px 30px rgba(37, 99, 235, 0.3);
+}
+
+.learning-card h3 { color: #2563EB; margin-bottom: 10px; font-size: 1.3rem; }
+
+.learning-card::before {
+content: '🧠';
+font-size: 2rem;
+display: inline-block;
+margin-right: 10px;
+margin-bottom: 5px;
+animation: rotate 3s ease-in-out infinite;
+vertical-align: middle;
+}
+
+@keyframes rotate {
+0%, 100% { transform: rotate(0deg); }
+25% { transform: rotate(-10deg); }
+75% { transform: rotate(10deg); }
+}
+
+/* ========================================================
+       WELCOME BOX & BUTTONS
+       ======================================================== */
+
+.welcome-box {
+background: white;
+padding: 45px;
+border-radius: 16px;
+box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+}
+
+.btn {
+display: inline-block;
+margin-top: 35px;
+padding: 14px 36px;
+background: linear-gradient(135deg, #2563EB, #22D3EE);
+color: white;
+border-radius: 10px;
+font-weight: 600;
+text-decoration: none;
+transition: all 0.3s ease;
+position: relative;
+overflow: hidden;
+}
+
+.btn::before {
+content: '';
+position: absolute;
+top: 50%;
+left: 50%;
+width: 0;
+height: 0;
+border-radius: 50%;
+background: rgba(255, 255, 255, 0.3);
+transform: translate(-50%, -50%);
+transition: width 0.6s, height 0.6s;
+}
+
+.btn:hover::before { width: 300px; height: 300px; }
+
+.btn:hover {
+transform: translateY(-3px);
+box-shadow: 0 10px 25px rgba(34, 211, 238, 0.4);
+}
+
+/* ========================================================
+       VIDEO SECTION STYLES
+       ======================================================== */
+
+.watch-section {
+background: linear-gradient(135deg, rgba(34, 211, 238, 0.05) 0%, rgba(37, 99, 235, 0.05) 100%);
+color: #0A2540;
+position: relative;
+overflow: hidden;
+margin: 0px;
+padding: 40px 0px;
+}
+
+.watch-section h2 {
+font-family: 'Playfair Display', serif;
+font-weight: 900;
+text-align: center;
+font-size: 2.5rem;
+margin-bottom: 50px;
+color: #2563EB;
+letter-spacing: -0.01em;
+}
+
+.video-container {
+max-width: 900px;
+margin: 0 auto 15px;
+position: relative;
+width: 100%;
+padding-bottom: 56.25%;
+height: 0;
+overflow: hidden;
+border-radius: 16px;
+box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+}
+
+.video-container iframe {
+position: absolute;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+border: none;
+border-radius: 16px;
+}
+
+.video-description {
+text-align: center;
+margin: 0 auto 40px;
+font-size: 1.1rem;
+color: #334155;
+max-width: 700px;
+padding: 0 15px;
+}
+
+/* ========================================================
+       PREMIUM CTA SECTION
+       ======================================================== */
+
+.learn-cta-section {
+position: relative;
+padding: 110px 20px;
+overflow: hidden;
+background: linear-gradient(135deg, #071426 0%, #0A2540 45%, #1E40AF 100%);
+text-align: center;
+}
+
+.learn-cta-section::before {
+content: '';
+position: absolute;
+width: 500px;
+height: 500px;
+top: -180px;
+left: -180px;
+border-radius: 50%;
+background: radial-gradient(circle, rgba(34,211,238,0.18), transparent 70%);
+animation: pulseOrb 8s ease-in-out infinite;
+}
+
+.learn-cta-section::after {
+content: '';
+position: absolute;
+width: 400px;
+height: 400px;
+bottom: -150px;
+right: -150px;
+border-radius: 50%;
+background: radial-gradient(circle, rgba(37,99,235,0.18), transparent 70%);
+animation: pulseOrb 8s ease-in-out infinite reverse;
+}
+
+@keyframes pulseOrb {
+0%,100% { transform: scale(1); opacity: .7; }
+50% { transform: scale(1.12); opacity: 1; }
+}
+
+.learn-cta-content { position: relative; z-index: 2; max-width: 850px; margin: 0 auto; }
+
+.learn-cta-badge {
+display: inline-flex;
+align-items: center;
+gap: 10px;
+padding: 10px 22px;
+border-radius: 999px;
+background: rgba(34,211,238,0.08);
+border: 1px solid rgba(34,211,238,0.25);
+color: #67E8F9;
+font-size: .8rem;
+font-weight: 700;
+letter-spacing: .12em;
+text-transform: uppercase;
+margin-bottom: 28px;
+backdrop-filter: blur(12px);
+}
+
+.learn-cta-title {
+font-family: 'Playfair Display', serif;
+font-weight: 900;
+font-size: clamp(2.2rem, 5vw, 4rem);
+line-height: 1.15;
+color: white;
+margin-bottom: 24px;
+letter-spacing: -0.03em;
+}
+
+.learn-cta-title span { color: #22D3EE; }
+
+.learn-cta-text {
+font-size: 1.08rem;
+line-height: 1.9;
+color: rgba(255,255,255,0.78);
+max-width: 720px;
+margin: 0 auto 42px;
+}
+
+.learn-cta-button {
+display: inline-flex;
+align-items: center;
+gap: 14px;
+padding: 20px 38px;
+border-radius: 18px;
+text-decoration: none;
+color: white;
+font-weight: 700;
+font-size: 1rem;
+background: linear-gradient(135deg, #2563EB 0%, #22D3EE 100%);
+box-shadow: 0 10px 35px rgba(34,211,238,.35);
+transition: all .35s ease;
+position: relative;
+overflow: hidden;
+}
+
+.learn-cta-button::before {
+content: '';
+position: absolute;
+inset: 0;
+background: linear-gradient(135deg, rgba(255,255,255,.25), transparent);
+opacity: 0;
+transition: opacity .35s ease;
+}
+
+.learn-cta-button:hover::before { opacity: 1; }
+.learn-cta-button:hover {
+transform: translateY(-6px) scale(1.03);
+box-shadow: 0 18px 45px rgba(34,211,238,.5);
+}
+
+.learn-cta-sub {
+margin-top: 20px;
+font-size: .82rem;
+color: rgba(255,255,255,.45);
+letter-spacing: .06em;
+}
+
+@keyframes ndl-glow {
+0%,100% { box-shadow: 0 0 0 0 rgba(16,185,129,.6); }
+50% { box-shadow: 0 0 0 9px rgba(16,185,129,0); }
+}
+
+.ndl-stat-card {
+flex: 1;
+min-width: 140px;
+max-width: 190px;
+background: rgba(255,255,255,.07);
+border: 1px solid rgba(255,255,255,.14);
+border-radius: 22px;
+padding: 26px 18px 22px;
+text-align: center;
+transition: transform .3s ease, background .3s ease, box-shadow .3s ease;
+}
+
+.ndl-stat-card:hover {
+transform: translateY(-7px);
+background: rgba(255,255,255,.13);
+box-shadow: 0 18px 44px rgba(37,99,235,.3);
+}
+
+/* ========================================================
+       NEUROAI — floating FAB + slide-in panel
+       ======================================================== */
+.ai-fab {
+position: fixed; bottom: 24px; right: 24px; z-index: 1200;
+width: 56px; height: 56px; border-radius: 50%;
+background: linear-gradient(135deg, var(--navy), #1e3a8a);
+border: 2px solid rgba(34,211,238,0.3);
+color: #fff; cursor: pointer; font-size: 1.5rem;
+box-shadow: 0 4px 20px rgba(10,37,64,0.45), 0 0 0 0 rgba(34,211,238,0.3);
+transition: transform var(--t), box-shadow var(--t);
+display: flex; align-items: center; justify-content: center;
+animation: fabPulse 3s infinite;
+}
+@keyframes fabPulse {
+0%,100%{ box-shadow: 0 4px 20px rgba(10,37,64,0.45), 0 0 0 0 rgba(34,211,238,0.25); }
+50%    { box-shadow: 0 4px 20px rgba(10,37,64,0.45), 0 0 0 10px rgba(34,211,238,0); }
+}
+.ai-fab:hover { transform: scale(1.1); animation: none; box-shadow: 0 8px 32px rgba(10,37,64,0.55); }
+
+.ai-overlay {
+position: fixed; inset: 0; z-index: 1100;
+background: rgba(10,14,26,0.55); backdrop-filter: blur(3px);
+opacity: 0; pointer-events: none; transition: opacity 0.28s ease;
+}
+.ai-overlay.show { opacity: 1; pointer-events: all; }
+
+.ai-panel {
+position: fixed; right: -400px; top: 0; bottom: 0; z-index: 1300;
+width: 380px; background: #fff;
+box-shadow: -4px 0 40px rgba(0,0,0,0.18);
+transition: right var(--t-md);
+display: flex; flex-direction: column;
+}
+.ai-panel.open { right: 0; }
+
+.ai-panel-header {
+background: linear-gradient(135deg, var(--navy), var(--navy-2));
+padding: 16px 18px; display: flex; align-items: center;
+justify-content: space-between; flex-shrink: 0;
+border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+.ai-panel-badge {
+background: var(--navy); border: 1.5px solid rgba(34,211,238,0.4);
+color: var(--cyan); padding: 4px 10px; border-radius: 100px;
+font-size: 0.72rem; font-weight: 700; letter-spacing: 0.05em;
+display: flex; align-items: center; gap: 6px;
+}
+.ai-panel-badge-dot {
+width: 6px; height: 6px; border-radius: 50%; background: var(--cyan);
+box-shadow: 0 0 6px var(--cyan); animation: aiPulseDot 2s infinite;
+}
+@keyframes aiPulseDot { 0%,100%{opacity:1;}50%{opacity:0.4;} }
+.ai-panel-sub { font-size: 0.68rem; color: rgba(255,255,255,0.4); margin-top: 2px; }
+.ai-close-btn {
+background: rgba(255,255,255,0.1); border: none; color: rgba(255,255,255,0.7);
+width: 30px; height: 30px; border-radius: 50%; font-size: 1rem;
+cursor: pointer; transition: background var(--t);
+display: flex; align-items: center; justify-content: center;
+}
+.ai-close-btn:hover { background: rgba(255,255,255,0.2); color: #fff; }
+
+.ai-chat-body {
+flex: 1; overflow-y: auto; padding: 16px 14px 8px;
+display: flex; flex-direction: column; gap: 12px;
+scroll-behavior: smooth;
+}
+.ai-msg { display: flex; gap: 8px; align-items: flex-start; }
+.ai-msg--user { flex-direction: row-reverse; }
+.ai-msg-avatar {
+width: 28px; height: 28px; border-radius: 50%; flex-shrink: 0;
+display: flex; align-items: center; justify-content: center; font-size: 0.95rem;
+background: #eff6ff; border: 1px solid #bfdbfe;
+}
+.ai-msg--user .ai-msg-avatar { background: #f0fdf4; border-color: #bbf7d0; }
+.ai-msg-bubble {
+padding: 9px 12px; border-radius: var(--r-md);
+font-size: 0.855rem; line-height: 1.65; color: var(--text);
+max-width: calc(100% - 40px);
+background: #f1f5f9; border: 1px solid var(--soft);
+word-break: break-word;
+}
+.ai-msg--user .ai-msg-bubble { background: var(--blue); color: #fff; border-color: var(--blue-dk); }
+.ai-typing { display: flex; align-items: center; gap: 4px; padding: 2px 0; }
+.ai-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--light); animation: aiTypeBounce 1.2s infinite; }
+.ai-dot:nth-child(2){ animation-delay: 0.2s; }
+.ai-dot:nth-child(3){ animation-delay: 0.4s; }
+@keyframes aiTypeBounce{ 0%,60%,100%{transform:translateY(0);}30%{transform:translateY(-7px);} }
+
+.ai-input-area { padding: 10px 12px 14px; border-top: 1px solid var(--soft); flex-shrink: 0; }
+.ai-input-row {
+display: flex; align-items: flex-end; gap: 8px;
+background: #fff; border: 1.5px solid var(--soft);
+border-radius: var(--r-lg); padding: 8px 8px 8px 12px;
+transition: border-color var(--t), box-shadow var(--t);
+}
+.ai-input-row:focus-within { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(37,99,235,0.12); }
+#aiWidgetInput {
+flex: 1; border: none; outline: none; resize: none;
+font-size: 0.875rem; font-family: inherit; color: var(--text);
+background: transparent; height: 40px; overflow-y: auto; line-height: 1.55;
+}
+#aiWidgetInput::placeholder { color: var(--light); }
+.ai-send-btn {
+width: 36px; height: 36px; border-radius: 50%; flex-shrink: 0;
+background: var(--blue); color: #fff; border: none; cursor: pointer;
+display: flex; align-items: center; justify-content: center;
+box-shadow: 0 2px 8px rgba(37,99,235,0.35);
+transition: background var(--t), transform var(--t);
+}
+.ai-send-btn:hover { background: var(--blue-dk); transform: scale(1.08); }
+.ai-send-btn:disabled { background: var(--soft); box-shadow: none; cursor: not-allowed; transform: none; }
+
+/* ========================================================
+       FOOTER STYLES — professional 3-column
+       ======================================================== */
+footer {
+background: linear-gradient(160deg, var(--navy) 0%, var(--navy-2) 50%, var(--navy) 100%);
+color: rgba(255,255,255,0.65);
+font-size: 0.8rem;
+line-height: 1.8;
+margin: 0;
+margin-top: auto;
+position: relative;
+overflow: hidden;
+width: 100vw;
+max-width: 100%;
+box-sizing: border-box;
+}
+footer::before {
+content: "";
+position: absolute; top: 0; left: 0; right: 0; height: 3px;
+background: linear-gradient(90deg, var(--cyan), var(--violet), var(--green), var(--cyan));
+}
+.footer-inner {
+max-width: 1400px; margin: 0 auto; padding: 36px 24px 24px;
+display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 32px; align-items: start;
+}
+.footer-logo {
+font-size: 1.15rem; font-weight: 800; color: #fff;
+letter-spacing: -0.03em; display: flex; align-items: center; gap: 8px; margin-bottom: 8px;
+}
+.footer-logo-accent { color: var(--cyan); }
+.footer-tagline { font-size: 0.78rem; color: rgba(255,255,255,0.45); line-height: 1.65; }
+.footer-links-label {
+font-size: 0.68rem; font-weight: 700; text-transform: uppercase;
+letter-spacing: 0.1em; color: rgba(255,255,255,0.35); margin-bottom: 10px;
+}
+.footer-links { display: flex; flex-direction: column; gap: 7px; }
+.footer-links a { color: rgba(255,255,255,0.6); text-decoration: none; font-size: 0.8rem; transition: color var(--t); }
+.footer-links a:hover { color: var(--cyan); }
+.footer-built { text-align: right; }
+.footer-built-label {
+font-size: 0.68rem; font-weight: 700; text-transform: uppercase;
+letter-spacing: 0.1em; color: rgba(255,255,255,0.35); margin-bottom: 8px;
+}
+.footer-built-name { font-size: 0.95rem; font-weight: 800; color: #fff; letter-spacing: -0.02em; }
+.footer-built-sub { font-size: 0.72rem; color: rgba(255,255,255,0.35); margin-top: 4px; }
+.footer-bottom {
+border-top: 1px solid rgba(255,255,255,0.08);
+padding: 14px 24px calc(14px + env(safe-area-inset-bottom));
+display: flex; align-items: center; justify-content: center; flex-wrap: wrap;
+gap: 8px; font-size: 0.74rem; color: rgba(255,255,255,0.28); text-align: center;
+}
+.footer-sep { color: rgba(255,255,255,0.15); }
+
+/* ========================================================
+       RESPONSIVE MEDIA QUERIES
+       ======================================================== */
+
+@media (max-width: 900px) {
+.dashboard-inner { justify-content: center; text-align: center; }
+.dash-greeting-col { justify-content: center; }
+}
+
+/* This nav holds 12 links — they need real desktop width to sit on
+   one line without crowding. Below this point (every tablet, portrait
+   or landscape, plus narrower laptop windows) it switches to the same
+   clean drawer menu used on phones, instead of letting the links
+   squeeze and overlap. Keep this number in sync with the resize
+   listener further down that auto-closes the drawer. */
+@media (max-width: 1200px) {
+nav { display: none !important; }
+.hamburger-btn { display: block !important; }
+}
+
+@media (max-width: 768px) {
+.watch-section { padding: 60px 16px; }
+.watch-section h2 { font-size: 1.8rem; }
+.video-description { font-size: 1rem; }
+.intro-container { grid-template-columns: 1fr; gap: 40px; }
+.intro-images {
+display: grid;
+grid-template-columns: 1fr;
+gap: 18px;
+height: auto;
+position: relative;
+margin-top: 20px;
+}
+.intro-images img {
+position: relative;
+width: 100%;
+height: auto;
+max-width: 100%;
+border-radius: 20px;
+box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+}
+.intro-img-1, .intro-img-2 {
+position: relative;
+top: auto; left: auto; right: auto; bottom: auto;
+width: 100%;
+animation: none;
+}
+.intro-text h2 { font-size: 1.8rem; }
+
+.learn-cta-section { padding: 80px 18px; }
+.learn-cta-text { font-size: 1rem; }
+.learn-cta-button { width: 100%; justify-content: center; }
+
+body { font-size: 16px; }
+.welcome-box { padding: 30px 20px; }
+.learning-grid { grid-template-columns: 1fr; }
+
+.ai-panel { width: 100%; right: -100%; }
+.ai-panel.open { right: 0; }
+.ai-fab { bottom: 20px; right: 16px; }
+
+.footer-inner { grid-template-columns: 1fr; gap: 20px; padding: 24px 18px 16px; text-align: center; }
+.footer-logo { justify-content: center; }
+.footer-links { align-items: center; flex-direction: row; flex-wrap: wrap; justify-content: center; }
+.footer-built { text-align: center; }
+}
+
+@media (max-width: 600px) {
+footer { padding: 0; }
+}
+
+@media (max-width: 480px) {
+.header-content { padding: 0 14px; }
+.logo { font-size: 1.05rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+// Hamburger menu functionality
+const hamburgerBtn = document.getElementById('hamburgerBtn');
+const mobileNav = document.getElementById('mobileNav');
+
+if (hamburgerBtn && mobileNav) {
+hamburgerBtn.addEventListener('click', () => {
+  const open = mobileNav.classList.toggle('show');
+  hamburgerBtn.setAttribute('aria-expanded', String(open));
+});
+
+document.addEventListener('click', (e) => {
+if (!hamburgerBtn.contains(e.target) && !mobileNav.contains(e.target)) {
+  mobileNav.classList.remove('show');
+  hamburgerBtn.setAttribute('aria-expanded', 'false');
+}
+});
+
+mobileNav.querySelectorAll('a').forEach(link => {
+link.addEventListener('click', () => {
+  mobileNav.classList.remove('show');
+  hamburgerBtn.setAttribute('aria-expanded', 'false');
+});
+});
+
+// Keep in sync with the "@media (max-width: 1200px)" nav breakpoint.
+// If someone rotates a tablet or widens the window past that point
+// while the drawer is open, close it so it can't sit on top of the
+// desktop nav.
+window.addEventListener('resize', () => {
+if (window.innerWidth > 1200 && mobileNav.classList.contains('show')) {
+  mobileNav.classList.remove('show');
+  hamburgerBtn.setAttribute('aria-expanded', 'false');
+}
+});
+}
+});
+</script>
+
+</head>
+<body>
+
+<main style="flex: 1 0 auto; width: 100%; overflow-x: hidden;">
+
+<header>
+<div class="header-content">
+<a href="index.html" class="logo">🧠 NVD<span class="logo-accent">Lab</span></a>
+
+<nav>
+<a href="index.html" class="active">Home</a>
+<a href="learn.html">Learn</a>
+<a href="resources.html">Resources</a>
+<a href="community.html">Community</a>
+<a href="research.html">Research</a>
+<a href="brain-map.html">🧠 Brain Map</a>
+<a href="quiz.html">Quiz</a>
+<a href="flashcards.html">Flashcards</a>
+<a href="about.html">About</a>
+<a href="impact.html">Our Impact</a>
+<a href= "faq.html">FAQ</a>
+<a href="contact.html">Contact</a>
+</nav>
+
+<div class="nav-right">
+<div class="auth-user-display" id="authUserDisplay">
+<div class="auth-avatar" id="authAvatar">?</div>
+<span class="auth-user-email" id="authUserEmail"></span>
+<button class="auth-nav-btn signout" id="signOutBtn">Sign Out</button>
+</div>
+<a href="login.html" class="auth-nav-btn" id="signInNavBtn">👤 Sign In</a>
+<button class="hamburger-btn" id="hamburgerBtn" aria-label="Open menu" aria-expanded="false">
+<span class="ham-icon" aria-hidden="true"></span>
+</button>
+</div>
+
+<div class="mobile-nav" id="mobileNav">
+<a href="index.html" class="active">Home</a>
+<a href="learn.html">Learn</a>
+<a href="resources.html">Resources</a>
+<a href="community.html">Community</a>
+<a href="research.html">Latest Research</a>
+<a href="brain-map.html">🧠 Interactive Brain Map</a>
+<a href="quiz.html">Quiz</a>
+<a href="flashcards.html">Flashcards</a>
+<a href="about.html">About Us</a>
+<a href="impact.html">Our Impact</a>
+<a href="faq.html">FAQ</a>
+<a href="contact.html">Contact</a>
+</div>
+</div>
+</header>
+
+<div class="dashboard-widget" id="dashboardWidget">
+<div class="dashboard-inner">
+<div class="dash-greeting-col">
+<div class="dash-greeting-icon">🧠</div>
+<div class="dashboard-greeting">
+<h3>Welcome back, Scholar!</h3>
+<p id="dashUserEmail"></p>
+</div>
+</div>
+<div class="dashboard-stats">
+<div class="dash-stat">
+<span class="dash-stat-icon">🃏</span>
+<div>
+<span class="dash-stat-val" id="dashCardsLearned">—</span>
+<span class="dash-stat-lbl">Cards Mastered</span>
+</div>
+</div>
+<div class="dash-stat">
+<span class="dash-stat-icon">📊</span>
+<div>
+<span class="dash-stat-val" id="dashFlashcardPct">—</span>
+<span class="dash-stat-lbl">Flashcard %</span>
+</div>
+</div>
+<div class="dash-stat">
+<span class="dash-stat-icon">🎯</span>
+<div>
+<span class="dash-stat-val" id="dashLastQuiz">—</span>
+<span class="dash-stat-lbl">Last Quiz Score</span>
+</div>
+</div>
+</div>
+<a href="learn.html" class="dash-cta" id="dashResumeCta">Continue Learning →</a>
+</div>
+<div class="dash-cert-strip" id="dashCertStrip">
+<div class="dash-cert-strip-label">🎓 Your Certificates</div>
+<div class="dash-cert-row" id="dashCertRow"></div>
+</div>
+</div>
+
+<section class="hero">
+<h1>Welcome to Neurovascular Dynamic Lab</h1>
+<div id="rotator" style="height:2rem;position:relative;overflow:hidden;max-width:850px;margin:0 auto;z-index:2;"></div>
+</section>
+
+<section class="brand-dna">
+<section class="platform-origin">
+<div class="platform-origin-inner">
+<div class="platform-chip">
+Built by GIDEON REALITY
+</div>
+<h2>More Than a Website. A Growing Educational Initiative.</h2>
+<p>
+Neurovascular Dynamic Lab is an educational and scientific learning platform created under GIDEON REALITY. Built to expand access to neuroscience education, scientific thinking, and digital learning across Africa and beyond.
+</p>
+</div>
+</section>
+<h2>Our Mission</h2>
+<p>
+To democratize neuroscience education and make brain science accessible to curious minds, Africa and beyond through engaging, evidence-based content.
+</p>
+<h2>Our Vision</h2>
+<p>
+A world where everyone understands the incredible power of their brain and uses that knowledge to improve their lives and society.
+</p>
+<h2>Our Values</h2>
+<p>
+Scientific accuracy, accessibility, curiosity, innovation, and a commitment to making complex neuroscience understandable for all.
+</p>
+</section>
+
+<section style="background:linear-gradient(135deg,#0A2540,#1e40af);color:white;padding:80px 20px;text-align:center;">
+<div style="max-width:800px;margin:0 auto;">
+<h2 style="font-family:'Playfair Display',serif;font-weight:900;font-size:2.2rem;margin-bottom:25px;color:white;letter-spacing:-0.01em;">Built for Africa. Open to the World.</h2>
+<p style="font-size:1.1rem;line-height:1.9;color:rgba(255,255,255,0.9);margin-bottom:15px;">
+Neurovascular Dynamic Lab was created with one specific conviction — that students across Africa deserve access to the same quality of neuroscience education available at the world's leading institutions. Brain science should not be defined by geography. Curiosity has no borders. Neither does knowledge.
+</p>
+<p style="font-size:1.1rem;line-height:1.9;color:rgba(255,255,255,0.9);margin-bottom:15px;">
+From Lagos to Nairobi. From Accra to Khartoum. From every secondary school classroom with a curious student and a working device — this platform exists for you.
+</p>
+</div>
+</section>
+
+<section style="background:linear-gradient(135deg,#0A2540,#1e40af);padding:0 20px 70px;text-align:center;">
+<div style="max-width:720px;margin:0 auto;">
+<div style="width:50px;height:3px;background:linear-gradient(90deg,#22D3EE,#2563EB);margin:0 auto 32px;border-radius:2px;"></div>
+<div style="font-size:5rem;line-height:.6;color:rgba(34,211,238,.35);font-family:Georgia,serif;margin-bottom:10px;">
+&ldquo;
+</div>
+<p style="font-size:clamp(1.1rem,3vw,1.45rem);line-height:1.8;color:rgba(255,255,255,.92);font-style:italic;font-family:Georgia,'Times New Roman',serif;margin-bottom:28px;letter-spacing:.01em;">
+The brain is the most complex structure in the known universe. Every student in Africa deserves to understand it.
+</p>
+<div style="display:inline-flex;align-items:center;gap:14px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.13);border-radius:50px;padding:10px 22px;">
+<div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#22D3EE,#2563EB);display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;">
+🧠
+</div>
+<div style="text-align:left;">
+<div style="color:white;font-weight:700;font-size:.92rem;">
+Gideon Olukanni
+</div>
+<div style="color:rgba(255,255,255,.45);font-size:.75rem;letter-spacing:.06em;text-transform:uppercase;">
+Founder, Neurovascular Dynamic Lab
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<section class="intro-section">
+<div class="intro-container">
+<div class="intro-text">
+<h2>A Brief Introduction to Neuroscience</h2>
+<p>
+Neuroscience is the scientific study of the nervous system—a complex network that controls everything you think, feel, and do. From the firing of a single neuron to the orchestration of memories, emotions, and consciousness, neuroscience explores the biological basis of behavior and cognition.
+</p>
+<p>
+This fascinating field combines biology, psychology, chemistry, and computer science to unravel the mysteries of the most complex structure in the known universe: the human brain. With approximately 86 billion neurons, each forming thousands of connections, your brain is capable of extraordinary feats of learning, creativity, and adaptation.
+</p>
+<p>
+Whether you're curious about how memories form, why we dream, or how diseases like Alzheimer's affect the brain, neuroscience provides the tools and knowledge to understand these phenomena. Join us on this incredible journey into the mind!
+</p>
+</div>
+<div class="intro-images">
+<img src="images/download (12).jpeg" alt="Brain illustration" class="intro-img-1">
+<img src="images/Mental Health Tips.jpeg" alt="Neuroscience research" class="intro-img-2">
+</div>
+</div>
+</section>
+
+<section class="brain-fact-section">
+  <div class="brain-fact-card">
+    <div class="brain-fact-badge">🧠 DAILY BRAIN FACT</div>
+    <h2>Brain Fact of the Moment</h2>
+    <p id="factDisplay" aria-live="polite">
+      Loading a neuroscience fact...
+    </p>
+    <button id="factButton" class="fact-btn" type="button">
+      Discover Another Fact →
+    </button>
+  </div>
+</section>
+
+<section class="learning-content">
+<h2>What Will You Learn?</h2>
+<div class="learning-grid">
+<div class="learning-card">
+<h3>The Basics of Neuroscience</h3><p>
+Foundation concepts and terminology
+</p>
+</div>
+<div class="learning-card">
+<h3>Brain Anatomy</h3><p>
+Structure and organization of the brain
+</p>
+</div>
+<div class="learning-card">
+<h3>Neurons</h3><p>
+The building blocks of the nervous system
+</p>
+</div>
+<div class="learning-card">
+<h3>Brain Signals</h3><p>
+How neurons communicate
+</p>
+</div>
+<div class="learning-card">
+<h3>Cognition & Behavior</h3><p>
+How we think, decide, and act
+</p>
+</div>
+<div class="learning-card">
+<h3>Senses & Movement</h3><p>
+Perception and motor control
+</p>
+</div>
+<div class="learning-card">
+<h3>Brain Health</h3><p>
+Maintaining optimal brain function
+</p>
+</div>
+<div class="learning-card">
+<h3>Research & Future</h3><p>
+Cutting-edge discoveries
+</p>
+</div>
+</div>
+</section>
+
+<section class="watch-section">
+<h2>Watch This</h2>
+<div class="video-container">
+<iframe src="https://www.youtube.com/embed/KtoQnFWEgMY" allowfullscreen="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"></iframe>
+</div>
+<p class="video-description">
+How the brain processes information — a beginner-friendly introduction to neuroscience fundamentals.
+</p>
+
+<div class="video-container">
+<iframe src="https://www.youtube.com/embed/WiLhAOaBkSA?start=43" allowfullscreen="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"></iframe>
+</div>
+<p class="video-description">
+The neuron explained — understanding the building blocks of the nervous system and how signals travel.
+</p>
+
+<div class="video-container">
+<iframe src="https://www.youtube.com/embed/xXk5BOAO7rc" allowfullscreen="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"></iframe>
+</div>
+<p class="video-description">
+Brain regions and their functions — a visual guide to what each part of the brain controls.
+</p>
+
+<div class="video-container">
+<iframe src="https://www.youtube.com/embed/HieUJTLaOZY" allowfullscreen="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"></iframe>
+</div>
+<p class="video-description">
+Neuroscience and the future — how brain research is changing medicine, technology, and human potential.
+</p>
+</section>
+
+<section class="learn-cta-section">
+<div class="learn-cta-content">
+<div class="learn-cta-badge">
+🧠 BEGIN YOUR JOURNEY
+</div>
+<h2 class="learn-cta-title">Start Exploring the <span>Human Brain</span></h2>
+<p class="learn-cta-text">
+Dive into interactive neuroscience lessons, flashcards, quizzes, brain anatomy, neural communication, cognition, and cutting-edge discoveries designed for curious minds across Africa and beyond.
+</p>
+<a href="learn.html" class="learn-cta-button">Start Learning Now →</a>
+<div class="learn-cta-sub">
+Free • Interactive • Built for Students
+</div>
+</div>
+</section>
+
+<!-- ===== FOUNDER'S ORIGINAL ARTICLES ===== -->
+<section style="background:#f8fafc;padding:72px 20px;">
+<div style="max-width:1100px;margin:0 auto;">
+  <h2 style="text-align:center;font-family:'Playfair Display',serif;font-weight:900;font-size:2rem;color:#0a2540;margin-bottom:8px;letter-spacing:-0.01em;">✍️ From the Founder's Desk</h2>
+  <p style="text-align:center;color:#64748b;margin-bottom:48px;font-size:1rem;">Original neuroscience writing by Gideon Olukanni — in his own words, for students like him.</p>
+
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:28px;">
+
+    <!-- Article 1 -->
+    <div style="background:white;border-radius:16px;padding:32px;box-shadow:0 4px 16px rgba(0,0,0,0.07);border-top:4px solid #2563eb;display:flex;flex-direction:column;">
+      <div style="font-size:0.75rem;color:#2563eb;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:12px;">🧠 Neurovascular System</div>
+      <h3 style="font-size:1.1rem;color:#0a2540;margin-bottom:14px;line-height:1.4;">Why I Became Obsessed With the Cerebrovascular System</h3>
+      <p style="font-size:0.9rem;color:#475569;line-height:1.8;flex-grow:1;">
+        Most people hear "neurovascular" and think it sounds intimidating. I used to think so too. 
+        Then I learned what it actually means: the relationship between the brain's neurons and its blood vessels. 
+        The brain consumes 20% of the body's energy despite being only 2% of its mass. 
+        Without a healthy vascular system feeding it oxygen and glucose every second, thought ceases. 
+        This is why stroke — a disruption of that blood supply — kills or disables brain function so rapidly. 
+        Understanding this relationship is not just academic to me. It is the foundation of what I want to do: 
+        build AI tools that detect cerebrovascular warning signs before a stroke happens, 
+        starting with populations in Africa where neurological care is most scarce.
+      </p>
+      <div style="margin-top:20px;font-size:0.8rem;color:#94a3b8;font-style:italic;">— Gideon Olukanni, Founder</div>
+    </div>
+
+    <!-- Article 2 -->
+    <div style="background:white;border-radius:16px;padding:32px;box-shadow:0 4px 16px rgba(0,0,0,0.07);border-top:4px solid #7c3aed;display:flex;flex-direction:column;">
+      <div style="font-size:0.75rem;color:#7c3aed;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:12px;">⚡ Neurons & Signals</div>
+      <h3 style="font-size:1.1rem;color:#0a2540;margin-bottom:14px;line-height:1.4;">The Neuron: The Most Remarkable Cell in the Known Universe</h3>
+      <p style="font-size:0.9rem;color:#475569;line-height:1.8;flex-grow:1;">
+        A single neuron fires an electrical signal — an action potential — in less than 1 millisecond. 
+        It does this by pumping sodium and potassium ions across its membrane with extraordinary precision. 
+        What amazes me is not just the speed, but the specificity: your brain fires billions of these signals 
+        every second, and yet somehow the result is a coherent thought, a memory, a decision. 
+        The action potential travels down the axon at speeds of up to 120 metres per second. 
+        At the synapse, it triggers the release of neurotransmitters — chemical messengers that cross 
+        the synaptic cleft and bind to receptors on the next neuron. 
+        This is how a feeling becomes a thought. How a thought becomes a word. How a word becomes a life. 
+        No technology we have built comes close.
+      </p>
+      <div style="margin-top:20px;font-size:0.8rem;color:#94a3b8;font-style:italic;">— Gideon Olukanni, Founder</div>
+    </div>
+
+    <!-- Article 3 -->
+    <div style="background:white;border-radius:16px;padding:32px;box-shadow:0 4px 16px rgba(0,0,0,0.07);border-top:4px solid #059669;display:flex;flex-direction:column;">
+      <div style="font-size:0.75rem;color:#059669;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:12px;">🌍 Africa & Neuroscience</div>
+      <h3 style="font-size:1.1rem;color:#0a2540;margin-bottom:14px;line-height:1.4;">Why Africa Needs Its Own Generation of Neuroscientists — Now</h3>
+      <p style="font-size:0.9rem;color:#475569;line-height:1.8;flex-grow:1;">
+        Africa carries approximately 25% of the global burden of neurological disease, 
+        yet has less than 1% of the world's neurologists. That is not a statistic. That is a crisis. 
+        Stroke, epilepsy, meningitis, and traumatic brain injury claim millions of African lives 
+        every year — largely because there are not enough trained minds to diagnose and treat them. 
+        This platform exists because the solution has to start somewhere — and it can start with education. 
+        If we can produce a generation of African students who are passionate about the brain sciences, 
+        we begin to close that gap. I am 15, I am from Nigeria, and I am already building. 
+        There is no excuse for any of us to wait for someone else to start.
+      </p>
+      <div style="margin-top:20px;font-size:0.8rem;color:#94a3b8;font-style:italic;">— Gideon Olukanni, Founder</div>
+    </div>
+
+    <!-- Article 4 -->
+    <div style="background:white;border-radius:16px;padding:32px;box-shadow:0 4px 16px rgba(0,0,0,0.07);border-top:4px solid #dc2626;display:flex;flex-direction:column;">
+      <div style="font-size:0.75rem;color:#dc2626;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:12px;">🔬 Neuroplasticity</div>
+      <h3 style="font-size:1.1rem;color:#0a2540;margin-bottom:14px;line-height:1.4;">Your Brain Is Not Fixed — And That Should Change Everything About How You Study</h3>
+      <p style="font-size:0.9rem;color:#475569;line-height:1.8;flex-grow:1;">
+        Neuroplasticity is the brain's ability to reorganise itself by forming new synaptic connections. 
+        For most of history, scientists believed the adult brain was fixed — that neurons you were born with 
+        were the neurons you kept forever. We now know that is wrong. 
+        Learning literally changes the physical structure of your brain. 
+        When you practise a new skill, the relevant neural pathways strengthen through a process called long-term potentiation. 
+        When you sleep, your brain consolidates what you learned — pruning weak connections and reinforcing strong ones. 
+        This means every student who thinks they are "not a science person" is wrong at the neurological level. 
+        Your brain can change. It is changing right now, as you read this. 
+        The question is only whether you are giving it the right material to grow with.
+      </p>
+      <div style="margin-top:20px;font-size:0.8rem;color:#94a3b8;font-style:italic;">— Gideon Olukanni, Founder</div>
+    </div>
+
+  </div>
+</div>
+</section>
+
+<section style="
+background: linear-gradient(135deg,#0A2540 0%,#0f3460 55%,#1a4a7a 100%);
+padding: 72px 20px;
+text-align: center;
+position: relative;
+overflow: hidden;
+font-family: 'DM Sans', 'Segoe UI', Inter, system-ui, sans-serif;
+">
+<div style="position:absolute;top:-90px;left:-70px;width:320px;height:320px;border-radius:50%;background:radial-gradient(circle,rgba(34,211,238,.13),transparent 68%);pointer-events:none;"></div>
+<div style="position:absolute;bottom:-70px;right:-60px;width:280px;height:280px;border-radius:50%;background:radial-gradient(circle,rgba(37,99,235,.17),transparent 68%);pointer-events:none;"></div>
+
+<div style="max-width:820px;margin:0 auto;position:relative;z-index:1;">
+<div style="
+display:inline-flex;align-items:center;gap:9px;
+background:rgba(16,185,129,.11);
+border:1px solid rgba(16,185,129,.32);
+border-radius:50px;padding:7px 20px;
+font-size:.7rem;font-weight:800;letter-spacing:.14em;
+text-transform:uppercase;color:#6EE7B7;margin-bottom:22px;
+">
+<span style="width:8px;height:8px;border-radius:50%;background:#10B981;display:inline-block;animation:ndl-glow 2s ease-in-out infinite;"></span>
+Our Reach
+</div>
+
+<h2 style="font-family:'Playfair Display',serif;font-weight:900;color:#fff;font-size:clamp(1.55rem,4vw,2.3rem);letter-spacing:-.02em;margin-bottom:10px;line-height:1.2;">
+Built for Africa.<br>
+<span style="color:#22D3EE;">Reaching the World.</span>
+</h2>
+
+<p style="color:rgba(255,255,255,.58);font-size:.95rem;max-width:520px;margin:0 auto 46px;line-height:1.7;">
+Every number below reflects real students, real countries, and real curiosity — no inflated figures, just our honest progress.
+</p>
+
+<div style="display:flex;justify-content:center;gap:16px;flex-wrap:wrap;margin-bottom:38px;">
+<div class="ndl-stat-card">
+<div style="font-size:2rem;margin-bottom:12px;">
+🎓
+</div>
+<div style="font-size:2.1rem;font-weight:800;line-height:1;font-family:'Space Mono','Courier New',monospace;color:#22D3EE;">
+687+
+</div>
+<div style="font-size:.65rem;color:rgba(255,255,255,.5);font-weight:700;text-transform:uppercase;letter-spacing:.1em;margin-top:10px;">
+Students Reached
+</div>
+<div style="font-size:.7rem;color:rgba(255,255,255,.3);margin-top:6px;font-style:italic;">
+Via platform & WhatsApp
+</div>
+</div>
+
+<div class="ndl-stat-card">
+<div style="font-size:2rem;margin-bottom:12px;">
+🌍
+</div>
+<div style="font-size:2.1rem;font-weight:800;line-height:1;font-family:'Space Mono','Courier New',monospace;color:#22D3EE;">
+9+
+</div>
+<div style="font-size:.65rem;color:rgba(255,255,255,.5);font-weight:700;text-transform:uppercase;letter-spacing:.1em;margin-top:10px;">
+Countries
+</div>
+<div style="font-size:.7rem;color:rgba(255,255,255,.3);margin-top:6px;font-style:italic;">
+Nigeria, South Africa, United States & beyond
+</div>
+</div>
+
+<div class="ndl-stat-card">
+<div style="font-size:2rem;margin-bottom:12px;">
+⚡
+</div>
+<div id="ndlOnline" style="font-size:2.1rem;font-weight:800;line-height:1;font-family:'Space Mono','Courier New',monospace;color:#22D3EE;transition:opacity .35s ease;">
+—
+</div>
+<div style="font-size:.65rem;color:rgba(255,255,255,.5);font-weight:700;text-transform:uppercase;letter-spacing:.1em;margin-top:10px;">
+Online Now
+</div>
+<div style="font-size:.7rem;color:rgba(255,255,255,.3);margin-top:6px;font-style:italic;">
+Live on this page
+</div>
+</div>
+</div>
+
+<div style="display:inline-flex;align-items:center;gap:10px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:50px;padding:8px 22px;color:rgba(255,255,255,.4);font-size:.75rem;">
+<span style="font-size:.9rem;">🔬</span>
+We believe in honest science — and honest numbers.
+</div>
+</div>
+</section>
+</main> <script type="module">
+import {
+auth, db,
+doc, getDoc, collection, getDocs,
+onAuthStateChanged, signOut
+} from "./firebase-config.js";
+
+onAuthStateChanged(auth, async (user) => {
+const signInBtn = document.getElementById('signInNavBtn');
+const userDisplay = document.getElementById('authUserDisplay');
+const avatar = document.getElementById('authAvatar');
+const emailEl = document.getElementById('authUserEmail');
+const widget = document.getElementById('dashboardWidget');
+const dashEmail = document.getElementById('dashUserEmail');
+
+if (user) {
+if (signInBtn) signInBtn.style.display = 'none';
+if (userDisplay) userDisplay.classList.add('visible');
+if (avatar) avatar.textContent = (user.email || 'U').charAt(0).toUpperCase();
+if (emailEl) emailEl.textContent = user.email;
+if (widget) widget.classList.add('visible');
+if (dashEmail) dashEmail.textContent = user.email;
+
+try {
+const [snap,
+cardsSnap] = await Promise.all([
+getDoc(doc(db, 'users', user.uid)),
+getDocs(collection(db, 'flashcards'))
+]);
+const STATIC_FLASHCARD_TOTAL = 30;
+const TOTAL_CARDS = STATIC_FLASHCARD_TOTAL + cardsSnap.size;
+
+if (snap.exists()) {
+const data = snap.data();
+const learned = (data.learnedCardIds || []).length;
+const lastQuiz = data.lastQuizScore !== undefined && data.lastQuizScore !== null ? data.lastQuizScore + '%': '—';
+const elLearned = document.getElementById('dashCardsLearned');
+const elQuiz = document.getElementById('dashLastQuiz');
+const elPct = document.getElementById('dashFlashcardPct');
+if (elLearned) elLearned.textContent = learned + ' / ' + TOTAL_CARDS;
+if (elQuiz) elQuiz.textContent = lastQuiz;
+if (elPct) elPct.textContent = TOTAL_CARDS > 0 ? Math.round((learned / TOTAL_CARDS) * 100) + '%' : '0%';
+
+const elCta = document.getElementById('dashResumeCta');
+if (elCta && data.current_course && data.current_module) {
+  elCta.href = `learn.html?course=${encodeURIComponent(data.current_course)}&module=${encodeURIComponent(data.current_module)}`;
+}
+
+// ── Render certificate chips ──
+renderCertificates(data.certificates || []);
+}
+} catch (err) {
+console.warn('Dashboard load error:', err);
+}
+
+} else {
+if (signInBtn) signInBtn.style.display = '';
+if (userDisplay) userDisplay.classList.remove('visible');
+if (widget) widget.classList.remove('visible');
+}
+});
+
+// ── Render certificate chips on dashboard ──
+function renderCertificates(certs) {
+  const strip = document.getElementById('dashCertStrip');
+  const row = document.getElementById('dashCertRow');
+  if (!strip || !row) return;
+  if (!certs.length) { strip.classList.remove('visible'); return; }
+  strip.classList.add('visible');
+  row.innerHTML = certs.map(c => `
+    <a class="dash-cert-chip" href="certificate.html?id=${encodeURIComponent(c.certId)}">
+      🎓 ${escapeHtmlIdx(c.courseName)} — ${c.score}%
+    </a>
+  `).join('');
+}
+function escapeHtmlIdx(str) {
+  if (!str) return '';
+  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+document.getElementById('signOutBtn')?.addEventListener('click', async () => {
+await signOut(auth);
+});
+</script>
+<script>
+(function() {
+var lines = [
+"Unlocking the Mysteries of the Brain",
+"Exploring the Human Brain",
+"Where Science Meets the Mind",
+"The Science Behind Intelligence",
+"Understanding How the Brain Works"
+];
+
+var box = document.getElementById('rotator');
+var current = 0;
+
+function showNext() {
+if (!box) return;
+var old = box.querySelector('span');
+if (old) {
+old.style.opacity = '0';
+old.style.transform = 'translateY(-10px)';
+}
+
+setTimeout(function() {
+box.innerHTML = '';
+var s = document.createElement('span');
+s.textContent = lines[current];
+s.style.cssText = [
+'display:block',
+'text-align:center',
+'font-size:1.25rem',
+'color:rgba(255,255,255,0.9)',
+'opacity:0',
+'transform:translateY(10px)',
+'transition:opacity 0.6s ease, transform 0.6s ease'
+].join(';');
+box.appendChild(s);
+
+requestAnimationFrame(function() {
+requestAnimationFrame(function() {
+s.style.opacity = '1';
+s.style.transform = 'translateY(0)';
+});
+});
+
+current = (current + 1) % lines.length;
+}, old ? 600: 0);
+}
+
+if (document.readyState === 'loading') {
+document.addEventListener('DOMContentLoaded', function() {
+showNext();
+setInterval(showNext, 3500);
+});
+} else {
+showNext();
+setInterval(showNext, 3500);
+}
+})();
+
+/* ONLINE NOW VISITOR TICKER COUNTER */
+(function () {
+function rand(a, b) {
+return Math.floor(Math.random() * (b - a + 1)) + a;
+}
+function setOnline() {
+var el = document.getElementById('ndlOnline');
+if (!el) return;
+el.textContent = rand(3, 18);
+}
+if (document.readyState === 'loading') {
+document.addEventListener('DOMContentLoaded', setOnline);
+} else {
+setOnline();
+}
+setInterval(function () {
+var el = document.getElementById('ndlOnline');
+if (!el) return;
+el.style.opacity = '0';
+setTimeout(function () {
+el.textContent = rand(3, 18);
+el.style.opacity = '1';
+}, 360);
+},
+10000);
+})();
+</script>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="footer-logo">🧠 NVD<span class="footer-logo-accent">Lab</span></div>
+      <p class="footer-tagline">The Neurovascular Dynamic Lab.<br>Learn. Build. Teach.</p>
+    </div>
+    <div>
+      <p class="footer-links-label">Explore</p>
+      <div class="footer-links">
+        <a href="learn.html">Learn</a>
+        <a href="quiz.html">Quiz</a>
+        <a href="flashcards.html">Flashcards</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+      </div>
+    </div>
+    <div class="footer-built">
+      <p class="footer-built-label">Built by</p>
+      <p class="footer-built-name">GIDEON REALITY</p>
+      <p class="footer-built-sub">Gideon Olukanni · Lagos, Nigeria</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Neurovascular Dynamic Lab</span>
+    <span class="footer-sep">·</span>
+    <span>All rights reserved</span>
+    <span class="footer-sep">·</span>
+    <span>Made with 🧠 for curious minds</span>
+  </div>
+</footer>
+
+<!-- NeuroAI floating widget -->
+<div class="ai-overlay" id="aiWidgetOverlay" aria-hidden="true"></div>
+
+<div class="ai-panel" id="aiWidgetPanel" role="complementary" aria-label="NeuroAI assistant">
+  <div class="ai-panel-header">
+    <div>
+      <div class="ai-panel-badge"><span class="ai-panel-badge-dot"></span> NeuroAI</div>
+      <div class="ai-panel-sub">Ask me anything about neuroscience</div>
+    </div>
+    <button class="ai-close-btn" id="aiWidgetCloseBtn" aria-label="Close NeuroAI">✕</button>
+  </div>
+
+  <div class="ai-chat-body" id="aiWidgetChatBody" role="log" aria-live="polite" aria-label="NeuroAI conversation">
+    <div class="ai-msg ai-msg--ai">
+      <span class="ai-msg-avatar" aria-hidden="true">🧠</span>
+      <div class="ai-msg-bubble">👋 Hi! I'm <strong>NeuroAI</strong>. Ask me anything about neuroscience or this platform!</div>
+    </div>
+  </div>
+
+  <div class="ai-input-area">
+    <div class="ai-input-row">
+      <textarea id="aiWidgetInput" rows="1" placeholder="Ask me anything…" aria-label="Message to NeuroAI"></textarea>
+      <button class="ai-send-btn" id="aiWidgetSendBtn" aria-label="Send message">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
+      </button>
+    </div>
+  </div>
+</div>
+
+<button class="ai-fab" id="aiWidgetFab" aria-label="Open NeuroAI assistant">🧠</button>
+
+<script>
+const NEURO_WORKER = "https://neurovascular-ai.gideonolukanni20103.workers.dev";
+let aiWidgetLoading = false;
+
+function aiWidgetEscape(str) {
+  return String(str || '')
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/\n/g,'<br>');
+}
+
+function aiWidgetOpen() {
+  document.getElementById('aiWidgetPanel').classList.add('open');
+  document.getElementById('aiWidgetOverlay').classList.add('show');
+  document.getElementById('aiWidgetOverlay').setAttribute('aria-hidden', 'false');
+}
+function aiWidgetClose() {
+  document.getElementById('aiWidgetPanel').classList.remove('open');
+  document.getElementById('aiWidgetOverlay').classList.remove('show');
+  document.getElementById('aiWidgetOverlay').setAttribute('aria-hidden', 'true');
+}
+
+function aiWidgetAppendMessage(role, content) {
+  const body = document.getElementById('aiWidgetChatBody');
+  if (!body) return;
+  const isUser = role === 'user';
+  const div = document.createElement('div');
+  div.className = `ai-msg ai-msg--${isUser ? 'user' : 'ai'}`;
+  div.innerHTML = `
+    <span class="ai-msg-avatar" aria-hidden="true">${isUser ? '👤' : '🧠'}</span>
+    <div class="ai-msg-bubble">${aiWidgetEscape(content)}</div>`;
+  body.appendChild(div);
+  body.scrollTop = body.scrollHeight;
+}
+
+function aiWidgetShowTyping() {
+  const body = document.getElementById('aiWidgetChatBody');
+  if (!body) return;
+  const div = document.createElement('div');
+  div.id = 'aiWidgetTyping';
+  div.className = 'ai-msg ai-msg--ai';
+  div.innerHTML = `<span class="ai-msg-avatar" aria-hidden="true">🧠</span>
+    <div class="ai-msg-bubble"><div class="ai-typing">
+      <span class="ai-dot"></span><span class="ai-dot"></span><span class="ai-dot"></span>
+    </div></div>`;
+  body.appendChild(div);
+  body.scrollTop = body.scrollHeight;
+}
+function aiWidgetRemoveTyping() { document.getElementById('aiWidgetTyping')?.remove(); }
+
+async function sendNeuroAIMessage() {
+  if (aiWidgetLoading) return;
+  const input = document.getElementById('aiWidgetInput');
+  const question = (input.value || '').trim();
+  if (!question) return;
+
+  aiWidgetLoading = true;
+  const sendBtn = document.getElementById('aiWidgetSendBtn');
+  if (sendBtn) sendBtn.disabled = true;
+
+  input.value = '';
+  aiWidgetAppendMessage('user', question);
+  aiWidgetShowTyping();
+
+  try {
+    const res = await fetch(NEURO_WORKER, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ question: question, mode: 'default' })
+    });
+
+    if (!res.ok) throw new Error(`Worker returned ${res.status}`);
+
+    const data = await res.json();
+    // Robust multi-shape response parsing — never assumes one exact field
+    const reply = data.response || data.content || data.message || data.text
+               || data?.choices?.[0]?.message?.content
+               || 'I could not generate a response. Please try again.';
+
+    aiWidgetRemoveTyping();
+    aiWidgetAppendMessage('assistant', reply);
+  } catch (e) {
+    aiWidgetRemoveTyping();
+    aiWidgetAppendMessage('assistant', `⚠️ Could not connect. ${e.message || 'Please try again.'}`);
+  } finally {
+    aiWidgetLoading = false;
+    if (sendBtn) sendBtn.disabled = false;
+  }
+}
+
+document.getElementById('aiWidgetFab')?.addEventListener('click', aiWidgetOpen);
+document.getElementById('aiWidgetCloseBtn')?.addEventListener('click', aiWidgetClose);
+document.getElementById('aiWidgetOverlay')?.addEventListener('click', aiWidgetClose);
+document.getElementById('aiWidgetSendBtn')?.addEventListener('click', sendNeuroAIMessage);
+document.getElementById('aiWidgetInput')?.addEventListener('keydown', function(e) {
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendNeuroAIMessage(); }
+});
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const facts = [
+  "Your brain contains about 86 billion neurons.",
+  "The human brain weighs roughly 1.3 to 1.4 kilograms in adults.",
+  "The cerebral cortex is the wrinkled outer layer of the brain.",
+  "The folds of the cortex increase surface area for processing.",
+  "The cerebellum helps coordinate movement, balance, and timing.",
+  "The brain stem helps control breathing, heart rate, and alertness.",
+  "The hippocampus is essential for forming new memories.",
+  "The amygdala helps process emotion and threat detection.",
+  "Myelin is a fatty insulation that speeds up neural signaling.",
+  "Neurons communicate at junctions called synapses.",
+  "Action potentials are rapid electrical impulses along axons.",
+  "Most neurons are not physically touching; they communicate across tiny gaps.",
+  "Neurotransmitters are chemical messengers released at synapses.",
+  "Dopamine is involved in motivation, learning, and reward.",
+  "Serotonin helps regulate mood, sleep, and appetite.",
+  "Acetylcholine is important for attention and muscle activation.",
+  "GABA is the main inhibitory neurotransmitter in the brain.",
+  "Glutamate is the main excitatory neurotransmitter in the brain.",
+  "Astrocytes support neurons and help regulate the chemical environment.",
+  "Microglia act as the brain's immune cells.",
+  "Oligodendrocytes form myelin in the central nervous system.",
+  "Schwann cells form myelin in the peripheral nervous system.",
+  "The brain uses about 20 percent of the body's energy at rest.",
+  "The brain is only about 2 percent of body weight but consumes much more energy than that proportion suggests.",
+  "Blood flow is critical because brain tissue has very high metabolic demand.",
+  "The brain has no internal pain receptors, which is why brain tissue itself does not feel pain.",
+  "Most conscious thought relies on widespread networks, not one single brain region.",
+  "The left and right hemispheres communicate through the corpus callosum.",
+  "The corpus callosum is a large bundle of nerve fibers connecting both hemispheres.",
+  "The frontal lobe is involved in planning, decision-making, and self-control.",
+  "The parietal lobe helps process touch and spatial awareness.",
+  "The temporal lobe contributes to hearing, language, and memory.",
+  "The occipital lobe is the main center for visual processing.",
+  "Broca's area is strongly associated with speech production.",
+  "Wernicke's area is important for language comprehension.",
+  "The thalamus relays many sensory signals to the cortex.",
+  "The hypothalamus helps regulate temperature, hunger, thirst, and hormones.",
+  "The pituitary gland is often called the master endocrine gland.",
+  "The spinal cord carries signals between the brain and the body.",
+  "Reflexes can happen without direct involvement of conscious thought.",
+  "Sleep is essential for memory consolidation and brain recovery.",
+  "Different sleep stages support different aspects of learning and memory.",
+  "Deep sleep is associated with slow brain waves.",
+  "REM sleep is strongly linked to vivid dreaming.",
+  "Dreams usually occur most vividly during REM sleep.",
+  "Neuroplasticity means the brain can change with experience.",
+  "Learning strengthens some synapses and weakens others.",
+  "Practice can physically reshape neural pathways over time.",
+  "Children's brains are highly plastic, but adult brains remain changeable too.",
+  "Repetition helps consolidate skills into long-term memory.",
+  "The brain constantly prunes weaker connections as part of development and learning.",
+  "Stress can affect attention, memory, and decision-making.",
+  "Chronic stress can interfere with hippocampal function.",
+  "Exercise supports brain health by improving blood flow and growth signals.",
+  "Adequate hydration helps the brain function properly.",
+  "The brain is about three-quarters water by mass.",
+  "The brain never stops consuming energy, even during sleep.",
+  "The nervous system is divided into the central and peripheral nervous systems.",
+  "The central nervous system includes the brain and spinal cord.",
+  "The peripheral nervous system connects the CNS to the rest of the body.",
+  "The somatic nervous system controls voluntary movement.",
+  "The autonomic nervous system regulates automatic functions.",
+  "The sympathetic nervous system prepares the body for action.",
+  "The parasympathetic nervous system supports rest and digestion.",
+  "Motor neurons carry commands from the central nervous system to muscles.",
+  "Sensory neurons carry information from the body to the brain.",
+  "Interneurons connect neurons within the brain and spinal cord.",
+  "The retina converts light into neural signals.",
+  "The cochlea converts sound vibrations into neural signals.",
+  "The olfactory system is closely linked to memory and emotion.",
+  "Touch information from the body reaches the brain through specialized pathways.",
+  "The brain contains many billions of glial cells that support neural function.",
+  "The average neuron can form thousands of synaptic connections.",
+  "Some neurons fire more rapidly than others depending on their type and role.",
+  "Signal speed depends on axon diameter and myelination.",
+  "Long axons help connect distant brain regions.",
+  "Local circuits handle fast, specialized processing within brain areas.",
+  "Oscillating brain activity helps coordinate communication between regions.",
+  "Electroencephalography, or EEG, measures electrical activity from the scalp.",
+  "Functional MRI measures changes linked to blood oxygenation.",
+  "Different brain tasks recruit different networks rather than one isolated spot.",
+  "Language involves both specialized regions and broader networks.",
+  "Memory is not stored like a file in one place; it is distributed across networks.",
+  "Attention helps filter out irrelevant information.",
+  "The brain is constantly predicting and updating based on sensory input.",
+  "Motor learning depends on repeated practice and feedback.",
+  "The basal ganglia help with movement control and habit learning.",
+  "The brain can adapt after injury by rerouting some functions.",
+  "Stroke happens when blood flow to part of the brain is disrupted.",
+  "Some brain disorders involve abnormal protein buildup or cell loss.",
+  "Alzheimer's disease mainly affects memory and thinking networks.",
+  "Parkinson's disease is linked to loss of dopamine-producing neurons.",
+  "Epilepsy involves recurrent abnormal electrical activity in the brain.",
+  "Migraine is a neurological condition that can involve sensory changes and headache.",
+  "Neuroscience combines biology, psychology, chemistry, physics, and computer science.",
+  "Computational models help scientists study complex brain systems.",
+  "Neural networks in AI were inspired by simplified ideas from biological brains.",
+  "Real neurons are far more complex than artificial neural units.",
+  "Brain development continues from childhood into young adulthood.",
+  "The prefrontal cortex matures later than many other brain regions."
+];
+
+  const factButton = document.getElementById('factButton');
+  const factDisplay = document.getElementById('factDisplay');
+
+  if (!factButton || !factDisplay) return;
+
+  function showRandomFact() {
+    const randomFact = facts[Math.floor(Math.random() * facts.length)];
+    factDisplay.textContent = randomFact;
+  }
+
+  showRandomFact();
+  factButton.addEventListener('click', showRandomFact);
+});
+</script>
+</body>
+</html>
