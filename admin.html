@@ -699,11 +699,11 @@ import {
 } from "./firebase-config.js";
 
 // ── CONSTANTS ────────────────────────────────────────────────────────────────
-const ADMIN_UID  = "ZYqturfLm1TVv7NoJ8kT4qU8LAV2";
+const ADMIN_UIDS = [
+  "ZYqturfLm1TVv7NoJ8kT4qU8LAV2",
+  "2EhMSWWZKJeJO2GrVqHYLXOlnSs1"
+];
 const COUNTS_REF = doc(db, "quizMetadata", "counts");
-  const ADMIN_UID  = "2EhMSWWZKJeJO2GrVqHYLXOlnSs1";
-const COUNTS_REF = doc(db, "quizMetadata", "counts");
-
 // ── HELPERS ──────────────────────────────────────────────────────────────────
 function slugify(str) {
   return str.toLowerCase().trim().replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,'');
@@ -738,7 +738,7 @@ window.switchTab = switchTab; // keep global for any inline calls
 
 // ── AUTH ──────────────────────────────────────────────────────────────────────
 onAuthStateChanged(auth, async (user) => {
-  if (user && user.uid === ADMIN_UID) {
+  if (user && ADMIN_UIDS.includes(user.uid)) {
     document.getElementById('authContainer').style.display = 'none';
     document.getElementById('mainContainer').style.display  = 'block';
     await initApp();
