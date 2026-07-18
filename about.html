@@ -1,0 +1,614 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-KJZ39Z1J53"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-KJZ39Z1J53');
+  </script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>🧠 Neurovascular Dynamic Lab - About Us</title>
+  <meta name="description" content="The story behind Neurovascular Dynamic Lab — our mission, vision, values, and the founder building free neuroscience education for Africa." />
+
+  <style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600;700&display=swap');
+
+  :root {
+    --navy:    #0A2540;
+    --navy-2:  #0D3B6E;
+    --blue:    #2563EB;
+    --blue-dk: #1D4ED8;
+    --cyan:    #22D3EE;
+    --white:   #F8FAFC;
+    --soft:    #E2E8F0;
+    --green:   #10B981;
+    --violet:  #8B5CF6;
+    --text:    #0F172A;
+    --muted:   #64748B;
+    --light:   #94A3B8;
+
+    --header-h: 64px;
+    --r-sm: 8px; --r-md: 12px; --r-lg: 18px; --r-xl: 24px; --r-2xl: 32px;
+    --sh-xs: 0 1px 4px rgba(0,0,0,0.06);
+    --sh-sm: 0 2px 10px rgba(0,0,0,0.09);
+    --sh-md: 0 6px 24px rgba(0,0,0,0.12);
+    --t: 0.2s ease;
+    --t-md: 0.32s cubic-bezier(0.4,0,0.2,1);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'DM Sans', 'Segoe UI', Inter, system-ui, sans-serif;
+    line-height: 1.6; color: var(--text); background-color: var(--white);
+    overflow-x: hidden; width: 100%; max-width: 100vw;
+    display: flex; flex-direction: column; min-height: 100vh;
+  }
+  :focus-visible { outline: 2.5px solid var(--blue); outline-offset: 2px; border-radius: var(--r-sm); }
+
+  /* ============================================================
+     HEADER — fixed height, compact nav, CSS-only hamburger
+     (original had this defined across 3 overlapping breakpoints
+     with dead selectors copy-pasted from other pages;
+     consolidated cleanly into one definition here)
+     ============================================================ */
+  header {
+    position: sticky; top: 0; z-index: 1000;
+    height: var(--header-h);
+    background: linear-gradient(135deg, var(--navy) 0%, var(--blue) 100%);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  }
+  .header-content {
+    max-width: 1400px; margin: 0 auto; padding: 0 20px; height: 100%;
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: nowrap; gap: 12px;
+  }
+  .logo {
+    font-size: 1.2rem; font-weight: 800; color: #fff;
+    letter-spacing: -0.03em; text-decoration: none;
+    display: flex; align-items: center; gap: 2px; flex-shrink: 0; white-space: nowrap;
+  }
+  .logo-accent { color: var(--cyan); }
+  nav { display: flex; gap: 0; align-items: center; flex-wrap: nowrap; min-width: 0; }
+  nav a {
+    color: rgba(255,255,255,0.82); text-decoration: none; padding: 0 11px;
+    line-height: var(--header-h); font-size: 0.8rem; font-weight: 500;
+    transition: color 0.25s ease; position: relative; white-space: nowrap;
+  }
+  nav a::after {
+    content: ''; position: absolute; bottom: 14px; left: 50%;
+    width: 0; height: 2px; background: var(--cyan);
+    transition: all 0.25s ease; transform: translateX(-50%);
+  }
+  nav a:hover::after, nav a.active::after { width: calc(100% - 22px); }
+  nav a:hover, nav a.active { color: #fff; }
+
+  .hamburger-btn {
+    display: none; background: none; border: none; cursor: pointer;
+    padding: 10px; border-radius: var(--r-sm); transition: background-color 0.3s; flex-shrink: 0;
+  }
+  .hamburger-btn:hover { background-color: rgba(255,255,255,0.1); }
+  .ham-icon, .ham-icon::before, .ham-icon::after {
+    display: block; width: 22px; height: 2px; background: #fff; border-radius: 2px;
+  }
+  .ham-icon { position: relative; }
+  .ham-icon::before, .ham-icon::after { content: ''; position: absolute; left: 0; }
+  .ham-icon::before { top: -7px; }
+  .ham-icon::after  { top: 7px; }
+
+  .mobile-nav {
+    display: none; position: absolute; top: 100%; left: 0; right: 0;
+    background: linear-gradient(135deg, var(--navy) 0%, var(--blue) 100%);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    animation: slideDown 0.25s ease-out; max-height: calc(100vh - 64px); overflow-y: auto;
+  }
+  .mobile-nav.show { display: block; }
+  @keyframes slideDown { from{opacity:0;transform:translateY(-8px);} to{opacity:1;transform:translateY(0);} }
+  .mobile-nav a {
+    display: block; color: white; text-decoration: none; padding: 15px 20px;
+    border-bottom: 1px solid rgba(255,255,255,0.1); transition: background-color 0.3s;
+  }
+  .mobile-nav a:hover { background-color: rgba(255,255,255,0.1); }
+  .mobile-nav a.active { background-color: rgba(255,255,255,0.2); font-weight: 600; }
+
+  /* ============================================================
+     HERO
+     ============================================================ */
+  .hero {
+    background: linear-gradient(135deg, var(--navy), var(--blue));
+    color: #fff; padding: 56px 20px 48px; text-align: center;
+    position: relative; overflow: hidden;
+  }
+  .hero::before, .hero::after {
+    content: ''; position: absolute; border-radius: 50%; filter: blur(80px); pointer-events: none; opacity: 0.18;
+  }
+  .hero::before { width: 400px; height: 400px; background: var(--cyan); top: -110px; left: -80px; animation: blobFloat 9s ease-in-out infinite; }
+  .hero::after  { width: 360px; height: 360px; background: var(--violet); bottom: -100px; right: -80px; animation: blobFloat 11s ease-in-out infinite reverse; }
+  @keyframes blobFloat { 0%,100%{transform:translateY(0) scale(1);} 50%{transform:translateY(-24px) scale(1.05);} }
+  .hero-inner { position: relative; z-index: 1; max-width: 620px; margin: 0 auto; }
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 7px;
+    background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.18);
+    padding: 5px 14px; border-radius: 100px; font-size: 0.74rem; font-weight: 600;
+    letter-spacing: 0.05em; text-transform: uppercase; color: var(--cyan); margin-bottom: 16px;
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif; font-weight: 900;
+    font-size: clamp(1.9rem, 5vw, 2.7rem); margin-bottom: 12px; letter-spacing: -0.02em;
+  }
+  .hero p { font-size: 1rem; color: rgba(255,255,255,0.75); max-width: 480px; margin: 0 auto; }
+
+  /* ============================================================
+     CONTENT — Mission / Vision / Story
+     ============================================================ */
+  .content { max-width: 900px; margin: 0 auto; padding: 56px 20px 20px; flex: 1; }
+
+  .about-box {
+    background: #fff; padding: 32px 34px; border-radius: var(--r-xl);
+    box-shadow: var(--sh-xs); margin-bottom: 22px; border-left: 4px solid var(--blue);
+    opacity: 0; transform: translateY(18px); transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .about-box.in-view { opacity: 1; transform: translateY(0); }
+  .about-box h3 {
+    font-family: 'Playfair Display', serif; font-weight: 900; font-size: 1.2rem;
+    color: var(--navy); margin-bottom: 12px;
+  }
+  .about-box p { color: #475569; font-size: 0.96rem; line-height: 1.85; }
+
+  /* ============================================================
+     FOUNDER SECTION
+     ============================================================ */
+  .author-section {
+    background: linear-gradient(135deg, rgba(37,99,235,0.05) 0%, rgba(34,211,238,0.05) 100%);
+    padding: 48px 20px; margin: 48px 0; border-radius: var(--r-2xl);
+  }
+  .author-container {
+    max-width: 900px; margin: 0 auto; display: grid;
+    grid-template-columns: 260px 1fr; gap: 42px; align-items: center;
+  }
+  .author-image {
+    width: 100%; border-radius: var(--r-xl); box-shadow: var(--sh-md);
+    opacity: 0; transform: scale(0.94); transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .author-image.in-view { opacity: 1; transform: scale(1); }
+  .author-info { opacity: 0; transform: translateY(20px); transition: opacity 0.7s ease 0.12s, transform 0.7s ease 0.12s; }
+  .author-info.in-view { opacity: 1; transform: translateY(0); }
+  .author-info h2 {
+    font-family: 'Playfair Display', serif; font-weight: 900; font-size: 1.7rem;
+    color: var(--navy); text-align: left; margin-bottom: 8px;
+  }
+  .author-title { color: var(--blue); font-size: 1.05rem; font-weight: 700; margin-bottom: 18px; }
+  .author-info p { color: #475569; font-size: 0.94rem; line-height: 1.8; margin-bottom: 12px; }
+  .author-info p:last-child { margin-bottom: 0; }
+
+  /* ============================================================
+     CORE VALUES
+     ============================================================ */
+  .section-title-wrap { text-align: center; margin: 20px 0 30px; }
+  .section-label { font-size: 0.72rem; font-weight: 700; color: var(--blue); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 8px; }
+  .section-title { font-family: 'Playfair Display', serif; font-weight: 900; font-size: 1.6rem; color: var(--navy); }
+
+  .values-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; }
+  .value-card {
+    background: #fff; padding: 26px; border-radius: var(--r-xl); border-left: 4px solid var(--cyan);
+    box-shadow: var(--sh-xs); opacity: 0; transform: translateY(18px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .value-card.in-view { opacity: 1; transform: translateY(0); }
+  .value-card h4 { color: var(--navy); font-size: 1.02rem; margin-bottom: 10px; }
+  .value-card p { color: var(--muted); font-size: 0.9rem; line-height: 1.7; }
+
+  /* ============================================================
+     NEUROAI — floating FAB + slide-in panel
+     ============================================================ */
+  .ai-fab {
+    position: fixed; bottom: 24px; right: 24px; z-index: 1200;
+    width: 56px; height: 56px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--navy), #1e3a8a);
+    border: 2px solid rgba(34,211,238,0.3); color: #fff; cursor: pointer; font-size: 1.5rem;
+    box-shadow: 0 4px 20px rgba(10,37,64,0.45); transition: transform var(--t), box-shadow var(--t);
+    display: flex; align-items: center; justify-content: center; animation: fabPulse 3s infinite;
+  }
+  @keyframes fabPulse { 0%,100%{box-shadow:0 4px 20px rgba(10,37,64,.45),0 0 0 0 rgba(34,211,238,.25);} 50%{box-shadow:0 4px 20px rgba(10,37,64,.45),0 0 0 10px rgba(34,211,238,0);} }
+  .ai-fab:hover { transform: scale(1.1); animation: none; box-shadow: 0 8px 32px rgba(10,37,64,0.55); }
+  .ai-overlay {
+    position: fixed; inset: 0; z-index: 1100; background: rgba(10,14,26,0.55); backdrop-filter: blur(3px);
+    opacity: 0; pointer-events: none; transition: opacity 0.28s ease;
+  }
+  .ai-overlay.show { opacity: 1; pointer-events: all; }
+  .ai-panel {
+    position: fixed; right: -400px; top: 0; bottom: 0; z-index: 1300; width: 380px; background: #fff;
+    box-shadow: -4px 0 40px rgba(0,0,0,0.18); transition: right var(--t-md); display: flex; flex-direction: column;
+  }
+  .ai-panel.open { right: 0; }
+  .ai-panel-header {
+    background: linear-gradient(135deg, var(--navy), var(--navy-2)); padding: 16px 18px;
+    display: flex; align-items: center; justify-content: space-between; flex-shrink: 0;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  .ai-panel-badge {
+    background: var(--navy); border: 1.5px solid rgba(34,211,238,0.4); color: var(--cyan);
+    padding: 4px 10px; border-radius: 100px; font-size: 0.72rem; font-weight: 700;
+    letter-spacing: 0.05em; display: flex; align-items: center; gap: 6px;
+  }
+  .ai-panel-badge-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--cyan); box-shadow: 0 0 6px var(--cyan); animation: aiPulseDot 2s infinite; }
+  @keyframes aiPulseDot { 0%,100%{opacity:1;} 50%{opacity:0.4;} }
+  .ai-panel-sub { font-size: 0.68rem; color: rgba(255,255,255,0.4); margin-top: 2px; }
+  .ai-close-btn {
+    background: rgba(255,255,255,0.1); border: none; color: rgba(255,255,255,0.7);
+    width: 30px; height: 30px; border-radius: 50%; font-size: 1rem; cursor: pointer;
+    transition: background var(--t); display: flex; align-items: center; justify-content: center;
+  }
+  .ai-close-btn:hover { background: rgba(255,255,255,0.2); color: #fff; }
+  .ai-chat-body { flex: 1; overflow-y: auto; padding: 16px 14px 8px; display: flex; flex-direction: column; gap: 12px; scroll-behavior: smooth; }
+  .ai-msg { display: flex; gap: 8px; align-items: flex-start; }
+  .ai-msg--user { flex-direction: row-reverse; }
+  .ai-msg-avatar { width: 28px; height: 28px; border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 0.95rem; background: #eff6ff; border: 1px solid #bfdbfe; }
+  .ai-msg--user .ai-msg-avatar { background: #f0fdf4; border-color: #bbf7d0; }
+  .ai-msg-bubble { padding: 9px 12px; border-radius: var(--r-md); font-size: 0.855rem; line-height: 1.65; color: var(--text); max-width: calc(100% - 40px); background: #f1f5f9; border: 1px solid var(--soft); word-break: break-word; }
+  .ai-msg--user .ai-msg-bubble { background: var(--blue); color: #fff; border-color: var(--blue-dk); }
+  .ai-typing { display: flex; align-items: center; gap: 4px; padding: 2px 0; }
+  .ai-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--light); animation: aiTypeBounce 1.2s infinite; }
+  .ai-dot:nth-child(2){ animation-delay: 0.2s; } .ai-dot:nth-child(3){ animation-delay: 0.4s; }
+  @keyframes aiTypeBounce{ 0%,60%,100%{transform:translateY(0);} 30%{transform:translateY(-7px);} }
+  .ai-input-area { padding: 10px 12px 14px; border-top: 1px solid var(--soft); flex-shrink: 0; }
+  .ai-input-row { display: flex; align-items: flex-end; gap: 8px; background: #fff; border: 1.5px solid var(--soft); border-radius: var(--r-lg); padding: 8px 8px 8px 12px; transition: border-color var(--t), box-shadow var(--t); }
+  .ai-input-row:focus-within { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(37,99,235,0.12); }
+  #aiWidgetInput { flex: 1; border: none; outline: none; resize: none; font-size: 0.875rem; font-family: inherit; color: var(--text); background: transparent; height: 40px; overflow-y: auto; line-height: 1.55; }
+  #aiWidgetInput::placeholder { color: var(--light); }
+  .ai-send-btn { width: 36px; height: 36px; border-radius: 50%; flex-shrink: 0; background: var(--blue); color: #fff; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(37,99,235,0.35); transition: background var(--t), transform var(--t); }
+  .ai-send-btn:hover { background: var(--blue-dk); transform: scale(1.08); }
+  .ai-send-btn:disabled { background: var(--soft); box-shadow: none; cursor: not-allowed; transform: none; }
+
+  /* ============================================================
+     FOOTER
+     ============================================================ */
+  footer {
+    background: linear-gradient(160deg, var(--navy) 0%, var(--navy-2) 50%, var(--navy) 100%);
+    color: rgba(255,255,255,0.65); font-size: 0.8rem; line-height: 1.8;
+    margin-top: auto; position: relative; overflow: hidden; width: 100vw; max-width: 100%; box-sizing: border-box;
+  }
+  footer::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--cyan), var(--violet), var(--green), var(--cyan)); }
+  .footer-inner { max-width: 1400px; margin: 0 auto; padding: 36px 24px 24px; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 32px; align-items: start; }
+  .footer-logo { font-size: 1.15rem; font-weight: 800; color: #fff; letter-spacing: -0.03em; display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+  .footer-logo-accent { color: var(--cyan); }
+  .footer-tagline { font-size: 0.78rem; color: rgba(255,255,255,0.45); line-height: 1.65; }
+  .footer-links-label { font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.35); margin-bottom: 10px; }
+  .footer-links { display: flex; flex-direction: column; gap: 7px; }
+  .footer-links a { color: rgba(255,255,255,0.6); text-decoration: none; font-size: 0.8rem; transition: color var(--t); }
+  .footer-links a:hover { color: var(--cyan); }
+  .footer-built { text-align: right; }
+  .footer-built-label { font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.35); margin-bottom: 8px; }
+  .footer-built-name { font-size: 0.95rem; font-weight: 800; color: #fff; letter-spacing: -0.02em; }
+  .footer-built-sub { font-size: 0.72rem; color: rgba(255,255,255,0.35); margin-top: 4px; }
+  .footer-bottom { border-top: 1px solid rgba(255,255,255,0.08); padding: 14px 24px calc(14px + env(safe-area-inset-bottom)); display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 8px; font-size: 0.74rem; color: rgba(255,255,255,0.28); text-align: center; }
+  .footer-sep { color: rgba(255,255,255,0.15); }
+
+  /* ============================================================
+     RESPONSIVE — nav gets its own breakpoint below, everything
+     else stays on ONE clean breakpoint
+     ============================================================ */
+  /* 12 links need real desktop width to sit on one line without
+     crowding — collapses to the drawer here, before tablets hit the
+     squeeze. Matches index.html, learn.html, quiz.html, flashcards.html. */
+  @media (max-width: 1200px) {
+    nav { display: none !important; }
+    .hamburger-btn { display: block !important; }
+  }
+  @media (max-width: 768px) {
+    .hero { padding: 44px 16px 40px; }
+    .content { padding: 40px 16px 10px; }
+    .author-container { grid-template-columns: 1fr; text-align: center; gap: 24px; }
+    .author-info h2 { text-align: center; }
+    .author-image { max-width: 220px; margin: 0 auto; }
+    .ai-panel { width: 100%; right: -100%; }
+    .ai-panel.open { right: 0; }
+    .ai-fab { bottom: 20px; right: 16px; }
+    .footer-inner { grid-template-columns: 1fr; gap: 20px; padding: 24px 18px 16px; text-align: center; }
+    .footer-logo { justify-content: center; }
+    .footer-links { align-items: center; flex-direction: row; flex-wrap: wrap; justify-content: center; }
+    .footer-built { text-align: center; }
+  }
+  @media (max-width: 480px) {
+    .header-content { padding: 0 14px; }
+    .logo { font-size: 1.05rem; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-content">
+    <a href="index.html" class="logo">🧠 NVD<span class="logo-accent">Lab</span></a>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="learn.html">Learn</a>
+      <a href="resources.html">Resources</a>
+      <a href="community.html">Community</a>
+      <a href="research.html">Research</a>
+      <a href="brain-map.html">🧠 Brain Map</a>
+      <a href="quiz.html">Quiz</a>
+      <a href="flashcards.html">Flashcards</a>
+      <a href="about.html" class="active">About</a>
+      <a href="impact.html">Our Impact</a>
+      <a href= "faq.html">FAQ</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <button class="hamburger-btn" id="hamburgerBtn" aria-label="Open menu" aria-expanded="false">
+      <span class="ham-icon" aria-hidden="true"></span>
+    </button>
+  </div>
+  <div class="mobile-nav" id="mobileNav">
+    <a href="index.html">Home</a>
+    <a href="learn.html">Learn</a>
+    <a href="resources.html">Resources</a>
+    <a href="community.html">Community</a>
+    <a href="research.html">Latest Research</a>
+    <a href="brain-map.html">🧠 Interactive Brain Map</a>
+    <a href="quiz.html">Quiz</a>
+    <a href="flashcards.html">Flashcards</a>
+    <a href="about.html" class="active">About Us</a>
+    <a href="impact.html">Our Impact</a>
+    <a href="faq.html">FAQ</a>
+    <a href="contact.html">Contact</a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-inner">
+    <span class="hero-eyebrow">🧠 About Us</span>
+    <h1>About Neurovascular Dynamic Lab</h1>
+    <p>Discover our mission to make neuroscience accessible and exciting for everyone.</p>
+  </div>
+</section>
+
+<div class="content">
+
+  <div class="about-box">
+    <h3>🎯 Our Mission</h3>
+    <p>Neurovascular Dynamic Lab is dedicated to making neuroscience accessible, fun, and engaging for everyone! We believe that understanding your brain is one of the most important things you can do. It helps you learn better, think clearer, make smarter decisions, and live a happier life.</p>
+  </div>
+
+  <div class="about-box">
+    <h3>👁️ Our Vision</h3>
+    <p>We envision a world where every learner has the tools to unlock their brain's full potential. By 2030, our goal is to become the leading global platform for youth-focused brain education, bridging the gap between clinical research and everyday curiosity.</p>
+  </div>
+
+  <div class="about-box">
+    <h3>💡 Our Story</h3>
+    <p>Neurovascular Dynamic Lab was founded by one person with one conviction — that brain science should not be a privilege reserved for students in wealthy countries or elite institutions. It should reach every curious mind, especially across Africa, where access to quality science education remains unequal. What started as a personal passion became a platform. What began as curiosity became a mission.</p>
+  </div>
+
+  <div class="author-section">
+    <div class="author-container">
+      <img src="images/author.png" alt="Gideon Olukanni" class="author-image" />
+      <div class="author-info">
+        <h2>Meet the Founder</h2>
+        <div class="author-title">Gideon Olukanni</div>
+        <p>Gideon Olukanni is a young Nigerian founder who recently graduated from secondary school, where he served as Senior Prefect. He is currently applying to study Neuroscience at Harvard University.</p>
+        <p>His vision is to become a Cerebrovascular Computational Neurosurgeon and Neuroengineer — someone who not only operates on the brain and vascular system, but builds AI-powered medical tools that serve patients regardless of geography. He believes distance should never determine who receives world-class neurological care.</p>
+        <p>Gideon founded Neurovascular Dynamic Lab to close the gap between neuroscience knowledge and African students who deserve access to it. He also founded Gideon Reality — a multi-sector brand built around education, technology, and enterprise — with the long-term goal of using technology and knowledge as tools for African development.</p>
+        <p>He built this platform not because it was assigned — but because he believed it needed to exist.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-title-wrap">
+    <div class="section-label">What We Stand For</div>
+    <div class="section-title">Our Core Values</div>
+  </div>
+  <div class="values-grid">
+    <div class="value-card">
+      <h4>🌟 Accessibility</h4>
+      <p>Education should be free and available to everyone, regardless of background.</p>
+    </div>
+    <div class="value-card">
+      <h4>📚 Quality</h4>
+      <p>We provide accurate, research-backed information explained clearly.</p>
+    </div>
+    <div class="value-card">
+      <h4>🎉 Engagement</h4>
+      <p>Learning should be exciting! We make neuroscience fun with interactive content.</p>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="footer-logo">🧠 NVD<span class="footer-logo-accent">Lab</span></div>
+      <p class="footer-tagline">The Neurovascular Dynamic Lab.<br>Learn. Build. Teach.</p>
+    </div>
+    <div>
+      <p class="footer-links-label">Explore</p>
+      <div class="footer-links">
+        <a href="learn.html">Learn</a>
+        <a href="quiz.html">Quiz</a>
+        <a href="flashcards.html">Flashcards</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+      </div>
+    </div>
+    <div class="footer-built">
+      <p class="footer-built-label">Built by</p>
+      <p class="footer-built-name">GIDEON REALITY</p>
+      <p class="footer-built-sub">Gideon Olukanni · Lagos, Nigeria</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Neurovascular Dynamic Lab</span>
+    <span class="footer-sep">·</span>
+    <span>All rights reserved</span>
+    <span class="footer-sep">·</span>
+    <span>Made with 🧠 for curious minds</span>
+  </div>
+</footer>
+
+<!-- NeuroAI floating widget -->
+<div class="ai-overlay" id="aiWidgetOverlay" aria-hidden="true"></div>
+<div class="ai-panel" id="aiWidgetPanel" role="complementary" aria-label="NeuroAI assistant">
+  <div class="ai-panel-header">
+    <div>
+      <div class="ai-panel-badge"><span class="ai-panel-badge-dot"></span> NeuroAI</div>
+      <div class="ai-panel-sub">Ask me anything about neuroscience</div>
+    </div>
+    <button class="ai-close-btn" id="aiWidgetCloseBtn" aria-label="Close NeuroAI">✕</button>
+  </div>
+  <div class="ai-chat-body" id="aiWidgetChatBody" role="log" aria-live="polite" aria-label="NeuroAI conversation">
+    <div class="ai-msg ai-msg--ai">
+      <span class="ai-msg-avatar" aria-hidden="true">🧠</span>
+      <div class="ai-msg-bubble">👋 Hi! I'm <strong>NeuroAI</strong>. Ask me anything about neuroscience or this platform!</div>
+    </div>
+  </div>
+  <div class="ai-input-area">
+    <div class="ai-input-row">
+      <textarea id="aiWidgetInput" rows="1" placeholder="Ask me anything…" aria-label="Message to NeuroAI"></textarea>
+      <button class="ai-send-btn" id="aiWidgetSendBtn" aria-label="Send message">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
+      </button>
+    </div>
+  </div>
+</div>
+<button class="ai-fab" id="aiWidgetFab" aria-label="Open NeuroAI assistant">🧠</button>
+
+<script>
+// Clean fade-in on scroll — replaces the old character-by-character typewriter effect
+document.addEventListener("DOMContentLoaded", () => {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("in-view");
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+
+  document.querySelectorAll(".about-box, .author-image, .author-info, .value-card")
+    .forEach((el) => observer.observe(el));
+
+  const hamburgerBtn = document.getElementById("hamburgerBtn");
+  const mobileNav = document.getElementById("mobileNav");
+  if (hamburgerBtn && mobileNav) {
+    hamburgerBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const open = mobileNav.classList.toggle("show");
+      hamburgerBtn.setAttribute('aria-expanded', String(open));
+    });
+    document.addEventListener("click", (e) => {
+      if (!hamburgerBtn.contains(e.target) && !mobileNav.contains(e.target)) {
+        mobileNav.classList.remove("show");
+        hamburgerBtn.setAttribute('aria-expanded', 'false');
+      }
+    });
+    mobileNav.querySelectorAll("a").forEach((link) => {
+      link.addEventListener("click", () => {
+        mobileNav.classList.remove("show");
+        hamburgerBtn.setAttribute('aria-expanded', 'false');
+      });
+    });
+    // Keep in sync with the "@media (max-width: 1200px)" nav breakpoint.
+    window.addEventListener("resize", () => {
+      if (window.innerWidth > 1200 && mobileNav.classList.contains("show")) {
+        mobileNav.classList.remove("show");
+        hamburgerBtn.setAttribute('aria-expanded', 'false');
+      }
+    });
+  }
+});
+
+// NeuroAI widget
+const NEURO_WORKER = "https://neurovascular-ai.gideonolukanni20103.workers.dev";
+let aiWidgetLoading = false;
+
+function aiWidgetEscape(str) {
+  return String(str || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>');
+}
+function aiWidgetOpen() {
+  document.getElementById('aiWidgetPanel').classList.add('open');
+  document.getElementById('aiWidgetOverlay').classList.add('show');
+  document.getElementById('aiWidgetOverlay').setAttribute('aria-hidden', 'false');
+}
+function aiWidgetClose() {
+  document.getElementById('aiWidgetPanel').classList.remove('open');
+  document.getElementById('aiWidgetOverlay').classList.remove('show');
+  document.getElementById('aiWidgetOverlay').setAttribute('aria-hidden', 'true');
+}
+function aiWidgetAppendMessage(role, content) {
+  const body = document.getElementById('aiWidgetChatBody');
+  if (!body) return;
+  const isUser = role === 'user';
+  const div = document.createElement('div');
+  div.className = `ai-msg ai-msg--${isUser ? 'user' : 'ai'}`;
+  div.innerHTML = `<span class="ai-msg-avatar" aria-hidden="true">${isUser ? '👤' : '🧠'}</span>
+    <div class="ai-msg-bubble">${aiWidgetEscape(content)}</div>`;
+  body.appendChild(div);
+  body.scrollTop = body.scrollHeight;
+}
+function aiWidgetShowTyping() {
+  const body = document.getElementById('aiWidgetChatBody');
+  if (!body) return;
+  const div = document.createElement('div');
+  div.id = 'aiWidgetTyping';
+  div.className = 'ai-msg ai-msg--ai';
+  div.innerHTML = `<span class="ai-msg-avatar" aria-hidden="true">🧠</span>
+    <div class="ai-msg-bubble"><div class="ai-typing">
+      <span class="ai-dot"></span><span class="ai-dot"></span><span class="ai-dot"></span>
+    </div></div>`;
+  body.appendChild(div);
+  body.scrollTop = body.scrollHeight;
+}
+function aiWidgetRemoveTyping() { document.getElementById('aiWidgetTyping')?.remove(); }
+
+async function sendNeuroAIMessage() {
+  if (aiWidgetLoading) return;
+  const input = document.getElementById('aiWidgetInput');
+  const question = (input.value || '').trim();
+  if (!question) return;
+
+  aiWidgetLoading = true;
+  const sendBtn = document.getElementById('aiWidgetSendBtn');
+  if (sendBtn) sendBtn.disabled = true;
+
+  input.value = '';
+  aiWidgetAppendMessage('user', question);
+  aiWidgetShowTyping();
+
+  try {
+    const res = await fetch(NEURO_WORKER, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ question: question, mode: 'default' })
+    });
+    if (!res.ok) throw new Error(`Worker returned ${res.status}`);
+    const data = await res.json();
+    const reply = data.response || data.content || data.message || data.text
+               || data?.choices?.[0]?.message?.content
+               || 'I could not generate a response. Please try again.';
+    aiWidgetRemoveTyping();
+    aiWidgetAppendMessage('assistant', reply);
+  } catch (e) {
+    aiWidgetRemoveTyping();
+    aiWidgetAppendMessage('assistant', `⚠️ Could not connect. ${e.message || 'Please try again.'}`);
+  } finally {
+    aiWidgetLoading = false;
+    if (sendBtn) sendBtn.disabled = false;
+  }
+}
+
+document.getElementById('aiWidgetFab')?.addEventListener('click', aiWidgetOpen);
+document.getElementById('aiWidgetCloseBtn')?.addEventListener('click', aiWidgetClose);
+document.getElementById('aiWidgetOverlay')?.addEventListener('click', aiWidgetClose);
+document.getElementById('aiWidgetSendBtn')?.addEventListener('click', sendNeuroAIMessage);
+document.getElementById('aiWidgetInput')?.addEventListener('keydown', function(e) {
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendNeuroAIMessage(); }
+});
+</script>
+</body>
+</html>

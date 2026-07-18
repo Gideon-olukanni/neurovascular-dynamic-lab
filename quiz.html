@@ -1,0 +1,1936 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-KJZ39Z1J53"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-KJZ39Z1J53');
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🧠 Neurovasular Dynamic Lab — Brain Quiz</title>
+  <meta name="description" content="A guided neuroscience quiz with NeuroAI support — choose a topic, pick your level, and test what you know.">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500;600;700&display=swap');
+
+    :root {
+      --navy:    #0A2540;
+      --navy-2:  #0D3B6E;
+      --blue:    #2563EB;
+      --blue-dk: #1D4ED8;
+      --cyan:    #22D3EE;
+      --white:   #F8FAFC;
+      --soft:    #E2E8F0;
+      --green:   #10B981;
+      --red:     #EF4444;
+      --gold:    #F59E0B;
+      --violet:  #8B5CF6;
+      --text:    #0F172A;
+      --muted:   #64748B;
+      --light:   #94A3B8;
+      --card:    #ffffff;
+
+      --header-h: 64px;
+      --r-sm: 8px; --r-md: 12px; --r-lg: 18px; --r-xl: 24px; --r-2xl: 32px;
+      --sh-xs: 0 1px 4px rgba(0,0,0,0.06);
+      --sh-sm: 0 2px 10px rgba(0,0,0,0.09);
+      --sh-md: 0 6px 24px rgba(0,0,0,0.12);
+      --sh-lg: 0 16px 48px rgba(0,0,0,0.18);
+      --t: 0.2s ease;
+      --t-md: 0.32s cubic-bezier(0.4,0,0.2,1);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background-color: var(--white);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+      display: flex; flex-direction: column; min-height: 100vh;
+    }
+    :focus-visible { outline: 2.5px solid var(--blue); outline-offset: 2px; border-radius: var(--r-sm); }
+    button, select { font-family: inherit; }
+
+    /* ============================================================
+       HEADER — fixed height, compact nav, auth always reachable
+       ============================================================ */
+    header {
+      position: sticky; top: 0; z-index: 1000;
+      height: var(--header-h);
+      background: linear-gradient(135deg, var(--navy) 0%, var(--blue) 100%);
+      color: white;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+    .header-content {
+      max-width: 1400px; margin: 0 auto; padding: 0 20px; height: 100%;
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: nowrap; gap: 12px;
+    }
+    .logo {
+      font-size: 1.2rem; font-weight: 800; color: white;
+      letter-spacing: -0.03em; text-decoration: none;
+      display: flex; align-items: center; gap: 2px; flex-shrink: 0; white-space: nowrap;
+    }
+    .logo-accent { color: var(--cyan); }
+
+    nav { display: flex; gap: 0; align-items: center; flex-wrap: nowrap; min-width: 0; }
+    nav a {
+      color: rgba(255,255,255,0.82); text-decoration: none; padding: 0 11px;
+      line-height: var(--header-h); font-size: 0.8rem; font-weight: 500;
+      transition: color 0.25s ease; position: relative; white-space: nowrap;
+    }
+    nav a::before {
+      content: ''; position: absolute; bottom: 14px; left: 50%;
+      width: 0; height: 2px; background: var(--cyan);
+      transition: all 0.25s ease; transform: translateX(-50%);
+    }
+    nav a:hover::before, nav a.active::before { width: calc(100% - 22px); }
+    nav a:hover, nav a.active { color: #fff; }
+
+    .nav-right { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+
+    .hamburger-btn {
+      display: none; background: none; border: none; cursor: pointer;
+      padding: 10px; border-radius: var(--r-sm); transition: background-color 0.3s; flex-shrink: 0;
+    }
+    .hamburger-btn:hover { background-color: rgba(255,255,255,0.1); }
+    .ham-icon, .ham-icon::before, .ham-icon::after {
+      display: block; width: 22px; height: 2px; background: #fff; border-radius: 2px;
+    }
+    .ham-icon { position: relative; }
+    .ham-icon::before, .ham-icon::after { content: ''; position: absolute; left: 0; }
+    .ham-icon::before { top: -7px; }
+    .ham-icon::after  { top: 7px; }
+
+    .mobile-nav {
+      display: none; position: absolute; top: 100%; left: 0; right: 0;
+      background: linear-gradient(135deg, var(--navy) 0%, var(--blue) 100%);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      animation: slideDown 0.25s ease-out; max-height: calc(100vh - 64px); overflow-y: auto;
+    }
+    .mobile-nav.show { display: block; }
+    @keyframes slideDown { from{opacity:0;transform:translateY(-8px);} to{opacity:1;transform:translateY(0);} }
+    .mobile-nav a {
+      display: block; color: white; text-decoration: none; padding: 15px 20px;
+      border-bottom: 1px solid rgba(255,255,255,0.1); transition: background-color 0.3s;
+    }
+    .mobile-nav a:hover { background-color: rgba(255,255,255,0.1); }
+    .mobile-nav a.active { background-color: rgba(255,255,255,0.2); }
+
+    .auth-nav-btn {
+      display: inline-flex; align-items: center; gap: 7px;
+      background: rgba(255,255,255,.15); border: 1px solid rgba(255,255,255,.3);
+      color: white; border-radius: 50px; padding: 7px 16px; font-size: .82rem; font-weight: 600;
+      cursor: pointer; text-decoration: none; transition: all .25s ease; white-space: nowrap;
+    }
+    .auth-nav-btn:hover { background: rgba(255,255,255,.25); transform: translateY(-1px); }
+    .auth-nav-btn.signout { background: rgba(239,68,68,.18); border-color: rgba(239,68,68,.4); }
+    .auth-nav-btn.signout:hover { background: rgba(239,68,68,.32); }
+    .auth-user-display { display: none; align-items: center; gap: 8px; }
+    .auth-user-display.visible { display: flex; }
+    .auth-avatar {
+      width: 30px; height: 30px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--cyan), var(--blue));
+      display: flex; align-items: center; justify-content: center;
+      font-size: .82rem; font-weight: 700; color: white; flex-shrink: 0;
+    }
+    .auth-user-email {
+      font-size: .78rem; color: rgba(255,255,255,.8); max-width: 110px;
+      overflow: hidden; text-overflow: ellipsis; white-space: nowrap; display: none;
+    }
+    @media (min-width: 900px) { .auth-user-email { display: inline; } }
+
+    /* ============================================================
+       HERO
+       ============================================================ */
+    .hero {
+      background: linear-gradient(135deg, var(--navy), var(--blue));
+      color: white; padding: 56px 20px 48px; text-align: center;
+      position: relative; overflow: hidden;
+    }
+    .hero::before, .hero::after {
+      content: ''; position: absolute; border-radius: 50%;
+      filter: blur(80px); pointer-events: none; opacity: 0.16;
+    }
+    .hero::before { width: 420px; height: 420px; background: var(--cyan); top: -100px; left: -80px; animation: blobFloat 8s ease-in-out infinite; }
+    .hero::after  { width: 360px; height: 360px; background: var(--violet); bottom: -90px; right: -70px; animation: blobFloat 10s ease-in-out infinite reverse; }
+    @keyframes blobFloat { 0%,100%{transform:translateY(0) scale(1);} 50%{transform:translateY(-26px) scale(1.05);} }
+    .hero-inner { position: relative; z-index: 1; }
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 7px;
+      background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.18);
+      padding: 5px 14px; border-radius: 100px; font-size: 0.74rem; font-weight: 600;
+      letter-spacing: 0.05em; text-transform: uppercase; color: var(--cyan); margin-bottom: 16px;
+    }
+    .hero h1 {
+      font-family: 'Playfair Display', serif; font-weight: 900;
+      font-size: clamp(1.8rem, 5vw, 2.6rem); margin-bottom: 10px; letter-spacing: -0.02em;
+    }
+    .hero p { font-size: 1rem; opacity: 0.82; max-width: 520px; margin: 0 auto; }
+
+    /* ============================================================
+       MIGRATION BANNER
+       ============================================================ */
+    #migrationBanner { display: none; max-width: 720px; margin: 0 auto; padding: 16px 20px 0; }
+    .migration-notice {
+      background: linear-gradient(135deg, #eff6ff, #e0f2fe);
+      border: 1px solid rgba(37,99,235,0.2); border-radius: var(--r-lg);
+      padding: 14px 18px; font-size: 0.85rem; color: var(--navy); font-weight: 500; text-align: center;
+    }
+
+    /* ============================================================
+       SETUP WIZARD — progressive disclosure, step by step
+       ============================================================ */
+    #level-screen { max-width: 640px; margin: 40px auto 60px; padding: 0 20px; }
+
+    .setup-card {
+      background: var(--card); border-radius: var(--r-2xl);
+      box-shadow: var(--sh-md); padding: 36px 32px;
+    }
+
+    /* Step track — visual progress indicator across the 3-stage wizard */
+    .step-track {
+      display: flex; align-items: center; justify-content: center;
+      gap: 6px; margin-bottom: 30px;
+    }
+    .step-dot {
+      display: flex; flex-direction: column; align-items: center; gap: 6px;
+    }
+    .step-num {
+      width: 28px; height: 28px; border-radius: 50%;
+      background: var(--soft); color: var(--muted);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.78rem; font-weight: 700; transition: all var(--t-md);
+    }
+    .step-label {
+      font-size: 0.66rem; font-weight: 700; color: var(--light);
+      text-transform: uppercase; letter-spacing: 0.05em; transition: color var(--t);
+    }
+    .step-dot.active .step-num { background: var(--blue); color: #fff; box-shadow: 0 0 0 4px rgba(37,99,235,0.15); }
+    .step-dot.active .step-label { color: var(--blue); }
+    .step-dot.done .step-num { background: var(--green); color: #fff; font-size: 0; }
+    .step-dot.done .step-num::after { content: '✓'; font-size: 0.85rem; }
+    .step-dot.done .step-label { color: var(--green); }
+    .step-line {
+      width: 40px; height: 2px; background: var(--soft); margin-bottom: 18px; transition: background var(--t-md);
+    }
+    .step-line.done { background: var(--green); }
+
+    /* Step content blocks */
+    .setup-step { animation: fadeUp 0.35s ease-out; }
+    @keyframes fadeUp { from{opacity:0;transform:translateY(10px);} to{opacity:1;transform:translateY(0);} }
+    .step-title {
+      font-family: 'Playfair Display', serif; font-weight: 900; font-size: 1.35rem;
+      color: var(--navy); margin-bottom: 6px; letter-spacing: -0.01em;
+    }
+    .step-sub { color: var(--muted); font-size: 0.88rem; margin-bottom: 20px; }
+
+    .modern-select {
+      width: 100%; padding: 16px 18px; border-radius: var(--r-lg);
+      border: 1.5px solid var(--soft); background: white; font-size: 1rem;
+      color: var(--text); outline: none; transition: all .25s ease; cursor: pointer;
+    }
+    .modern-select:focus { border-color: var(--blue); box-shadow: 0 0 0 4px rgba(37,99,235,.1); }
+
+    /* Completed-step summary chip — replaces a finished step visually */
+    .step-summary {
+      display: flex; align-items: center; gap: 10px;
+      background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: var(--r-lg);
+      padding: 12px 16px; margin-bottom: 18px; animation: fadeUp 0.3s ease-out;
+    }
+    .summary-icon { font-size: 1.2rem; flex-shrink: 0; }
+    .summary-text { flex: 1; font-size: 0.88rem; color: #166534; }
+    .summary-text strong { color: var(--navy); }
+    .summary-change {
+      background: white; border: 1px solid #bbf7d0; color: #166534;
+      padding: 5px 12px; border-radius: 100px; font-size: 0.74rem; font-weight: 700;
+      cursor: pointer; transition: all var(--t); flex-shrink: 0;
+    }
+    .summary-change:hover { background: #dcfce7; }
+
+    /* Level cards */
+    .level-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .level-card {
+      background: white; border-radius: var(--r-lg); padding: 22px 16px;
+      cursor: pointer; transition: all 0.25s ease; box-shadow: var(--sh-xs);
+      border: 2px solid var(--soft); text-align: center; position: relative;
+    }
+    .level-card:hover { transform: translateY(-4px); box-shadow: var(--sh-sm); }
+    .level-card.beginner:hover     { border-color: var(--green); }
+    .level-card.intermediate:hover { border-color: var(--gold); }
+    .level-card.advanced:hover     { border-color: var(--violet); }
+    .level-card.selected.beginner     { border-color: var(--green);  background: #f0fdf4; }
+    .level-card.selected.intermediate { border-color: var(--gold);   background: #fffbeb; }
+    .level-card.selected.advanced     { border-color: var(--violet); background: #f5f3ff; }
+    .level-icon { font-size: 1.9rem; margin-bottom: 10px; }
+    .level-card h3 { font-size: 0.95rem; font-weight: 700; color: var(--navy); margin-bottom: 5px; }
+    .level-best-for { font-size: 0.72rem; color: var(--muted); line-height: 1.45; margin-bottom: 10px; min-height: 32px; }
+    .level-badge {
+      display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 0.7rem; font-weight: 700;
+    }
+    .beginner     .level-badge { background: #dcfce7; color: #166534; }
+    .intermediate .level-badge { background: #fef3c7; color: #92400e; }
+    .advanced     .level-badge { background: #ede9fe; color: #5b21b6; }
+
+    /* Question count: quick-pick chips + custom input */
+    .count-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
+    .count-chip {
+      padding: 9px 18px; border-radius: 100px; border: 1.5px solid var(--soft);
+      background: white; color: var(--text); font-size: 0.88rem; font-weight: 600;
+      cursor: pointer; transition: all var(--t); font-family: inherit;
+    }
+    .count-chip:hover { border-color: var(--blue); color: var(--blue); }
+    .count-chip.active { background: var(--blue); border-color: var(--blue); color: #fff; }
+    .count-custom-label {
+      font-size: 0.76rem; color: var(--muted); margin-bottom: 8px; display: block;
+    }
+    .count-wrap { display: flex; flex-wrap: wrap; gap: 12px; }
+    .count-meta { margin-top: 10px; color: var(--muted); font-size: 0.84rem; }
+
+    /* Start button */
+    .start-btn {
+      display: block; width: 100%; margin-top: 26px;
+      background: linear-gradient(135deg, var(--navy), var(--blue));
+      color: white; padding: 17px 40px; border-radius: var(--r-lg); border: none;
+      font-size: 1.02rem; font-weight: 700; cursor: pointer; transition: all 0.3s ease;
+      opacity: 0.4; pointer-events: none; font-family: inherit;
+    }
+    .start-btn.ready { opacity: 1; pointer-events: all; }
+    .start-btn.ready:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(37,99,235,0.38); }
+
+    /* ============================================================
+       QUIZ SCREEN
+       ============================================================ */
+    #quiz-screen { display: none; max-width: 720px; margin: 32px auto 60px; padding: 0 20px; }
+
+    .quiz-status-bar {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 14px; gap: 10px; flex-wrap: wrap;
+    }
+    .quiz-exit-btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: white; border: 1.5px solid var(--soft); color: var(--muted);
+      padding: 7px 14px; border-radius: 50px; font-size: 0.8rem; font-weight: 600;
+      cursor: pointer; transition: all var(--t);
+    }
+    .quiz-exit-btn:hover { border-color: var(--red); color: var(--red); background: #fef2f2; }
+    .quiz-live-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: #eff6ff; color: var(--blue); border-radius: 100px;
+      padding: 6px 14px; font-size: 0.78rem; font-weight: 700;
+    }
+    .live-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--blue); animation: pulseDot 1.6s infinite; }
+    @keyframes pulseDot { 0%,100%{opacity:1;} 50%{opacity:0.35;} }
+    .q-counter { font-size: 0.84rem; color: var(--muted); font-weight: 600; }
+
+    .progress-wrap { background: var(--soft); border-radius: 10px; height: 7px; margin-bottom: 26px; overflow: hidden; }
+    .progress-bar { height: 100%; border-radius: 10px; background: linear-gradient(90deg, var(--blue), var(--cyan)); transition: width 0.5s ease; }
+
+    /* Timer ring */
+    .quiz-stage { display: flex; align-items: center; justify-content: space-between; margin-bottom: 22px; }
+    .timer-ring-wrap { position: relative; width: 76px; height: 76px; }
+    .timer-ring { width: 76px; height: 76px; transform: rotate(-90deg); }
+    .timer-ring-bg { fill: none; stroke: var(--soft); stroke-width: 6; }
+    .timer-ring-fg {
+      fill: none; stroke: var(--blue); stroke-width: 6; stroke-linecap: round;
+      stroke-dasharray: 213.6; stroke-dashoffset: 0;
+      transition: stroke-dashoffset 1s linear, stroke 0.4s ease;
+    }
+    .timer-ring-fg.warning { stroke: var(--gold); }
+    .timer-ring-fg.danger  { stroke: var(--red); }
+    .timer-circle {
+      position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+      font-family: 'Space Mono', monospace; font-size: 1.25rem; font-weight: 700; color: var(--navy);
+      transition: color 0.4s ease;
+    }
+    .timer-circle.warning { color: var(--gold); }
+    .timer-circle.danger  { color: var(--red); animation: shake 0.4s ease infinite; }
+    @keyframes shake { 0%,100%{transform:rotate(0deg);} 25%{transform:rotate(-3deg);} 75%{transform:rotate(3deg);} }
+    .score-display {
+      font-size: 0.92rem; color: var(--navy); font-weight: 700;
+      background: #f8faff; border: 1px solid var(--soft); border-radius: 100px; padding: 9px 18px;
+    }
+
+    .question-card {
+      background: white; border-radius: var(--r-xl); padding: 32px;
+      box-shadow: var(--sh-sm); margin-bottom: 20px; animation: fadeSlideIn 0.4s ease;
+    }
+    @keyframes fadeSlideIn { from{opacity:0;transform:translateY(16px);} to{opacity:1;transform:translateY(0);} }
+    .q-level-tag {
+      display: inline-block; padding: 4px 14px; border-radius: 20px;
+      font-size: 0.72rem; font-weight: 700; margin-bottom: 16px; text-transform: uppercase; letter-spacing: 0.03em;
+    }
+    .tag-beginner     { background: #dcfce7; color: #166534; }
+    .tag-intermediate { background: #fef3c7; color: #92400e; }
+    .tag-advanced     { background: #ede9fe; color: #5b21b6; }
+    .question-text { font-size: 1.18rem; font-weight: 600; color: var(--navy); line-height: 1.5; }
+
+    /* Answer options — letter badge + icon feedback, not color alone */
+    .options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
+    .option-btn {
+      display: flex; align-items: center; gap: 12px;
+      background: white; border: 1.5px solid var(--soft); border-radius: var(--r-lg);
+      padding: 14px 16px; text-align: left; cursor: pointer; font-size: 0.92rem;
+      color: var(--text); transition: all 0.22s ease; line-height: 1.4; font-family: inherit;
+    }
+    .option-btn:hover:not(:disabled) { border-color: var(--blue); background: #f8faff; transform: translateY(-2px); }
+    .option-letter {
+      width: 26px; height: 26px; border-radius: 50%; flex-shrink: 0;
+      background: var(--soft); color: var(--muted); font-weight: 700; font-size: 0.78rem;
+      display: flex; align-items: center; justify-content: center; transition: all var(--t);
+    }
+    .option-text { flex: 1; }
+    .option-icon { font-size: 1.05rem; flex-shrink: 0; display: none; }
+    .option-btn.correct { background: #dcfce7; border-color: var(--green); color: #166534; font-weight: 600; }
+    .option-btn.correct .option-letter { background: var(--green); color: #fff; }
+    .option-btn.correct .option-icon, .option-btn.reveal .option-icon { display: inline; }
+    .option-btn.wrong   { background: #fef2f2; border-color: var(--red); color: #991b1b; font-weight: 600; }
+    .option-btn.wrong .option-letter { background: var(--red); color: #fff; }
+    .option-btn.wrong .option-icon { display: inline; }
+    .option-btn.reveal  { background: #dcfce7; border-color: var(--green); color: #166534; }
+    .option-btn.reveal .option-letter { background: var(--green); color: #fff; }
+    .option-btn:disabled { cursor: not-allowed; }
+
+    .feedback-box {
+      display: none; align-items: flex-start; gap: 10px;
+      padding: 16px 18px; border-radius: var(--r-md); font-size: 0.92rem;
+      margin-bottom: 16px; animation: fadeSlideIn 0.3s ease;
+    }
+    .feedback-box.correct { background: #dcfce7; color: #166534; border-left: 4px solid var(--green); }
+    .feedback-box.wrong   { background: #fef2f2; color: #991b1b; border-left: 4px solid var(--red); }
+    .feedback-icon { font-size: 1.2rem; flex-shrink: 0; }
+
+    .next-btn {
+      display: none; width: 100%; padding: 15px; border-radius: var(--r-lg);
+      background: linear-gradient(135deg, var(--navy), var(--blue)); color: white;
+      font-size: 0.98rem; font-weight: 700; border: none; cursor: pointer;
+      transition: all 0.3s ease; margin-top: 14px; font-family: inherit;
+    }
+    .next-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(37,99,235,0.35); }
+    .kbd-hint {
+      text-align: center; font-size: 0.72rem; color: var(--light); margin-top: 10px;
+    }
+    .kbd-hint kbd {
+      background: var(--soft); border-radius: 4px; padding: 1px 6px; font-family: 'Space Mono', monospace;
+    }
+
+    /* ============================================================
+       NEUROAI — contextual follow-up companion
+       ============================================================ */
+    .qai-box {
+      background: linear-gradient(135deg, #f8faff, #eff6ff);
+      border: 1px solid #dbeafe; border-radius: var(--r-lg); padding: 16px; margin-top: 4px;
+    }
+    .qai-invite { font-size: 0.82rem; color: var(--navy); margin-bottom: 10px; }
+    .qai-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+    .qai-badge {
+      display: flex; align-items: center; gap: 6px;
+      background: linear-gradient(135deg, var(--navy), var(--navy-2)); color: var(--cyan);
+      border-radius: 100px; padding: 4px 11px; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.03em;
+    }
+    .qai-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--cyan); box-shadow: 0 0 6px var(--cyan); animation: qaiPulse 2s infinite; }
+    @keyframes qaiPulse { 0%,100%{opacity:1;} 50%{opacity:0.45;} }
+    .qai-sub { font-size: 0.72rem; color: var(--muted); }
+    .qai-chatlog { display: flex; flex-direction: column; gap: 9px; max-height: 240px; overflow-y: auto; margin-bottom: 10px; scroll-behavior: smooth; }
+    .qai-chatlog:empty { display: none; }
+    .qai-msg { display: flex; gap: 7px; align-items: flex-start; }
+    .qai-msg--user { flex-direction: row-reverse; }
+    .qai-avatar {
+      width: 24px; height: 24px; border-radius: 50%; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center; font-size: 0.8rem;
+      background: #fff; border: 1px solid #bfdbfe;
+    }
+    .qai-msg--user .qai-avatar { background: #f0fdf4; border-color: #bbf7d0; }
+    .qai-bubble {
+      padding: 8px 11px; border-radius: var(--r-md); font-size: 0.85rem; line-height: 1.6;
+      color: var(--text); max-width: calc(100% - 34px); background: #fff; border: 1px solid var(--soft);
+    }
+    .qai-msg--user .qai-bubble { background: var(--blue); color: #fff; border-color: var(--blue-dk); }
+    .qai-typing { display: flex; gap: 4px; padding: 2px 0; }
+    .qai-typing-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--light); animation: qaiBounce 1.2s infinite; }
+    .qai-typing-dot:nth-child(2) { animation-delay: 0.2s; }
+    .qai-typing-dot:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes qaiBounce { 0%,60%,100%{transform:translateY(0);} 30%{transform:translateY(-6px);} }
+    .qai-input-row { display: flex; align-items: flex-end; gap: 7px; background: #fff; border: 1.5px solid var(--soft); border-radius: var(--r-lg); padding: 6px 6px 6px 12px; transition: border-color var(--t); }
+    .qai-input-row:focus-within { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(37,99,235,0.1); }
+    #quizAIInput {
+      flex: 1; border: none; outline: none; resize: none; font-size: 0.86rem;
+      font-family: inherit; color: var(--text); background: transparent; height: 38px; overflow-y: auto; line-height: 1.5;
+    }
+    #quizAIInput::placeholder { color: var(--light); }
+    .qai-send {
+      width: 34px; height: 34px; border-radius: 50%; flex-shrink: 0;
+      background: var(--blue); color: #fff; border: none; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 2px 8px rgba(37,99,235,0.3); transition: background var(--t), transform var(--t);
+    }
+    .qai-send:hover { background: var(--blue-dk); transform: scale(1.08); }
+    .qai-send:disabled { background: var(--soft); box-shadow: none; cursor: not-allowed; transform: none; }
+
+    /* ============================================================
+       RESULTS SCREEN — emotionally intelligent, reward-focused
+       ============================================================ */
+    #results-screen { display: none; max-width: 620px; margin: 50px auto 60px; padding: 0 20px; text-align: center; }
+    .results-card { background: white; border-radius: var(--r-2xl); padding: 48px 36px; box-shadow: var(--sh-md); }
+    .results-emoji { font-size: 4.2rem; margin-bottom: 14px; animation: bounceIn 0.6s ease; }
+    @keyframes bounceIn { 0%{transform:scale(0);} 60%{transform:scale(1.15);} 100%{transform:scale(1);} }
+    .results-card h2 { font-family: 'Playfair Display', serif; font-weight: 900; font-size: 1.85rem; color: var(--navy); margin-bottom: 8px; }
+    .results-card > p#resultsSubtitle { color: #475569; font-size: 1rem; margin-bottom: 26px; }
+
+    /* Score ring */
+    .score-ring-wrap { position: relative; width: 160px; height: 160px; margin: 0 auto 8px; }
+    .score-ring { width: 160px; height: 160px; transform: rotate(-90deg); }
+    .score-ring-bg { fill: none; stroke: var(--soft); stroke-width: 10; }
+    .score-ring-fg { fill: none; stroke: var(--blue); stroke-width: 10; stroke-linecap: round; stroke-dasharray: 440; stroke-dashoffset: 440; transition: stroke-dashoffset 1.1s cubic-bezier(0.4,0,0.2,1) 0.2s; }
+    .score-ring-center { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+    .score-big { font-family: 'Space Mono', monospace; font-size: 2rem; font-weight: 700; color: var(--blue); line-height: 1; }
+    .score-label { color: var(--muted); font-size: 0.78rem; margin-top: 2px; }
+
+    .stats-row { display: flex; justify-content: center; gap: 14px; margin: 24px 0 26px; flex-wrap: wrap; }
+    .stat-item {
+      text-align: center; background: var(--white); border: 1px solid var(--soft);
+      border-radius: var(--r-lg); padding: 14px 20px; min-width: 90px;
+    }
+    .stat-num { font-size: 1.5rem; font-weight: 700; font-family: 'Space Mono', monospace; }
+    .stat-lbl { font-size: 0.7rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; margin-top: 2px; }
+    .stat-correct .stat-num { color: var(--green); }
+    .stat-wrong   .stat-num { color: var(--red); }
+    .stat-skipped .stat-num { color: var(--gold); }
+
+    .result-msg {
+      background: linear-gradient(135deg, #eff6ff, #e0f2fe); border-radius: var(--r-lg);
+      padding: 18px 20px; margin-bottom: 28px; font-size: 0.95rem; color: var(--navy); font-weight: 500; text-align: left;
+    }
+    .results-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+    .btn-retry, .btn-change {
+      padding: 13px 28px; border-radius: 50px; border: none; font-size: 0.94rem; font-weight: 600;
+      cursor: pointer; transition: all 0.3s ease; font-family: inherit;
+    }
+    .btn-retry  { background: linear-gradient(135deg, var(--navy), var(--blue)); color: white; }
+    .btn-change { background: var(--soft); color: var(--navy); }
+    .btn-retry:hover, .btn-change:hover { transform: translateY(-2px); box-shadow: var(--sh-sm); }
+    .score-saved-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(16,185,129,.12); border: 1px solid rgba(16,185,129,.3); color: #059669;
+      border-radius: 50px; padding: 6px 16px; font-size: .78rem; font-weight: 700; margin-top: 16px;
+    }
+
+    /* ============================================================
+       FOOTER
+       ============================================================ */
+    footer {
+      background: linear-gradient(160deg, var(--navy) 0%, var(--navy-2) 50%, var(--navy) 100%);
+      color: rgba(255,255,255,0.65); font-size: 0.8rem; line-height: 1.8;
+      margin-top: auto; position: relative; overflow: hidden; width: 100vw; max-width: 100%; box-sizing: border-box;
+    }
+    footer::before {
+      content: ""; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, var(--cyan), var(--violet), var(--green), var(--cyan));
+    }
+    .footer-inner {
+      max-width: 1400px; margin: 0 auto; padding: 36px 24px 24px;
+      display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 32px; align-items: start;
+    }
+    .footer-logo { font-size: 1.15rem; font-weight: 800; color: #fff; letter-spacing: -0.03em; display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+    .footer-logo-accent { color: var(--cyan); }
+    .footer-tagline { font-size: 0.78rem; color: rgba(255,255,255,0.45); line-height: 1.65; }
+    .footer-links-label { font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.35); margin-bottom: 10px; }
+    .footer-links { display: flex; flex-direction: column; gap: 7px; }
+    .footer-links a { color: rgba(255,255,255,0.6); text-decoration: none; font-size: 0.8rem; transition: color var(--t); }
+    .footer-links a:hover { color: var(--cyan); }
+    .footer-built { text-align: right; }
+    .footer-built-label { font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.35); margin-bottom: 8px; }
+    .footer-built-name { font-size: 0.95rem; font-weight: 800; color: #fff; letter-spacing: -0.02em; }
+    .footer-built-sub { font-size: 0.72rem; color: rgba(255,255,255,0.35); margin-top: 4px; }
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,0.08); padding: 14px 24px calc(14px + env(safe-area-inset-bottom));
+      display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 8px;
+      font-size: 0.74rem; color: rgba(255,255,255,0.28); text-align: center;
+    }
+    .footer-sep { color: rgba(255,255,255,0.15); }
+
+    /* ============================================================
+       RESPONSIVE
+       ============================================================ */
+    @media (max-width: 900px) {
+      .options-grid { grid-template-columns: 1fr; }
+      .question-card { padding: 24px; }
+    }
+    /* Header nav: 12 links need real desktop width to sit on one line,
+       so it collapses to the drawer well before "mobile" — otherwise
+       tablets get a squeezed, cropped row of links. Keep in sync with
+       the resize listener that auto-closes the drawer. Matches the
+       same fix on index.html and learn.html. */
+    @media (max-width: 1200px) {
+      nav { display: none !important; }
+      .hamburger-btn { display: block !important; }
+    }
+    @media (max-width: 768px) {
+      .setup-card { padding: 28px 22px; }
+      .level-cards { grid-template-columns: 1fr; }
+      .level-best-for { min-height: 0; }
+      .quiz-stage { flex-direction: row; }
+      .footer-inner { grid-template-columns: 1fr; gap: 20px; padding: 24px 18px 16px; text-align: center; }
+      .footer-logo { justify-content: center; }
+      .footer-links { align-items: center; flex-direction: row; flex-wrap: wrap; justify-content: center; }
+      .footer-built { text-align: center; }
+    }
+    @media (max-width: 480px) {
+      .header-content { padding: 0 14px; }
+      .logo { font-size: 1.05rem; }
+      .results-card { padding: 36px 22px; }
+      .step-track { gap: 4px; }
+      .step-line { width: 24px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="header-content">
+    <a href="index.html" class="logo">🧠 NVD<span class="logo-accent">Lab</span></a>
+
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="learn.html">Learn</a>
+      <a href="resources.html">Resources</a>
+      <a href="community.html">Community</a>
+      <a href="research.html">Research</a>
+      <a href="brain-map.html">🧠 Brain Map</a>
+      <a href="quiz.html" class="active">Quiz</a>
+      <a href="flashcards.html">Flashcards</a>
+      <a href="about.html">About</a>
+      <a href="impact.html">Our Impact</a>
+      <a href= "faq.html">FAQ</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+
+    <div class="nav-right">
+      <div class="auth-user-display" id="authUserDisplay">
+        <div class="auth-avatar" id="authAvatar">?</div>
+        <span class="auth-user-email" id="authUserEmail"></span>
+        <button class="auth-nav-btn signout" id="signOutBtn">Sign Out</button>
+      </div>
+      <a href="login.html" class="auth-nav-btn" id="signInNavBtn">👤 Sign In</a>
+      <button class="hamburger-btn" id="hamburgerBtn" aria-label="Open menu" aria-expanded="false">
+        <span class="ham-icon" aria-hidden="true"></span>
+      </button>
+    </div>
+
+    <div class="mobile-nav" id="mobileNav">
+      <a href="index.html">Home</a>
+      <a href="learn.html">Learn</a>
+      <a href="resources.html">Resources</a>
+      <a href="community.html">Community</a>
+      <a href="research.html">Latest Research</a>
+      <a href="brain-map.html">🧠 Brain Map</a>
+      <a href="quiz.html" class="active">Quiz</a>
+      <a href="flashcards.html">Flashcards</a>
+      <a href="about.html">About</a>
+      <a href="impact.html">Our Impact</a>
+      <a href="faq.html">FAQ</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <span class="hero-eyebrow">🧠 Guided Quiz</span>
+    <h1>Test what you know</h1>
+    <p>Pick a topic, choose how challenging you want it, and we'll guide you through the rest.</p>
+  </div>
+</section>
+
+<!-- MIGRATION BANNER -->
+<div id="migrationBanner">
+  <div class="migration-notice">⚙️ Setting up Mixed Topics for the first time — this only happens once...</div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════
+     SETUP WIZARD — 3 progressive steps: Topic → Level → Count
+     ════════════════════════════════════════════════════════════ -->
+<div id="level-screen">
+  <div class="setup-card">
+
+    <!-- Step indicator -->
+    <div class="step-track" aria-label="Setup progress, 3 steps">
+      <div class="step-dot active" id="stepDot1"><span class="step-num">1</span><span class="step-label">Topic</span></div>
+      <div class="step-line" id="stepLine1"></div>
+      <div class="step-dot" id="stepDot2"><span class="step-num">2</span><span class="step-label">Level</span></div>
+      <div class="step-line" id="stepLine2"></div>
+      <div class="step-dot" id="stepDot3"><span class="step-num">3</span><span class="step-label">Questions</span></div>
+    </div>
+
+    <!-- STEP 1: TOPIC -->
+    <div class="setup-step" id="stepTopicBlock">
+      <h2 class="step-title">📚 What would you like to study?</h2>
+      <p class="step-sub">Choose a topic to begin — you can change this anytime.</p>
+      <select id="topicSelect" class="modern-select" onchange="handleTopicChange()">
+        <option value="">Loading topics...</option>
+      </select>
+    </div>
+    <div class="step-summary" id="topicSummary" style="display:none;">
+      <span class="summary-icon">📚</span>
+      <span class="summary-text">Topic: <strong id="topicSummaryText"></strong></span>
+      <button class="summary-change" id="topicChangeBtn">Change</button>
+    </div>
+
+    <!-- STEP 2: LEVEL -->
+    <div class="setup-step" id="stepLevelBlock" style="display:none;">
+      <h2 class="step-title">🎯 Choose your difficulty</h2>
+      <p class="step-sub">Not sure? Beginner is a great place to start.</p>
+      <div class="level-cards">
+        <div class="level-card beginner" onclick="selectLevel('beginner', this)" role="button" tabindex="0" aria-label="Beginner level">
+          <div class="level-icon">🌱</div>
+          <h3>Beginner</h3>
+          <p class="level-best-for">Best for first-time learners and basic brain facts</p>
+          <span class="level-badge" id="badge-beginner">—</span>
+        </div>
+        <div class="level-card intermediate" onclick="selectLevel('intermediate', this)" role="button" tabindex="0" aria-label="Intermediate level">
+          <div class="level-icon">⚡</div>
+          <h3>Intermediate</h3>
+          <p class="level-best-for">Best if you already know the basics</p>
+          <span class="level-badge" id="badge-intermediate">—</span>
+        </div>
+        <div class="level-card advanced" onclick="selectLevel('advanced', this)" role="button" tabindex="0" aria-label="Advanced level">
+          <div class="level-icon">🔬</div>
+          <h3>Advanced</h3>
+          <p class="level-best-for">Best for deep dives into clinical detail</p>
+          <span class="level-badge" id="badge-advanced">—</span>
+        </div>
+      </div>
+    </div>
+    <div class="step-summary" id="levelSummary" style="display:none;">
+      <span class="summary-icon" id="levelSummaryIcon">🎯</span>
+      <span class="summary-text">Level: <strong id="levelSummaryText"></strong></span>
+      <button class="summary-change" id="levelChangeBtn">Change</button>
+    </div>
+
+    <!-- STEP 3: QUESTION COUNT -->
+    <div class="setup-step" id="stepCountBlock" style="display:none;">
+      <h2 class="step-title">🔢 How many questions?</h2>
+      <p class="step-sub">Pick a quick option, or enter your own number.</p>
+      <div class="count-chips" id="countChips"></div>
+      <span class="count-custom-label">Or enter a custom number:</span>
+      <div class="count-wrap" id="questionCountWrap"></div>
+      <div class="count-meta" id="countMeta"></div>
+    </div>
+
+    <button class="start-btn" id="startBtn" onclick="startQuiz()">Start Quiz →</button>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════
+     QUIZ SCREEN
+     ════════════════════════════════════════════════════════════ -->
+<div id="quiz-screen">
+  <div class="quiz-status-bar">
+    <button class="quiz-exit-btn" id="quizExitBtn" aria-label="Exit this quiz">← Exit</button>
+    <span class="quiz-live-badge"><span class="live-dot"></span> Live Quiz</span>
+    <span class="q-counter" id="qCounter">Question 1 of 10</span>
+  </div>
+
+  <div class="progress-wrap"><div class="progress-bar" id="progressBar" style="width:0%"></div></div>
+
+  <div class="quiz-stage">
+    <div class="timer-ring-wrap" role="timer" aria-label="Time remaining for this question">
+      <svg class="timer-ring" viewBox="0 0 80 80">
+        <circle class="timer-ring-bg" cx="40" cy="40" r="34"></circle>
+        <circle class="timer-ring-fg" id="timerRingFg" cx="40" cy="40" r="34"></circle>
+      </svg>
+      <div class="timer-circle" id="timerCircle" aria-live="polite">30</div>
+    </div>
+    <span class="score-display" id="scoreDisplay">Score: 0</span>
+  </div>
+
+  <div class="question-card">
+    <span class="q-level-tag" id="levelTag">Beginner</span>
+    <p class="question-text" id="questionText">Loading question...</p>
+  </div>
+
+  <div class="options-grid" id="optionsGrid" role="group" aria-label="Answer options"></div>
+  <div class="feedback-box" id="feedbackBox" role="status" aria-live="polite"></div>
+
+  <!-- NeuroAI follow-up -->
+  <div id="quizAIBox" class="qai-box" style="display:none;">
+    <p class="qai-invite">💡 Want this explained a different way? Ask NeuroAI below.</p>
+    <div class="qai-header">
+      <span class="qai-badge"><span class="qai-dot"></span> Ask NeuroAI</span>
+      <span class="qai-sub">about this question</span>
+    </div>
+    <div id="quizAIChatLog" class="qai-chatlog"></div>
+    <div class="qai-input-row">
+      <textarea id="quizAIInput" rows="1" placeholder="Ask a follow-up…" aria-label="Ask NeuroAI a follow-up question"></textarea>
+      <button class="qai-send" id="quizAISendBtn" aria-label="Send to NeuroAI">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <button class="next-btn" id="nextBtn" onclick="nextQuestion()">Next Question →</button>
+  <p class="kbd-hint">Press <kbd>1</kbd>–<kbd>4</kbd> to answer · <kbd>Enter</kbd> for next · <kbd>Esc</kbd> to exit</p>
+</div>
+
+<!-- ════════════════════════════════════════════════════════════
+     RESULTS SCREEN
+     ════════════════════════════════════════════════════════════ -->
+<div id="results-screen">
+  <div class="results-card">
+    <div class="results-emoji" id="resultsEmoji">🧠</div>
+    <h2 id="resultsTitle">Quiz Complete!</h2>
+    <p id="resultsSubtitle">Here's how your brain performed.</p>
+
+    <div class="score-ring-wrap">
+      <svg class="score-ring" viewBox="0 0 160 160">
+        <circle class="score-ring-bg" cx="80" cy="80" r="70"></circle>
+        <circle class="score-ring-fg" id="scoreRingFg" cx="80" cy="80" r="70"></circle>
+      </svg>
+      <div class="score-ring-center">
+        <div class="score-big" id="scoreBig">0/10</div>
+        <div class="score-label">Total Score</div>
+      </div>
+    </div>
+
+    <div class="stats-row">
+      <div class="stat-item stat-correct"><div class="stat-num" id="statCorrect">0</div><div class="stat-lbl">Correct</div></div>
+      <div class="stat-item stat-wrong"><div class="stat-num" id="statWrong">0</div><div class="stat-lbl">Wrong</div></div>
+      <div class="stat-item stat-skipped"><div class="stat-num" id="statSkipped">0</div><div class="stat-lbl">Timed Out</div></div>
+    </div>
+
+    <div class="result-msg" id="resultMsg"></div>
+
+    <div class="results-btns">
+      <button class="btn-retry" onclick="retryQuiz()">Retry Same Quiz</button>
+      <button class="btn-change" onclick="changeLevel()">New Quiz</button>
+    </div>
+    <div id="scoreSavedBadge" class="score-saved-badge" style="display:none;">☁️ Score saved to your cloud profile!</div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="footer-logo">🧠 NVD<span class="footer-logo-accent">Lab</span></div>
+      <p class="footer-tagline">The Neurovascular Dynamic Lab.<br>Learn. Build. Teach.</p>
+    </div>
+    <div>
+      <p class="footer-links-label">Explore</p>
+      <div class="footer-links">
+        <a href="learn.html">Learn</a>
+        <a href="quiz.html">Quiz</a>
+        <a href="flashcards.html">Flashcards</a>
+        <a href="leaderboard.html">Leaderboard</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+      </div>
+    </div>
+    <div class="footer-built">
+      <p class="footer-built-label">Built by</p>
+      <p class="footer-built-name">GIDEON REALITY</p>
+      <p class="footer-built-sub">Gideon Olukanni · Lagos, Nigeria</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Neurovascular Dynamic Lab</span>
+    <span class="footer-sep">·</span>
+    <span>All rights reserved</span>
+    <span class="footer-sep">·</span>
+    <span>Made with 🧠 for curious minds</span>
+  </div>
+</footer>
+
+<script type="module">
+
+// ─────────────────────────────
+// FIREBASE IMPORTS — unchanged
+// ─────────────────────────────
+import {
+  db, auth,
+  collection, getDocs, getDoc, setDoc, updateDoc, addDoc,
+  doc, query, where, orderBy, increment, writeBatch,
+  arrayUnion, onAuthStateChanged, signOut, serverTimestamp
+} from "./firebase-config.js";
+import { submitFinalExam, getUserProgress, completeMiniQuiz } from "./progressionEngine.js";
+  const WORKER_URL = "https://neurovascular-ai.gideonolukanni20103.workers.dev";
+
+// ─────────────────────────────
+// THE 20 HARDCODED QUESTIONS — verbatim, unchanged
+// ─────────────────────────────
+const HARDCODED_QUESTIONS = [
+  // BEGINNER (7 questions)
+  { level: 'beginner', q: 'What is the main control center of the human body?', options: ['The Heart', 'The Brain', 'The Lungs', 'The Spine'], answer: 1, explanation: "The brain is the body's control center, managing everything from breathing to thinking and emotions." },
+  { level: 'beginner', q: 'How many lobes does the human brain have?', options: ['Two', 'Three', 'Four', 'Five'], answer: 2, explanation: 'The brain has four lobes: the Frontal, Parietal, Temporal, and Occipital lobes.' },
+  { level: 'beginner', q: 'Which part of the brain is responsible for memory formation?', options: ['Cerebellum', 'Hippocampus', 'Brainstem', 'Amygdala'], answer: 1, explanation: 'The hippocampus, located deep in the temporal lobe, is the primary structure for forming new memories.' },
+  { level: 'beginner', q: 'What do we call the basic building blocks of the nervous system?', options: ['Cells', 'Neurons', 'Atoms', 'Genes'], answer: 1, explanation: 'Neurons are the specialized nerve cells that transmit information throughout the brain and body.' },
+  { level: 'beginner', q: 'Which brain structure controls balance and coordination?', options: ['Frontal Lobe', 'Thalamus', 'Cerebellum', 'Cortex'], answer: 2, explanation: 'The cerebellum, located at the back of the brain, coordinates movement and maintains balance.' },
+  { level: 'beginner', q: 'Approximately how many neurons does the human brain contain?', options: ['1 million', '1 billion', '86 billion', '1 trillion'], answer: 2, explanation: 'The human brain contains approximately 86 billion neurons, each forming thousands of connections.' },
+  { level: 'beginner', q: 'What is the outer layer of the brain called?', options: ['Medulla', 'Cerebral Cortex', 'Thalamus', 'Corpus Callosum'], answer: 1, explanation: 'The cerebral cortex is the outermost layer of the brain, responsible for higher thinking, perception, and language.' },
+  // INTERMEDIATE (7 questions)
+  { level: 'intermediate', q: 'What is the gap between two neurons where signals are transmitted called?', options: ['Axon', 'Dendrite', 'Synapse', 'Myelin'], answer: 2, explanation: 'The synapse is the tiny gap between neurons where neurotransmitters carry signals from one neuron to the next.' },
+  { level: 'intermediate', q: 'Which part of a neuron receives incoming signals from other neurons?', options: ['Axon', 'Dendrite', 'Nucleus', 'Myelin Sheath'], answer: 1, explanation: 'Dendrites are the branch-like extensions of a neuron that receive signals from neighboring neurons.' },
+  { level: 'intermediate', q: 'What is the function of the myelin sheath?', options: ['Store memories', 'Speed up electrical signal transmission', 'Produce neurotransmitters', 'Connect the two hemispheres'], answer: 1, explanation: 'The myelin sheath insulates the axon, significantly speeding up the transmission of electrical signals along the neuron.' },
+  { level: 'intermediate', q: 'Which neurotransmitter is most associated with reward and motivation?', options: ['Serotonin', 'Dopamine', 'Acetylcholine', 'GABA'], answer: 1, explanation: "Dopamine is the primary neurotransmitter in the brain's reward system, influencing motivation, pleasure, and reinforcement." },
+  { level: 'intermediate', q: 'The frontal lobe is primarily responsible for which function?', options: ['Processing visual information', 'Regulating balance', 'Planning, decision-making, and personality', 'Processing sound'], answer: 2, explanation: 'The frontal lobe governs executive functions including planning, decision-making, problem solving, and personality expression.' },
+  { level: 'intermediate', q: 'What connects the left and right hemispheres of the brain?', options: ['Thalamus', 'Corpus Callosum', 'Brainstem', 'Hippocampus'], answer: 1, explanation: "The corpus callosum is a thick band of nerve fibers that connects and allows communication between the brain's two hemispheres." },
+  { level: 'intermediate', q: 'What is neuroplasticity?', options: ["The brain's ability to grow in size", 'The process of forgetting memories', "The brain's ability to reorganize and form new connections", 'The production of new neurons only at birth'], answer: 2, explanation: "Neuroplasticity is the brain's remarkable ability to reorganize itself by forming new neural connections throughout life in response to learning or injury." },
+  // ADVANCED (6 questions)
+  { level: 'advanced', q: 'What does the term "cerebrovascular" specifically refer to?', options: ['Brain tissue and neurons', 'Blood vessels that supply the brain', 'The cerebrospinal fluid system', 'The peripheral nervous system'], answer: 1, explanation: 'Cerebrovascular refers specifically to the blood vessels — arteries, veins, and capillaries — that supply blood to the brain.' },
+  { level: 'advanced', q: 'Which type of stroke is caused by a blocked blood vessel in the brain?', options: ['Hemorrhagic stroke', 'Ischemic stroke', 'Transient ischemic attack only', 'Brainstem stroke'], answer: 1, explanation: 'An ischemic stroke occurs when a blood vessel supplying the brain becomes blocked, cutting off oxygen to brain tissue. It accounts for about 87% of all strokes.' },
+  { level: 'advanced', q: 'What is the blood-brain barrier?', options: ['A surgical membrane used in brain operations', 'A region of the brain that filters emotions', 'A selective barrier of cells that protects the brain from harmful substances in the blood', 'The layer between grey and white matter'], answer: 2, explanation: 'The blood-brain barrier is a highly selective semipermeable border of endothelial cells that prevents most substances from crossing from the bloodstream into the brain.' },
+  { level: 'advanced', q: 'In computational neuroscience, what are artificial neural networks modeled after?', options: ['The structure of DNA', 'The biological structure and function of neurons in the brain', 'The architecture of the spinal cord', 'The pattern of brain waves during sleep'], answer: 1, explanation: 'Artificial neural networks are directly inspired by the structure and function of biological neurons — including layered processing, weighted connections, and activation thresholds.' },
+  { level: 'advanced', q: 'What is the primary characteristic of a cerebral aneurysm?', options: ['A tumor growing on the surface of the brain', 'A bulge or ballooning in a blood vessel in the brain', "Inflammation of the brain's outer membrane", 'Hardening of neural pathways'], answer: 1, explanation: 'A cerebral aneurysm is a bulge or ballooning in a blood vessel in the brain. If it ruptures, it causes a hemorrhagic stroke — a life-threatening emergency.' },
+  { level: 'advanced', q: 'Which imaging technology measures brain activity by detecting changes in blood flow and oxygenation?', options: ['CT Scan', 'X-Ray', 'fMRI (functional MRI)', 'EEG'], answer: 2, explanation: 'fMRI (functional Magnetic Resonance Imaging) detects changes in blood oxygenation and flow that reflect neural activity, making it the gold standard for mapping brain function.' }
+];
+
+// ─────────────────────────────
+// CONSTANTS — unchanged
+// ─────────────────────────────
+const LEVELS            = ['beginner', 'intermediate', 'advanced'];
+const MAX_QUESTIONS     = 60;
+const QUESTION_PRESETS  = [5, 10, 15, 20, 30, 40, 50, 60];
+const COUNTS_REF        = () => doc(db, 'quizMetadata', 'counts');
+const MIGRATION_FLAG    = 'hardcodedMigrationDone';
+
+// ─────────────────────────────
+// SESSION STATE — unchanged
+// ─────────────────────────────
+let currentUser           = null;
+let quizTopics            = [];
+let quizCounts             = {};
+let selectedTopic         = null;
+let selectedTopicName     = '';
+let selectedLevel         = null;
+let selectedQuestionCount = null;
+let currentQuestions      = [];
+let currentIndex          = 0;
+let score                 = 0;
+let correctCount          = 0;
+let wrongCount            = 0;
+let skippedCount          = 0;
+let timerInterval         = null;
+let timeLeft              = 30;
+let answered              = false;
+let seenQuestionIds       = new Set();
+
+// ─────────────────────────────
+// EXAM MODE STATE — unchanged
+// ─────────────────────────────
+let examMode       = null;
+let examCourseId   = null;
+let examCourseName = '';
+let examModuleId   = null;
+
+// NeuroAI per-question chat history
+let qaiHistory = [];
+let qaiLoading = false;
+
+const TIMER_RING_CIRCUMFERENCE = 2 * Math.PI * 34; // matches the r=34 SVG circle
+
+// ─────────────────────────────
+// AUTH
+// ─────────────────────────────
+onAuthStateChanged(auth, (user) => {
+  currentUser = user;
+  const signInBtn   = document.getElementById('signInNavBtn');
+  const userDisplay = document.getElementById('authUserDisplay');
+  const avatar      = document.getElementById('authAvatar');
+  const emailEl     = document.getElementById('authUserEmail');
+
+  if (user) {
+    signInBtn.style.display = 'none';
+    userDisplay.classList.add('visible');
+    avatar.textContent  = (user.email || 'U').charAt(0).toUpperCase();
+    emailEl.textContent = user.email;
+  } else {
+    signInBtn.style.display = '';
+    userDisplay.classList.remove('visible');
+  }
+});
+
+document.getElementById('signOutBtn')?.addEventListener('click', async () => {
+  await signOut(auth);
+});
+
+// ─────────────────────────────
+// MIGRATION — unchanged logic, field name 'topic' (matches startQuiz's
+// query, not the old mismatched 'topicId')
+// ─────────────────────────────
+async function migrateHardcodedQuestions() {
+  const banner = document.getElementById('migrationBanner');
+  try {
+    const existingSnap = await getDocs(query(
+      collection(db, 'questions'),
+      where('topic', '==', 'mixed-topics')
+    ));
+
+    const existingTexts = new Set();
+    existingSnap.forEach((d) => { if (d.data().q) existingTexts.add(d.data().q.trim()); });
+
+    const missing = HARDCODED_QUESTIONS.filter(q => !existingTexts.has(q.q.trim()));
+
+    if (missing.length > 0) {
+      if (banner) banner.style.display = 'block';
+
+      await setDoc(doc(db, 'quizTopics', 'mixed-topics'), {
+        title: 'Mixed Topics', name: 'Mixed Topics',
+        slug: 'mixed-topics', isActive: true,
+        createdAt: serverTimestamp()
+      }, { merge: true });
+
+      const batch = writeBatch(db);
+      for (const q of missing) {
+        const newRef = doc(collection(db, 'questions'));
+        batch.set(newRef, {
+          topic: 'mixed-topics', topicName: 'Mixed Topics',
+          level: q.level, q: q.q, options: q.options,
+          answer: q.answer, explanation: q.explanation,
+          createdAt: serverTimestamp(), migratedFromHardcode: true
+        });
+      }
+      await batch.commit();
+    }
+
+    const finalSnap = await getDocs(query(
+      collection(db, 'questions'),
+      where('topic', '==', 'mixed-topics')
+    ));
+    const finalCounts = { beginner: 0, intermediate: 0, advanced: 0 };
+    finalSnap.forEach((d) => {
+      const lvl = d.data().level;
+      if (lvl && finalCounts[lvl] !== undefined) finalCounts[lvl]++;
+    });
+
+    await setDoc(COUNTS_REF(), { 'mixed-topics': finalCounts, [MIGRATION_FLAG]: true }, { merge: true });
+    quizCounts['mixed-topics'] = finalCounts;
+
+    if (banner) banner.style.display = 'none';
+  } catch (err) {
+    console.error('Migration failed:', err);
+    if (banner) banner.style.display = 'none';
+  }
+}
+
+// ─────────────────────────────
+// LOAD QUIZ METADATA — unchanged
+// ─────────────────────────────
+async function loadQuizMetadata() {
+  try {
+    const countsSnap = await getDoc(COUNTS_REF());
+    quizCounts = countsSnap.exists() ? countsSnap.data() : {};
+
+    const topicsSnap = await getDocs(query(collection(db, 'quizTopics'), orderBy('createdAt', 'asc')));
+    quizTopics = [];
+    topicsSnap.forEach((topicDoc) => {
+      const data          = topicDoc.data();
+      const resolvedTitle = data.title || data.name || '';
+      const resolvedSlug  = data.slug  || topicDoc.id || '';
+      if (!resolvedTitle || !resolvedSlug) return;
+      quizTopics.push({ id: resolvedSlug, title: resolvedTitle, slug: resolvedSlug, createdAt: data.createdAt });
+    });
+
+    quizTopics.sort((a, b) => {
+      if (a.slug === 'mixed-topics') return -1;
+      if (b.slug === 'mixed-topics') return 1;
+      return 0;
+    });
+
+    populateTopicDropdown();
+  } catch (err) {
+    console.error('Quiz metadata load failed:', err);
+    const sel = document.getElementById('topicSelect');
+    if (sel) sel.innerHTML = '<option value="">Failed to load topics. Please refresh.</option>';
+  }
+}
+
+// ─────────────────────────────
+// POPULATE DROPDOWN — unchanged
+// ─────────────────────────────
+function populateTopicDropdown() {
+  const sel = document.getElementById('topicSelect');
+  if (!sel) return;
+  if (quizTopics.length === 0) {
+    sel.innerHTML = '<option value="">No topics available yet.</option>';
+    return;
+  }
+  sel.innerHTML = '<option value="">Select a topic…</option>';
+  quizTopics.forEach((topic) => {
+    const opt = document.createElement('option');
+    opt.value = topic.slug;
+    opt.textContent = topic.title;
+    sel.appendChild(opt);
+  });
+}
+
+// ─────────────────────────────
+// STEP-TRACK HELPERS — purely additive visual layer, new IDs only
+// ─────────────────────────────
+function setStepState(stepNum, state) {
+  // state: 'pending' | 'active' | 'done'
+  const dot  = document.getElementById('stepDot' + stepNum);
+  if (dot) {
+    dot.classList.remove('active', 'done');
+    if (state === 'active') dot.classList.add('active');
+    if (state === 'done')   dot.classList.add('done');
+  }
+}
+
+// ─────────────────────────────
+// TOPIC CHANGED — same core contract (resets level/count, fills badges),
+// extended with progressive-disclosure reveal of Step 2
+// ─────────────────────────────
+window.handleTopicChange = function() {
+  const sel     = document.getElementById('topicSelect');
+  selectedTopic = sel.value;
+
+  const found       = quizTopics.find(t => t.slug === selectedTopic);
+  selectedTopicName = found ? found.title : '';
+
+  selectedLevel         = null;
+  selectedQuestionCount = null;
+  document.querySelectorAll('.level-card').forEach(c => c.classList.remove('selected'));
+  document.getElementById('stepCountBlock').style.display     = 'none';
+  document.getElementById('questionCountWrap').innerHTML      = '';
+  document.getElementById('countChips').innerHTML             = '';
+  document.getElementById('countMeta').textContent            = '';
+  document.getElementById('levelSummary').style.display       = 'none';
+  document.getElementById('startBtn').classList.remove('ready');
+
+  LEVELS.forEach((level) => {
+    const badge = document.getElementById('badge-' + level);
+    if (!badge) return;
+    if (selectedTopic) {
+      const count = quizCounts?.[selectedTopic]?.[level] || 0;
+      badge.textContent = count + ' Question' + (count !== 1 ? 's' : '');
+    } else {
+      badge.textContent = '—';
+    }
+  });
+
+  if (selectedTopic) {
+    document.getElementById('stepTopicBlock').style.display = 'none';
+    document.getElementById('topicSummaryText').textContent = selectedTopicName;
+    document.getElementById('topicSummary').style.display   = 'flex';
+    document.getElementById('stepLevelBlock').style.display = 'block';
+    setStepState(1, 'done');
+    setStepState(2, 'active');
+    document.getElementById('stepLine1').classList.add('done');
+  } else {
+    document.getElementById('stepTopicBlock').style.display = 'block';
+    document.getElementById('topicSummary').style.display   = 'none';
+    document.getElementById('stepLevelBlock').style.display = 'none';
+    setStepState(1, 'active');
+    setStepState(2, 'pending');
+    document.getElementById('stepLine1').classList.remove('done');
+  }
+};
+
+document.getElementById('topicChangeBtn')?.addEventListener('click', () => {
+  document.getElementById('topicSelect').value = '';
+  window.handleTopicChange();
+  document.getElementById('topicSelect').focus();
+});
+
+// ─────────────────────────────
+// LEVEL SELECTED — same core contract, extended with count-chips
+// (built from QUESTION_PRESETS, now actually used) + progressive reveal
+// ─────────────────────────────
+window.selectLevel = function(level, el) {
+  if (!selectedTopic) {
+    alert('Please select a topic first.');
+    return;
+  }
+
+  const available = quizCounts?.[selectedTopic]?.[level] || 0;
+  if (available < 1) {
+    alert('No questions are available for this level yet. Try another level or topic.');
+    return;
+  }
+
+  document.querySelectorAll('.level-card').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+
+  selectedLevel         = level;
+  selectedQuestionCount = null;
+
+  const capped = Math.min(available, MAX_QUESTIONS);
+
+  const chipsWrap = document.getElementById('countChips');
+  const presetsInRange = QUESTION_PRESETS.filter(p => p <= capped);
+  if (!presetsInRange.includes(capped)) presetsInRange.push(capped);
+  chipsWrap.innerHTML = presetsInRange.map((n, i) =>
+    `<button type="button" class="count-chip${i === presetsInRange.length - 1 ? ' active' : ''}" data-val="${n}">${n}</button>`
+  ).join('');
+
+  const wrap = document.getElementById('questionCountWrap');
+  const meta = document.getElementById('countMeta');
+  wrap.innerHTML = '';
+  meta.textContent = available + ' question' + (available !== 1 ? 's' : '') + ' available for this level (max ' + MAX_QUESTIONS + ' per session)';
+
+  wrap.innerHTML = `
+    <div style="display: flex; flex-direction: column; gap: 8px; width: 100%;">
+      <div style="display: flex; gap: 15px; align-items: center; width: 100%;">
+        <input type="number" id="dynamicQCount" min="1" max="${capped}" value="${capped}"
+               class="modern-select" style="width: 100px; text-align: center; padding: 14px; transition: all 0.2s ease;">
+        <button id="dynamicStartBtn" class="start-btn ready" style="margin-top: 0; flex-grow: 1; transition: all 0.2s ease;">
+          Start Quiz →
+        </button>
+      </div>
+      <small id="inputHint" style="color: var(--red); font-size: 0.85rem; display: none; text-align: left; font-weight: 500;">
+        ⚠️ Please choose a number between 1 and ${capped}.
+      </small>
+    </div>
+  `;
+
+  selectedQuestionCount = capped;
+
+  const qInput   = document.getElementById('dynamicQCount');
+  const startBtn = document.getElementById('dynamicStartBtn');
+  const hintText = document.getElementById('inputHint');
+
+  function validateCount() {
+    const val = parseInt(qInput.value, 10);
+    if (isNaN(val) || val < 1 || val > capped) {
+      qInput.style.borderColor = 'var(--red)';
+      qInput.style.boxShadow = '0 0 0 3px rgba(239, 68, 68, 0.2)';
+      startBtn.disabled = true;
+      startBtn.style.opacity = '0.4';
+      startBtn.style.cursor = 'not-allowed';
+      startBtn.classList.remove('ready');
+      hintText.style.display = 'block';
+      hintText.innerHTML = val > capped
+        ? `⚠️ Only <strong>${capped}</strong> questions are available for this level.`
+        : `⚠️ Please enter a valid number (minimum 1).`;
+      document.querySelectorAll('.count-chip').forEach(c => c.classList.remove('active'));
+    } else {
+      qInput.style.borderColor = '';
+      qInput.style.boxShadow = '';
+      startBtn.disabled = false;
+      startBtn.style.opacity = '1';
+      startBtn.style.cursor = 'pointer';
+      startBtn.classList.add('ready');
+      hintText.style.display = 'none';
+      selectedQuestionCount = val;
+      document.querySelectorAll('.count-chip').forEach(c => c.classList.toggle('active', parseInt(c.dataset.val, 10) === val));
+    }
+  }
+
+  qInput.addEventListener('input', validateCount);
+  startBtn.addEventListener('click', () => { if (!startBtn.disabled) startQuiz(); });
+
+  chipsWrap.querySelectorAll('.count-chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+      qInput.value = chip.dataset.val;
+      validateCount();
+    });
+  });
+
+  document.getElementById('stepCountBlock').style.display = 'block';
+
+  document.getElementById('stepLevelBlock').style.display = 'none';
+  const levelLabel = level.charAt(0).toUpperCase() + level.slice(1);
+  const levelIcons = { beginner: '🌱', intermediate: '⚡', advanced: '🔬' };
+  document.getElementById('levelSummaryIcon').textContent = levelIcons[level] || '🎯';
+  document.getElementById('levelSummaryText').textContent = levelLabel;
+  document.getElementById('levelSummary').style.display   = 'flex';
+  setStepState(2, 'done');
+  setStepState(3, 'active');
+  document.getElementById('stepLine2').classList.add('done');
+
+  const oldStartBtn = document.getElementById('startBtn');
+  if (oldStartBtn) oldStartBtn.style.display = 'none';
+};
+
+document.getElementById('levelChangeBtn')?.addEventListener('click', () => {
+  document.querySelectorAll('.level-card').forEach(c => c.classList.remove('selected'));
+  document.getElementById('levelSummary').style.display   = 'none';
+  document.getElementById('stepLevelBlock').style.display = 'block';
+  document.getElementById('stepCountBlock').style.display = 'none';
+  document.getElementById('startBtn').classList.remove('ready');
+  selectedLevel = null;
+  setStepState(2, 'active');
+  setStepState(3, 'pending');
+  document.getElementById('stepLine2').classList.remove('done');
+});
+
+document.querySelectorAll('.level-card').forEach(card => {
+  card.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); card.click(); }
+  });
+});
+
+// ─────────────────────────────
+// START QUIZ — unchanged
+// ─────────────────────────────
+window.startQuiz = async function() {
+  if (!selectedTopic || !selectedLevel || !selectedQuestionCount) return;
+
+  document.getElementById('level-screen').style.display   = 'none';
+  document.getElementById('quiz-screen').style.display    = 'block';
+  document.getElementById('results-screen').style.display = 'none';
+
+  document.getElementById('questionText').textContent  = 'Loading questions...';
+  document.getElementById('optionsGrid').innerHTML      = '';
+  document.getElementById('feedbackBox').style.display  = 'none';
+  document.getElementById('nextBtn').style.display      = 'none';
+
+  try {
+    const qSnap = await getDocs(query(
+      collection(db, 'questions'),
+      where('topic', '==', selectedTopic),
+      where('level', '==', selectedLevel)
+    ));
+
+    let pool = [];
+    qSnap.forEach((docSnap) => { pool.push({ id: docSnap.id, ...docSnap.data() }); });
+
+    if (pool.length === 0) {
+      alert('No questions found for this selection. Please try another combination.');
+      document.getElementById('level-screen').style.display = 'block';
+      document.getElementById('quiz-screen').style.display  = 'none';
+      return;
+    }
+
+    for (let i = pool.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [pool[i], pool[j]] = [pool[j], pool[i]];
+    }
+
+    let unseenPool = pool.filter(q => !seenQuestionIds.has(q.id));
+    if (unseenPool.length < selectedQuestionCount) {
+      seenQuestionIds.clear();
+      unseenPool = pool;
+    }
+
+    currentQuestions = unseenPool.slice(0, selectedQuestionCount);
+    currentQuestions.forEach(q => seenQuestionIds.add(q.id));
+
+    currentIndex = 0; score = 0; correctCount = 0; wrongCount = 0; skippedCount = 0;
+
+    loadQuestion();
+  } catch (err) {
+    console.error('Quiz load failed:', err);
+    alert('Failed to load questions. Please check your connection and try again.');
+    document.getElementById('level-screen').style.display = 'block';
+    document.getElementById('quiz-screen').style.display  = 'none';
+  }
+};
+
+// ─────────────────────────────
+// LOAD QUESTION — same scoring contract; builds options with a letter
+// badge for clearer "tappable choice" affordance and resets AI chat
+// ─────────────────────────────
+function loadQuestion() {
+  qaiHistory = [];
+  qaiLoading = false;
+  const aiBox = document.getElementById('quizAIBox');
+  const aiLog = document.getElementById('quizAIChatLog');
+  if (aiBox) {
+    aiBox.style.display = 'none';
+    if (aiLog) aiLog.innerHTML = '';
+    document.getElementById('quizAIInput').value = '';
+  }
+
+  answered = false;
+  timeLeft = 30;
+
+  const q     = currentQuestions[currentIndex];
+  const total = currentQuestions.length;
+
+  document.getElementById('progressBar').style.width = ((currentIndex / total) * 100) + '%';
+  document.getElementById('qCounter').textContent    = 'Question ' + (currentIndex + 1) + ' of ' + total;
+  document.getElementById('scoreDisplay').textContent = 'Score: ' + score;
+
+  const tag       = document.getElementById('levelTag');
+  tag.textContent = q.level.charAt(0).toUpperCase() + q.level.slice(1);
+  tag.className   = 'q-level-tag tag-' + q.level;
+
+  document.getElementById('questionText').textContent = q.q;
+
+  const letters = ['A', 'B', 'C', 'D'];
+  const grid = document.getElementById('optionsGrid');
+  grid.innerHTML = '';
+  q.options.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'option-btn';
+    btn.setAttribute('aria-label', `Option ${letters[i] || i + 1}: ${opt}`);
+    btn.innerHTML = `
+      <span class="option-letter">${letters[i] || i + 1}</span>
+      <span class="option-text"></span>
+      <span class="option-icon"></span>`;
+    btn.querySelector('.option-text').textContent = opt;
+    btn.onclick = () => selectAnswer(i);
+    grid.appendChild(btn);
+  });
+
+  document.getElementById('feedbackBox').style.display = 'none';
+  document.getElementById('feedbackBox').className     = 'feedback-box';
+  document.getElementById('nextBtn').style.display     = 'none';
+
+  updateTimerDisplay();
+  clearInterval(timerInterval);
+  timerInterval = setInterval(() => {
+    timeLeft--;
+    updateTimerDisplay();
+    if (timeLeft <= 0) { clearInterval(timerInterval); timeOut(); }
+  }, 1000);
+}
+
+// ─────────────────────────────
+// TIMER — same contract (sets #timerCircle text + warning/danger
+// classes), now also drives the SVG ring
+// ─────────────────────────────
+function updateTimerDisplay() {
+  const circle       = document.getElementById('timerCircle');
+  circle.textContent = timeLeft;
+  circle.className   = 'timer-circle';
+
+  const ring = document.getElementById('timerRingFg');
+  if (ring) {
+    const pct = Math.max(0, timeLeft / 30);
+    ring.style.strokeDashoffset = TIMER_RING_CIRCUMFERENCE * (1 - pct);
+    ring.classList.remove('warning', 'danger');
+  }
+
+  if (timeLeft <= 10 && timeLeft > 5) { circle.classList.add('warning'); ring?.classList.add('warning'); }
+  if (timeLeft <= 5)                   { circle.classList.add('danger');  ring?.classList.add('danger'); }
+}
+
+// ─────────────────────────────
+// SELECT ANSWER — same scoring contract, adds icon feedback
+// (not color alone) for accessibility
+// ─────────────────────────────
+window.selectAnswer = function(chosen) {
+  if (answered) return;
+  answered = true;
+  clearInterval(timerInterval);
+
+  const q    = currentQuestions[currentIndex];
+  const btns = document.querySelectorAll('.option-btn');
+  btns.forEach(b => b.disabled = true);
+
+  const fb = document.getElementById('feedbackBox');
+
+  if (chosen === q.answer) {
+    btns[chosen].classList.add('correct');
+    btns[chosen].querySelector('.option-icon').textContent = '✓';
+    score += timeLeft > 0 ? Math.max(1, timeLeft) : 1;
+    correctCount++;
+    fb.className = 'feedback-box correct';
+    fb.innerHTML = `<span class="feedback-icon">✅</span><span>Correct! ${q.explanation || ''}</span>`;
+  } else {
+    btns[chosen].classList.add('wrong');
+    btns[chosen].querySelector('.option-icon').textContent = '✗';
+    btns[q.answer].classList.add('reveal');
+    btns[q.answer].querySelector('.option-icon').textContent = '✓';
+    wrongCount++;
+    fb.className = 'feedback-box wrong';
+    fb.innerHTML = `<span class="feedback-icon">💡</span><span>Not quite — that's okay, this is how learning works. ${q.explanation || ''}</span>`;
+  }
+
+  fb.style.display = 'flex';
+  document.getElementById('scoreDisplay').textContent = 'Score: ' + score;
+  document.getElementById('nextBtn').style.display    = 'block';
+
+  const aiBox = document.getElementById('quizAIBox');
+  if (aiBox) aiBox.style.display = 'block';
+};
+
+// ─────────────────────────────
+// TIME OUT — same contract, framed as a learning moment not a failure
+// ─────────────────────────────
+function timeOut() {
+  if (answered) return;
+  answered = true;
+
+  const q    = currentQuestions[currentIndex];
+  const btns = document.querySelectorAll('.option-btn');
+  btns.forEach(b => b.disabled = true);
+  btns[q.answer].classList.add('reveal');
+  btns[q.answer].querySelector('.option-icon').textContent = '✓';
+  skippedCount++;
+
+  const fb     = document.getElementById('feedbackBox');
+  fb.className = 'feedback-box wrong';
+  fb.innerHTML = `<span class="feedback-icon">⏰</span><span>Time's up — no worries, here's the answer. ${q.explanation || ''}</span>`;
+  fb.style.display = 'flex';
+  document.getElementById('nextBtn').style.display = 'block';
+
+  const aiBox = document.getElementById('quizAIBox');
+  if (aiBox) aiBox.style.display = 'block';
+}
+
+// ─────────────────────────────
+// NEXT QUESTION — unchanged
+// ─────────────────────────────
+window.nextQuestion = function() {
+  currentIndex++;
+  if (currentIndex >= currentQuestions.length) { showResults(); }
+  else { loadQuestion(); }
+};
+
+// ─────────────────────────────
+// SHOW RESULTS — same contract, plus score-ring animation
+// ─────────────────────────────
+function showResults() {
+  clearInterval(timerInterval);
+  document.getElementById('quiz-screen').style.display    = 'none';
+  document.getElementById('results-screen').style.display = 'block';
+
+  const total = currentQuestions.length;
+  const pct   = Math.round((correctCount / total) * 100);
+
+  document.getElementById('scoreBig').textContent    = correctCount + '/' + total;
+  document.getElementById('statCorrect').textContent = correctCount;
+  document.getElementById('statWrong').textContent   = wrongCount;
+  document.getElementById('statSkipped').textContent = skippedCount;
+
+  const ringFg = document.getElementById('scoreRingFg');
+  if (ringFg) {
+    const circumference = 2 * Math.PI * 70;
+    ringFg.style.strokeDasharray = circumference;
+    const ringColor = pct >= 70 ? 'var(--green)' : pct >= 50 ? 'var(--gold)' : 'var(--red)';
+    ringFg.style.stroke = ringColor;
+    requestAnimationFrame(() => {
+      ringFg.style.strokeDashoffset = circumference * (1 - pct / 100);
+    });
+  }
+
+  let emoji, title, subtitle, msg;
+  if (pct >= 90) {
+    emoji = '🏆'; title = 'Outstanding!'; subtitle = 'Your brain is working at elite level.';
+    msg = 'You answered ' + pct + '% correctly. You clearly have a deep passion for neuroscience. Keep going — the brain never stops surprising those who study it.';
+  } else if (pct >= 70) {
+    emoji = '🧠'; title = 'Great Work!'; subtitle = 'You know your neuroscience well.';
+    msg = 'You answered ' + pct + '% correctly. Solid performance. Review the questions you missed and try again — mastery is built through repetition.';
+  } else if (pct >= 50) {
+    emoji = '⚡'; title = 'Good Start!'; subtitle = 'Your foundations are forming.';
+    msg = "You answered " + pct + "% correctly. You're building your knowledge. Revisit the Learn and Resources pages, then come back stronger.";
+  } else {
+    emoji = '🌱'; title = 'Keep Growing!'; subtitle = 'Every expert started as a beginner.';
+    msg = "You answered " + pct + "% correctly. Don't be discouraged — wrong answers are part of learning, not a verdict on you. Start with our Resources page and build from the ground up.";
+  }
+
+  document.getElementById('resultsEmoji').textContent    = emoji;
+  document.getElementById('resultsTitle').textContent    = title;
+  document.getElementById('resultsSubtitle').textContent = subtitle;
+  document.getElementById('resultMsg').textContent       = msg;
+
+  if (typeof gtag === 'function') {
+    gtag('event', 'quiz_completed', {
+      quiz_topic:      selectedTopic,
+      quiz_level:      selectedLevel,
+      score_percent:   pct,
+      correct_answers: correctCount
+    });
+  }
+
+  if (examMode === 'exam' && currentUser) { handleFinalExamResult(pct); return; }
+  if (examMode === 'mini' && currentUser) { handleMiniQuizResult(pct); return; }
+
+  if (currentUser) {
+    const record = {
+      topic: selectedTopic, topicName: selectedTopicName, level: selectedLevel,
+      score: score, correct: correctCount, total: total, pct: pct, date: new Date().toISOString()
+    };
+    setDoc(doc(db, 'users', currentUser.uid), {
+      quizScores: arrayUnion(record), lastQuizScore: pct, lastQuizDate: record.date
+    }, { merge: true }).then(() => {
+      const badge = document.getElementById('scoreSavedBadge');
+      if (badge) badge.style.display = 'inline-flex';
+    }).catch(err => console.warn('Score save failed:', err));
+  }
+}
+
+// ─────────────────────────────
+// FINAL EXAM RESULT HANDLER — unchanged
+// ─────────────────────────────
+async function handleFinalExamResult(pct) {
+  try {
+    const result = await submitFinalExam(currentUser.uid, examCourseId, examCourseName, pct, 70);
+    const resultsBtns = document.querySelector('.results-btns');
+    const badge = document.getElementById('scoreSavedBadge');
+
+    if (result.passed) {
+      document.getElementById('resultsEmoji').textContent    = '🏆';
+      document.getElementById('resultsTitle').textContent    = 'Course Complete!';
+      document.getElementById('resultsSubtitle').textContent = `You passed the ${escapeHtmlQ(examCourseName)} final exam.`;
+      document.getElementById('resultMsg').textContent       = `You scored ${pct}% — your certificate has been issued! +100 XP earned.`;
+      if (badge) { badge.style.display = 'inline-flex'; badge.textContent = '🎓 Certificate issued — view it on your dashboard!'; }
+      if (resultsBtns) {
+        resultsBtns.innerHTML = `
+          <button class="btn-retry" onclick="window.location.href='index.html'">View Dashboard</button>
+          <button class="btn-change" onclick="window.location.href='learn.html'">Back to Learn</button>`;
+      }
+    } else {
+      document.getElementById('resultsEmoji').textContent    = '📚';
+      document.getElementById('resultsTitle').textContent    = 'Almost There!';
+      document.getElementById('resultsSubtitle').textContent = `You need 70% to pass — you scored ${pct}%.`;
+      document.getElementById('resultMsg').textContent       = `Review the course modules and try the exam again when you're ready.`;
+      if (resultsBtns) {
+        resultsBtns.innerHTML = `
+          <button class="btn-retry" onclick="window.location.href='${window.location.pathname}${window.location.search}'">Retry Exam</button>
+          <button class="btn-change" onclick="window.location.href='learn.html'">Review Course</button>`;
+      }
+    }
+  } catch (err) {
+    console.error('Final exam submission failed:', err);
+  }
+}
+
+// ─────────────────────────────
+// MODULE MINI-QUIZ RESULT HANDLER — unchanged
+// ─────────────────────────────
+async function handleMiniQuizResult(pct) {
+  const passed = pct >= 60;
+  try {
+    await completeMiniQuiz(currentUser.uid, examModuleId, pct, passed);
+    const resultsBtns = document.querySelector('.results-btns');
+    if (passed) {
+      document.getElementById('resultsEmoji').textContent    = '🎯';
+      document.getElementById('resultsTitle').textContent    = 'Quiz Passed!';
+      document.getElementById('resultsSubtitle').textContent = 'This step is now complete.';
+      document.getElementById('resultMsg').textContent       = `You scored ${pct}%. +10 XP earned.`;
+    } else {
+      document.getElementById('resultsEmoji').textContent    = '🌱';
+      document.getElementById('resultsTitle').textContent    = 'Keep Trying!';
+      document.getElementById('resultsSubtitle').textContent = 'You need 60% to pass.';
+      document.getElementById('resultMsg').textContent       = `You scored ${pct}%. Review the module and try again.`;
+    }
+    if (resultsBtns) {
+      resultsBtns.innerHTML = passed
+        ? `<button class="btn-retry" onclick="window.location.href='learn.html'">Back to Module</button>`
+        : `<button class="btn-retry" onclick="window.location.href='${window.location.pathname}${window.location.search}'">Retry Quiz</button>
+           <button class="btn-change" onclick="window.location.href='learn.html'">Back to Module</button>`;
+    }
+  } catch (err) {
+    console.error('Mini quiz submission failed:', err);
+  }
+}
+
+// ─────────────────────────────
+// RETRY / NEW QUIZ — unchanged
+// ─────────────────────────────
+window.retryQuiz = function() {
+  document.getElementById('results-screen').style.display = 'none';
+  startQuiz();
+};
+
+window.changeLevel = function() {
+  document.getElementById('results-screen').style.display = 'none';
+  document.getElementById('level-screen').style.display   = 'block';
+
+  seenQuestionIds.clear();
+  selectedTopic = null; selectedTopicName = ''; selectedLevel = null; selectedQuestionCount = null;
+
+  const sel = document.getElementById('topicSelect');
+  if (sel) sel.value = '';
+
+  document.querySelectorAll('.level-card').forEach(c => c.classList.remove('selected'));
+  LEVELS.forEach(l => { const b = document.getElementById('badge-' + l); if (b) b.textContent = '—'; });
+
+  document.getElementById('stepTopicBlock').style.display = 'block';
+  document.getElementById('topicSummary').style.display   = 'none';
+  document.getElementById('stepLevelBlock').style.display = 'none';
+  document.getElementById('levelSummary').style.display   = 'none';
+  document.getElementById('stepCountBlock').style.display = 'none';
+  document.getElementById('questionCountWrap').innerHTML  = '';
+  document.getElementById('countChips').innerHTML         = '';
+  document.getElementById('countMeta').textContent        = '';
+  document.getElementById('startBtn').classList.remove('ready');
+  document.getElementById('scoreSavedBadge').style.display = 'none';
+
+  setStepState(1, 'active'); setStepState(2, 'pending'); setStepState(3, 'pending');
+  document.getElementById('stepLine1').classList.remove('done');
+  document.getElementById('stepLine2').classList.remove('done');
+};
+
+// ─────────────────────────────
+// EXIT QUIZ — escape hatch with confirmation
+// ─────────────────────────────
+window.exitQuizSession = function() {
+  if (!confirm('Exit this quiz? Your progress on this question will be lost.')) return;
+  clearInterval(timerInterval);
+  if (examMode === 'exam' || examMode === 'mini') { window.location.href = 'learn.html'; return; }
+  document.getElementById('quiz-screen').style.display = 'none';
+  changeLevel();
+};
+document.getElementById('quizExitBtn')?.addEventListener('click', () => window.exitQuizSession());
+
+// ─────────────────────────────
+// FULL KEYBOARD NAVIGATION — additive global listener
+// 1-4 select an option · Enter advances · Esc exits
+// ─────────────────────────────
+document.addEventListener('keydown', (e) => {
+  const tagName = document.activeElement?.tagName;
+  if (tagName === 'TEXTAREA' || tagName === 'INPUT') return; // never hijack typing
+
+  const quizVisible = document.getElementById('quiz-screen').style.display === 'block';
+  if (!quizVisible) return;
+
+  if (!answered && ['1', '2', '3', '4'].includes(e.key)) {
+    const idx  = parseInt(e.key, 10) - 1;
+    const btns = document.querySelectorAll('.option-btn');
+    if (btns[idx]) { e.preventDefault(); btns[idx].click(); }
+  }
+  if (answered && e.key === 'Enter') { e.preventDefault(); nextQuestion(); }
+  if (e.key === 'Escape') { e.preventDefault(); window.exitQuizSession(); }
+});
+
+// ─────────────────────────────
+// HAMBURGER — closes on outside click AND nav link tap
+// ─────────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+  const btn = document.getElementById('hamburgerBtn');
+  const nav = document.getElementById('mobileNav');
+  if (btn && nav) {
+    btn.addEventListener('click', () => {
+      const open = nav.classList.toggle('show');
+      btn.setAttribute('aria-expanded', String(open));
+    });
+    document.addEventListener('click', e => {
+      if (!btn.contains(e.target) && !nav.contains(e.target)) {
+        nav.classList.remove('show');
+        btn.setAttribute('aria-expanded', 'false');
+      }
+    });
+    nav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+      nav.classList.remove('show');
+      btn.setAttribute('aria-expanded', 'false');
+    }));
+    // Keep in sync with the "@media (max-width: 1200px)" nav breakpoint.
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > 1200 && nav.classList.contains('show')) {
+        nav.classList.remove('show');
+        btn.setAttribute('aria-expanded', 'false');
+      }
+    });
+  }
+
+  migrateHardcodedQuestions().then(() => {
+    loadQuizMetadata();
+    detectExamModeFromURL();
+  });
+});
+
+// ─────────────────────────────
+// EXAM MODE DETECTION — unchanged
+// ─────────────────────────────
+function detectExamModeFromURL() {
+  const params = new URLSearchParams(window.location.search);
+  const mode = params.get('mode');
+  if (mode !== 'exam' && mode !== 'mini') return;
+
+  examMode       = mode;
+  examCourseId   = params.get('courseId');
+  examCourseName = params.get('courseName') || '';
+  examModuleId   = params.get('moduleId');
+
+  if (mode === 'exam') launchFinalExam();
+  else launchMiniQuiz();
+}
+
+// ─────────────────────────────
+// LAUNCH: FINAL EXAM — unchanged
+// ─────────────────────────────
+async function launchFinalExam() {
+  if (!currentUser) { alert('Please sign in to take the final exam.'); return; }
+  if (!examCourseId) return;
+
+  document.querySelector('.hero-inner').innerHTML = `
+    <span class="hero-eyebrow">🏆 Final Exam</span>
+    <h1>${escapeHtmlQ(examCourseName || 'Course')}</h1>
+    <p>Pass with ≥70% to earn your certificate.</p>
+  `;
+  document.getElementById('level-screen').style.display   = 'none';
+  document.getElementById('quiz-screen').style.display    = 'block';
+  document.getElementById('results-screen').style.display = 'none';
+  document.getElementById('questionText').textContent      = 'Loading exam questions...';
+  document.getElementById('optionsGrid').innerHTML         = '';
+  document.getElementById('feedbackBox').style.display     = 'none';
+  document.getElementById('nextBtn').style.display         = 'none';
+
+  try {
+    const qSnap = await getDocs(query(
+      collection(db, 'questions'),
+      where('majorId', '==', examCourseId),
+      where('questionType', '==', 'exam')
+    ));
+    let pool = [];
+    qSnap.forEach(d => pool.push({ id: d.id, ...d.data() }));
+
+    if (pool.length === 0) {
+      alert('This course does not have a final exam yet. Please check back later.');
+      window.location.href = 'learn.html';
+      return;
+    }
+
+    for (let i = pool.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [pool[i], pool[j]] = [pool[j], pool[i]];
+    }
+
+    currentQuestions = pool.slice(0, Math.min(pool.length, 50));
+    currentIndex = 0; score = 0; correctCount = 0; wrongCount = 0; skippedCount = 0;
+    selectedTopicName = examCourseName;
+
+    loadQuestion();
+  } catch (err) {
+    console.error('Exam load failed:', err);
+    alert('Failed to load the final exam. Please check your connection and try again.');
+    window.location.href = 'learn.html';
+  }
+}
+
+// ─────────────────────────────
+// LAUNCH: MODULE MINI-QUIZ — unchanged
+// ─────────────────────────────
+async function launchMiniQuiz() {
+  if (!currentUser) { alert('Please sign in to take this quiz.'); return; }
+  if (!examModuleId) return;
+
+  document.querySelector('.hero-inner').innerHTML = `
+    <span class="hero-eyebrow">🎯 Module Quiz</span>
+    <h1>Quick Check</h1>
+    <p>Pass with ≥60% to complete this step.</p>
+  `;
+  document.getElementById('level-screen').style.display   = 'none';
+  document.getElementById('quiz-screen').style.display    = 'block';
+  document.getElementById('results-screen').style.display = 'none';
+
+  try {
+    const qSnap = await getDocs(query(
+      collection(db, 'questions'),
+      where('moduleId', '==', examModuleId),
+      where('questionType', '==', 'mini')
+    ));
+    let pool = [];
+    qSnap.forEach(d => pool.push({ id: d.id, ...d.data() }));
+
+    if (pool.length === 0) {
+      alert('This module does not have a mini quiz yet.');
+      window.location.href = 'learn.html';
+      return;
+    }
+
+    for (let i = pool.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [pool[i], pool[j]] = [pool[j], pool[i]];
+    }
+
+    currentQuestions = pool.slice(0, Math.min(pool.length, 5));
+    currentIndex = 0; score = 0; correctCount = 0; wrongCount = 0; skippedCount = 0;
+
+    loadQuestion();
+  } catch (err) {
+    console.error('Mini quiz load failed:', err);
+    alert('Failed to load the quiz. Please try again.');
+    window.location.href = 'learn.html';
+  }
+}
+
+function escapeHtmlQ(str) {
+  if (!str) return '';
+  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ─────────────────────────────
+// NEUROAI FOLLOW-UP — chat history per question + robust response parsing
+// ─────────────────────────────
+function qaiEscape(str) {
+  return String(str || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>');
+}
+
+function qaiAppendMessage(role, content) {
+  const log = document.getElementById('quizAIChatLog');
+  if (!log) return;
+  const isUser = role === 'user';
+  const div = document.createElement('div');
+  div.className = `qai-msg qai-msg--${isUser ? 'user' : 'ai'}`;
+  div.innerHTML = `<span class="qai-avatar" aria-hidden="true">${isUser ? '👤' : '🧠'}</span>
+    <div class="qai-bubble">${qaiEscape(content)}</div>`;
+  log.appendChild(div);
+  log.scrollTop = log.scrollHeight;
+}
+
+function qaiShowTyping() {
+  const log = document.getElementById('quizAIChatLog');
+  if (!log) return;
+  const div = document.createElement('div');
+  div.id = 'qaiTypingRow';
+  div.className = 'qai-msg qai-msg--ai';
+  div.innerHTML = `<span class="qai-avatar" aria-hidden="true">🧠</span>
+    <div class="qai-bubble"><div class="qai-typing">
+      <span class="qai-typing-dot"></span><span class="qai-typing-dot"></span><span class="qai-typing-dot"></span>
+    </div></div>`;
+  log.appendChild(div);
+  log.scrollTop = log.scrollHeight;
+}
+function qaiRemoveTyping() { document.getElementById('qaiTypingRow')?.remove(); }
+
+async function sendQuizFollowUp() {
+  if (qaiLoading) return;
+  const input = document.getElementById('quizAIInput');
+  const question = (input.value || '').trim();
+  if (!question) return;
+
+  qaiLoading = true;
+  const sendBtn = document.getElementById('quizAISendBtn');
+  if (sendBtn) sendBtn.disabled = true;
+
+  input.value = '';
+  qaiAppendMessage('user', question);
+  qaiHistory.push({ role: 'user', content: question });
+  qaiShowTyping();
+
+  const currentQ = currentQuestions[currentIndex] || {};
+
+  try {
+    const res = await fetch(WORKER_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        question: question,
+        topic:    selectedTopicName || examCourseName || 'Neuroscience',
+        keywords: currentQ.q ? [currentQ.q] : [],
+        summary:  currentQ.explanation || '',
+        mode:     'tutor'
+      })
+    });
+
+    if (!res.ok) throw new Error(`Worker returned ${res.status}`);
+    const data  = await res.json();
+    const reply = data.response || data.content || data.message || data.text
+               || data?.choices?.[0]?.message?.content
+               || 'I could not generate a response. Please try again.';
+
+    qaiRemoveTyping();
+    qaiAppendMessage('assistant', reply);
+    qaiHistory.push({ role: 'assistant', content: reply });
+  } catch (err) {
+    qaiRemoveTyping();
+    qaiAppendMessage('assistant', `⚠️ Could not connect to NeuroAI. ${err.message || 'Please try again.'}`);
+  } finally {
+    qaiLoading = false;
+    if (sendBtn) sendBtn.disabled = false;
+  }
+}
+window.sendQuizFollowUp = sendQuizFollowUp;
+
+document.getElementById('quizAISendBtn')?.addEventListener('click', sendQuizFollowUp);
+document.getElementById('quizAIInput')?.addEventListener('keydown', e => {
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendQuizFollowUp(); }
+});
+</script>
+</body>
+</html>
