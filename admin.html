@@ -738,7 +738,13 @@ window.switchTab = switchTab; // keep global for any inline calls
 
 // ── AUTH ──────────────────────────────────────────────────────────────────────
 onAuthStateChanged(auth, async (user) => {
-  if (user && ADMIN_UIDS.includes(user.uid)) {
+  const user = auth.currentUser;
+
+if (user && ADMIN_UIDS.includes(user.uid)) {
+  // Admin access
+} else {
+  // Not an admin
+}
     document.getElementById('authContainer').style.display = 'none';
     document.getElementById('mainContainer').style.display  = 'block';
     await initApp();
