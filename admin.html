@@ -738,42 +738,38 @@ window.switchTab = switchTab; // keep global for any inline calls
 
 // ── AUTH ──────────────────────────────────────────────────────────────────────
 onAuthStateChanged(auth, async (user) => {
-  const user = auth.currentUser;
-
-if (user && ADMIN_UIDS.includes(user.uid)) {
-  // Admin access
-} else {
-  // Not an admin
-}
+  if (user && ADMIN_UIDS.includes(user.uid)) {
     document.getElementById('authContainer').style.display = 'none';
-    document.getElementById('mainContainer').style.display  = 'block';
+    document.getElementById('mainContainer').style.display = 'block';
     await initApp();
   } else if (user) {
     document.getElementById('authMessage').textContent = "Access Denied.";
     await signOut(auth);
     document.getElementById('authContainer').style.display = 'flex';
-    document.getElementById('mainContainer').style.display  = 'none';
+    document.getElementById('mainContainer').style.display = 'none';
   } else {
     document.getElementById('authContainer').style.display = 'flex';
-    document.getElementById('mainContainer').style.display  = 'none';
+    document.getElementById('mainContainer').style.display = 'none';
   }
 });
 
 document.getElementById('loginBtn').addEventListener('click', async () => {
-  const email    = document.getElementById('adminEmail').value;
+  const email = document.getElementById('adminEmail').value.trim();
   const password = document.getElementById('adminPassword').value;
-  const msg      = document.getElementById('authMessage');
-  msg.textContent = "Authenticating…";
+  const msg = document.getElementById('authMessage');
+
+  msg.textContent = "Authenticating...";
+
   try {
     await signInWithEmailAndPassword(auth, email, password);
     msg.textContent = "";
-  } catch {
-    msg.textContent = "Invalid email or password.";
+  } catch (error) {
+    console.error(error);
+    msg.textContent = error.message;
   }
 });
 
 document.getElementById('logoutBtn').addEventListener('click', () => signOut(auth));
-
 // ── INIT ──────────────────────────────────────────────────────────────────────
 async function initApp() {
   await loadMajorSegments();
