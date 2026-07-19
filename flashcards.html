@@ -73,9 +73,9 @@
   header {
     position: sticky; top: 0; z-index: 900;
     height: var(--header-h);
-    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-2) 100%);
-    box-shadow: 0 2px 16px rgba(0,0,0,0.25);
-  }
+    background: linear-gradient(135deg, var(--navy) 0%, var(--blue) 100%);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
   .header-inner {
     max-width: 1400px; margin: 0 auto; padding: 0 24px;
     height: 100%; display: flex; align-items: center; justify-content: space-between;
@@ -94,14 +94,19 @@
   /* Desktop nav */
   nav.site-nav { display: flex; align-items: center; gap: 2px; }
   nav.site-nav a {
-    color: rgba(255,255,255,0.75); text-decoration: none;
+    color: rgba(255,255,255,0.82); text-decoration: none;
     padding: 0 12px; line-height: var(--header-h);
     font-size: 0.82rem; font-weight: 500;
-    transition: color var(--t);
-    border-bottom: 2px solid transparent;
+    transition: color 0.25s ease;
+    position: relative;
   }
-  nav.site-nav a:hover { color: #fff; }
-  nav.site-nav a.active { color: var(--cyan); border-bottom-color: var(--cyan); }
+  nav.site-nav a::after {
+    content: ''; position: absolute; bottom: 14px; left: 50%;
+    width: 0; height: 2px; background: var(--cyan);
+    transition: all 0.25s ease; transform: translateX(-50%);
+  }
+  nav.site-nav a:hover::after, nav.site-nav a.active::after { width: calc(100% - 22px); }
+  nav.site-nav a:hover, nav.site-nav a.active { color: #fff; }
 
   /* Auth display */
   .nav-right { display: flex; align-items: center; gap: 12px; }
