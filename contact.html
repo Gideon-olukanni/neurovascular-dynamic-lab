@@ -13,8 +13,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>🧠 Neurovascular Dynamic Lab - Contact Us</title>
+<style>
+      @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600;700&display=swap');
 
-    <style>
       /* ================= RESET ================= */
       * {
         margin: 0;
@@ -23,7 +24,7 @@
       }
 
       body {
-        font-family: "Segoe UI", Inter, system-ui, sans-serif;
+        font-family: 'DM Sans', 'Segoe UI', Inter, system-ui, sans-serif;
         background-color: #f8fafc;
         color: #0f172a;
         line-height: 1.6;
@@ -35,87 +36,71 @@
         position: sticky;
         top: 0;
         z-index: 1000;
+        height: 64px;
         background: linear-gradient(135deg, #0a2540 0%, #2563eb 100%);
-        color: white;
-        padding: 0;
         box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-        animation: slideDown 0.8s ease-out forwards;
+        animation: slideDown 0.7s ease-out forwards;
       }
 
       @keyframes slideDown {
-        from {
-          transform: translateY(-100%);
-          opacity: 0;
-        }
-        to {
-          transform: translateY(0);
-          opacity: 1;
-        }
+        from { transform: translateY(-100%); opacity: 0; }
+        to   { transform: translateY(0); opacity: 1; }
       }
 
       .header-content {
-        max-width: 1400px;
-        margin: auto;
-        padding: 0 20px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
+        max-width: 1400px; margin: 0 auto; padding: 0 20px; height: 100%;
+        display: flex; justify-content: space-between; align-items: center;
+        flex-wrap: nowrap; gap: 12px;
       }
 
       .logo {
-        font-size: 1.8rem;
-        font-weight: 700;
-        color: white;
-        padding: 15px 0;
-        animation: pulse 2s ease-in-out infinite;
+        font-size: 1.2rem; font-weight: 800; color: #fff;
+        letter-spacing: -0.03em; text-decoration: none;
+        display: flex; align-items: center; gap: 2px; flex-shrink: 0; white-space: nowrap;
       }
+      .logo-accent { color: #22D3EE; }
 
-      @keyframes pulse {
-        0%,
-        100% {
-          transform: scale(1);
-        }
-        50% {
-          transform: scale(1.05);
-        }
-      }
-
-      nav {
-        display: flex;
-        flex-wrap: wrap;
-      }
-
+      nav { display: flex; gap: 0; align-items: center; flex-wrap: nowrap; min-width: 0; }
       nav a {
-        color: white;
-        text-decoration: none;
-        padding: 18px 16px;
-        font-size: 0.95rem;
-        transition: all 0.3s ease;
-        position: relative;
-        overflow: hidden;
+        color: rgba(255,255,255,0.82); text-decoration: none; padding: 0 11px;
+        line-height: 64px; font-size: 0.8rem; font-weight: 500;
+        transition: color 0.25s ease; position: relative; white-space: nowrap;
       }
+      nav a::after {
+        content: ''; position: absolute; bottom: 14px; left: 50%;
+        width: 0; height: 2px; background: #22D3EE;
+        transition: all 0.25s ease; transform: translateX(-50%);
+      }
+      nav a:hover::after, nav a.active::after { width: calc(100% - 22px); }
+      nav a:hover, nav a.active { color: #fff; }
 
-      nav a::before {
-        content: "";
-        position: absolute;
-        bottom: 0;
-        left: 50%;
-        width: 0;
-        height: 3px;
-        background: white;
-        transition: all 0.3s ease;
-        transform: translateX(-50%);
+      .hamburger-btn {
+        display: none; background: none; border: none; cursor: pointer;
+        padding: 10px; border-radius: 8px; transition: background-color 0.3s; flex-shrink: 0;
       }
+      .hamburger-btn:hover { background-color: rgba(255,255,255,0.1); }
+      .ham-icon, .ham-icon::before, .ham-icon::after {
+        display: block; width: 22px; height: 2px; background: #fff; border-radius: 2px;
+      }
+      .ham-icon { position: relative; }
+      .ham-icon::before, .ham-icon::after { content: ''; position: absolute; left: 0; }
+      .ham-icon::before { top: -7px; }
+      .ham-icon::after  { top: 7px; }
 
-      nav a:hover::before,
-      nav a.active::before {
-        width: 100%;
+      .mobile-nav {
+        display: none; position: absolute; top: 100%; left: 0; right: 0;
+        background: linear-gradient(135deg, #0a2540 0%, #2563eb 100%);
+        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        animation: mobileSlideDown 0.25s ease-out; max-height: calc(100vh - 64px); overflow-y: auto;
       }
-
-      nav a:hover {
-        background: rgba(255, 255, 255, 0.15);
-        transform: translateY(-2px);
+      .mobile-nav.show { display: block; }
+      @keyframes mobileSlideDown { from{opacity:0;transform:translateY(-8px);} to{opacity:1;transform:translateY(0);} }
+      .mobile-nav a {
+        display: block; color: white; text-decoration: none; padding: 15px 20px;
+        border-bottom: 1px solid rgba(255,255,255,0.1); transition: background-color 0.3s;
       }
+      .mobile-nav a:hover { background-color: rgba(255,255,255,0.1); }
+      .mobile-nav a.active { background-color: rgba(255,255,255,0.2); font-weight: 600; }
 
       /* ================= HERO ================= */
       .hero {
@@ -190,14 +175,16 @@
           transform: translate(25px, 10px);
         }
       }
-
-      .hero h1 {
+.hero h1 {
+        font-family: 'Playfair Display', serif;
+        font-weight: 900;
         font-size: 3rem;
+        letter-spacing: -0.02em;
         margin-bottom: 20px;
         position: relative;
         z-index: 2;
         animation: fadeInUp 1s ease-out;
-      }
+}
 
       .hero p {
         max-width: 700px;
@@ -419,48 +406,35 @@
         box-shadow: 0 10px 25px rgba(34, 211, 238, 0.4);
       }
 
-      /* ================= FOOTER ================= */
       /* ========================================================
-       FOOTER STYLES (COMPLETELY FIXED EDGE-TO-EDGE)
+       FOOTER STYLES
        ======================================================== */
 footer {
-background: linear-gradient(135deg, #0a2540 0%, #1e3a5f 100%);
-color: rgba(255, 255, 255, 0.85);
-text-align: center;
-padding: 24px 20px;
-/* Accommodates iPhone home indicators to prevent bottom whitespace */
-padding-bottom: calc(24px + env(safe-area-inset-bottom));
-margin: 0;
-margin-top: auto;
-/* Forces footer flush to the bottom */
-position: relative;
-overflow: hidden;
-font-size: 0.88rem;
-line-height: 1.8;
-width: 100vw;
-max-width: 100%;
-display: block;
-box-sizing: border-box;
-/* Crucial for preventing horizontal overflow */
+  background: linear-gradient(160deg, #0A2540 0%, #0D3B6E 50%, #0A2540 100%);
+  color: rgba(255,255,255,0.65); font-size: 0.8rem; line-height: 1.8;
+  margin-top: auto; position: relative; overflow: hidden; width: 100vw; max-width: 100%; box-sizing: border-box;
 }
-
-footer::before {
-content: "";
-position: absolute;
-top: 0;
-left: 0;
-right: 0;
-height: 3px;
-background: linear-gradient(90deg, #00d4ff, #7b2ff7, #00d4ff);
+footer::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, #22D3EE, #8B5CF6, #10B981, #22D3EE); }
+.footer-inner { max-width: 1400px; margin: 0 auto; padding: 36px 24px 24px; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 32px; align-items: start; }
+.footer-logo { font-size: 1.15rem; font-weight: 800; color: #fff; letter-spacing: -0.03em; display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+.footer-logo-accent { color: #22D3EE; }
+.footer-tagline { font-size: 0.78rem; color: rgba(255,255,255,0.45); line-height: 1.65; }
+.footer-links-label { font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.35); margin-bottom: 10px; }
+.footer-links { display: flex; flex-direction: column; gap: 7px; }
+.footer-links a { color: rgba(255,255,255,0.6); text-decoration: none; font-size: 0.8rem; transition: color 0.25s ease; }
+.footer-links a:hover { color: #22D3EE; }
+.footer-built { text-align: right; }
+.footer-built-label { font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.35); margin-bottom: 8px; }
+.footer-built-name { font-size: 0.95rem; font-weight: 800; color: #fff; letter-spacing: -0.02em; }
+.footer-built-sub { font-size: 0.72rem; color: rgba(255,255,255,0.35); margin-top: 4px; }
+.footer-bottom { border-top: 1px solid rgba(255,255,255,0.08); padding: 14px 24px calc(14px + env(safe-area-inset-bottom)); display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 8px; font-size: 0.74rem; color: rgba(255,255,255,0.28); text-align: center; }
+.footer-sep { color: rgba(255,255,255,0.15); }
+@media (max-width: 768px) {
+  .footer-inner { grid-template-columns: 1fr; gap: 20px; padding: 24px 18px 16px; text-align: center; }
+  .footer-logo { justify-content: center; }
+  .footer-links { align-items: center; flex-direction: row; flex-wrap: wrap; justify-content: center; }
+  .footer-built { text-align: center; }
 }
-
-footer p {
-margin: 0;
-padding: 4px 0;
-word-break: keep-all;
-overflow-wrap: normal;
-}
-
       /* ================= RESPONSIVE ================= */
       @media (max-width: 768px) {
         .hero h1 {
@@ -488,70 +462,15 @@ overflow-wrap: normal;
         align-items: center;
       }
 
-      /* --- Hamburger Button --- */
-      .hamburger-btn {
-        display: none; /* Hidden by default on desktop */
-        background: none;
-        border: none;
-        cursor: pointer;
-        padding: 5px;
-        transition: transform 0.3s ease;
-      }
-
-      .hamburger-btn img {
-        width: 28px;
-        height: 28px;
-        filter: brightness(0) invert(1); /* Forces the image to be pure white */
-      }
-
-      /* --- Mobile Navigation --- */
-      .mobile-nav {
-        display: none; /* Hidden until toggled */
-        flex-direction: column;
-        background: #112240; /* Slightly lighter navy for contrast */
-        width: 100%;
-        border-top: 1px solid #38bdf8;
-      }
-
-      .mobile-nav.show {
-        display: flex;
-        animation: slideIn 0.3s ease-out;
-      }
-
-      .mobile-nav a {
-        color: #f8fafc;
-        padding: 15px 25px;
-        text-decoration: none;
-        font-weight: 500;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-      }
-
-      .mobile-nav a:hover {
-        background: #1d4ed8;
-        color: #38bdf8; /* Electric Blue high-contrast text */
-      }
-
-      /* --- Responsive Logic --- */
+/* --- Responsive Logic --- */
       @media (max-width: 768px) {
-        .desktop-nav {
+        nav {
           display: none;
         }
         .hamburger-btn {
           display: block;
         }
       }
-
-      @keyframes slideIn {
-        from {
-          opacity: 0;
-          transform: translateY(-10px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
-
       /* Mobile responsive header/footer fallback */
       @media (max-width: 768px) {
         header {
@@ -637,23 +556,23 @@ overflow-wrap: normal;
   <body>
     <header>
       <div class="header-content">
-        <div class="logo">🧠 Neurovascular Dynamic Lab</div>
-        <nav class="desktop-nav">
+        <a href="index.html" class="logo">🧠 NVD<span class="logo-accent">Lab</span></a>
+        <nav>
           <a href="index.html">Home</a>
           <a href="learn.html">Learn</a>
           <a href="resources.html">Resources</a>
           <a href="community.html">Community</a>
           <a href="research.html">Latest Research</a>
           <a href="brain-map.html">🧠 Interactive Brain Map</a>
-      <a href="quiz.html">Quiz</a>
-      <a href="flashcards.html">Flashcards</a>
+          <a href="quiz.html">Quiz</a>
+          <a href="flashcards.html">Flashcards</a>
           <a href="about.html">About Us</a>
           <a href="impact.html">Our Impact</a>
           <a href="faq.html">FAQ</a>
-          <a href="contact.html" class="active">Contact</a>
+          <a href="contact.html" class="active" aria-current="page">Contact</a>
         </nav>
-        <button class="hamburger-btn" id="hamburgerBtn">
-          <img src="expand.png" alt="Menu" />
+        <button class="hamburger-btn" id="hamburgerBtn" aria-label="Open menu" aria-expanded="false" aria-controls="mobileNav">
+          <span class="ham-icon" aria-hidden="true"></span>
         </button>
       </div>
       <div class="mobile-nav" id="mobileNav">
@@ -784,12 +703,34 @@ overflow-wrap: normal;
     </section>
 
     <footer>
-<p>
-&copy; 2026 Neurovascular Dynamic Lab. All rights reserved.
-</p>
-<p>
-Made with 🧠 for curious minds. <br>Powered by <strong>GIDEON REALITY</strong>
-</p>
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <div class="footer-logo">🧠 NVD<span class="footer-logo-accent">Lab</span></div>
+          <p class="footer-tagline">The Neurovascular Dynamic Lab.<br>Learn. Build. Teach.</p>
+        </div>
+        <div>
+          <p class="footer-links-label">Explore</p>
+          <div class="footer-links">
+            <a href="learn.html">Learn</a>
+            <a href="quiz.html">Quiz</a>
+            <a href="flashcards.html">Flashcards</a>
+            <a href="about.html">About</a>
+            <a href="contact.html">Contact</a>
+          </div>
+        </div>
+        <div class="footer-built">
+          <p class="footer-built-label">Built by</p>
+          <p class="footer-built-name">GIDEON REALITY</p>
+          <p class="footer-built-sub">Gideon Olukanni · Lagos, Nigeria</p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 Neurovascular Dynamic Lab</span>
+        <span class="footer-sep">·</span>
+        <span>All rights reserved</span>
+        <span class="footer-sep">·</span>
+        <span>Made with 🧠 for curious minds</span>
+      </div>
     </footer>
 
     <script>
