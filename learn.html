@@ -109,8 +109,13 @@
   header {
     position: sticky; top: 0; z-index: 1000;
     height: var(--header-h);
-    background: linear-gradient(135deg, var(--night) 0%, var(--night-soft) 100%);
-    box-shadow: 0 2px 12px rgba(0,0,0,0.22);
+    background: linear-gradient(135deg, var(--night) 0%, var(--blue) 100%);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    animation: headerSlideDown .7s ease-out forwards;
+  }
+  @keyframes headerSlideDown {
+    from { transform: translateY(-100%); opacity: 0; }
+    to   { transform: translateY(0); opacity: 1; }
   }
   .header-inner {
     max-width: 1600px; margin: 0 auto; padding: 0 20px;
@@ -128,16 +133,20 @@
   /* Desktop nav */
   nav.site-nav { display: flex; align-items: center; }
   nav.site-nav a {
-    color: rgba(255,255,255,0.75); text-decoration: none;
+    color: rgba(255,255,255,0.82); text-decoration: none;
     padding: 0 11px; line-height: var(--header-h);
     font-size: 0.8rem; font-weight: 500;
-    transition: color var(--t);
-    border-bottom: 2px solid transparent;
+    transition: color 0.25s ease;
+    position: relative;
     white-space: nowrap;
   }
-  nav.site-nav a:hover { color: #fff; }
-  nav.site-nav a.active { color: var(--cyan); border-bottom-color: var(--cyan); }
-
+  nav.site-nav a::after {
+    content: ''; position: absolute; bottom: 14px; left: 50%;
+    width: 0; height: 2px; background: var(--cyan);
+    transition: all 0.25s ease; transform: translateX(-50%);
+  }
+  nav.site-nav a:hover::after, nav.site-nav a.active::after { width: calc(100% - 22px); }
+  nav.site-nav a:hover, nav.site-nav a.active { color: #fff; }
   /* Hamburger (mobile) */
   .hamburger-btn {
     display: none; background: none; border: none; cursor: pointer;
@@ -173,8 +182,7 @@
     transition: background var(--t), color var(--t);
   }
   .mobile-nav a:hover { background: rgba(255,255,255,0.06); color: #fff; }
-  .mobile-nav a.active { color: var(--cyan); border-left: 3px solid var(--cyan); padding-left: 17px; }
-
+.mobile-nav a.active { background: rgba(255,255,255,0.2); color: #fff; font-weight: 600; }
   /* ============================================================
      3. APP SHELL (3-column layout)
      ============================================================ */
