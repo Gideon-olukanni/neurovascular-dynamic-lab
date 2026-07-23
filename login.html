@@ -15,6 +15,8 @@
   <title>🧠 Login & Sign Up — Neurovascular Dynamic Lab</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600;700&display=swap');
+
     /* ========================================================
          GLOBAL DESIGN SYSTEM (Cohesive with Lab Ecosystem)
          ======================================================== */
@@ -44,7 +46,7 @@
     }
 
     body {
-      font-family: "Segoe UI", Inter, system-ui, sans-serif;
+      font-family: 'DM Sans', "Segoe UI", Inter, system-ui, sans-serif;
       line-height: 1.6;
       color: var(--dark);
       background-color: var(--slate-50);
@@ -67,85 +69,54 @@
     }
 
     .nav-container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 1.5rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      height: 60px;
+      max-width: 1400px; margin: 0 auto; padding: 0 20px; height: 64px;
+      display: flex; justify-content: space-between; align-items: center;
     }
-
     .logo-container {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      text-decoration: none;
-      color: white;
-      font-weight: 700;
-      font-size: 1.25rem;
+      font-size: 1.15rem; font-weight: 800; color: #fff; letter-spacing: -0.03em;
+      display: flex; align-items: center; gap: 8px; text-decoration: none; white-space: nowrap;
     }
-
-    .logo-container i {
-      color: var(--cyan);
-      font-size: 1.5rem;
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 1.5rem;
-      align-items: center;
-    }
-
+    .logo-container i { color: var(--cyan); font-size: 1.3rem; }
+    .nav-links { display: flex; align-items: center; }
     .nav-links a {
-      color: rgba(255, 255, 255, 0.85);
-      text-decoration: none;
-      font-size: 0.95rem;
-      font-weight: 500;
-      transition: var(--transition);
-      padding: 0.5rem 0.75rem;
-      border-radius: 6px;
+      color: rgba(255,255,255,0.82); text-decoration: none; padding: 0 11px;
+      line-height: 64px; font-size: 0.8rem; font-weight: 500;
+      transition: color 0.25s ease; position: relative; white-space: nowrap; border-radius: 0;
     }
-
-    .nav-links a:hover {
-      color: white;
-      background: rgba(255, 255, 255, 0.1);
+    .nav-links a::after {
+      content: ''; position: absolute; bottom: 14px; left: 50%;
+      width: 0; height: 2px; background: var(--cyan);
+      transition: all 0.25s ease; transform: translateX(-50%);
     }
-
-    .nav-links a.active {
-      color: var(--cyan);
-      font-weight: 600;
-    }
+    .nav-links a:hover::after, .nav-links a.active::after { width: calc(100% - 22px); }
+    .nav-links a:hover, .nav-links a.active { color: #fff; background: none; }
 
     .hamburger {
-      display: none;
-      background: none;
-      border: none;
-      color: white;
-      font-size: 1.5rem;
-      cursor: pointer;
-      transition: var(--transition);
+      display: none; background: none; border: none; color: white;
+      font-size: 1.3rem; cursor: pointer; padding: 10px; border-radius: 8px; transition: background-color 0.3s;
     }
+    .hamburger:hover { background-color: rgba(255,255,255,0.1); }
+    .ham-icon, .ham-icon::before, .ham-icon::after {
+      display: block; width: 22px; height: 2px; background: #fff; border-radius: 2px;
+    }
+    .ham-icon { position: relative; }
+    .ham-icon::before, .ham-icon::after { content: ''; position: absolute; left: 0; }
+    .ham-icon::before { top: -7px; }
+    .ham-icon::after  { top: 7px; }
 
     .mobile-nav {
-      display: none;
-      background: var(--navy);
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
-      padding: 1rem;
+      display: none; position: absolute; top: 100%; left: 0; right: 0;
+      background: linear-gradient(135deg, var(--navy) 0%, var(--blue) 100%);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      max-height: calc(100vh - 64px); overflow-y: auto;
     }
-
+    .mobile-nav.show { display: block; }
     .mobile-nav a {
-      display: block;
-      color: white;
-      text-decoration: none;
-      padding: 0.75rem 1rem;
-      font-size: 1rem;
-      border-radius: 6px;
+      display: block; color: white; text-decoration: none; padding: 15px 20px;
+      border-bottom: 1px solid rgba(255,255,255,0.1); transition: background-color 0.3s;
     }
-
-    .mobile-nav a:hover {
-      background: rgba(255, 255, 255, 0.1);
-    }
+    .mobile-nav a:hover { background-color: rgba(255,255,255,0.1); }
+    .mobile-nav a.active { background-color: rgba(255,255,255,0.2); font-weight: 600; }
 
     /* ========================================================
          AUTHENTICATION CARD CONTAINER
@@ -188,10 +159,11 @@
     }
 
     .auth-banner h1 {
-      font-size: 1.75rem;
-      font-weight: 700;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.85rem;
+      font-weight: 900;
       margin-bottom: 0.5rem;
-      letter-spacing: -0.5px;
+      letter-spacing: -0.02em;
     }
 
     .auth-banner p {
@@ -412,44 +384,33 @@
     }
 
     /* ========================================================
-       FOOTER STYLES (COMPLETELY FIXED EDGE-TO-EDGE)
+       FOOTER STYLES
        ======================================================== */
 footer {
-background: linear-gradient(135deg, #0a2540 0%, #1e3a5f 100%);
-color: rgba(255, 255, 255, 0.85);
-text-align: center;
-padding: 24px 20px;
-/* Accommodates iPhone home indicators to prevent bottom whitespace */
-padding-bottom: calc(24px + env(safe-area-inset-bottom));
-margin: 0;
-margin-top: auto;
-/* Forces footer flush to the bottom */
-position: relative;
-overflow: hidden;
-font-size: 0.88rem;
-line-height: 1.8;
-width: 100vw;
-max-width: 100%;
-display: block;
-box-sizing: border-box;
-/* Crucial for preventing horizontal overflow */
+  background: linear-gradient(160deg, #0A2540 0%, #0D3B6E 50%, #0A2540 100%);
+  color: rgba(255,255,255,0.65); font-size: 0.8rem; line-height: 1.8;
+  margin-top: auto; position: relative; overflow: hidden; width: 100vw; max-width: 100%; box-sizing: border-box;
 }
-
-footer::before {
-content: "";
-position: absolute;
-top: 0;
-left: 0;
-right: 0;
-height: 3px;
-background: linear-gradient(90deg, #00d4ff, #7b2ff7, #00d4ff);
-}
-
-footer p {
-margin: 0;
-padding: 4px 0;
-word-break: keep-all;
-overflow-wrap: normal;
+footer::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, #22D3EE, #8B5CF6, #10B981, #22D3EE); }
+.footer-inner { max-width: 1400px; margin: 0 auto; padding: 36px 24px 24px; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 32px; align-items: start; }
+.footer-logo { font-size: 1.15rem; font-weight: 800; color: #fff; letter-spacing: -0.03em; display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+.footer-logo-accent { color: #22D3EE; }
+.footer-tagline { font-size: 0.78rem; color: rgba(255,255,255,0.45); line-height: 1.65; }
+.footer-links-label { font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.35); margin-bottom: 10px; }
+.footer-links { display: flex; flex-direction: column; gap: 7px; }
+.footer-links a { color: rgba(255,255,255,0.6); text-decoration: none; font-size: 0.8rem; transition: color 0.25s ease; }
+.footer-links a:hover { color: #22D3EE; }
+.footer-built { text-align: right; }
+.footer-built-label { font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.35); margin-bottom: 8px; }
+.footer-built-name { font-size: 0.95rem; font-weight: 800; color: #fff; letter-spacing: -0.02em; }
+.footer-built-sub { font-size: 0.72rem; color: rgba(255,255,255,0.35); margin-top: 4px; }
+.footer-bottom { border-top: 1px solid rgba(255,255,255,0.08); padding: 14px 24px calc(14px + env(safe-area-inset-bottom)); display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 8px; font-size: 0.74rem; color: rgba(255,255,255,0.28); text-align: center; }
+.footer-sep { color: rgba(255,255,255,0.15); }
+@media (max-width: 768px) {
+  .footer-inner { grid-template-columns: 1fr; gap: 20px; padding: 24px 18px 16px; text-align: center; }
+  .footer-logo { justify-content: center; }
+  .footer-links { align-items: center; flex-direction: row; flex-wrap: wrap; justify-content: center; }
+  .footer-built { text-align: center; }
 }
 
     /* Responsive adjustments */
@@ -465,10 +426,7 @@ overflow-wrap: normal;
 
   <header>
     <div class="nav-container">
-      <a href="index.html" class="logo-container">
-        <i class="fa-solid fa-brain"></i>
-        <span>Neurovascular Dynamic Lab</span>
-      </a>
+      <a href="index.html" class="logo-container">🧠 NVD<span style="color:var(--cyan)">Lab</span></a>
       <nav class="nav-links">
         <a href="index.html">Home</a>
         <a href="learn.html">Learn</a>
@@ -479,15 +437,16 @@ overflow-wrap: normal;
         <a href="quiz.html">Quiz</a>
         <a href="flashcards.html">Flashcards</a>
         <a href="about.html">About Us</a>
+        <a href="impact.html">Our Impact</a>
         <a href="faq.html">FAQ</a>
         <a href="contact.html">Contact</a>
-        <a href="login.html" class="active"><i class="fa-solid fa-user-gear"></i> Portal</a>
+        <a href="login.html" class="active" aria-current="page">Portal</a>
       </nav>
-      <button class="hamburger" id="hamburgerBtn" aria-label="Toggle Navigation">
-        <i class="fa-solid fa-bars"></i>
+      <button class="hamburger" id="hamburgerBtn" aria-label="Toggle Navigation" aria-expanded="false" aria-controls="mobileNav">
+        <span class="ham-icon" aria-hidden="true"></span>
       </button>
     </div>
-    <div class="mobile-nav" id="mobileNav">
+    <div class="mobile-nav" id="mobileNav" role="navigation" aria-label="Mobile navigation">
         <a href="index.html">Home</a>
         <a href="learn.html">Learn</a>
         <a href="resources.html">Resources</a>
@@ -497,9 +456,10 @@ overflow-wrap: normal;
         <a href="quiz.html">Quiz</a>
         <a href="flashcards.html">Flashcards</a>
         <a href="about.html">About Us</a>
+        <a href="impact.html">Our Impact</a>
         <a href="faq.html">FAQ</a>
         <a href="contact.html">Contact</a>
-      <a href="login.html">Portal Login</a>
+      <a href="login.html" class="active" aria-current="page">Portal Login</a>
     </div>
   </header>
 
@@ -581,12 +541,34 @@ overflow-wrap: normal;
   </div>
 
 <footer>
-<p>
-&copy; 2026 Neurovascular Dynamic Lab. All rights reserved.
-</p>
-<p>
-Made with 🧠 for curious minds. <br>Powered by <strong>GIDEON REALITY</strong>
-</p>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="footer-logo">🧠 NVD<span class="footer-logo-accent">Lab</span></div>
+      <p class="footer-tagline">The Neurovascular Dynamic Lab.<br>Learn. Build. Teach.</p>
+    </div>
+    <div>
+      <p class="footer-links-label">Explore</p>
+      <div class="footer-links">
+        <a href="learn.html">Learn</a>
+        <a href="quiz.html">Quiz</a>
+        <a href="flashcards.html">Flashcards</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+      </div>
+    </div>
+    <div class="footer-built">
+      <p class="footer-built-label">Built by</p>
+      <p class="footer-built-name">GIDEON REALITY</p>
+      <p class="footer-built-sub">Gideon Olukanni · Lagos, Nigeria</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Neurovascular Dynamic Lab</span>
+    <span class="footer-sep">·</span>
+    <span>All rights reserved</span>
+    <span class="footer-sep">·</span>
+    <span>Made with 🧠 for curious minds</span>
+  </div>
 </footer>
   <script type="module">
     // OPTION B FIX: Using the absolute path pointing directly to your correct filename
