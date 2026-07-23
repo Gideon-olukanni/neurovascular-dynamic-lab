@@ -961,6 +961,21 @@
   .comp-acc-fill { height:100%; border-radius:100px; background:linear-gradient(90deg,var(--emerald),#34d399); transition:width 1s ease; }
   .comp-acc-txt  { font-family:'Space Mono',monospace; font-size:0.88rem; font-weight:700; color:#fff; }
   .comp-actions  { display:flex; gap:10px; width:100%; max-width:310px; }
+    .guest-cta {
+  display: none; margin-top: 14px; padding: 16px 18px; border-radius: 12px;
+  background: linear-gradient(135deg, rgba(37,99,235,0.08), rgba(34,211,238,0.08));
+  border: 1px solid rgba(37,99,235,0.18); text-align: left; width: 100%; max-width: 310px;
+}
+.guest-cta.show { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+.guest-cta-text { flex: 1; min-width: 180px; }
+.guest-cta-text strong { display:block; font-size:0.92rem; color:#0f172a; margin-bottom:2px; }
+.guest-cta-text span { font-size:0.82rem; color:#64748b; }
+.guest-cta-btn {
+  flex-shrink:0; padding:9px 18px; border-radius:8px; border:none;
+  background: var(--blue,#2563eb); color:#fff; font-weight:600; font-size:0.85rem;
+  text-decoration:none; white-space:nowrap; transition: transform .15s ease;
+}
+.guest-cta-btn:hover { transform: translateY(-1px); }
   .comp-again {
     flex:1; padding:13px; background:var(--blue); color:#fff; border:none;
     border-radius:var(--r-lg); font-size:0.88rem; font-weight:700; font-family:inherit;
@@ -1260,7 +1275,13 @@
         <div class="comp-acc-bar"><div class="comp-acc-fill" id="compAccFill" style="width:0%"></div></div>
         <div class="comp-acc-txt" id="compAccTxt">0%</div>
       </div>
-
+       <div id="guestCta" class="guest-cta">
+  <div class="guest-cta-text">
+    <strong>Progress is only saved on this device.</strong>
+    <span>Sign in free to keep your mastered cards synced everywhere.</span>
+  </div>
+  <a href="login.html" class="guest-cta-btn">Sign In Free</a>
+       </div>
       <div class="comp-actions">
         <button class="comp-exit" id="compExitBtn">← Exit</button>
         <button class="comp-again" id="compAgainBtn">↻ Study Again</button>
@@ -1904,8 +1925,9 @@ function showSessionComplete() {
     emojiEl.textContent = '📖'; titleEl.textContent = 'Session Complete';
     subEl.textContent = `${sessionMore} cards need more review — keep going!`;
   }
-
-  document.getElementById('studyComplete').classList.add('show');
+const cta = document.getElementById('guestCta');
+if (cta) cta.classList.toggle('show', !currentUser);
+document.getElementById('studyComplete').classList.add('show');
   setTimeout(() => {
     document.getElementById('compAccFill').style.width = accuracy + '%';
   }, 100);
