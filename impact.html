@@ -707,14 +707,14 @@ import { db, collection, getDocs, getDoc, doc } from "./firebase-config.js";
 async function loadLiveStudentCount() {
   const el = document.getElementById('statStudents');
   try {
-    const snap = await getDocs(collection(db, 'users'));
-    el.textContent = snap.size + '+';
+    const res = await fetch('https://ga4-stats-worker.gideonolukanni20103.workers.dev');
+    const data = await res.json();
+    el.textContent = data.activeUsers + '+';
   } catch (err) {
-    console.warn('Live student count failed, showing last known figure:', err);
+    console.warn('Live GA4 count failed, showing last known figure:', err);
     el.textContent = '450+';
   }
 }
-
 /* ── LIVE STAT 2: Flashcards — same 30 + Firestore formula as flashcards.html ── */
 async function loadLiveFlashcardCount() {
   const el = document.getElementById('statFlashcards');
