@@ -1783,21 +1783,21 @@ Every number below reflects real students, real countries, and real curiosity �
 </p>
 
 <div style="display:flex;justify-content:center;gap:16px;flex-wrap:wrap;margin-bottom:38px;">
+
 <div class="ndl-stat-card">
 <div style="font-size:2rem;margin-bottom:12px;">
 🎓
 </div>
-<div style="font-size:2.1rem;font-weight:800;line-height:1;font-family:'Space Mono','Courier New',monospace;color:#22D3EE;">
-687+
+<div id="statStudentsReached" style="font-size:2.1rem;font-weight:800;line-height:1;font-family:'Space Mono','Courier New',monospace;color:#22D3EE;">
+—
 </div>
 <div style="font-size:.65rem;color:rgba(255,255,255,.5);font-weight:700;text-transform:uppercase;letter-spacing:.1em;margin-top:10px;">
 Students Reached
 </div>
 <div style="font-size:.7rem;color:rgba(255,255,255,.3);margin-top:6px;font-style:italic;">
-Via platform & WhatsApp
+Via platform
 </div>
 </div>
-
 <div class="ndl-stat-card">
 <div style="font-size:2rem;margin-bottom:12px;">
 🌍
@@ -1977,32 +1977,34 @@ setInterval(showNext, 3500);
 }
 })();
 
-/* ONLINE NOW VISITOR TICKER COUNTER */
-(function () {
-function rand(a, b) {
-return Math.floor(Math.random() * (b - a + 1)) + a;
+</script>
+<script type="module">
+async function loadStudentsReached() {
+  const el = document.getElementById('statStudentsReached');
+  if (!el) return;
+  try {
+    const res = await fetch('https://ga4-stats-worker.gideonolukanni20103.workers.dev');
+    const data = await res.json();
+    el.textContent = data.activeUsers + '+';
+  } catch (err) {
+    console.warn('Could not load live student count:', err);
+  }
 }
-function setOnline() {
-var el = document.getElementById('ndlOnline');
-if (!el) return;
-el.textContent = rand(3, 18);
+loadStudentsReached();
+
+async function loadOnlineNow() {
+  const el = document.getElementById('ndlOnline');
+  if (!el) return;
+  try {
+    const res = await fetch('https://ga4-stats-worker.gideonolukanni20103.workers.dev/realtime');
+    const data = await res.json();
+    el.textContent = data.activeUsers;
+  } catch (err) {
+    console.warn('Could not load live online count:', err);
+  }
 }
-if (document.readyState === 'loading') {
-document.addEventListener('DOMContentLoaded', setOnline);
-} else {
-setOnline();
-}
-setInterval(function () {
-var el = document.getElementById('ndlOnline');
-if (!el) return;
-el.style.opacity = '0';
-setTimeout(function () {
-el.textContent = rand(3, 18);
-el.style.opacity = '1';
-}, 360);
-},
-10000);
-})();
+loadOnlineNow();
+setInterval(loadOnlineNow, 30000);
 </script>
 
 <footer>
